@@ -1,0 +1,197 @@
+<div class="col-md-12" *ngIf="!show"> 
+  <div class="row"> 
+  <div style="display: both" class="col-md-12"><br>
+  <span style="font-weight:500">Projects</span>
+         <button type="button" *ngIf='flag' style="float: right;margin: 0% 0% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "add()">Add</button>
+ </div><br><br>
+ </div>
+ 
+ <div class="row">
+  <div class="col-lg-12">
+  <div class=""> 
+    <table  class="table table-bordered table-stripped table-sm">
+  <thead class="">
+      <tr>
+       <th>Action</th>
+       <th>Project</th> 
+       <th *ngIf='flag'>Status</th>
+       <th *ngIf='flag'>Base Project</th>
+       <th *ngIf='eflag'>Start Date</th>
+       <th *ngIf='eflag'>End Date</th>
+       <th >Client</th> 
+       <th *ngIf='flag'>Currency</th>
+       <th *ngIf='flag'>Project Type</th>
+      </tr> 
+       </thead>
+      <tbody *ngFor="let data of pro;let i = index ">
+            <tr>
+               <td>
+                   <i class="fa fa-eye"  title="View" (click)="open(deptModal);view(data);findproject(data);"></i>&nbsp;&nbsp;
+                 <i  (click)="edit(data);" *ngIf="this.getuser.utype!='Employee'"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;
+                 <i (click)="delete(data,i)"  *ngIf="this.getuser.utype!='Employee'" title="Delete" class="fa fa-trash-o"></i>&nbsp;&nbsp;
+ 
+               </td>
+             
+              <td >{{data.project[0].projectname}}</td>
+             
+              <td *ngIf='flag'>{{data.project[0].status}}</td>
+              
+              <td *ngIf='flag'>{{data.project[0].base}}</td>
+
+              <td *ngIf='eflag'>{{data.project[0].todate | date}}</td>
+
+              <td *ngIf='eflag'>{{data.project[0].fromdate | date}}</td>
+               
+              <td >{{data.project[0].client}}</td>
+              
+              <td *ngIf='flag'>{{data.project[0].currency}}</td>
+              
+              <td *ngIf='flag'>{{data.project[0].type}}</td>
+            </tr>                        
+      </tbody>
+                                 
+     </table>
+    </div>
+    </div>
+    </div> 
+ </div>
+ 
+  <md2-dialog #deptModal>
+     <md2-dialog-title>Project</md2-dialog-title>
+      <div class=" row box">
+     <div class="emp-info">
+       Project : {{projecttime.project[0].projectname}}
+     </div>
+     <div class="emp-info ">
+       Client : {{projecttime.project[0].client}}
+     </div><br>
+     <div class="emp-info alter-div">
+       Currency : {{projecttime.project[0].currency}}
+     </div>
+     <div class="emp-info alter-div">
+       Project Type : {{projecttime.project[0].type}}
+     </div><br>
+     <div class="emp-info">
+       Estimated Hours : {{projecttime.project[0].estimate}}
+     </div>
+     <div class="emp-info ">
+       Status : {{projecttime.project[0].status}}
+     </div><br>
+     <div class="emp-info alter-div">
+       Start Date : {{projecttime.project[0].fromdate | date}}
+     </div>
+     <div class="emp-info alter-div">
+       End Date : {{projecttime.project[0].todate | date}}
+     </div><br>
+     <div class="emp-info ">
+       Description : {{projecttime.project[0].prjdes}}
+     </div>
+     <div class="emp-info"></div>
+   </div>
+
+   
+      <div class="row"> 
+          <div style="display: both" class="col-md-12">
+          <span style="font-weight:500;padding-left: 20px;">Tasks</span>
+          </div>
+         </div><br><br>
+      <div class="col-lg-12">
+          <table  class="table">
+              <thead class="active">
+                  <tr>
+                   <th>Name</th>
+                   <th>Estimated Hours</th> 
+                   <th>Actual Hours</th>
+                  </tr> 
+                   </thead>
+                  <tbody *ngFor="let data of task_options;let i = index ">
+                        <tr>                                                    
+                          <td >{{data.taskname}}</td>
+                         
+                          <td >{{data.estimatedhour}}</td>
+                          
+                          <td >{{data.taskname}}</td>
+                        </tr>                        
+                  </tbody>                                             
+                 </table>
+                </div>
+ </md2-dialog> 
+ 
+<!--  
+ <div class="col-md-12" *ngIf="this.show"> 
+    <div class="row"> 
+    <div style="display: both" class="col-md-12"><br>
+    <span style="font-weight:500">Project Details</span>
+    </div>
+   </div>
+   <br><br>
+   <div class="row">
+    <div class="col-lg-12 box">
+        <div class="emp-info">
+            Project : {{projecttime.project[0].projectname}}
+          </div>
+          <div class="emp-info ">
+            Client : {{projecttime.project[0].client}}
+          </div><br>
+          <div class="emp-info alter-div">
+            Currency : {{projecttime.project[0].currency}}
+          </div>
+          <div class="emp-info alter-div">
+            Project Type : {{projecttime.project[0].type}}
+          </div><br>
+          <div class="emp-info">
+            Estimated Hours : {{projecttime.project[0].estimate}}
+          </div>
+          <div class="emp-info ">
+            Status : {{projecttime.project[0].status}}
+          </div><br>
+          <div class="emp-info alter-div">
+            Start Date : {{projecttime.project[0].fromdate | date}}
+          </div>
+          <div class="emp-info alter-div">
+            End Date : {{projecttime.project[0].todate | date}}
+          </div><br>
+          <div class="emp-info ">
+            Description : {{projecttime.project[0].prjdes}}
+          </div>
+          <div class="emp-info"></div>
+      </div>
+  
+      <div class="row"> 
+          <div style="display: both" class="col-md-12">
+          <span style="font-weight:500;padding-left: 20px;">Tasks</span>
+          </div>
+         </div><br><br>
+      <div class="col-lg-12">
+          <table  class="table">
+              <thead class="active">
+                  <tr>
+                   <th>Name</th>
+                   <th>Estimated Hours</th> 
+                   <th>Actual Hours</th>
+                  </tr> 
+                   </thead>
+                  <tbody *ngFor="let data of task_options;let i = index ">
+                        <tr>                                                    
+                          <td >{{data.official[0].taskname}}</td>
+                         
+                          <td >{{data.official[0].estimatedhour}}</td>
+                          
+                          <td >{{data.official[0].taskname}}</td>
+                        </tr>                        
+                  </tbody>                                             
+                 </table>
+               
+        </div>
+     
+      </div>
+   
+   
+   </div>
+   -->
+ 
+ 
+ 
+ 
+ 
+ 

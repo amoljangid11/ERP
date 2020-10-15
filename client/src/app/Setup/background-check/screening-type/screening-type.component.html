@@ -1,0 +1,122 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show" >
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Background Check </li>
+        <li class="breadcrumb-item ">Configuration </li>
+        <li class="breadcrumb-item active">Screening Type</li>
+      </ol>
+   </div> 
+  
+    <div >
+   <span style="font-weight:500">Screening Type</span>
+          <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button> 
+  </div><br><br>
+  
+   <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+  </div>
+    <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+    </div>
+    
+  <div class="row">
+   <div class="col-lg-12">
+     <div>
+            <table  class="table table-bordered table-striped table-sm">
+              <thead class="bg-success">
+       <tr>
+            <th>Action</th>
+            <th>Screening Type</th>
+            <th>Description</th>
+            
+       </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let bu of screen;let i = index " >
+          <td>
+              
+            <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(bu)"></i>
+            <i (click)="edit(bu);show = !show;hide=!hide"  title="Edit" class="fa fa-pencil-square-o"></i>
+            <i (click)="delete(bu,i)" title="Delete" class="fa fa-trash-o"></i></td>
+              
+                    
+          <td >{{bu.screeningtype[0].screentype}}</td>
+          <td>{{bu.screeningtype[0].description}}</td> 
+          
+        </tr>                                 
+      </tbody>                        
+      </table>
+     </div>
+    </div>
+  </div>
+</div>
+  
+<form class="form-horizontal" [formGroup]="form">
+   <div *ngIf= "show" >
+     <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Background Check </li>
+        <li class="breadcrumb-item ">Configuration </li>
+        <li class="breadcrumb-item active">Screening Type</li>
+        <li class="breadcrumb-item active">Add</li>
+      </ol>
+   </div><br>
+  
+   <div class="row">
+    <div class="col-md-3">
+
+      <md-input-container class="example-full-width">
+          
+          <label class="control-label">Screening Type</label><small>*</small>
+          <br><br>
+         <input mdInput [(ngModel)]="screens.screeningtype[0].screentype" id="screentype"  class="form-control" formControlName="screentype" required>
+         <md-error >
+          Please Enter Screening Type.
+          </md-error>
+      </md-input-container>
+    </div>
+  
+  <div class="col-md-3">
+    <md-input-container class="example-full-width">
+      <label class="control-label">Description</label>
+      <textarea [(ngModel)]="screens.screeningtype[0].description" mdInput minlength="3" maxlength="200" id="desc"  class="form-control" formControlName="desc" ></textarea>
+      <md-hint align="end">200 characters remaining (200 maximum)</md-hint>
+      <md-error >
+          Please Enter Characters Length Between 3 to 200.
+          </md-error>
+   </md-input-container>    
+       
+  </div>
+  
+   <div  class="col-md-12" style="margin-top: 5%">
+      <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(screens);show=!show" [disabled]="!form.valid"> Save</button>
+      <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(screens);show=!show;updatebutton=!updatebutton;"> Update</button>
+      <button class="btn btn-outline-warning btn-sm" (click) = "cancel(screens);show=!show"> Cancel </button> 
+    </div>
+  
+  </div>
+  </div>
+  </form>
+  </div> 
+  
+  
+  
+  <md2-dialog #deptModal>
+    <md2-dialog-title>Screening Type</md2-dialog-title>
+    <div class=" row box">
+      <div class="emp-info">
+          Screening Type : {{screens.screeningtype[0].screentype}}
+      </div>
+      <div class="emp-info">
+          Description    : {{screens.screeningtype[0].description}}
+      </div>
+    </div>
+  <md2-dialog-footer>
+      <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+  </md2-dialog-footer>
+</md2-dialog>
+  
+  

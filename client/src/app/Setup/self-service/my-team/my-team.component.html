@@ -1,0 +1,299 @@
+<div class="col-md-12 card card-outline-info" style="height:100%;" >
+    <div *ngIf = "!this.show" >
+    <div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Self Service</li>
+        <li class="breadcrumb-item active">My Team</li>
+      </ol>
+    </div>
+  <div>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm" *ngIf="this.getuser.utype!='Team Lead' && this.getuser.utype!='employee'" (click) = "showreport();">My Team Report</button>
+       </div><br><br>
+    
+    <div class="row">
+      <div  style="padding:1% 0% 1% 2% " class="col-md-3" *ngFor="let data of this.objee" >
+          <div class="" id="content" *ngIf="data._id!=this.getuser.employee_OId" >
+        <div class="" id="content">
+          <div class="" style="padding:1% 1% 1% 3% ">
+            <div style="padding: 1% 1% 0% 1%">
+                <i class="fa fa-ellipsis-v" style="float:right" data-toggle="dropdown" aria-hidden="true"></i>
+                <div  class="dropdown-menu card-success">
+                    <div class="btn dropdown-item " (click)="edit(data);show=!show" >Edit</div>        
+                     <div class="dropdown-divider"></div>
+                     <div class="btn dropdown-item "(click)="view(data);show=!show" >View</div>  
+                 </div>
+    
+                 <div class="" id="main" style="border-style:hidden;height: auto;width: auto;">
+                  <img class="imageClass" style="float:left;" src="./assets/Images/employee.jpg">
+                  <h5 class="card-title" style="font-size:19;color: black;">  {{data.official[0].firstname}} {{data.official[0].lastname}}</h5>
+                  <h6 style="font-size: 13.5;color: black">  {{data.official[0].role}}</h6>
+                  <h6 style="font-size: 11"> {{data.official[0].departments}}</h6>
+            
+            </div>
+    
+          <br>
+            <div class="" id="child" style="border-style:hidden;height: auto;width: auto;">
+              <span><p> <img class="" style="float:left;height:18px;width: 15px;" src="./assets/Images/user.png"> &nbsp;<a class="card-text" (click)="view(data);show=!show" style="color:cornflowerblue; font-size: 12px;">{{data.official[0].username}}</a></p></span>
+                <span><p> <img class="" style="float:left;height:18px;width: 15px;" src="./assets/Images/email.png"> &nbsp;<a class="card-text" (click)="view(data);show=!show" style="color:cornflowerblue;font-size: 12px;">{{data.official[0].email}}</a></p></span>
+                <span><p> <img class="" style="float:left;height:18px;width: 15px;" src="./assets/Images/call.png"> &nbsp;<a class="card-text" (click)="view(data);show=!show" style="color:cornflowerblue;font-size: 12px;">{{data.official[0].phonenumber}}</a></p></span>
+              
+             </div>
+                <p class="card-text"><small class="text-muted"></small></p>
+              </div>
+              </div>
+              </div>
+              </div>
+              </div>
+              </div>
+       </div>       
+    
+      <div id="off" style="display: none">
+        <div>
+            <ol class="breadcrumb row bg-primary">
+              <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+              <li class="breadcrumb-item ">Self Service</li>
+              <li class="breadcrumb-item ">My Team</li>
+              <li class="breadcrumb-item active">Add</li>
+              
+            </ol>
+            <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) ="cancel();show=!show" >Back</button>
+        </div>
+        <div style="overflow: auto">
+          <div class="row" >
+            <div class="" style="width:17%;">
+              <ul class="nav nav-pills nav-pills flex-column">
+                <li class="nav-item "  (click)="official()" >
+                  <a class="nav-link">Official</a>
+                </li>
+                <li class="nav-item" (click)="personal()">
+                  <a class="nav-link ">Personal</a>
+                </li>
+                <li class="nav-item" (click)="cont()">
+                  <a class="nav-link ">Contact</a>
+                </li>
+                <li class="nav-item"  (click)="skills()">
+                  <a class="nav-link ">Skills</a>
+                </li>
+                <li class="nav-item" (click)="jobHistory()">
+                  <a class="nav-link ">JobHistory</a>
+                </li>
+                <li class="nav-item" (click)="experience()">
+                  <a class="nav-link ">Experience</a>
+                </li>
+                <li class="nav-item" (click)="education()">
+                  <a class="nav-link ">Education</a>
+                </li>
+                <li class="nav-item" (click)="trcer()">
+                  <a class="nav-link ">Training & Certifications</a>
+                </li>
+                <li class="nav-item"  (click)="adetails()">
+                  <a class="nav-link ">Additional Details</a>
+                </li>
+              </ul>
+            </div>
+            <div class="" style="width:83% ;">
+              <div>
+                <router-outlet name="fourthchild"></router-outlet>
+              </div>
+            </div>
+            </div>
+            </div>
+        </div>
+    </div>
+        <div class="col-md-12 card card-outline-info" style="height:100%;" >
+  
+    <div  id="rep" style="overflow: auto;display: none"> 
+        <div>
+          <ol class="breadcrumb row bg-primary">
+            <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+            <li class="breadcrumb-item ">Self Service</li>
+            <li class="breadcrumb-item ">My Team</li>
+            <li class="breadcrumb-item active">My Team Report</li>
+          </ol>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) ="back();show=!show" >Back</button><br><br>
+        <div class="box2" style="float: right;margin:0% 1% 0% 0%">
+          <img class="imageClass1" src="./assets/Images/multi.png"/>&nbsp;My Team Count :{{countall}} &nbsp;
+          <img class="imageClass1" src="./assets/Images/pdf.png"/>&nbsp;<i style="color: #1565c0" (click)="downloadPDF()">Export to PDF</i> &nbsp;
+          <img class="imageClass1" src="./assets/Images/excel.ico"/>&nbsp;<i style="color: #1565c0" (click)="downloadExcel('tbl', 'employeedata')" >Export to Excel</i>
+        </div>
+        </div><br><br>
+     
+    
+      <div class="display_emp" >
+          <label>Generate Custom Report</label><br><br>
+        <div class="row" >
+      <md-input-container class="example-full-width">
+          <input mdInput placeholder="Employee ID" (input)="teamex(team);" [(ngModel)]="this.employeeid">
+      </md-input-container><br><br><br>
+     
+      <md-input-container class="example-full-width">
+          <input mdInput placeholder="Employee Name" [(ngModel)]="this.name">
+      </md-input-container><br><br><br>
+    
+      <md-input-container class="example-full-width">
+          <input mdInput placeholder="Email ID" [(ngModel)]="this.email">
+      </md-input-container><br><br><br><br>
+    
+      
+      <md-input-container class="example-full-width">
+        <input mdInput placeholder="Job Title" [(ngModel)]="this.jobtitle">
+    </md-input-container>
+          <!-- <md-select placeholder="Job Title" [(ngModel)]="this.jobtitle">
+         <md-option [value]="this.jobtitle"  required>
+          {{this.jobtitle}}
+          </md-option>
+          </md-select> -->
+          <br><br><br>
+    
+  
+          <md-input-container class="example-full-width">
+            <input mdInput placeholder="Position" [(ngModel)]="this.position">
+        </md-input-container>
+          <!-- <md-select placeholder="Position" [(ngModel)]="this.position">
+          <md-option   [value]="this.position" required>
+          {{this.position}}
+          </md-option>
+          </md-select> -->
+          <br><br><br>
+    
+  
+          <md-input-container class="example-full-width">
+            <input mdInput placeholder="User Status" [(ngModel)]="this.status">
+        </md-input-container>
+                <!-- <md-select placeholder="User Status" [(ngModel)]="this.status">
+              <md-option   [value]="this.status" required>
+              {{this.status}}
+              </md-option>
+              </md-select> -->
+              <br><br>
+              <div  class="col-md-12" style="margin-top: 5%">
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="downloadExcel('tbl', 'team');show=!show"> GENERATE REPORT</button>
+                <button type="reset" class="btn btn-outline-primary btn-sm" (click)="reset();">Reset</button>
+                <!-- <button type="reset" value="Reset">Reset</button> -->
+              </div>
+                </div>
+                </div>
+    
+    
+                <div class= "row"  style="overflow:auto">
+                  <!-- <md-select placeholder="Employee">
+                    <md-option> -->
+                        &nbsp;&nbsp;<i class="fa fa-arrow-down" aria-hidden="true"  (click)="displaybox();"></i>&nbsp;<label>Employee</label> 
+                    <!-- </md-option>
+                  </md-select> -->
+                 
+                  <div id="chkb" class="col-md-12 box" style="float: right;display: none;">
+                      <!-- <table class="col-md-12 ">
+                        <tbody>
+                          <tr class="row">
+                              <td class="box1 col-md-3" *ngFor ="let bu of itemList">
+                                <input type="checkbox" (change)="checkIfAllSelected();" [(ngModel)]="bu.selected" [value]="bu.selected">{{bu.name}}
+                              </td>
+                          </tr>
+                        </tbody>
+                      </table> -->
+                      <angular2-multiselect [data]="itemList"  [(ngModel)]="team.Empteam" [settings]="settings" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
+                      </angular2-multiselect>
+  
+                      <div><br>
+                          <button type="reset" *ngIf="add" class="btn btn-outline-success btn-sm" (click)="save(team);">Apply</button>
+                          <button class="btn btn-outline-success btn-sm" *ngIf="!add" (click)="update1(team);" >Apply</button>   
+                          <i class="btn btn-outline-warning btn-sm" (click)="cancel1();">Cancel</i>
+                      </div>
+                     <br>
+                    </div>
+               
+                  <br><br>
+  
+  
+                  <!-- <li *ngFor='let sub of itemList'>
+                    <div class="checkbox">
+                   <input id="checkbox1"  type="checkbox" [(ngModel)]="sub.checked" [value]="sub.name">
+                   <label for="checkbox1">{{sub.name}}</label>
+                   </div>
+           
+                 </li>  -->
+           
+                 <!-- <div  class="col-md-6" style="float: right;">
+                   <md-select  placeholder="Employee">
+                  <md-option multiple *ngFor ="let sub of itemList">
+                  <input type="checkbox1" type="checkbox" [(ngModel)]="sub.checked" [value]="sub.name">
+                   {{sub.name}}
+                  </md-option>
+                  </md-select>
+                  </div> -->
+           
+                 <!-- <pre>Selected names: <span *ngFor="let itemList of checked()">{{ itemList.name}}</span></pre> -->
+                       
+            
+                    <div class="col-md-12" id="customers" style="float: right;">
+                        <table id="tbl" class="table table-bordered table-striped table-sm " >
+                            <thead class="bg-info">
+                              <tr>
+                               <!-- <th *ngFor="let itemList of checked()">{{ itemList.name}}</th> -->
+                                <th>Employee Id</th>
+                                <th>Employee</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th>Role</th>
+                                <th>Date of Joining</th>
+                                <th>Job Title</th>
+                                <th>Position</th>
+                                <th>Business Unit</th>
+                                <th>Department</th>
+                                <th>Employment Status</th>
+                                <th>Work Phone</th>
+                                <th>Mode of Entry(Other)</th>
+                                <th>Referred By</th> 
+                                <th>Date of Leaving</th>
+                                <th>Holiday Group</th>
+                               
+                                <th>Background Check Status</th>
+                                
+                               
+                          </tr>
+                            </thead>
+                             <tbody  style="overflow:auto">
+                              <tr *ngFor="let tm of objee">
+                                <!-- <tr> -->
+                              <!-- <td *ngFor="let itemList of checked()">{{ itemList.value}}</td> -->
+                              <td>{{tm.official[0].username}}</td>
+                               <td>{{tm.official[0].firstname}} {{tm.official[0].lastname}}</td> 
+                              <td>{{tm.official[0].email}}</td>
+                              <td>{{tm.official[0].phonenumber}}</td>
+                              <td>{{tm.official[0].role}}</td>
+                              <td>{{tm.official[0].dateofjoing | date}}</td>
+                              <td>{{tm.official[0].jobtitle }}</td>
+                              <td>{{tm.official[0].position}}</td>
+                              <td>{{tm.official[0].businessunit}}</td>
+                              <td >{{tm.official[0].departments}}</td>
+                              <td>{{tm.official[0].status}}</td>
+                              <td>{{tm.official[0].phonenumber}}</td>
+                              <td>{{tm.official[0].modeofemp}}</td>
+                              <td>{{tm.official[0].referid}}</td>
+                              <td>{{tm.official[0].doleaving}}</td>
+                              <td>{{tm.official[0].group}}</td>
+                              <td>{{tm.official[0].extension}}</td>
+                              <td>{{tm.official[0].backgroundcheck}}</td>
+                              <td>{{this.pay}}</td>
+                              <td>{{this.sal}}</td>
+                              <!-- <td>Active</td> -->
+                          <!-- </tr> -->
+                            </tbody> 
+                          </table> 
+                          
+                     </div>
+                    </div>
+                    
+                          
+    
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    

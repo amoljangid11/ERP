@@ -1,0 +1,608 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+   
+  <div *ngIf = "!show">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Background </i></li>
+        <li class="breadcrumb-item ">Configuration </li>
+        <li class="breadcrumb-item active"> Agencies</li>
+      </ol>
+   </div> 
+  
+ <div>
+   <span style="font-weight:500"> Agencies</span>
+          <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button> 
+  </div><br><br>
+  
+  <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+    {{ message }}   
+  </div>
+<div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+    {{ message }}
+  </div>
+    
+  <div class="row">
+   <div class="col-lg-12">
+     <div>
+            <table  class="table table-bordered table-striped table-sm">
+              <thead class="bg-success">
+       <tr>
+        <th>Action</th>
+        <th>Agency Name</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Website Url</th>
+        <th>User ID</th>
+       
+       </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let bu of bunit;let i = index " >
+          <td>
+            <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(bu)"></i>&nbsp;&nbsp;
+            <i (click)="edit(bu);show=!show;"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;
+            <i (click)="delete(bu,i)" title="Delete" class="fa fa-trash-o"></i>
+          </td>
+  
+  
+  <td >{{bu.agenciesunits[0].agencyname}}</td>
+  <td>{{bu.agenciesunits[0].phone}}</td>
+  <td >{{bu.agenciesunits[0].address}}</td>
+  <td>{{bu.agenciesunits[0].url}}</td>
+    
+  </tr>  
+                                       
+      </tbody>                        
+      </table>
+     </div></div>
+  </div></div>
+  
+  
+   <div *ngIf= "show" style="overflow:auto">
+     <div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Background </li>
+        <li class="breadcrumb-item "> Agencies </li>
+        <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+      </ol>
+   </div><br>
+ 
+      
+   <div class="row">
+
+  <div class="col-md-3">
+      
+          <md-input-container class="example-full-width">
+              <label>Agency Name </label><small>*</small>
+              <input mdInput [(ngModel)]="bunits.agenciesunits[0].agencyname"  [value]="agencyname" required minlength="5" maxlength="30">
+              <md-hint>Characters length between 5 to 30</md-hint>
+              <md-error>
+                Please enter Agency Name.
+                </md-error> 
+          </md-input-container>
+          </div>
+
+
+  <div class="col-md-3">
+      <md-input-container class="example-full-width">  
+              <label>Url </label><small>*</small>  
+              <input mdInput [(ngModel)]="bunits.agenciesunits[0].url" class="form-control" [value]="url" required pattern="https?://.+">
+              <md-error >
+               Must be a Valid URL.
+                </md-error>
+          </md-input-container>  
+  </div>
+
+  <div class="col-md-3">
+   <md-input-container class="example-full-width">
+          <label>PrimaryPhone </label><small>*</small>     
+          <input mdInput [(ngModel)]="bunits.agenciesunits[0].primaryphone" class="form-input" type="phone"  pattern="[0-9]{10}"  [value]="primaryphone" maxlength="10" required>
+          <md-error >
+            Please enter valid 10 digit PrimaryPhone Number.
+            </md-error>
+      </md-input-container>
+  </div>
+
+<div class="col-md-3">
+  <md-input-container class="example-full-width"> 
+      <label>SecondaryPhone </label>
+      <input mdInput [(ngModel)]="bunits.agenciesunits[0].secondaryphone" [value]="secondaryphone" class="form-input" type="phone"  pattern="[0-9]{10}" maxlength="10">
+      <md-error >
+          Please enter valid 10 digit Number.
+          </md-error>
+  </md-input-container>
+</div>
+
+<div class="col-md-3">
+<br><br>
+<label>Screening Type </label><small>*</small> 
+<md-select [(ngModel)]="bunits.agenciesunits[0].screeningtypes" >
+    <input type="search" [(ngModel)]="searchTexts" placeholder="Search ST">
+   <md-option *ngFor="let b of bun | filter : searchTexts" (click)="selectbusiness(b,bunits,screeningtypes)" [value]="b.screeningtype[0].screentype">
+   {{b.screeningtype[0].screentype}}
+  
+   </md-option>
+   <md-option *ngFor="let s of screeningtype"  [value]="s">
+      {{s}}
+      </md-option>
+
+   
+   </md-select><br>
+   <p class="btn btn-sm btn-success" data-toggle="modal" data-target="#basics">Add</p> 
+</div>
+
+<div class="col-md-3"> 
+  <md-input-container class="example-full-width"> 
+      <label>Address </label><small>*</small>    
+      <textarea mdInput [(ngModel)]="bunits.agenciesunits[0].address" [value]="address" required ></textarea>
+      <md-error >
+          Please enter Address.
+          </md-error>
+  </md-input-container>
+</div>
+
+
+
+<div class="col-md-4">
+<md-select placeholder="User Id"  [(ngModel)]="bunits.agenciesunits[0].userid">
+    <!-- <input type="search" [(ngModel)]="searchTextcat" placeholder="Search"> -->
+    <md-option *ngFor="let con of response | filter: searchTextcat">
+    </md-option>
+  
+<md-option *ngFor="let asset of assu;let i=index" [value]="bunits.agenciesunits[0].userid">
+    {{bunits.agenciesunits[0].userid}}
+</md-option>
+</md-select>
+</div>
+   
+   </div>
+  <br>
+
+
+
+
+
+   <h3>Poc Details</h3>
+   <br>
+   <div class="box">
+
+      <ul class="nav nav-tabs" role="tablist">
+          <br>
+          <li class="nav-item"><br>
+            <a class="nav-link active" href="#contact1" role="tab" data-toggle="tab">Contact1</a><br>
+          </li>
+          <br>
+          <li class="nav-item"><br>
+            <a class="nav-link" href="#contact2" role="tab" data-toggle="tab">Contact2</a><br>
+          </li>
+          <br>
+          <li class="nav-item"><br>
+            <a class="nav-link" href="#contact2" role="tab" data-toggle="tab">Contact3</a><br>
+          </li>
+          <br>
+      </ul>
+
+
+      <!-- Tab panels -->
+         <div class="tab-content">
+       <!-- Tab contact1 -->
+         <div role="tabpanel" class="tab-pane fade show active" id="contact1">
+   <div class="row">
+      <div class="col-md-4">
+              <md-input-container class="example-full-width">
+                  <label>FirstName </label><small>*</small>       
+                  <input mdInput [(ngModel)]="bunits.agenciesunits[0].firstname" value="firstname" required>
+                  <md-error >
+                    Please enter First Name.
+                    </md-error>
+              </md-input-container>
+      </div>
+      
+      <div class="col-md-4">
+          <md-input-container class="example-full-width"> 
+              <label>LastName </label><small>*</small>    
+              <input mdInput [(ngModel)]="bunits.agenciesunits[0].lastname" value="lastname" required>
+              <md-error >
+                Please enter Last Name.
+                </md-error>
+          </md-input-container>
+    </div>
+  <div class="col-md-4">
+      <md-input-container class="example-full-width">
+          <label>Phone </label><small>*</small>    
+          <input mdInput [(ngModel)]="bunits.agenciesunits[0].phone" class="form-input" numberOnly  pattern="[0-9]{10}" value="phone" required>
+          <md-error >
+            Please enter valid 10 digit Phone Number.
+            </md-error>
+      </md-input-container>
+ </div>
+<br>
+
+<div class="col-md-4">
+  <md-input-container class="example-full-width"> 
+      <label>Email </label><small>*</small>     
+      <input mdInput [(ngModel)]="bunits.agenciesunits[0].email" value="email" type="email"  pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+      <md-error >
+        Please enter Valid Email.
+        </md-error>
+  </md-input-container>
+</div>
+
+<div class="col-md-4">
+  <md-input-container class="example-full-width">  
+      <label>Location </label><small>*</small>   
+      <input mdInput [(ngModel)]="bunits.agenciesunits[0].location" value="location" required>
+      <md-error >
+        Please enter Location.
+        </md-error>
+  </md-input-container>
+</div>
+
+<div class="col-md-4" >
+  <label>Country </label><small>*</small> 
+  <br>
+  <md-select [(ngModel)]="bunits.agenciesunits[0].countryname"  >
+    
+  <input type="search" [(ngModel)]="searchCoun" placeholder="Select Country">
+   <md-option *ngFor="let b of dat | filter : searchCoun" (click)="selectcounfetch(b,cons,countries); select(co.countryal);" [value]="b.countr[0].countryname">
+    {{b.countr[0].countryname}}
+    
+    </md-option>
+  </md-select><br>
+  <p class="btn btn-sm btn-success" data-toggle="modal" data-target="#basic">Add</p>
+</div>
+  
+<div class="col-md-4" >
+  <label>State </label><small>*</small> 
+  <br>
+   <md-select [(ngModel)]="bunits.agenciesunits[0].statename">
+      <input type="search" [(ngModel)]="searchSta" placeholder="Search state">
+      <md-option *ngFor="let s of sta | filter : searchSta" (click)="selectstatefetch(s,stas,states)" [value]="s.stat[0].statename">
+              {{s.stat[0].statename}}
+      </md-option>
+  </md-select><br>
+  <p class="btn btn-sm btn-success" data-toggle="modal" data-target="#basic1">Add</p> 
+</div>
+
+<div class="col-md-4" >
+  <label>City </label><small>*</small>
+  <br>
+<md-select [(ngModel)]="bunits.agenciesunits[0].city">
+  
+  <input type="search" [(ngModel)]="searchCit" placeholder="Search city">
+ <md-option *ngFor="let c of ci | filter : searchCit" (click)="selectcityfetch(c,citys,cityes)" [value]="c.cit[0].cityname">
+    {{c.cit[0].cityname}}
+</md-option>
+</md-select><br>
+<p class="btn btn-sm btn-success" data-toggle="modal" data-target="#basic2">Add</p> 
+</div>
+
+
+
+<div class="col-md-4" >
+  <label>Contact Type </label><small>*</small>
+  <md-select  [(ngModel)]="bunits.agenciesunits[0].contacttype2">
+      <md-option *ngFor="let con of contacttype2" [value]="con.name">
+      {{con.name}}
+      </md-option>
+  </md-select><br>
+</div>
+</div>
+</div>
+<!-- Tab contact2 -->
+<div role="tabpanel" class="tab-pane fade" id="contact2">
+  <div class="row">
+      <div class="col-md-4">
+          <md-input-container class="example-full-width">
+              <label>FirstName </label><small>*</small>       
+              <input mdInput [(ngModel)]="bunits.agenciesunits[0].firstname" value="firstname" required>
+              <md-error >
+                Please enter First Name.
+                </md-error>
+          </md-input-container>
+  </div>
+  
+  <div class="col-md-4">
+      <md-input-container class="example-full-width"> 
+          <label>LastName </label><small>*</small>    
+          <input mdInput [(ngModel)]="bunits.agenciesunits[0].lastname" value="lastname" required>
+          <md-error>
+            Please enter Last Name.
+            </md-error>
+        </md-input-container>
+</div>
+<div class="col-md-4">
+  <md-input-container class="example-full-width">
+      <label>Phone </label><small>*</small>    
+      <input mdInput [(ngModel)]="bunits.agenciesunits[0].phone" class="form-input" type="phone"  pattern="[0-9]{10}" value="phone" required>
+      <md-error >
+        Please enter valid 10 digit Phone Number.
+        </md-error>
+  </md-input-container>
+</div>
+<br>
+
+<div class="col-md-4">
+<md-input-container class="example-full-width"> 
+  <label>Email </label><small>*</small>     
+  <input mdInput [(ngModel)]="bunits.agenciesunits[0].email" value="email" required >
+  <md-error >
+    Please enter Valid Email.
+    </md-error>
+</md-input-container>
+</div>
+
+<div class="col-md-4">
+<md-input-container class="example-full-width">  
+  <label>Location </label><small>*</small>   
+  <input mdInput [(ngModel)]="bunits.agenciesunits[0].location" value="location" required>
+  <md-error >
+    Please enter Location.
+    </md-error>
+</md-input-container>
+</div>
+
+<div class="col-md-4" >
+<label>Country </label><small>*</small> 
+<br>
+<md-select [(ngModel)]="bunits.agenciesunits[0].country">
+<input type="search" [(ngModel)]="searchCountry" placeholder="Search country">
+
+<md-option *ngFor="let b of dat | filter : searchCountry" (click)="selectcounfetch(b,cons,countries)" [value]="b.countr[0].countryname">
+{{b.countr[0].countryname}}
+</md-option>
+</md-select><br>
+</div>
+
+<div class="col-md-4" >
+<label>State </label><small>*</small>
+<br> 
+<md-select [(ngModel)]="bunits.agenciesunits[0].state">
+  <input type="search" [(ngModel)]="searchState" placeholder="Search state">
+
+  <md-option *ngFor="let s of sta | filter : searchState" (click)="selectstatefetch(s,stas,states)" [value]="s.stat[0].statename">
+          {{s.stat[0].statename}}
+  </md-option>
+</md-select><br>
+</div>
+
+<div class="col-md-4" >
+<label>City </label><small>*</small>
+<br>
+<md-select [(ngModel)]="bunits.agenciesunits[0].city">
+
+<input type="search" [(ngModel)]="searchCity" placeholder="Search city">
+
+<md-option *ngFor="let c of ci | filter : searchCity" (click)="selectcityfetch(c,citys,cityes)" [value]="c.cit[0].cityname">
+{{c.cit[0].cityname}}
+</md-option>
+</md-select><br> 
+</div>
+
+
+
+<div class="col-md-4" >
+<label>Contact Type </label><small>*</small>
+<md-select  [(ngModel)]="bunits.agenciesunits[0].contacttype2">
+  <md-option *ngFor="let con of contacttype2" [value]="con.name">
+  {{con.name}}
+  </md-option>
+</md-select><br>
+</div> 
+</div>
+</div>
+</div>
+<br><br><br><br>
+
+
+<div class="col-md-4" >
+  <label>Contact Type </label><small>*</small>
+<md-select [(ngModel)]="bunits.agenciesunits[0].contacttype3">
+  
+  <input type="search" [(ngModel)]="searchText" placeholder="Search role">
+
+<md-option *ngFor="let con of contacttype3 | filter: searchText" [value]="con.name">
+ {{con.name}}
+ </md-option>
+</md-select>
+
+
+</div>
+  
+  <div  class="col-md-12" style="margin-top: 5%">
+      <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(bunits);show=!show"> Save</button>
+      <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(bunits);show=!show;updatebutton=!updatebutton;"> Update</button>
+  
+      <button class="btn btn-outline-warning btn-sm" (click) = "cancel(bunits);show=!show"> Cancel </button>
+    </div>
+
+  
+  </div>
+  
+
+</div>
+
+ 
+<div class="modal fade" id="basic" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Country</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          
+        </div>
+        
+        
+        <div class="modal-body">
+            <div style="margin-left: 2%;" class="row">
+              <md-input-container class="example-full-width">
+              <input  mdInput placeholder="Other Country" [(ngModel)]="cons.countr[0].countryname" >
+              </md-input-container><br><br><br>
+            </div>
+            <div style="margin-left: 2%;"  class="row">
+              <md-input-container >
+              <input mdInput placeholder="Other countrycode"  [(ngModel)]="cons.countr[0].countrycode">
+              </md-input-container><br><br><br>
+          </div>
+          
+        </div>
+
+         <div class="modal-footer">
+          
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="save1(cons);">Save changes</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="basic1" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">State</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        
+        </div>
+        
+        
+        <div class="modal-body" >
+          <div style="margin-left: 2%;" class="row">
+              <div class="col-6">
+                  <div class="form-group">
+                      <label>Country</label>
+                      <select class="form-control" [(ngModel)]="cons.countr[0].countryname" placeholder="Select">
+                        <option *ngFor="let b of dat | filter : searchTexts" (click)="selectcounfetch(b,cons,countries)" [value]="b.countr[0].countryname"> {{b.countr[0].countryname}}</option>
+                       
+                      </select>
+                    </div>
+               </div>
+           <div class="col-md-6">
+            <md-input-container class="example-full-width">
+              <input  mdInput placeholder="Statename" [(ngModel)]="stas.stat[0].statename" >
+              </md-input-container><br><br><br>
+           </div>
+         
+          </div>
+        </div>
+
+         <div class="modal-footer">
+          
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="save2(stas)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" id="basic2" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">City</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+         
+        </div>
+
+   <div class="modal-body">
+          <div style="margin-left: 2%;" class="row">
+              <div class="col-6">
+                  <div class="form-group">
+                      <label>Country</label>
+                      <select class="form-control" [(ngModel)]="cons.countr[0].countryname" placeholder="Select">
+                        <option *ngFor="let b of dat | filter : searchTexts" (click)="selectcounfetch(b,cons,countries)" [value]="b.countr[0].countryname"> {{b.countr[0].countryname}}</option>
+                       
+                      </select>
+                    </div>
+               </div>
+               <div class="col-6">
+                  <div class="form-group">
+                      <label>State</label>
+                      <select class="form-control" [(ngModel)]="stas.stat[0].statename" placeholder="Select">
+                        <option *ngFor="let s of sta | filter : searchTexts" (click)="selectstatefetch(s,stas,states)" [value]="s.stat[0].statename"> {{s.stat[0].statename}}</option>
+                       
+                      </select>
+                    </div>
+               </div>
+               <div class="col-6">
+                  <div class="form-group">
+            <md-input-container class="example-full-width">
+            <input  mdInput placeholder="Other cityname" [(ngModel)]="citys.cit[0].cityname" >
+            </md-input-container><br><br><br>
+          </div>
+          </div>
+        </div>
+        </div>
+
+         <div class="modal-footer">
+          
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="save3(citys)">Save changes</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+     <div class="modal fade" id="basics" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title" id="myModalLabel">screeningtype</h4>
+        </div>
+        
+        
+        <div class="modal-body">
+            <div style="margin-left: 2%;" class="row">
+              <md-input-container class="example-full-width">
+              <input  mdInput placeholder="screentype" [(ngModel)]="screentype" >
+              </md-input-container><br><br><br>
+            </div>
+            <div style="margin-left: 2%;"  class="row">
+              <md-input-container >
+              <input mdInput placeholder="Description"  [(ngModel)]="description">
+              </md-input-container><br><br><br>
+          </div>
+          
+        </div>
+
+         <div class="modal-footer">
+          
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="savechngscreen()">Save changes</button>
+        </div>
+        
+      </div>
+    </div>
+  </div> 
+</div>
+
+      
+
+<md2-dialog #deptModal>
+    <md2-dialog-title>Agencies</md2-dialog-title>
+    <div class="row box">
+      <div class="emp-info">
+          Agency Name : {{this.bunits.agenciesunits[0].agencyname}}
+      </div>
+      <div class="emp-info">
+          Website Url   : {{this.bunits.agenciesunits[0].url}}
+      </div><br>
+      <div class="emp-info alter-div">
+          Phone Number : {{this.bunits.agenciesunits[0].primaryphone}}
+      </div>
+      <div class="emp-info alter-div">
+          Address   : {{this.bunits.agenciesunits[0].address}}
+      </div><br>
+      <div class="emp-info">
+          Screening Type : {{this.bunits.agenciesunits[0].screeningtypes}}
+      </div>
+      <div class="emp-info">
+      </div>
+    </div>
+  <md2-dialog-footer>
+      <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+  </md2-dialog-footer>
+</md2-dialog>

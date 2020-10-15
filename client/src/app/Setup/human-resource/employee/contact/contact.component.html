@@ -1,0 +1,568 @@
+
+<div class="col-md-12" *ngIf="service.visible" >
+
+
+  <form [formGroup]="xyz">
+  <!-- <div class="col-md-12">
+      <div class="row">
+        <div  style="display: both" class="col-lg-12">
+          <span style="font-weight:500"><b>CONTACT</b></span><br>
+    
+          <md-input-container class="example-full-width" >
+          <input mdInput [(ngModel)]="employee.contact.personalmail"  placeholder="Personal Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" maxlength="50" formControlName="email11" >
+          <md-error>Please Enter Valid Email ID</md-error>
+        </md-input-container><br><br>
+        </div><br><br>
+      </div>
+    </div> -->
+
+    
+    
+    
+    <div class="col-md-12">
+        <!-- <form [formGroup]="abc3"> -->
+      <span><b>PERMANENT ADDRESS</b></span>
+      <div class="col-md-12">
+        <div class="row">
+          <div  class="col-md-4">
+            <md-input-container class="example-full-width">
+              <!-- pattern="^[a-zA-Z0-9 ]*$" -->
+            <textarea mdInput  [(ngModel)]="employee.contact.permanent_address.streetaddress1"   placeholder="Address 1"  maxlength="100" formControlName="peraddress1" required></textarea>
+            <md-error>Please Enter Valid Street Address</md-error>  
+            </md-input-container><br><br><br><br>
+
+            <md-select placeholder="City"  [(ngModel)]="employee.contact.permanent_address.city"  formControlName="city" required>
+                <md-option *ngFor="let ci of datas3" [value]="ci.cityname" >
+                {{ci.cityname}}
+                </md-option>
+                </md-select><br><i style="color: #1565c0" onclick="document.getElementById('cit').style.display='block'" >Add City</i><br><br><br>
+
+                <md-input-container class="example-full-width">
+                    <input mdInput max="10" [(ngModel)]="employee.contact.permanent_address.postalcode"  placeholder="Postal Code" minlength="6" maxlength="10" pattern="[0-9.]+" formControlName="pcode" required >
+                   <md-error>Please Enter 6 Digit Pincode Number</md-error>  
+                  </md-input-container><br><br><br>
+
+          </div>
+          <div class="col-md-4">
+              <md-input-container class="example-full-width">
+                  <!-- pattern="^[a-zA-Z0-9 ]*$" -->
+              <textarea mdInput  [(ngModel)]="employee.contact.permanent_address.streetaddress2"   placeholder="Address 2"  maxlength="100" formControlName="peraddress2"></textarea>
+              </md-input-container><br><br><br><br>
+              <!-- *ngIf="!employee.contact.permanent_address.state" -->
+                  <md-select  [(ngModel)]="employee.contact.permanent_address.state" placeholder="State" formControlName="state" required >
+                      <!-- (click)="select1(st.statename)" -->
+                  <md-option *ngFor="let st of datas2"  [value]="st.statename[0]" >
+                  {{st.statename[0]}}
+                  </md-option>
+                  </md-select>
+          
+                  <!-- <md-select *ngIf="employee.contact.permanent_address.state && employee.contact.permanent_address.city" [(ngModel)]="employee.contact.permanent_address.state" placeholder="State" formControlName="state"  required>
+                      <md-option [value]="statee" >
+                      {{statee}}
+                      </md-option>
+                      </md-select> -->
+                
+                  <br>
+                  <i style="color: #1565c0" onclick="document.getElementById('stat').style.display='block'" >Add State</i><br><br>
+
+           
+          </div>
+          <div class="col-md-4">
+              <md-input-container class="example-full-width">
+                  <!-- pattern="^[a-zA-Z0-9 ]*$" -->
+              <textarea mdInput  [(ngModel)]="employee.contact.permanent_address.streetaddress3"   placeholder="Address 3"  formControlName="peraddress3" maxlength="100"></textarea>
+              </md-input-container><br><br><br><br>
+
+              <md-select placeholder="Country" [(ngModel)]="employee.contact.permanent_address.country" (click)="nullstate(employee.contact.permanent_address.state)" formControlName="country" required>
+                  <!-- (click)="select(co.countryal)" -->
+                <md-option *ngFor="let co of datas1"   [value]="co.countryal" >
+                  {{co.countryal}}
+                  </md-option>
+              </md-select><br>
+             <i style="color: #1565c0" onclick="document.getElementById('count').style.display='block'">Add Country</i><br><br><br>
+
+               
+           
+          </div>
+          <md-checkbox [(ngModel)]="employee.contact.sameaddress" value="employee.contact.sameaddress" (change)="updateAddrs($event,employee)"
+          [indeterminate]="!checked" formControlName="smadd" >
+          Check if permanent and current address are same<br>
+          </md-checkbox><br><br>
+        </div>
+      </div>
+      <div  class="col-md-12">
+        <span><b>CURRENT ADDRESS</b></span>
+        <div class="row" *ngIf="Curreaddshow">
+          <div class="col-md-4">
+            <md-input-container class="example-full-width">
+            <textarea mdInput [(ngModel)]="employee.contact.current_address.streetaddress1"  placeholder="Street Address1" formControlName="peraddress11" required ></textarea>
+            <md-error>Please Enter Valid Street Address</md-error> 
+          </md-input-container><br><br><br><br>
+           
+
+          
+          <md-select [(ngModel)]="employee.contact.current_address.city " placeholder="City"  formControlName="city1" required >
+              <md-option *ngFor="let ci1 of datas3" [value]="ci1.cityname" >
+              {{ci1.cityname}}
+              </md-option>
+              </md-select><br><br><br>
+    
+
+              <md-input-container class="example-full-width">
+                  <input mdInput [(ngModel)]="employee.contact.current_address.postalcode " minlength="6" maxlength="10" pattern="[0-9.]+" placeholder="Postal Code"  formControlName="pcode1" required>
+                 <md-error>Please Enter 6 Digit Pincode Number</md-error>  
+                </md-input-container><br><br><br>
+            
+          </div>
+          <div class="col-md-4">
+             
+              <md-input-container class="example-full-width">
+                  <textarea mdInput [(ngModel)]="employee.contact.current_address.streetaddress2"  placeholder="Street Address2" formControlName="peraddress21" ></textarea>
+                  </md-input-container><br><br><br><br>
+
+                  <!-- <md-input-container class="example-full-width" *ngIf="employee.contact.sameaddress">
+                      <input mdInput [(ngModel)]="employee.contact.current_address.state" placeholder="State" [value]="statee" [readonly]="true" formControlName="state11">
+                  </md-input-container> -->
+                 
+              <md-select [(ngModel)]="employee.contact.current_address.state"  placeholder="State"  formControlName="state1"  required >
+                  <!-- (click)="selectsta(st1.statename)" -->
+                 <md-option *ngFor="let st1 of datas2 ; let i=index "   [value]="st1.statename[0]" >
+                  {{st1.statename[0]}}
+                  </md-option>
+                  </md-select><br><br><br>
+
+           
+          </div>
+          <div class="col-md-4">
+              <md-input-container class="example-full-width">
+                  <textarea mdInput [(ngModel)]="employee.contact.current_address.streetaddress3"  placeholder="Street Address3" formControlName="peraddress31"  ></textarea>
+                  </md-input-container><br><br><br><br>
+
+                  <md-select [(ngModel)]="employee.contact.current_address.country"  placeholder="Country" formControlName="country1" required>
+                      <!-- (click)="selectcou(co1.countryal)" -->
+                    <md-option *ngFor="let co1 of datas1  ; let i=index "   [value]="co1.countryal" >
+                      {{co1.countryal}}
+                      </md-option>
+                      </md-select><br><br><br>
+
+              
+          </div>
+        </div>
+
+        <div class="row" *ngIf="Curreaddhide">
+          <div class="col-md-4">
+            <md-input-container class="example-full-width">
+            <textarea mdInput [(ngModel)]="employee.contact.current_address.streetaddress1"  placeholder="Street Address1" formControlName="peraddress11" [readonly]="true" required ></textarea>
+            <md-error>Please Enter Valid Street Address</md-error> 
+          </md-input-container><br><br><br><br>
+           
+        
+          <md-input-container class="example-full-width">
+            <input mdInput [(ngModel)]="employee.contact.current_address.city"  placeholder="City"  formControlName="city1" [readonly]="true">
+           <!-- <md-error>Please Enter 6 Digit Pincode Number</md-error>   -->
+          </md-input-container><br><br><br>
+
+          <!-- <md-select [(ngModel)]="employee.contact.current_address.city " placeholder="City"  formControlName="city1" required >
+              <md-option *ngFor="let ci1 of datas3" [value]="ci1.cityname" >
+              {{ci1.cityname}}
+              </md-option>
+              </md-select><br><br><br> -->
+    
+
+              <md-input-container class="example-full-width">
+                  <input mdInput [(ngModel)]="employee.contact.current_address.postalcode " minlength="6" maxlength="10" pattern="[0-9.]+" placeholder="Postal Code" [readonly]="true"  formControlName="pcode1" required>
+                 <!-- <md-error>Please Enter 6 Digit Pincode Number</md-error>   -->
+              </md-input-container><br><br><br>
+            
+          </div>
+          <div class="col-md-4">
+             
+              <md-input-container class="example-full-width">
+                  <textarea mdInput [(ngModel)]="employee.contact.current_address.streetaddress2"  placeholder="Street Address2" formControlName="peraddress21" [readonly]="true" ></textarea>
+                  </md-input-container><br><br><br><br>
+
+                  <!-- <md-input-container class="example-full-width" *ngIf="employee.contact.sameaddress">
+                      <input mdInput [(ngModel)]="employee.contact.current_address.state" placeholder="State" [value]="statee" [readonly]="true" formControlName="state11">
+                  </md-input-container> -->
+
+                  <md-input-container class="example-full-width">
+                    <input mdInput [(ngModel)]="employee.contact.current_address.state"  placeholder="State"  formControlName="state1" [readonly]="true">
+                   <!-- <md-error>Please Enter 6 Digit Pincode Number</md-error>   -->
+                  </md-input-container><br><br><br>
+                 
+              <!-- <md-select [(ngModel)]="employee.contact.current_address.state"  placeholder="State"  formControlName="state1"  required >
+                  
+                 <md-option *ngFor="let st1 of datas2 ; let i=index "   [value]="st1.statename[0]" >
+                  {{st1.statename[0]}}
+                  </md-option>
+                  </md-select><br><br><br> -->
+
+           
+          </div>
+          <div class="col-md-4">
+              <md-input-container class="example-full-width">
+                  <textarea mdInput [(ngModel)]="employee.contact.current_address.streetaddress3"  placeholder="Street Address3" formControlName="peraddress31" [readonly]="true" ></textarea>
+                  </md-input-container><br><br><br><br>
+
+                  <!-- <md-select [(ngModel)]="employee.contact.current_address.country"  placeholder="Country" formControlName="country1" required>
+                  
+                    <md-option *ngFor="let co1 of datas1  ; let i=index "   [value]="co1.countryal" >
+                      {{co1.countryal}}
+                      </md-option>
+                      </md-select><br><br><br> -->
+
+                      <md-input-container class="example-full-width">
+                        <input mdInput [(ngModel)]="employee.contact.current_address.country"  placeholder="Country"  formControlName="country1" [readonly]="true">
+                       <!-- <md-error>Please Enter 6 Digit Pincode Number</md-error>   -->
+                      </md-input-container><br><br><br>
+              
+          </div>
+        </div>
+      </div>
+      
+      <span><b>EMERGENCY DETAILS</b></span><br>
+   
+      <div class="col-md-12">
+          <span><b>Emergency Contact1 Details</b></span>
+        <div class="row">
+          <div class="col-md-4">
+            <md-input-container class="example-full-width">
+            <input mdInput  [(ngModel)]="employee.contact.Name1"  placeholder="Name"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" formControlName="name" required>
+            <md-error>Please Enter Name</md-error> 
+          </md-input-container><br><br>
+          </div>
+          <div class="col-md-4">
+              <md-input-container class="example-full-width">
+              <input mdInput  [(ngModel)]="employee.contact.Relation1"  placeholder="Relationship"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" formControlName="relation" required>
+              <md-error>Please Enter Valid Relation With Employee</md-error> 
+            </md-input-container><br><br>
+          </div>
+          <div class="col-md-4">
+              <md-input-container class="example-full-width">
+              <input mdInput  [(ngModel)]="employee.contact.Email1"  placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="email" required>
+              <md-error>Please Enter Valid Email ID</md-error>
+            </md-input-container><br><br>
+            </div>
+        </div>
+        <div class="row">
+       
+          <div class="col-md-4">
+            <md-input-container class="example-full-width">
+            <input mdInput [(ngModel)]="employee.contact.Number1" placeholder="Mobile Number" pattern="[0-9.]+" minlength="10" maxlength="10" formControlName="no" required>
+            <md-error>Please Enter Valid Mobile Number</md-error>
+          </md-input-container><br><br>
+          </div>
+          <!-- <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+              {{ message }}
+            </div> -->
+        </div>
+        <span><b>Emergency Contact2 Details</b></span>
+        <div class="row">
+          
+        <div class="col-md-4">
+          <md-input-container class="example-full-width">
+          <input mdInput  [(ngModel)]="employee.contact.Name2"  placeholder="Name"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" formControlName="name1">
+          <md-error>Please Enter Name</md-error> 
+        </md-input-container><br><br>
+        </div>
+        <div class="col-md-4">
+            <md-input-container class="example-full-width">
+            <input mdInput  [(ngModel)]="employee.contact.Relation2"  placeholder="Relationship"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" formControlName="relation1">
+            <md-error>Please Enter Valid Relation With Employee</md-error> 
+          </md-input-container><br><br>
+          </div>
+          <div class="col-md-4">
+              <md-input-container class="example-full-width">
+              <input mdInput  [(ngModel)]="employee.contact.Email2"  placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="email1">
+              <md-error>Please Enter Valid Email ID</md-error>
+            </md-input-container><br><br>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-md-4">
+          <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="employee.contact.Number2" placeholder="Mobile Number" pattern="[0-9.]+" minlength="10" maxlength="10" formControlName="no1">
+          <md-error>Please Enter Valid Mobile Number</md-error>
+        </md-input-container><br><br>
+        </div>
+        <!-- <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+            {{ message }}
+          </div> -->
+      </div>
+      </div><br><br>
+      <div style="float: right;margin:0% 2% 0% 0%" class="row">
+        <div  class="col-md-12">
+          <button class="btn btn-outline-success btn-sm" (click)="save(employee)" [disabled]="!xyz.valid" >Save</button>
+        </div>
+      </div>
+    </div>
+      </form>
+  
+    
+    
+    <form [formGroup]="abc">
+    <div id="count" class="w3-modal w3-animate-opacity">
+      <div class="w3-modal-content w3-card-4">
+        <header class="w3-container w3-teal bg-primary">
+          <span onclick="document.getElementById('count').style.display='none'"  style="margin-top: -1%;font-weight: 500"
+          class=" w3-display-topright fa fa-times " ></span>
+          <span><b>Add Country</b></span>
+        </header>
+        <div class="w3-container">
+          <div class="col-md-12">
+            <div class="row">
+              <div  style="display: inline-flex;" class="col-md-12">
+                <div class="col-md-6">
+                  <md-input-container>
+                  <input mdInput  [(ngModel)]="country" placeholder="Country" formControlName="countnm"  pattern="[a-zA-Z]+$" >
+                  <md-error *ngIf="abc.controls['countnm'].errors && (abc.controls['countnm'].dirty || abc.controls['countnm'].touched)" [ngStyle]="{'color': 'red'}"> country name is required 
+                    </md-error>
+                  </md-input-container>
+                  <br><br>
+                </div>
+                <div class="col-md-6">
+                    <!-- [ngClass]="{'error': abc.controls['countcd'].errors && !abc.controls['countcd'].pristine}" dividerColor="{{abc.controls['countcd'].errors && !abc.controls['countcd'].pristine ? 'warn' : 'primary'}}" -->
+                  <md-input-container >
+                  <input mdInput  [(ngModel)]="countrycode" placeholder="Country Code" formControlName="countcd">
+                  <!-- <md-error *ngIf="abc.controls['countcd'].errors && (abc.controls['countcd'].dirty || abc.controls['countcd'].touched)" [ngStyle]="{'color': 'red'}"> country code is required 
+                    </md-error> -->
+                  </md-input-container>
+                  <br><br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+          <div class="col-sm-12">
+            <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savecountry(alert,document)" [disabled]="abc.invalid" data-dismiss="model" >Save</button>
+          </div>
+        </footer>
+      </div>
+    </div>
+    </form>
+    
+    <form [formGroup]="abc1">
+    <div id="stat" class="w3-modal w3-animate-opacity">
+      <div class="w3-modal-content w3-card-4">
+        <header class="w3-container w3-teal bg-primary">
+          <span onclick="document.getElementById('stat').style.display='none'"  style="margin-top: -1%;font-weight: 500"
+          class=" w3-display-topright fa fa-times " ></span>
+          <span><b>Add State</b></span>
+        </header>
+        <div class="w3-container">
+          <div class="col-md-12">
+            <div class="row">
+              <div  style="display: inline-flex;" class="col-md-12">
+                <br>
+                <div class="col-md-6">
+                  <br>
+                  <md-select placeholder="Country" [(ngModel)]="countryvalue" formControlName="countnm1" >
+                  <md-option *ngFor="let country of datas1" [value]="country.countryal" >
+                  {{country.countryal}}
+                  </md-option>
+                  </md-select><br>
+                  <!-- <md-hint *ngIf="abc1.controls['countnm1'].errors && (abc1.controls['countnm1'].dirty || abc1.controls['countnm1'].touched)" [ngStyle]="{'color': 'red'}"> country name is required 
+                    </md-hint> -->
+                  <br><br><br><br>
+                </div>
+                <div class="col-md-6">
+                  <md-input-container >
+                  <input mdInput  [(ngModel)]="statename" placeholder="State Name" formControlName="stat"  pattern="[a-zA-Z]+$" >
+                  <md-error *ngIf="abc1.controls['stat'].errors && (abc1.controls['stat'].dirty || abc1.controls['stat'].touched)" [ngStyle]="{'color': 'red'}"> state name is required 
+                    </md-error>
+                  </md-input-container>
+          <br><br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+          <div class="col-sm-12">
+            <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savestate(alert,document)" data-dismiss="model" [disabled]="abc1.invalid" >Save</button>
+          </div>
+        </footer>
+      </div>
+    </div>
+    </form>
+    
+    <form [formGroup]="abc2">
+    <div id="cit" class="w3-modal w3-animate-opacity">
+      <div class="w3-modal-content w3-card-4">
+        <header class="w3-container w3-teal bg-primary">
+          <span onclick="document.getElementById('cit').style.display='none'"  style="margin-top: -1%;font-weight: 500"
+          class=" w3-display-topright fa fa-times " ></span>
+          <span><b>Add City</b></span>
+        </header>
+        <div class="w3-container">
+          <div class="col-md-12">
+            <div class="row">
+              <div  style="display: inline-flex;" class="col-md-12">
+                  <br>
+                <div class="col-md-6"><br>
+             
+                  <md-select placeholder="Country" [(ngModel)]="countries" formControlName="counn">
+              
+                  <md-option *ngFor="let count of datas1"  [value]="count.countryal" >
+                  {{count.countryal}}
+                </md-option>
+              </md-select><br>
+              <!-- <md-error *ngIf="abc2.controls['counn'].errors && (abc2.controls['counn'].dirty || abc2.controls['counn'].touched)" [ngStyle]="{'color': 'red'}"> country name is required 
+                </md-error> -->
+              <br><br>
+              <md-input-container >
+              <input mdInput  [(ngModel)]="cityname" placeholder="City Name" formControlName="citt"  pattern="[a-zA-Z]+$">
+              <md-error *ngIf="abc2.controls['citt'].errors && (abc2.controls['citt'].dirty || abc2.controls['citt'].touched)" [ngStyle]="{'color': 'red'}"> city name is required 
+                </md-error>
+            </md-input-container>
+            
+      <br><br>
+            </div>
+            <div class="col-md-6">
+                <br>
+              <md-select placeholder="State" [(ngModel)]="statevalue" formControlName="statt">
+        
+              <md-option *ngFor="let state of  datas2; let i=index " [value]="state.statename" >
+              {{state.statename}}
+              </md-option>
+              </md-select><br>
+              <!-- <md-error *ngIf="abc2.controls['statt'].errors && (abc2.controls['statt'].dirty || abc2.controls['statt'].touched)" [ngStyle]="{'color': 'red'}"> state name is required 
+                </md-error> -->
+              <br><br><br><br>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+      <div class="col-sm-12">
+        <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savecity()" [disabled]="abc2.invalid" data-dismiss="model" >Save</button>
+      </div>
+    </footer>
+  </div>
+</div>
+</form>
+
+</div>
+<div class="col-md-12" *ngIf="service.invisible" (click)="viewcont(data)" >
+<!-- <span style="font-weight:500"><b>Contact Details</b></span> -->
+<!-- <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "viewcon(data)">Edit</button> -->
+
+<!-- <div class="col-md-12 box" >
+  <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+      <tr>
+          <td><b>Personal Email</b></td>
+          <td>{{employee.contact.personalmail}}<td>
+          <td></td>
+        
+      </tr>
+   </table>
+</div> -->
+<!-- <br> -->
+
+<span><b>Permanent Address Details</b></span>
+<div class="col-md-12 box" >
+<table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+  <tr>
+      <td><b>Address 1</b></td>
+      <td>{{employee.contact.permanent_address.streetaddress1}}<td>
+      <td><b>Address 2</b></td>
+      <td>{{employee.contact.permanent_address.streetaddress2}}<td>
+  </tr>
+  <tr>
+     <td><b>Address 3</b></td>
+     <td>{{employee.contact.permanent_address.streetaddress3}}<td>
+     <td><b>Country</b></td> 
+     <td>{{employee.contact.permanent_address.country}}<td>
+  </tr>
+  <tr>
+    <td><b>State</b></td>
+    <td>{{employee.contact.permanent_address.state}}<td>
+    <td><b>City</b></td> 
+    <td>{{employee.contact.permanent_address.city}}<td>
+  </tr>
+  <tr>
+    <td><b>Postalcode</b></td>
+    <td>{{employee.contact.permanent_address.postalcode}}<td>
+    <td></td> 
+    <td><td>
+  </tr>
+</table>
+</div>
+
+<br>
+
+<span><b>Current Address Details</b></span>
+<div class="col-md-12 box"  >
+
+<table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+    <tr>
+        <td><b>Address 1</b></td>
+        <td>{{employee.contact.current_address.streetaddress1}}<td>
+        <td><b>Address 2</b></td>
+        <td>{{employee.contact.current_address.streetaddress2}}<td>
+    </tr>
+    <tr>
+        <td><b>Address 3</b></td>
+        <td>{{employee.contact.current_address.streetaddress3}}<td>
+        <td><b>Country</b></td> 
+        <td>{{employee.contact.current_address.country}}<td>
+     </tr>
+     <tr>
+       <td><b>State</b></td>
+       <td>{{employee.contact.current_address.state}}<td>
+       <td><b>City</b></td> 
+       <td>{{employee.contact.current_address.city}}<td>
+     </tr>
+     <tr>
+       <td><b>Postalcode</b></td>
+       <td>{{employee.contact.current_address.postalcode}}<td>
+       <td></td> 
+       <td><td>
+     </tr>
+  </table>
+</div>
+
+<br>
+<span><b>Emergency Contact 1 Details</b></span>
+<div class="col-md-12 box">      
+<table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+  <tr>
+      <td><b>Name</b></td>
+      <td>{{employee.contact.Name1}}<td>
+      <td><b>Relationship</b></td>
+      <td>{{employee.contact.Relation1}}<td>
+  </tr>
+  <tr>
+      <td><b>Email</b></td>
+      <td>{{employee.contact.Email1}}<td>
+      <td><b>Number</b></td>
+      <td>{{employee.contact.Number1}}<td>
+  </tr>
+</table>
+</div><br>
+<span><b>Emergency Contact 2 Details</b></span>
+<div class="col-md-12 box">      
+  <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+      <tr>
+          <td><b>Name</b></td>
+          <td>{{employee.contact.Name2}}<td>
+          <td><b>Relationship</b></td>
+          <td>{{employee.contact.Relation2}}<td>
+      </tr>
+      <tr>
+          <td><b>Email</b></td>
+          <td>{{employee.contact.Email2}}<td>
+          <td><b>Number</b></td>
+          <td>{{employee.contact.Number2}}<td>
+      </tr>
+    </table>
+</div>
+</div>
+
+
+
+
+      

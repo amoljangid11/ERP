@@ -1,0 +1,96 @@
+<div class="col-md-12 card card-outline-info" style="height:100%">
+  <div  *ngIf= "!show">
+    <div >
+      <ol class="breadcrumb row ">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home ›</i></li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item ">Currency </li>
+        <li class="breadcrumb-item active">Currencies</li>
+      </ol>
+      <div >
+        <span style="font-weight:  500">Currencies</span>
+        <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">
+        <i class="fa fa-plus"></i>   Add</button>
+      </div><br><br>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+          <table  class="table table-bordered table-striped table-sm">
+            <thead class="">
+              <tr>
+                <th>Action</th>
+                <th>Currency</th>
+                <th>Currency-Code</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr *ngFor="let d of datas; let i=index ">
+                <td >
+                  <i title="Edit" *ngIf="d.id !== editRowId" (click)="toggle(d.id)" (click)="edit(d.id)" style="margin-left: 2%;"  class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  <i title="Delete" style="margin-left: 2%;" class="fa fa-trash" aria-hidden="true" (click)="remove(d,i)" ></i>
+                  <i title="Save" *ngIf="d.id == editRowId" style="float: right" class="fa fa-floppy-o" aria-hidden="true"  (click)="update(d)"></i>
+                </td>
+                
+                <td *ngIf="d.id == editRowId" class="example-full-width">
+                  <input type="text"  [(ngModel)]="d.currencies[0].type">
+                </td>
+                <td  *ngIf="d.id !== editRowId">{{d.currencies[0].type}}</td>
+                <td *ngIf="d.id == editRowId" class="example-full-width">
+                  <input type="text"  [(ngModel)]="d.currencies[0].code">
+                </td>
+                <td  *ngIf="d.id !== editRowId">{{d.currencies[0].code}}</td>
+                <td *ngIf="d.id == editRowId" class="example-full-width">
+                  <input type="text"  [(ngModel)]="d.currencies[0].description">
+                </td>
+                <td  *ngIf="d.id !== editRowId">{{d.currencies[0].description}}</td>
+                
+              </tr>
+            </tbody>
+            
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf= "show" >
+    <div >
+      <ol class="breadcrumb row ">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home</i> </li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item ">Currency </li>
+        <li class="breadcrumb-item ">Currencies</li>
+        <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+      </ol>
+    </div>
+    <div  class="row">
+      <div class="col-md-3">
+        <md-input-container class="example-full-width">
+        <input mdInput placeholder="Currency" [(ngModel)]="currency.type"  required>
+        <md-error >
+        Please enter Currency.
+        </md-error>
+        </md-input-container><i mdTooltip="Ex:M,F" class="fa fa-question-circle"></i><br>
+      </div>
+      <div class="col-md-3">
+        <md-input-container class="example-full-width">
+        <input mdInput placeholder="Currency code" [(ngModel)]="currency.code"  required>
+        <md-error >
+        Please enter Currency code.
+        </md-error>
+        </md-input-container><i mdTooltip="Ex:Male,Female"  class="fa fa-question-circle"></i><br>
+      </div>
+      <div class="col-md-3">
+        <md-input-container class="example-full-width">
+        <input mdInput #message maxlength="200" placeholder="Description" [(ngModel)]="currency.description" >
+        <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+        </md-input-container><br>
+      </div>
+      <div  class="col-md-12" style="margin-top: 5%">
+        <button class="btn btn-outline-success btn-sm" (click)="save(currency)" > Save</button>
+        <button class="btn btn-outline-danger btn-sm" (click) = "show = !show;"> Cancel </button>
+      </div>
+    </div>
+  </div>
+</div>

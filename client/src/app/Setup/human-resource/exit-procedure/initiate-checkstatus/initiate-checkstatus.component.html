@@ -1,0 +1,352 @@
+<div class="col-md-12 card card-outline-primary"  style="height:100%">
+  <div *ngIf = "!show">
+    <div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Exit Procedure </li>
+        <li class="breadcrumb-item active">Initiate/Check Status</li>
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:500">Initiate/Check Status</span>
+     <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm" id="btn"  (click) = "show=!show;updatebutton=false;">Add</button>
+     <!-- <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm" id="btn" *ngIf="buttonhide"  (click)="withdrawEmployee(initdata);">Withdraw</button> -->
+     <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm" *ngIf="repoFlag" (click)="open(abscondEmployee);">Abscond Employee</button>
+      
+    </div><br>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div><br><br>
+    <div class="row">
+      <div class="col-lg-12">
+        <div >
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Business Unit</th>
+                <th>Department</th>
+                <th>Exit Type</th>
+                <th>Overall Status</th>
+                <th>Initiated Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ext of initdata; let i = index">
+              <td>
+                  <i class="fa fa-eye text-primary"  title="View" (click)="open(deptModal1);pqr(ext);view(ext)"></i>&nbsp;&nbsp;
+                  <i class="fa fa-exclamation-circle text-primary" *ngIf="btnhd" title="Answer & View Questions/Comments" (click)="open(deptModal);pqr(ext);select(ext);edvwqueans(ext)"></i>&nbsp;&nbsp;
+                  <i class="fa fa-times text-primary" title="Withdraw / Cancel Exit Request" *ngIf="ext.initiatecheckstatus[0].Empstatus!='Cancelled'" aria-hidden="true" (click)="withdrawEmployee(ext);finddata(ext);initiateexitstatus(HR,L2,mailFormat);"></i>
+                  <!-- <i class="fa fa-exclamation-circle text-primary" *ngIf="'reportingid'" title="Abscond Employee" (click)="open(abscondEmployee);" ></i> -->
+              </td>
+              <td>{{ext.initiatecheckstatus[0].businessunit}}</td>  <!--{{datas.exitsetting[0].businessunit}}-->
+              <td>{{ext.initiatecheckstatus[0].department}}</td>  <!--{{ext.exitsetting[0].department}}-->
+              <td>{{ext.initiatecheckstatus[0].exittype}}</td>  <!--  {{ext.exittype[0].exittype}} -->
+              <td>{{ext.initiatecheckstatus[0].status}}</td>
+              <td>{{ext.initiatecheckstatus[0].requestdate}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form class="form-horizontal" [formGroup]="form">
+  <div *ngIf= "show">
+      <div >
+          <ol class="breadcrumb row bg-primary">
+              <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+              <li class="breadcrumb-item ">HR </li>
+              <li class="breadcrumb-item ">Exit Procedure </li>
+              <li class="breadcrumb-item active">Initiate/Check Status</li>
+            <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+          </ol>
+        </div><br><br>
+        <div class="row">
+          <div class="col-md-4">
+            <md-select placeholder="Exit Type" [(ngModel)]="initialstatus.initiatecheckstatus[0].exittype" formControlName="extyp" required>
+              <md-option>Select exit type</md-option>
+              <md-option *ngFor="let que of ecitResine" [value]="que.exittype[0].exittype" (click)="selectExittype(que.exittype[0].exittype);">
+                 {{ que.exittype[0].exittype }}
+              </md-option>
+            </md-select>
+            <br> 
+            <span  style="color: red" *ngIf="!initialstatus.initiatecheckstatus[0].exittype">
+              Please select Exit Type.
+            </span>
+            <br><br><br> 
+          </div>
+          <div class="col-md-4">
+            <md-input-container class="example-full-width">
+            <input mdInput #message maxlength="50" [(ngModel)]="initialstatus.initiatecheckstatus[0].comments" placeholder="Comments" formControlName="cmt" required>
+            <md-hint align="end">{{message.value.length}} characters entered(50 maximum)</md-hint>
+            </md-input-container>
+            <br>
+            <span  style="color: red" *ngIf="!initialstatus.initiatecheckstatus[0].comments">
+              Please enter comment.
+            </span><br><br><br>
+          </div>
+          
+          <div  class="col-md-12" style="margin-top: 5%;">
+            <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(initialstatus);pqr(initialstatus);initiateexit(HR,L2,Repo,initialstatus.initiatecheckstatus[0].exittype,mailFormat);show=!show" [disabled]="!form.valid"> Initate</button>
+            <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(initialstatus);show=!show;updatebutton=!updatebutton;"> Update</button>
+            <button class="btn btn-outline-warning btn-sm" (click) = "cancel();show=!show"> Cancel </button>
+          </div>
+        </div>
+      </div>
+      </form>   
+    </div>
+
+
+
+
+<md2-dialog #abscondEmployee>
+ <md2-dialog-title>Abscond Employee</md2-dialog-title><br>
+ <div class="row"><br><br>
+  <div class="col-md-4">
+    <md-select placeholder="Exit Type" [(ngModel)]="initialstatus.initiatecheckstatus[0].exittype" required>
+      <md-option>Select exit type</md-option>
+      <md-option *ngFor="let que of exitAbscond" [value]="que.exittype[0].exittype" (click)="selectExittype(que.exittype[0].exittype)">
+         {{que.exittype[0].exittype}}
+      </md-option>
+    </md-select>
+    <br> 
+    <span  style="color: red" *ngIf="!initialstatus.initiatecheckstatus[0].exittype">
+      Please select Exit Type.
+    </span>
+    <br><br><br> 
+  </div>
+
+  <div class="col-md-4">
+    <md-select placeholder="Select Employee" [(ngModel)]="employeename" required>
+      <md-option>Select Employee.....</md-option>
+      <md-option *ngFor="let que of reportManEmp" [value]="que.official[0].firstname+' '+que.official[0].lastname" (click)="selectedEmployee(que);setMail(que);">
+         {{ que.official[0].firstname }}  {{ que.official[0].lastname }}
+      </md-option>
+    </md-select>
+    <br> 
+    <span  style="color: red" *ngIf="!initialstatus.initiatecheckstatus[0].employeename">
+      Please select Employee.
+    </span>
+    <br><br><br> 
+  </div>
+
+  <div class="col-md-4">
+    <md-input-container class="example-full-width">
+    <input mdInput #message maxlength="50" [(ngModel)]="initialstatus.initiatecheckstatus[0].comments" placeholder="Comments"  required>
+    <md-hint align="end">{{message.value.length}} characters entered(50 maximum)</md-hint>
+    </md-input-container>
+    <br>
+    <span  style="color: red" *ngIf="!initialstatus.initiatecheckstatus[0].comments">
+      Please enter comment.
+    </span><br><br><br>
+  </div>
+
+  <div class="col-md-12">
+    <button class="btn btn-outline-success btn-sm" (click)="saveAbscond(initialstatus);initiateexit(HR,L2,Repo,initialstatus.initiatecheckstatus[0].exittype,mailFormat);">Initate</button>
+    <button class="btn btn-outline-warning btn-sm" (click)="close(abscondEmployee)">Cancel</button>
+  </div>
+  </div>
+</md2-dialog>
+
+
+
+    <md2-dialog #deptModal>
+      <md2-dialog-title>Initiate/Check Status</md2-dialog-title>
+    <div *ngIf="service.visible">
+    <table class="table table-bordered table-striped table-sm">
+      <thead class="bg-success">
+        <tr>
+          <th>Question</th>
+          <th>Answer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bu of objj6;let i=index;">
+        <td>
+    
+          <md-input-container class="example-full-width">
+            <textarea mdInput id="que"  value="{{bu.question}}" readonly> </textarea>
+          </md-input-container> 
+        </td> 
+        <td>
+          <md-input-container class="example-full-width">
+              <textarea mdInput id="ans"  placeholder="Answer" [(ngModel)]="bu.answer"></textarea>
+            </md-input-container>
+        </td>       
+      </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="row box" *ngIf="service.invisible" >    
+        
+      <table class="table table-bordered table-striped table-sm">
+       <thead class="bg-success">
+         <tr>
+           <th>Question</th>
+           <th>Answer</th>
+         </tr>
+       </thead>
+       <tbody>
+         <tr *ngFor="let bu of objj6;let i=index;">
+         <td>
+          
+           <md-input-container class="example-full-width">
+             <textarea mdInput   value="{{bu.question}}" readonly></textarea>
+           </md-input-container> 
+         </td> 
+         <td>
+            <md-input-container class="example-full-width">
+               <textarea mdInput value="{{bu.answer}}" readonly></textarea>
+             </md-input-container>
+         </td>       
+       </tr>
+       </tbody>
+     </table>
+  </div>
+   <div *ngIf="service.visible">
+    <button id="savequeans" class="btn btn-outline-success btn-sm" (click)="saveques(initialstatus);" >Save</button>
+    <button class="btn btn-outline-warning btn-sm" (click)="close(deptModal)">Cancel</button>
+   </div>
+</md2-dialog>
+
+
+
+ 
+    <md2-dialog #deptModal1>
+    <md2-dialog-title>Exit Procedure Details</md2-dialog-title>
+      <div class="row box">
+     <div class="col-md-12">
+      <div class="emp-info">
+        Exit Type : {{initialstatus.initiatecheckstatus[0].exittype}}
+      </div>
+      <div class="emp-info">
+        Raised On: {{initialstatus.initiatecheckstatus[0].requestdate}}
+      </div>
+      <div class="emp-info alter-div">
+        Comments : {{initialstatus.initiatecheckstatus[0].comments}}
+      </div>
+      <div class="emp-info alter-div">
+        Process Status: {{initialstatus.initiatecheckstatus[0].status}}
+      </div>
+      <div class="emp-info">
+       Relieving Date : {{initialstatus.initiatecheckstatus[0].relievingdate | date}}
+      </div>
+      </div>
+    </div><br><br> 
+    <div class="row">
+    <div class="col-md-12 box">
+      {{initialstatus.initiatecheckstatus[0].employeestatus}}
+    </div>
+   </div><br>
+    <div class="row box">
+      <div class="col-md-12"><br>
+        <div class="emp-info  alter-div">
+          L1 Manager : {{initialstatus.initiatecheckstatus[0].reportingmanager}}
+        </div>
+        <div class="emp-info alter-div">
+          Status : {{initialstatus.initiatecheckstatus[0].L1status}}
+        </div>
+        <div class="emp-info">
+          Comments : {{initialstatus.initiatecheckstatus[0].L1comments}}
+        </div></div><br>
+        <div class="col-md-12">
+        <div class="emp-info  alter-div">
+          L2 Manager : {{this.l2m}}
+        </div>
+        <div class="emp-info  alter-div">
+          Status : {{initialstatus.initiatecheckstatus[0].L2status}}
+        </div>
+        <div class="emp-info">
+          Comments : {{initialstatus.initiatecheckstatus[0].L2comments}}
+        </div></div><br>
+        <div class="col-md-12">
+        <div class="emp-info  alter-div">
+            HR Manager : {{this.hrm}}
+        </div>
+        <div class="emp-info  alter-div">
+            Status : {{initialstatus.initiatecheckstatus[0].Hrstatus}}
+        </div>
+        <div class="emp-info">
+            Comments : {{initialstatus.initiatecheckstatus[0].Hrcomments}}
+        </div>
+        </div>
+        <div class="col-md-12">
+          <div class="emp-info  alter-div">
+              General Admin : {{this.gaa}}
+          </div>
+          <div class="emp-info  alter-div">
+              Status : {{initialstatus.initiatecheckstatus[0].GAstatus}}
+          </div>
+          <div class="emp-info">
+              Comments : {{initialstatus.initiatecheckstatus[0].GAcomments}}
+          </div>
+          </div>
+          <div class="col-md-12">
+            <div class="emp-info  alter-div">
+                Finance Manager : {{this.faman}}
+            </div>
+            <div class="emp-info  alter-div">
+                Status : {{initialstatus.initiatecheckstatus[0].FMstatus}}
+            </div>
+            <div class="emp-info">
+                Comments : {{initialstatus.initiatecheckstatus[0].FMcomments}}
+            </div>
+            </div>
+            <div class="col-md-12">
+              <div class="emp-info  alter-div">
+                  System Admin : {{this.sad}}
+              </div>
+              <div class="emp-info  alter-div">
+                  Status : {{initialstatus.initiatecheckstatus[0].SAstatus}}
+              </div>
+              <div class="emp-info">
+                  Comments : {{initialstatus.initiatecheckstatus[0].SAcomments}}
+              </div>
+              </div>
+    </div>
+        <br><br>
+
+    <span><h5><b>PROCESS HISTORY</b></h5></span>
+    <div class="row box">
+      <table class="table  table-sm">  
+      <tbody> 
+      <tr *ngIf="initialstatus.initiatecheckstatus[0].status=='Approved'"> 
+          <td><img class="imageClass" src="./assets/Images/employee.jpg"/></td>
+          <td>{{initialstatus.initiatecheckstatus[0].overallstatus}} on {{initialstatus.initiatecheckstatus[0].relievingdate | date}} at {{initialstatus.initiatecheckstatus[0].relievingtime}}</td>
+      </tr>
+      <tr *ngIf="initialstatus.initiatecheckstatus[0].status=='Rejected'">
+          <td>
+            <img class="imageClass" src="./assets/Images/employee.jpg"/>
+          </td>
+           <td *ngIf="initialstatus.initiatecheckstatus[0].status=='Rejected'">{{initialstatus.initiatecheckstatus[0].overallstatus}} on {{initialstatus.initiatecheckstatus[0].relievingdate | date}} at {{initialstatus.initiatecheckstatus[0].relievingtime}}</td>
+           
+      </tr>
+      <tr *ngIf="initialstatus.initiatecheckstatus[0].status=='Cancelled'">
+          <td>
+            <img class="imageClass" src="./assets/Images/employee.jpg"/>
+          </td>
+           <td *ngIf="initialstatus.initiatecheckstatus[0].status=='Cancelled'">{{initialstatus.initiatecheckstatus[0].overallstatus}} on {{initialstatus.initiatecheckstatus[0].relievingdate | date}} at {{initialstatus.initiatecheckstatus[0].relievingtime}}</td>
+      </tr>
+      <tr>
+          <td>
+            <img class="imageClass" src="./assets/Images/employee.jpg"/>
+          </td>
+           <td>{{initialstatus.initiatecheckstatus[0].requested}} on {{initialstatus.initiatecheckstatus[0].requestdate}}</td>          
+     </tr>
+     </tbody>
+     </table>
+     </div>
+
+  <md2-dialog-footer>
+    <button type="submit" class="btn btn-secondary" (click)="close(deptModal1)">Cancel</button>
+  </md2-dialog-footer>
+</md2-dialog>
+
+      
+    

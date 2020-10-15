@@ -1,0 +1,79 @@
+<div  class="col-md-12">
+<div class="row">
+<div  style="display: both" class="col-lg-12">
+    <span style="font-weight:500">Leave</span>
+    
+</div><br><br>
+</div>			 
+<div class="row">
+				<div class="col-md-3">
+					<md-input-container class="example-full-width">
+                        <input  mdInput placeholder="Add or Remove Leaves" [(ngModel)]="employee.leave[0].leavelimit"    required>
+                     </md-input-container>
+					
+				</div>
+				<div class="col-md-3">
+                     <md-input-container class="example-full-width">
+                        <input  mdInput placeholder="Year" [(ngModel)]="employee.leave[0].year"    required>
+                     </md-input-container>				
+                 </div>
+                 <br>
+                 <br>
+                 <div class="col-md-12">
+                 	<button type="button" style="" class="btn btn-outline-primary btn-sm" (click)="back()">Cancel
+                    </button>
+                 	<button type="button"  class="btn btn-outline-primary btn-sm" (click)="save(employee)">Save
+                    </button>
+                 	
+                 </div>
+			</div>
+			<br><br>
+			
+		</div>
+
+		<div class="col-md-12">
+			<div class="table-responsive">
+             <table  class="table table-bordered table-hover ">
+                <thead class="thead-inverse">
+                	   <th>Action</th>
+                	   <th>Alloted Leave Limit</th>
+                	   <th>Used Leave</th>
+                	   <th>Leave Balance</th>
+                	   <th>Alloted Year</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of employee.leave;let i=index " >
+                    	<td> 
+                            <i *ngIf="data.id !== editRowId" (click)="edit(data.id)"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;
+                            <i (click)="delete(data,i)" title="Delete" class="fa fa-trash-o"></i>&nbsp;&nbsp;
+                            <i *ngIf="data.id == editRowId" (click)="update(employee)" title="save" class="fa fa-floppy-o"></i>
+                    		
+                    	</td>
+                        <td *ngIf="data.id == editRowId" class="example-full-width"> 
+                           <input type="text"  [(ngModel)]="data.leavelimit">
+                        </td>
+                        <td  *ngIf="data.id !== editRowId">{{data.leavelimit}}</td>
+
+                        <td *ngIf="data.id == editRowId" class="example-full-width"> 
+                           <input type="text"  [(ngModel)]="data.usedleaves">
+                        </td>
+                        <td  *ngIf="data.id !== editRowId">{{data.usedleaves}}</td>
+
+                        <td *ngIf="data.id == editRowId" class="example-full-width"> 
+                           <input type="text"  [(ngModel)]="data.leavebalance">
+                        </td>
+                        <td  *ngIf="data.id !== editRowId">{{data.leavebalance}}</td>
+
+                        <td *ngIf="data.id == editRowId" class="example-full-width"> 
+                           <input type="text"  [(ngModel)]="data.year">
+                        </td>
+                        <td  *ngIf="data.id !== editRowId">{{data.year}}</td>
+                    	
+                    </tr>     	
+               </tbody>
+                                
+              </table>
+             </div>
+			
+		</div>
+

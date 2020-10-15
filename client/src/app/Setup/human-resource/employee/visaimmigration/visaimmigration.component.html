@@ -1,0 +1,189 @@
+<div *ngIf= "!show"  class="col-lg-12">
+  <div class="row">
+    <div  style="display: both" class="col-lg-12">
+      <span style="font-weight:500">Visa and Immigration</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button>
+    </div><br><br>
+  </div>
+  <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+    {{ message }}
+  </div>
+  <div class="row">
+    <div class="col-lg-12"><br>
+      <div>
+        <table class="table table-bordered table-striped table-sm">
+          <thead class="bg-success">
+            <tr>
+              <th>Action</th>
+              <th>Passport Number</th>
+              <th>Passport Expiry Date</th>
+              <th>Visa Number</th>
+              <th>Visa Expiry Date</th>
+              <th>Inine Status</th>
+              <th>Ininetyfour Status</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="havevisa">
+            <tr *ngFor=" let ex of passvisa.visa; let i = index " >
+              <td><i class="fa fa-pencil-square-o" (click)="edit(ex,passvisa,i);show = !show"  title="Edit" ></i>
+                <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(ex,passvisa,i)"></i></td>
+              <td>{{ex.passport_number}}</td>
+              <td>{{ex.passport_expirydate}}</td>
+              <td>{{ex.visa_number}}</td>
+              <td>{{ex.visa_expirydate}}</td>
+              <td>{{ex.I9_status}}</td>
+              <td>{{ex.I94_status}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<form class="form-horizontal" [formGroup]="form">
+<div *ngIf= "show"  class="col-md-12">
+  <div  style="display: both" class="row">
+    <div class="col-md-12">
+      <span style="font-weight:  800">Visa and Immigration</span>
+      
+      <br><br>
+    </div></div>
+    <div class="row">
+      
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput  [(ngModel)]="employee.visa[i].passport_number" placeholder="Passport Number" formControlName="passno"    maxlength="20" >
+        <md-error>Please enter passport number.</md-error>
+        </md-input-container><br><br>
+        <md-input-container class="example-full-width">
+        <input mdInput [(ngModel)]="employee.visa[i].visaTcode"  placeholder="Visa Type Code" pattern="^[a-zA-Z0-9 ]*$" maxlength="3" formControlName="visacode" >
+        </md-input-container><br><br>
+        <md-input-container>
+        <input mdInput [mdDatepicker]="datepicker" [(ngModel)]="employee.visa[i].visa_expirydate" placeholder="Visa Expiry Date" formControlName="visaexpdate" id="visaexpydate" >
+        <button mdSuffix [mdDatepickerToggle]="datepicker"></button>
+        <md-error>Please enter visa expiry date.</md-error>
+        </md-input-container>
+        <md-datepicker #datepicker></md-datepicker><br><br>
+        <md-input-container class="example-full-width">
+        <input mdInput  [(ngModel)]="employee.visa[i].issuing_authority" placeholder="Issuing Authority" formControlName="issauth" pattern="[a-zA-Z]+$" maxlength="50" >
+        <md-error>
+          Enter only alphabets.
+        </md-error>
+        </md-input-container><br><br>
+      </div>
+      <div class="col-md-4">
+        <md-input-container>
+        <input mdInput [mdDatepicker]="datepicker1" [(ngModel)]="employee.visa[i].passport_issueddate" placeholder="Passport Issued Date" formControlName="issdate" id="issuepass">
+        <button mdSuffix [mdDatepickerToggle]="datepicker1"></button>
+        </md-input-container>
+        <md-datepicker #datepicker1></md-datepicker><br><br>
+        <md-input-container class="example-full-width">
+        <input mdInput [(ngModel)]="employee.visa[i].visa_number"  placeholder="Visa Number " formControlName="visanum"   maxlength="20" >
+        <md-error>Please enter visa number.</md-error>
+        </md-input-container>
+        <br><br>
+        <md-input-container class="example-full-width">
+        <input mdInput [(ngModel)]="employee.visa[i].I9_status"  placeholder="I-9 Status" formControlName="i9s" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" >
+        <md-error>
+          Enter only alphanets
+        </md-error>
+        </md-input-container>
+        <br><br>
+        <md-input-container class="example-full-width">
+        <input mdInput [(ngModel)]="employee.visa[i].I94_status"  placeholder="I-94 Status" formControlName="i94s" maxlength="50" >
+        </md-input-container>
+      </div>
+      <div class="col-md-4">
+        <md-input-container>
+        <input mdInput [mdDatepicker]="datepicker2" [(ngModel)]="employee.visa[i].passport_expirydate" placeholder="Passport Expiry Date" formControlName="expdate" id="exppdatee" maxlength="50">
+        <button mdSuffix [mdDatepickerToggle]="datepicker2" ></button>
+        <md-error>Please enter passport expire date.</md-error>
+        </md-input-container>
+        <md-datepicker #datepicker2></md-datepicker><br><br>
+        <md-input-container>
+        <input mdInput [mdDatepicker]="datepicker3" [(ngModel)]="employee.visa[i].visa_issueddate"  placeholder="Visa Issued Date" formControlName="visadate">
+        <button mdSuffix [mdDatepickerToggle]="datepicker3"></button>
+        </md-input-container>
+        <md-datepicker #datepicker3></md-datepicker><br><br>
+        <md-input-container>
+        <input mdInput [mdDatepicker]="datepicker4" [(ngModel)]="employee.visa[i].I9_reviewdate" placeholder="I-9 Review Date" formControlName="i94reviewd" >
+        <button mdSuffix [mdDatepickerToggle]="datepicker4"></button>
+        </md-input-container>
+        <md-datepicker #datepicker4></md-datepicker><br><br>
+        <md-input-container>
+        <input mdInput [mdDatepicker]="datepicker5" [(ngModel)]="employee.visa[i].I94_reviewdate" placeholder="I-94 Review Date" formControlName="i94re" id="i94" >
+        <button mdSuffix [mdDatepickerToggle]="datepicker5"></button>
+        </md-input-container>
+        <md-datepicker #datepicker5></md-datepicker><br><br>
+      </div>
+    </div>
+    <div style="float: right;margin:0% 2% 0% 0%" class="row">
+      <div  class="col-md-12">
+        <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(employee);show=!show;" [disabled]="!form.valid" > Save</button>
+        <button *ngIf="updatebutton"  class="btn btn-outline-success btn-sm" (click)="updatevisa(employee);show=!show;updatebutton=!updatebutton;" [disabled]="!form.valid"> Update</button>
+        <button  class="btn btn-outline-warning btn-sm" (click) = "cancel(employee);show=!show;updatebutton=!updatebutton;"> Cancel </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+
+<md2-dialog #deptModal>
+    
+    <md2-dialog-title>Visa and Immigration</md2-dialog-title>
+    <div class="row box">
+      <div class="display_emp">
+        <div class="emp-info alter-div">
+            Passport Number : {{employee.visa[i].passport_number}}
+        </div>
+        <div class="emp-info alter-div ">
+            Passport Issued Date: {{employee.visa[i].passport_issueddate}}
+        </div><br>
+        <div class="emp-info">
+            Passport Expiry Date: {{employee.visa[i].passport_expirydate}}
+        </div>
+        <div class="emp-info">
+            Visa Type Code :{{employee.visa[i].visaTcode}}
+        </div>
+
+        <div  class="emp-info alter-div">
+            Visa Number : {{employee.visa[i].visa_number}}
+        </div>
+
+        <div  class="emp-info alter-div">
+            Visa Issued Date : {{employee.visa[i].passport_issueddate}}
+        </div>
+
+        <div  class="emp-info">
+            Visa Expiry Date : {{employee.visa[i].visa_expirydate}}
+        </div>
+        <div  class="emp-info">
+            I-9 Status : {{employee.visa[i].I9_status}}
+        </div>
+        <div  class="emp-info alter-div">
+            I-9 Review Date : {{employee.visa[i].I9_reviewdate}}
+        </div>
+        <div  class="emp-info alter-div">
+            Issuing Authority : {{employee.visa[i].issuing_authority}}
+        </div>
+        <div  class="emp-info">
+            I-94 Status: {{employee.visa[i].I94_status}}
+        </div>
+        <div  class="emp-info ">
+            I-94 Expiry Date : {{employee.visa[i].I94_reviewdate}}
+        </div>
+      </div>
+      </div>
+    <md2-dialog-footer>
+        <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+    </md2-dialog-footer>
+</md2-dialog>
+
+
+
+
+
+
+
+

@@ -1,0 +1,412 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show" >
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Organization </li>
+        <li class="breadcrumb-item active">Business Units</li>
+      </ol>
+   </div> 
+  
+    <div >
+   <span style="font-weight:500">Business Units</span>
+          <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button> 
+  </div><br><br>
+  
+   <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+    <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+    
+  <div class="row">
+   <div class="col-lg-12">
+     <div>
+            <table  class="table table-bordered table-striped table-sm">
+              <thead class="bg-success">
+       <tr>
+        <th>Action</th>
+        <th>Name</th>
+        <th>Code</th>
+        <th>Started On</th>
+        <th>Street Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Country</th>
+        <th>Time Zone</th>
+       </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let bu of bunit;let i = index " >
+          <td><i (click)="edit(bu);show=!show;"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(bu,i)" title="Delete" class="fa fa-trash-o"></i></td>
+  
+  
+  <td >{{bu.businessunits[0].name}}</td>
+  <td >{{bu.businessunits[0].code}}</td>
+  <td>{{bu.businessunits[0].starton}}</td>
+  <td >{{bu.businessunits[0].address}}</td>
+  <td>{{bu.businessunits[0].city}}</td>
+  <td >{{bu.businessunits[0].state}}</td>
+   <td>{{bu.businessunits[0].country}}</td>
+  <td >{{bu.businessunits[0].timezone}}</td>
+    
+        </tr>                                 
+      </tbody>                        
+      </table>
+     </div></div>
+  </div></div>
+  
+  <form class="form-horizontal" [formGroup]="form">
+
+   <div *ngIf= "show" >
+     <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Organization </li>
+        <li class="breadcrumb-item ">Business Units</li>
+        <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+      </ol>
+   </div><br>
+  
+   <div class="row">
+  <div class="col-md-3">
+      <md-input-container class="example-full-width">
+         <input mdInput placeholder="Name" [(ngModel)]="bunits.businessunits[0].name" formControlName="name">
+         <md-error>Please enter name.</md-error>
+      </md-input-container>
+      <br><br><br><br>
+      <md-select placeholder="Time Zone" [(ngModel)]="bunits.businessunits[0].timezone" name="zone" formControlName="tzone">
+      <md-option *ngFor="let s of site_t" [value]="s.timezone">
+      {{s.timezone}}
+      </md-option>
+      </md-select>
+      <br>
+      <i style="color: #1565c0" onclick="document.getElementById('timemodal').style.display='block'">Add Timezone</i>
+  
+    
+  <br><br><br>
+  
+      <md-input-container class="example-full-width">
+         <input [(ngModel)]="bunits.businessunits[0].address" maxlength="100" mdInput placeholder="Street Address" formControlName="add1">
+         <md-error>Please enter address.</md-error>
+      </md-input-container><br><br><br>
+  </div>
+  
+  <div class="col-md-3">
+    <md-input-container class="example-full-width">
+      <input maxlength="100" [(ngModel)]="bunits.businessunits[0].code" mdInput placeholder="Code" minlength="2" pattern="[0-9.]+"  formControlName="codes">
+      <md-error>Please enter code.</md-error>
+    </md-input-container><br><br><br>
+  <br>
+     <md-select placeholder="Country" [(ngModel)]="bunits.businessunits[0].country" formControlName="country1">
+      <md-option *ngFor="let cn of countri ; let i=index " (click)="selectcoun(cn.countryvalue)" [value]="cn.countryvalue">
+      {{cn.countryvalue}}
+      </md-option>
+    </md-select>
+      <br><i style="color: #1565c0"  onclick="document.getElementById('bModal').style.display='block'">Add Country</i>
+   
+      <br><br><br>
+       
+  </div>
+  <div class="col-md-3">
+   <md-input-container class="example-full-width">
+      <input  mdInput name="descripe" #message  maxlength="200" [(ngModel)]="bunits.businessunits[0].description" placeholder="Description" formControlName="des">
+      <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+    </md-input-container><br><br><br><br>
+  
+  <md-select placeholder="State" [(ngModel)]="bunits.businessunits[0].state" formControlName="state1">
+       <md-option *ngFor="let stat of sarray | unique: 'state1' ; let i=index " (click)="select1(stat.state1)" [value]="stat.state1">
+      {{stat.state1}}
+      </md-option>
+    </md-select><br>
+    <i style="color: #1565c0" onclick="document.getElementById('sModal').style.display='block'">Add State</i>
+  
+  
+  <br><br><br>
+  
+  </div>
+  
+  <div class="col-md-3">
+   <md-input-container>
+      <input mdInput [mdDatepicker]="picker" placeholder="Started On" [(ngModel)]="bunits.businessunits[0].starton" formControlName="starton" required>
+
+      <button mdSuffix [mdDatepickerToggle]="picker"></button>
+      <md-error>Please select date.</md-error>
+    </md-input-container>
+    <md-datepicker #picker></md-datepicker> <br><br><br><br>
+  
+  <md-select placeholder="City" [(ngModel)]="bunits.businessunits[0].city" formControlName="cityss"> 
+          <md-option *ngFor="let ci of cityarry"   [value]="ci.city2">
+      {{ci.city2}}
+      </md-option>
+    </md-select><br>
+      <i style="color: #1565c0"   onclick="document.getElementById('ciModal').style.display='block'">Add City</i>
+  
+       <br><br><br>
+  </div>
+  
+   <div  class="col-md-12" style="margin-top: 5%">
+      <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(bunits);show=!show" [disabled]="!form.valid"> Save</button>
+      <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(bunits);show=!show;updatebutton=!updatebutton;"> Update</button>
+  
+      <button class="btn btn-outline-warning btn-sm" (click) = "cancel(bunits);show=!show"> Cancel </button>
+    </div>
+  
+  </div>
+  </div>
+  </form>
+  </div> 
+  
+  <form class="form-horizontal" [formGroup]="form4">
+
+  <div id="ciModal" class="w3-modal">
+      <div class="w3-modal-content">
+        <header class="w3-container w3-teal bg-primary"> 
+          <span onclick="document.getElementById('ciModal').style.display='none'" 
+          class="w3-display-topright fa fa-times fa-lg"></span>
+          <h4>City</h4>
+        </header>
+        <div class="w3-container">
+           <div style="display: inline-flex;"  class="col-md-12">
+     <div class="col-md-6">
+     <md-select placeholder="Country" [(ngModel)]="country3" formControlName="coun2nm">
+      <md-option *ngFor="let co of countri | unique: 'countryvalue';" (click)="selectst()" [value]="co.countryvalue">
+      {{co.countryvalue}}
+      </md-option>
+    </md-select><br><br><br>
+    <div class="input-group">
+       <!-- <md-select placeholder="City" [(ngModel)]="city3"> 
+          <md-option *ngFor="let cit of assci"   [value]="cit.cityname">
+      {{cit.cityname}}
+      </md-option>
+    </md-select> -->
+    <md-input-container class="example-full-width">
+        <input [(ngModel)]="city3"  mdInput placeholder="city Name " formControlName="citynm">
+        <md-error>Please enter city.</md-error>
+      </md-input-container>
+    
+    <br><br><br>
+              </div>
+     </div>
+      <div class="col-md-6">
+        <md-select placeholder="State" [(ngModel)]="state3" formControlName="stat1nm">
+       <md-option *ngFor="let stat of addst | unique: 'state1'" (click)="selectcity()" [value]="stat.state1">
+      {{stat.state1}}
+      </md-option>
+    </md-select><br><br><br>
+      </div>
+     </div>
+        </div>
+      <footer class="w3-container w3-teal">
+        <button style="float: right;" type="submit" class="btn btn-primary" (click)="saveci()"  [disabled]="!form4.valid"  data-dismiss="modal" >Save changes</button>
+      </footer>
+      </div>
+    </div>
+  </form>
+  <!-- 
+   <md2-dialog #ciModal>
+      <md2-dialog-title>Add City</md2-dialog-title><br>
+     <div style="display: inline-flex;"  class="col-md-12">
+     <div class="col-md-6">
+     <md-select placeholder="Country" [(ngModel)]="country3">
+      <md-option *ngFor="let co of countri | unique: 'countryvalue' ;  " (click)="selectst()" [value]="co.countryvalue">
+      {{co.countryvalue}}
+      </md-option>
+    </md-select><br><br><br>
+    <div class="input-group">
+       <md-select placeholder="City" [(ngModel)]="city3"> 
+          <md-option *ngFor="let cit of assci"   [value]="cit.cityname">
+      {{cit.cityname}}
+      </md-option>
+    </md-select><br><br><br>
+              </div>
+     </div>
+      <div class="col-md-6">
+        <md-select placeholder="State" [(ngModel)]="state3">
+       <md-option *ngFor="let stat of addst | unique: 'state1' " (click)="selectcity()" [value]="stat.state1">
+      {{stat.state1}}
+      </md-option>
+    </md-select><br><br><br>
+      </div>
+     </div>
+      <md2-dialog-footer>
+        <button type="submit" class="btn btn-primary" (click)="saveci()"  data-dismiss="modal" >Save changes</button>
+        <button type="submit" class="btn btn-secondary" (click)="close(ciModal)">Cancel</button>
+      </md2-dialog-footer>
+    </md2-dialog> -->
+  
+    <form class="form-horizontal" [formGroup]="form2">
+
+  <div id="bModal" class="w3-modal">
+      <div class="w3-modal-content">
+        <header class="w3-container w3-teal bg-primary"> 
+          <span onclick="document.getElementById('bModal').style.display='none'" 
+          class=" w3-display-topright fa fa-times fa-lg"></span>
+          <h4>Country</h4>
+        </header>
+        <div class="w3-container">
+              <div style="display: inline-flex;"  class="col-md-12">
+  <div class="col-md-6"><br><br>
+      <!-- <md-select placeholder="Country" [(ngModel)]="selectedValue" name="cnt">
+      <md-option *ngFor="let cntry of conall ;let i=index " [value]="cntry.countryal"  (click)="selects(i,conall)">
+        {{cntry.countryal}}
+      </md-option>
+  
+    </md-select> -->
+    
+    <md-input-container class="example-full-width">
+        <input [(ngModel)]="selectedValue" mdInput placeholder="Country Name " formControlName="coun">
+        <md-error>Please enter country name.</md-error>
+      </md-input-container>
+    
+    <br><br><br>
+  </div>
+  <div class="col-md-6"><br><br>
+     <div class="input-group">
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" type="button">Country code</button>
+        </span>
+        <input type="text" class="form-control" placeholder="code"  [(ngModel)]="codevalue"    [value]="codevalue" formControlName="councd">
+      </div><br><br><br>
+  </div>
+  </div>
+        </div>
+        <footer class="w3-container w3-teal">
+          <button style="float: right;" type="submit" class="btn btn-primary" (click)="saves()" [disabled]="!form2.valid"  data-dismiss="bModal" >Save changes</button>
+        </footer>
+      </div>
+    </div>
+  </form>
+   <!--   <md2-dialog #bModal>
+      <md2-dialog-title>Country</md2-dialog-title>
+         <div style="display: inline-flex;"  class="col-md-12">
+  <div class="col-md-6">
+      <md-select placeholder="Country" [(ngModel)]="selectedValue" name="cnt">
+      <md-option *ngFor="let cntry of conall ;let i=index " [value]="cntry.countryal"  (click)="selects(i,conall)">
+        {{cntry.countryal}}
+      </md-option>
+  
+    </md-select><br><br><br>
+  </div>
+  <div class="col-md-6">
+     <div class="input-group">
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" type="button">Country code</button>
+        </span>
+        <input type="text" class="form-control" placeholder="code"  [(ngModel)]="codevalue"   [value]="codevalue">
+      </div><br><br><br>
+  </div>
+  </div>
+      <md2-dialog-footer>
+        <button type="submit" class="btn btn-primary" (click)="saves()"  data-dismiss="modal" >Save changes</button>
+        <button  type="submit" class="btn btn-smal btn-sml-primary" (click)="close(bModal)">Cancel</button>
+      </md2-dialog-footer>
+     </md2-dialog> -->
+     <form class="form-horizontal" [formGroup]="form1">
+
+     <div id="timemodal" class="w3-modal">
+      <div class="w3-modal-content">
+        <header class="w3-container w3-teal bg-primary"> 
+          <span onclick="document.getElementById('timemodal').style.display='none'" 
+          class=" w3-display-topright fa fa-times fa-lg"></span>
+          <h4>Timezone</h4>
+        </header>
+        <div class="w3-container">
+          <div style="display: inline-flex;"  class="col-md-12">
+          <div class="col-md-6">
+     
+       <!-- <md-select placeholder="Default Timezone"  [(ngModel)]="timezone" >
+      <md-option *ngFor="let t of time_val" [value]="t.timezoneval">
+      {{t.timezoneval}}
+      </md-option>
+      </md-select> -->
+      
+      <md-input-container class="example-full-width">
+          <input [(ngModel)]="timezone"  mdInput placeholder="Time " formControlName="time1">
+        </md-input-container>
+
+
+      <br><br><br>
+  
+     </div>
+      <div class="col-md-6">
+         <md-input-container class="example-full-width">
+                <input mdInput placeholder="Description" [(ngModel)]="description" formControlName="desc">
+                </md-input-container><br><br><br>
+        
+      </div>
+    </div>
+        </div>
+        <footer class="w3-container w3-teal ">
+          <button style="float: right;" type="submit" class="btn btn-primary  bg-primary" (click)="savechang()"  [disabled]="!form1.valid"  data-dismiss="modal" >Save</button>
+        </footer>
+      </div>
+    </div>
+  
+  </form>
+
+
+  <form class="form-horizontal" [formGroup]="form3">
+
+   <div id="sModal" class="w3-modal">
+      <div class="w3-modal-content">
+        <header class="w3-container w3-teal bg-primary"> 
+          <span onclick="document.getElementById('sModal').style.display='none'" 
+          class=" w3-display-topright fa fa-times fa-lg"></span>
+          <h4>State</h4>
+        </header>
+        <div class="w3-container">
+          <div style="display: inline-flex;"  class="col-md-12">
+  <div class="col-md-6">
+    <br>
+     <md-select placeholder="Country" [(ngModel)]="country1" formControlName="coun1nm">
+         <md-option *ngFor="let op of countri" [value]="op.countryvalue" (click)="selectstate()">
+         {{op.countryvalue}} </md-option>
+     </md-select><br><br><br>
+  </div>
+  <div class="col-md-6">
+     <!-- <md-select placeholder="State" [(ngModel)]="state1">
+        <md-option *ngFor="let stats of statearry"  [value]="stats.statename" >
+          {{stats.statename}}
+        </md-option>
+     </md-select> -->
+     
+     <md-input-container class="example-full-width">
+        <input [(ngModel)]="state1"  mdInput placeholder="State Name " formControlName="statnm">
+        <md-error>Please enter state name.</md-error>
+      </md-input-container>
+    
+     
+     <br><br><br>
+  </div>
+  </div>
+        </div>
+        <footer class="w3-container w3-teal">
+          <button style="float: right;" type="submit" class="btn btn-primary" (click)="savestate()"  [disabled]="!form3.valid"   data-dismiss="sModal" >Save changes</button>
+        </footer>
+      </div>
+    </div>
+  </form>
+       <!-- <md2-dialog #sModal>
+      <md2-dialog-title>State</md2-dialog-title>
+        <div style="display: inline-flex;"  class="col-md-12">
+  <div class="col-md-6">
+     <md-select placeholder="Country" [(ngModel)]="country1" >
+         <md-option *ngFor="let op of countri" [value]="op.countryvalue" (click)="selectstate()">
+         {{op.countryvalue}} </md-option>
+     </md-select><br><br><br>
+  </div>
+  <div class="col-md-6">
+     <md-select placeholder="State" [(ngModel)]="state1">
+        <md-option *ngFor="let stats of statearry"  [value]="stats.statename" >
+          {{stats.statename}}
+        </md-option>
+     </md-select><br><br><br>
+  </div>
+  </div>
+      <md2-dialog-footer>
+       <button type="submit" class="btn btn-primary" (click)="savestate()"  data-dismiss="modal" >Save changes</button>
+        <button type="submit" class="btn btn-sml btn-secondary" (click)="close(sModal)">Cancel</button>
+      </md2-dialog-footer>
+    </md2-dialog> -->

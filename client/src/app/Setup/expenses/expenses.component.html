@@ -1,0 +1,24 @@
+<div style="height: 100%;" class="row">
+  <div style="width: 100%;" class="nav-side-menu">
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+    <div class="menu-list">
+        <ul id="menu-content">
+            <li (click)="opening()"><a >Expenses</a></li>
+            <li (click)="category()"><a >Category</a></li>
+            <li (click)="paymode()"><a >Payment Mode</a></li>
+            <li (click)="receipts()"><a >Receipts</a></li>
+            <li (click)="trips()"><a >Trips</a></li>
+            <ul id="menu-content" class="menu-content collapse out">
+                <li data-toggle="collapse" data-target="#holiday" class="collapsed "><a>Advances 
+                    <span class="arrow"></span></a></li>
+                        <ul class="sub-menu collapse" id="holiday">
+                            <li (click)="myadvances()"><a >My Advances</a></li>
+                            <li  (click)="employeeadvances()"><a>Employee Advances</a></li>
+                        </ul></ul>
+            <li (click)="myempexpense()"><a >My Employee Expenses</a></li>
+           
+            
+            </ul>
+            </div>
+            </div>
+            </div>

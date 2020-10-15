@@ -1,0 +1,99 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">      
+<div  *ngIf= "!show">
+<div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item active">Site Preference</li>
+      </ol>
+  <div>
+      <span style="font-weight:500">Site Preference</span>
+      <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Edit</button>
+    </div>
+
+ </div>
+ </div>
+<div *ngIf= "show">
+    <div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item ">Site Preference </li>
+        <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+      </ol>
+    </div>
+
+
+<div class="row" style="padding-top: 2%">
+  <div class="col-md-4">
+    <md-select placeholder="Date format" [(ngModel)]="dateValue" name="money" >
+    <md-option  *ngFor="let date of dates" [value]="date">
+    {{date}}
+    </md-option>
+    </md-select>
+    <p>Example:</p>
+    <br><br>
+    <md-select placeholder="Default password" [(ngModel)]="passwordValue">
+    <md-option *ngFor="let pass of pswds" [value]="pass">
+    {{pass}}
+    </md-option>
+    </md-select>
+  </div>
+  <div class="col-md-4">
+    <md-select placeholder="Time format" [(ngModel)]="timeValue" name="time">
+    <md-option *ngFor="let time of times" [value]="time">
+    {{time}}
+    </md-option>
+    </md-select>
+    <p>Example:</p>
+    <br>
+    <md-input-container class="example-full-width">
+    <input mdInput placeholder="Description" [(ngModel)]="description">
+    </md-input-container>
+  </div>
+  <div class="col-md-4">
+    <md-select placeholder="Default Time Zone" [(ngModel)]="zoneValue" name="zone">
+    <md-option *ngFor="let zone of zones" [value]="zone">
+    {{zone}}
+    </md-option>
+    </md-select><br>
+    <a  class="btn btn-sm btn-success" data-toggle="modal" data-target="#basicModal">add</a>
+    
+  </div>
+  <div class="col-md-12" style="margin-top: 5%">
+    <button class="btn btn-sm btn-outline-success" (click)="show=!show">save</button>
+    <button  class="btn btn-sm btn-outline-danger" (click)="show=!show">cancel</button>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title" id="myModalLabel">Add Time Zone</h4>
+        </div>
+        
+        
+        <div class="modal-body">
+          <div style="margin-left: 2%;" class="row">
+            <md-input-container class="example-full-width">
+            <input  mdInput placeholder="Timezone" [(ngModel)]= "timezone" >
+            </md-input-container><br><br><br>
+          </div>
+          <div style="margin-left: 2%;"  class="row">
+            <md-input-container class="example-full-width">
+            <input mdInput placeholder="Description" [(ngModel)]="description">
+            </md-input-container><br><br><br>
+          </div>
+        </div>
+        <div class="modal-footer">
+          
+          <button type="submit" class="btn btn-primary" (click)="savechang()"  data-dismiss="modal" >Save changes</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>

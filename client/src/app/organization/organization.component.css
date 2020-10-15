@@ -1,0 +1,28 @@
+
+.inputField {
+    border: 0;
+    outline: 0; 
+    background: transparent; 
+    border-bottom: 1px solid #7C7C81;
+    width: 100%;
+    margin-bottom: 10px; 
+    }
+    .inputField .c-token{
+    background: #38d574 !important;
+    }
+    .inputField .pure-checkbox label::before {
+    border-color: #38d574 !important;
+    }
+    .inputField .pure-checkbox input[type="checkbox"]:checked + 
+    label[_ngcontent-c1]:before {
+    background: #38d574 !important;
+    }
+    
+    .inputField .c-btn {
+    border: 0 !important;
+    outline: 0 !important;  
+    background: transparent !important; 
+    border-bottom: 1px solid #7C7C81 !important;
+    width: 100% !important;
+    margin-bottom: 10px !important; 
+    }

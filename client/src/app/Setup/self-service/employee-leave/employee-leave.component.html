@@ -1,0 +1,307 @@
+<div class="col-md-12 card card-outline-info" style="height:100%">
+  <div  *ngIf= "!show" >
+    <div >
+      <ol class="breadcrumb row ">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Self Service </li>
+        <li class="breadcrumb-item ">Leaves </li>
+        <li class="breadcrumb-item active">Employee Leave</li>
+      </ol>
+    </div>
+    <div >
+      <span style="font-weight:500">Employee Leave</span>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-12">
+        <div >
+          <table  class="table table-bordered table-striped table-sm ">
+            <thead class="bg-info">
+              <tr>
+                <th>Action</th>
+                <th>Employee</th>
+                <th>Leave Type</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Days</th>
+                <th>Leave Status</th>
+              </tr>
+            </thead>
+            <tbody id="hide" *ngFor="let eleave of leavemanagement">
+              <tr  *ngIf="eleave.reporting_mid==this.getuser.employee_OId || eleave.hr_mid==this.getuser.employee_OId" >
+                <td  *ngIf="eleave.employee_id!=this.getuser.employee_OId && eleave.leaverequest.status=='Approved' || eleave.leaverequest.status=='Pending for approval'">
+                   <i style="margin-left: 10%" (click)="open(deptModal);view(eleave);editvieweleave(eleave);" title="View" class="fa fa-eye text-primary"></i>
+                    <i style="margin-left: 5%" (click)="open(statusModal);action(eleave);editvieweleave(eleave);"  title="Approve or Reject or Cancel Leaves" class="fa fa-ellipsis-v text-primary"></i>    
+                </td>
+                <td  *ngIf="eleave.employee_id!=this.getuser.employee_OId && eleave.leaverequest.status=='Approved' || eleave.leaverequest.status=='Pending for approval'">{{eleave.username }}</td>
+                <td  *ngIf="eleave.employee_id!=this.getuser.employee_OId && eleave.leaverequest.status=='Approved' || eleave.leaverequest.status=='Pending for approval'">{{eleave.leaverequest.leavetype}}</td>
+                <td  *ngIf="eleave.employee_id!=this.getuser.employee_OId && eleave.leaverequest.status=='Approved' || eleave.leaverequest.status=='Pending for approval'">{{eleave.leaverequest.from_date}}</td>
+                <td  *ngIf="eleave.employee_id!=this.getuser.employee_OId && eleave.leaverequest.status=='Approved' || eleave.leaverequest.status=='Pending for approval'">{{eleave.leaverequest.to_date}}</td>
+                <td  *ngIf="eleave.employee_id!=this.getuser.employee_OId && eleave.leaverequest.status=='Approved' || eleave.leaverequest.status=='Pending for approval'">{{eleave.leaverequest.no_days}}</td>
+                <td  *ngIf="eleave.employee_id!=this.getuser.employee_OId && eleave.leaverequest.status=='Approved' || eleave.leaverequest.status=='Pending for approval'">{{eleave.leaverequest.status}}</td>
+              </tr> 
+              
+            </tbody>
+            
+          </table>
+        </div>
+      </div>
+      </div>
+    </div>
+    
+    <!-- <div  *ngIf="service.reporting_mid==this.getuser.employee_OId " style="margin: auto;
+    width: 100%;
+    border: 3px solid #73AD21;
+    padding: 10px; text-align: center" >
+        No Data Found
+    </div>
+  </div> -->
+
+  <md2-dialog #statusModal>
+      <!-- <div  *ngIf="hide" id="question"> -->
+      <md2-dialog-title>Leave Request</md2-dialog-title>    
+    <div *ngIf="userservice.visible" >
+        <div class="row">
+            <div class="col-md-4"><br>
+              <md-select placeholder="Status" [(ngModel)]="service.leaverequest.status"  class="example-full-width">
+              <md-option  *ngFor="let st of status" (click)="select(st.value)"  [value]="st.value" >
+              {{st.viewValue}}
+              </md-option>
+              </md-select><br><br>
+              
+            </div>
+            <div class="col-md-4">
+              <md-input-container class="example-full-width">
+              <input mdInput #message maxlength="50" [(ngModel)]="service.leaverequest.comments"  placeholder="Comments">
+              <md-hint align="end">{{message.value.length}} Characters entered / 50</md-hint>
+              </md-input-container><br><br>
+            </div>
+            <div  class="col-md-12" style="margin-top: 5%">
+              <button class="btn btn-outline-success btn-sm" (click)="save(service);leaveapproved(this.email,this.username,this.leavetype,this.from_date,this.to_date,this.no_days,this.applied_on,this.utype,service.leaverequest.status,service.leaverequest.comments)"> Save</button>
+              <button class="btn btn-outline-warning btn-sm" (click)="close(statusModal)">Cancel</button>
+            </div><br><br>
+          </div><br>  
+          
+          <div class="col-md-12">
+              <div  class="table-responsive" >
+                   <table class="table table-bordered table-hover "  >
+                     <tbody >
+                       
+                      <tr >
+                         <th>Employee</th>
+                         <td>{{service.username}}</td>
+                         <th>Leave Type</th>
+                         <td>{{service.leaverequest.leavetype}}</td>
+                       </tr>
+         
+                       <tr >
+                         <th>From</th>
+                         <td>{{service.leaverequest.from_date}}</td>
+                         <th>To</th>
+                         <td>{{service.leaverequest.to_date}}</td>
+                       </tr>
+         
+                       <tr  >
+                         <th>Leave For</th>
+                         <td>{{service.leaverequest.leavefor}}</td>
+                         <th>Days</th>
+                         <td>{{service.leaverequest.no_days}}</td>
+                       </tr>
+         
+                       <tr  >
+                         <th>Applied On</th>
+                         <td>{{service.leaverequest.applied_on}}</td>
+                       </tr>
+         
+                     </tbody> 
+                   </table>
+                 </div> 
+               </div>
+        </div>
+
+  <!-- //////////////// -->
+       <div *ngIf="userservice.invisible">
+            <div class="row">
+                <div class="col-md-4"><br>
+                  <md-select placeholder="Status" [(ngModel)]="service.leaverequest.status"  class="example-full-width">
+                  <md-option  *ngFor="let st of status1" (click)="select(st.value)"  [value]="st.value" >
+                  {{st.viewValue}}
+                  </md-option>
+                  </md-select><br><br> 
+            </div>
+            <div class="col-md-4">
+                <md-input-container class="example-full-width">
+                <input mdInput #message maxlength="50" [(ngModel)]="service.leaverequest.comments"  placeholder="Comments">
+                <md-hint align="end">{{message.value.length}} Characters entered / 50</md-hint>
+                </md-input-container><br><br>
+            </div>
+            <div  class="col-md-12" style="margin-top: 5%">
+                <button class="btn btn-outline-success btn-sm" (click)="save(service);leaveapproved(this.email,this.username,this.leavetype,this.from_date,this.to_date,this.no_days,this.applied_on,this.utype,service.leaverequest.status,service.leaverequest.comments)"> Save</button>
+                <button class="btn btn-outline-warning btn-sm" (click)="close(statusModal)">Cancel</button>
+            </div><br><br>
+            
+          <div class="col-md-12">
+              <div  class="table-responsive" >
+                   <table class="table table-bordered table-hover "  >
+                     <tbody >
+                       
+                      <tr >
+                         <th><b>Employee</b></th>
+                         <td>{{service.username}}</td>
+                         <th><b>Leave Type</b></th>
+                         <td>{{service.leaverequest.leavetype}}</td>
+                       </tr>
+         
+                       <tr >
+                         <th><b>From</b></th>
+                         <td>{{service.leaverequest.from_date}}</td>
+                         <th><b>To</b></th>
+                         <td>{{service.leaverequest.to_date}}</td>
+                       </tr>
+         
+                       <tr>
+                         <th><b>Leave For</b></th>
+                         <td>{{service.leaverequest.leavefor}}</td>
+                         <th><b>Days</b></th>
+                         <td>{{service.leaverequest.no_days}}</td>
+                       </tr>
+         
+                       <tr  >
+                         <th><b>Approved On</b></th>
+                         <td>{{service.leaverequest.approved_on | date}}</td>
+                       </tr>
+         
+                     </tbody> 
+                   </table>
+                 </div> 
+               </div>
+              </div>
+      </div>
+      
+    </md2-dialog>
+  
+  <md2-dialog #deptModal >
+    <md2-dialog-title>Employees Leave Detail</md2-dialog-title>
+    <div *ngIf="userservice.visible" >
+        <div class="row">
+            <div class="col-md-4"><br>
+              <md-select placeholder="Status" [(ngModel)]="service.leaverequest.status"  class="example-full-width">
+              <md-option  *ngFor="let st of status" (click)="select(st.value)"  [value]="st.value" >
+              {{st.viewValue}}
+              </md-option>
+              </md-select><br><br>
+            </div>
+            <div class="col-md-4">
+              <md-input-container class="example-full-width">
+              <input mdInput #message maxlength="50" [(ngModel)]="service.leaverequest.comments"  placeholder="Comments">
+              <md-hint align="end">{{message.value.length}} Characters entered / 50</md-hint>
+              </md-input-container><br><br>
+            </div>
+            <div  class="col-md-12" style="margin-top: 5%">
+                <button class="btn btn-outline-success btn-sm" (click)="save(service);leaveapproved(this.email,this.username,this.leavetype,this.from_date,this.to_date,this.no_days,this.applied_on,this.utype,service.leaverequest.status,service.leaverequest.comments)"> Save</button>
+                <button class="btn btn-outline-warning btn-sm" (click)="close(deptModal)">Cancel</button>
+            </div><br>
+        </div>
+      </div>
+      <div *ngIf="userservice.invisible">
+          <div class="row">
+              <div class="col-md-4"><br>
+                <md-select placeholder="Status" [(ngModel)]="service.leaverequest.status"  class="example-full-width">
+                <md-option  *ngFor="let st of status1" (click)="select(st.value)"  [value]="st.value" >
+                {{st.viewValue}}
+                </md-option>
+                </md-select><br>
+              </div>
+              <div class="col-md-4">
+                  <md-input-container class="example-full-width">
+                  <input mdInput #message maxlength="50" [(ngModel)]="service.leaverequest.comments"  placeholder="Comments">
+                  <md-hint align="end">{{message.value.length}} Characters entered / 50</md-hint>
+                  </md-input-container><br>
+                </div>
+                <div  class="col-md-12" style="margin-top: 5%">
+                    <button class="btn btn-outline-success btn-sm" (click)="save(service);leaveapproved(this.email,this.username,this.leavetype,this.from_date,this.to_date,this.no_days,this.applied_on,this.utype,service.leaverequest.status,service.leaverequest.comments)"> Save</button>
+                    <button class="btn btn-outline-warning btn-sm" (click)="close(deptModal)">Cancel</button>
+                </div><br>
+          </div>
+      </div>
+    <br>
+    <div class=" row box" >
+      <div class="emp-info">
+        <b>Username  :</b> {{service.username}}
+      </div>
+      <div class="emp-info">
+        <b>Leave Type :</b> {{service.leaverequest.leavetype}}
+      </div>
+      <div class="emp-info alter-div">
+        <b>From Date :</b> {{service.leaverequest.from_date | date}}
+      </div>
+      <div class="emp-info alter-div">
+        <b>To Date :</b> {{service.leaverequest.to_date | date}}
+      </div>
+      <div class="emp-info">
+        <b>Days  :</b> {{service.leaverequest.no_days}}
+      </div>
+      <div class="emp-info">
+      <b>Leave Status :</b> {{service.leaverequest.status}}
+      </div><br>
+    </div>
+      <br>
+    <span><b>LEAVE REQUEST HISTORY</b></span>
+    <div class="box4" *ngIf="service.leaverequest.status=='Approved'">
+        <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+        <tr>
+          <td>
+        <img class="imageClass" src="./assets/Images/employee.jpg"/>
+        </td>
+        <td>
+      <span>
+          {{service.leaverequest.approvestatus}} on {{service.leaverequest.approved_on | date}}
+      </span>
+      </td>
+      </tr>
+        </table>
+    </div>
+    <!-- <div class="box4" *ngIf="leave.leaverequest.status=='Rejected'">
+        <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+            <tr>
+              <td>
+            <img class="imageClass" src="./assets/Images/employee.jpg"/>
+            </td>
+            <td>
+          <span>
+              {{leave.leaverequest.rejectstatus}} on {{leave.leaverequest.rejected_on | date}}
+          </span>
+            </td>
+            </tr>
+            </table>
+        </div>
+        <div class="box4" *ngIf="leave.leaverequest.status=='Cancelled'">
+            <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+            <tr>
+              <td>
+            <img class="imageClass" src="./assets/Images/employee.jpg"/>
+            </td>
+            <td>
+          <span>
+              {{leave.leaverequest.cancelstatus}} on {{leave.leaverequest.cancelled_on | date}}
+          </span>
+          </td>
+          </tr>
+            </table>
+        </div> -->
+        <div class="box4" >
+            <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+                <tr>
+                  <td>
+                <img class="imageClass" src="./assets/Images/employee.jpg"/>
+                </td>
+                <td>
+              <span>
+                  {{service.leaverequest.requested}} on {{service.leaverequest.applied_on | date}}
+              </span>
+                </td>
+                </tr>
+                </table>
+            </div>
+</md2-dialog>
+  

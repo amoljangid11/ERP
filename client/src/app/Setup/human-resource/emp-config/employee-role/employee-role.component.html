@@ -1,0 +1,125 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+    <div  *ngIf = "!show" >
+      <div>
+        <ol class="breadcrumb row bg-primary" >
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employees-Configuration </li>
+          <li class="breadcrumb-item active">Employee-Roles</li>
+        </ol>
+      </div>
+      <div>
+        <span style="font-weight:500">Employee-Roles</span>
+        <button type="button" style="float: right;margin:0% 0% 0% 0%" class="btn btn-primary btn-sm" (click)="cancel();show = !show;updates=false;">Add
+      </button></div>
+      <br><br>
+  
+       <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+            {{ message }}
+          </div>
+          <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+            {{ message }}
+          </div>
+  
+      <div class="row">
+        <div class="col-lg-12">
+          <div>
+            <table class="table table-bordered table-striped table-sm">
+              <thead class="bg-success">
+                <tr>
+                  <th>Actions</th>
+                  <th>Role Name</th>
+                  <th>Description</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let erole of datas;let i = index " >
+                  <td>
+                      <i class="fa fa-eye"  title="View" (click)="open(roleModal);view(erole);"></i>&nbsp;&nbsp;
+                    <i (click)="edit(erole);show = !show"   title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(erole,i)" title="Delete" class="fa fa-trash-o"></i> </td>
+                  <td >{{erole.employeeroles[0].rolename}}</td>
+                  <td>{{erole.employeeroles[0].description}}</td>
+                </tr>
+              </tbody>
+              
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="form-horizontal" [formGroup]="form">
+    <div  *ngIf = "show" >
+      <div>
+        <ol class="breadcrumb row bg-primary" >
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employees-Configuration </li>
+          <li class="breadcrumb-item ">Employee-Roles</li>
+          <li class="breadcrumb-item active">Add</li>
+        </ol>
+        
+      </div><br>
+      
+      <div class="row">
+        <div class="col-sm-4">
+          <md-input-container class="example-full-width">
+          <input mdInput placeholder="Role Name" [(ngModel)]="employee.employeeroles[0].rolename" class="form-control" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="20" formControlName="rolename" required>
+          <md-error>
+          Please enter role name.
+          </md-error>
+          </md-input-container><i mdTooltip="Ex:" class="fa fa-question-circle" ></i>
+        </div>
+        <div class="col-sm-4">
+          <md-input-container class="example-full-width">
+          <input mdInput placeholder="Description" [(ngModel)]="employee.employeeroles[0].description" class="form-control" formControlName="description" >
+          </md-input-container>
+        </div>
+        <!-- <div class="col-sm-4">
+            <md-input-container class="example-full-width">
+          <input mdInput placeholder="Group Name" [(ngModel)]="groupname" required>
+          <md-error>
+          Please enter group name.
+          </md-error>
+          </md-input-container>
+        </div> -->
+        
+        <div class="col-md-12" style="margin-top: 5%">
+          <button  *ngIf="!updates"  class="btn btn-outline-success btn-sm"(click)="save(employee);show=!show;" [disabled]="!form.valid"> Save</button>
+          <button *ngIf="updates"  class="btn btn-outline-success btn-sm" (click)="update(employee);show=!show;updates=!updates" [disabled]="!form.valid"> Update</button>
+          <button  class="btn btn-outline-warning btn-sm" (click) = "cancel(employee);show=!show;updates=!updates"> Cancel </button>
+        </div>
+  
+      </div>
+    
+    </div>
+    </form>
+    <!-- <tree-root [nodes]="nodes" [options]="options">
+        
+    </tree-root> -->
+
+
+    <md2-dialog #roleModal>
+        <md2-dialog-title>Employee-Roles</md2-dialog-title>
+        <div class="row">
+          <div style="" class="col-md-12"><br>
+                <div class="emp-info alter-div">
+                    Role Name : {{employee.employeeroles[0].rolename}}
+                </div>  
+                <div class="emp-info alter-div">
+                    Description : {{employee.employeeroles[0].description}}
+                </div>  
+                <div class="emp-info">
+                    
+                </div>  
+                <div class="emp-info">
+                  
+                </div>  
+           </div>
+           </div>
+           
+        <md2-dialog-footer>
+            <button type="submit" class="btn btn-secondary" (click)="close(roleModal)">Cancel</button>
+        </md2-dialog-footer>
+      </md2-dialog>
+      

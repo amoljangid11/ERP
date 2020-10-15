@@ -1,0 +1,63 @@
+<!-- <div  class="col-md-12">
+<div  style="padding-top: 20px;border-style: inset;" class="row">
+  <div  class="col-md-4">
+  <md-card>
+  <md-card-content  (click)="project_time()" >
+  <p><b><i class="fa fa-file-powerpoint-o" style="font-size:36px"></i><h4>Project</h4></b><br>Configure the project details and define the project<br> type along with the estimates</p>
+  </md-card-content>
+  </md-card>&nbsp;
+  </div>
+ <div  class="col-md-4">
+
+  <md-card> 
+     <md-card-content  (click)="tasks()">
+     <p ><b><i (click)="pro" class="fa fa-sitemap" style="font-size:36px"></i><h4>Tasks</h4></b><br>Add the project related tasks,provide estimates,billable rate per hour and assign the resources</p></md-card-content>
+  </md-card>&nbsp;
+  </div>
+ <div  class="col-md-4">
+  <md-card>
+    <md-card-content (click)="resources()">
+  <p><b><i class="fa fa-registered" style="font-size:36px"></i><h4>Resources</h4></b><br>Add the project related resources,provide billable,<br>cost rate and assign tasks</p>
+  </md-card-content>
+  </md-card>
+  </div>
+</div> 
+<div class="row">
+  <div class="col-md-12">
+        <router-outlet name="projectchild"></router-outlet> 
+  </div>
+</div>
+
+</div>  -->
+<div class="col-md-12">
+  <div  class="row" style="padding: 0">
+        <ul class="nav nav-tab nav-pills left_steps">       
+          <li class="site inactive" style="width: 33.3%;padding:10px">
+            <md-card-content  (click)="project_time()">
+            <p><b><i class="fa fa-file-powerpoint-o" style="font-size:36px"></i><h4>Project</h4></b><br>Configure the project details and define the project type along with the estimates</p>
+            </md-card-content>
+          </li>
+          <li class="manage inactive" style="width: 33.3%;padding: 10px" >
+            <md-card-content  (click)="tasks()">
+            <p ><b><i (click)="pro" class="fa fa-sitemap" style="font-size:36px"></i><h4>Tasks</h4></b><br>Add the project related tasks,provide estimates,billable rate per hour and assign the resources</p>
+            </md-card-content>
+          </li>
+          <li class="org inactive" style="width: 33.4%;padding: 10px" >
+            <md-card-content (click)="resources()">
+            <p><b><i class="fa fa-registered" style="font-size:36px"></i><h4>Resources</h4></b><br>Add the project related resources,provide billable,cost rate and assign tasks</p>
+            </md-card-content>
+          </li>
+  </ul>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+          <router-outlet name="projectchild"></router-outlet> 
+    </div>
+  </div>
+  </div>
+     <!-- <div style="" class="card-body">
+      <div style="" class="row">
+        
+      </div>         
+    </div> -->
+   

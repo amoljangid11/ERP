@@ -1,0 +1,81 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div  *ngIf= "!show">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item ">General </li>
+        <li class="breadcrumb-item active">Number Formats</li>
+      </ol>
+    </div>
+    <div >
+      <span style="font-weight:500">Number Formats</span>
+      <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button>
+    </div><br><br>
+    <div class="row">
+      <div class="col-lg-12">
+        <div >
+          <table  class="table table-bordered table-striped table-sm ">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Number Format Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let num of alldata">
+              <tr>
+                <td>
+                  <i title="Edit" *ngIf="num.id !== editRowId" (clnumick)="toggle(num.id)" (click)="edit(num.id)" style="margin-left: 1%;"  class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  <i title="Delete" style="margin-left: 1%;" class="fa fa-trash" aria-hidden="true" (click)="remove(num,i)" ></i>
+                  <i title="Save" *ngIf="num.id == editRowId" style="float: right" class="fa fa-floppy-o" aria-hidden="true"  (click)="update(num)"></i>
+                </td>
+                
+                <td *ngIf="num.id == editRowId" class="example-full-width">
+                  <input type="text"  [(ngModel)]="num.numberformats[0].type">
+                </td>
+                <td  *ngIf="num.id !== editRowId">{{num.numberformats[0].type}}</td>
+                <td *ngIf="num.id == editRowId" class="example-full-width">
+                  <input type="text"  [(ngModel)]="num.numberformats[0].description">
+                </td>
+                <td  *ngIf="num.id !== editRowId">{{num.numberformats[0].description}}</td>
+                
+              </tr>
+            </tbody>
+            
+          </table>
+        </div></div>
+      </div>
+    </div>
+    <div >
+      <div *ngIf= "show" >
+        <div >
+          <ol class="breadcrumb row bg-primary">
+            <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+            <li class="breadcrumb-item ">Site </li>
+            <li class="breadcrumb-item ">General </li>
+            <li class="breadcrumb-item ">Number Formats </li>
+            <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+            
+          </ol>
+        </div>
+        <div  class="row">
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input required name="num" [(ngModel)]="number.type" mdInput placeholder=" Number Formats" >
+            </md-input-container><i mdTooltip="Ex:1,000,000" class="fa fa-question-circle"></i><br>
+          </div>
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput #message maxlength="200" [(ngModel)]="number.description" placeholder="Description">
+            <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+            </md-input-container><br>
+          </div>
+          <div  class="col-md-12" style="margin-top: 5%">
+            <button class="btn btn-outline-success btn-sm" (click)="save(number);show=!show"> Save</button>
+            <button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

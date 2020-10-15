@@ -1,0 +1,112 @@
+<div *ngIf= "!show"  class="col-lg-12">
+<div class="row">
+<div  style="display: both" class="col-lg-12">
+    <span style="font-weight:500">Experience</span>
+    <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button> 
+</div><br><br>
+</div>
+<div class="row">
+ <div class="col-lg-12"><br>
+  <div class="table-responsive"> 
+  <table  class="table table-bordered table-hover ">
+ <thead class="thead-inverse">
+     <tr>
+      <th>Action</th>
+      <th>Company Name</th>
+      <th>Company Website</th>
+       <th>Designation</th>
+      <th>From</th>
+      <th>To</th>
+     </tr>
+  </thead> 
+  <tbody> 
+    <tr *ngFor="let ex of exper;let i = index " >
+            <td><i *ngIf="ex.id !== editRowId" (click)="edit(ex.id)"  title="Edit" class="fa fa-pencil-square-o"></i>/td>
+
+  <td *ngIf="ex.id == editRowId"> 
+       <input type="text" [(ngModel)]="ex.companyname">
+  </td>
+  <td *ngIf="ex.id !== editRowId">{{ex.companyname}}</td>
+
+  <td *ngIf="ex.id == editRowId"> 
+       <input type="text" [(ngModel)]="ex.companywebsite">
+  </td>
+  <td *ngIf="ex.id !== editRowId">{{ex.companywebsite}}</td>
+
+  <td *ngIf="ex.id == editRowId"> 
+       <input type="text" [(ngModel)]="ex.designation">
+  </td>
+  <td *ngIf="ex.id !== editRowId">{{ex.designation}}</td>
+
+  <td *ngIf="ex.id == editRowId"> 
+       <input type="text" [(ngModel)]="ex.joindate">
+  </td>
+  <td *ngIf="ex.id !== editRowId">{{ex.joindate}}</td>
+
+  <td *ngIf="ex.id == editRowId"> 
+       <input type="text" [(ngModel)]="ex.lastdate">
+  </td>
+  <td *ngIf="ex.id !== editRowId">{{ex.lastdate}}</td>
+</tr>                                        	
+  </tbody>                             
+  </table>
+  </div>
+  </div>
+  </div>
+</div>
+
+<div *ngIf= "show" class="col-lg-12">
+<div style=""  class="row">
+<div class="col-md-4"><br>
+    <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="company"  placeholder="Company Name"> 
+    </md-input-container><br><br> <br>
+
+    <md-input-container>
+     <input mdInput [mdDatepicker]="pick1"  [(ngModel)]="from" placeholder="From">
+     <button mdSuffix [mdDatepickerToggle]="pick1"></button>
+    </md-input-container>
+    <md-datepicker #pick1></md-datepicker> <br><br><br><br>
+    <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="referrer"  placeholder="Referrer Name"> 
+    </md-input-container><br><br> <br>
+  </div>
+<div class="col-md-4"><br>
+ <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="cwebsite"  placeholder="Company Website"> 
+    </md-input-container><br><br> <br>
+
+    <md-input-container>
+     <input mdInput [mdDatepicker]="pick"  [(ngModel)]="to" placeholder="To">
+     <button mdSuffix [mdDatepickerToggle]="pick"></button>
+    </md-input-container>
+    <md-datepicker #pick></md-datepicker> <br><br><br><br>
+    <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="refercontact"  placeholder="Referrer Contact"> 
+    </md-input-container><br><br> <br>
+
+
+</div>
+<div class="col-md-4"><br>
+ <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="designation"  placeholder="Designation">
+    </md-input-container><br><br> <br>
+     <md-input-container class="example-full-width">
+        <input mdInput name="reason" [(ngModel)]="reason"  #message maxlength="200" placeholder="Reason for Leaving">
+  </md-input-container><br><br><br> <br>
+     <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="refermail"  placeholder="Referrer Email"> 
+    </md-input-container><br><br> <br>
+	</div>
+
+</div>
+  <div style="float: right;margin:0% 2% 0% 0%" class="row">
+<div  class="col-md-12">
+<button class="btn btn-outline-primary btn-sm" (click)="saveexp();show=!show"> Save</button>
+<button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+</div>
+</div>
+
+
+</div>
+

@@ -1,0 +1,104 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item ">General </li>
+        <li class="breadcrumb-item active">Ethnic-Code</li>
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:500">Ethnic-Code</span>
+      <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button>
+    </div><br><br>
+    
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+   
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <table  class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Ehnic Code</th>
+                <th>Ethnic Short Code</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ecode of datas;let i = index ">
+                <td>
+                    <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(ecode)"></i>&nbsp;&nbsp;
+                  <i (click)="edit(ecode);show = !show"   title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(ecode,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                <td>{{ecode.ethnic[0].code}}</td>
+                <td>{{ecode.ethnic[0].shortcode}}</td>
+                <td>{{ecode.ethnic[0].description}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf= "show" >
+    <div>
+      <ol class="breadcrumb row bg-primary">
+        
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item ">General </li>
+        <li class="breadcrumb-item ">Ethnic-Code</li>
+        <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+      </ol>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput [(ngModel)]="code.ethnic[0].code" placeholder="Ethnic Code" >
+        
+        </md-input-container><i mdTooltip="Ex:American Indian" class="fa fa-question-circle"></i><br><br><br>
+      </div>
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput [(ngModel)]="code.ethnic[0].shortcode" placeholder="Ethnic short code" >
+        
+        </md-input-container><i mdTooltip="Ex:AI" mdTooltipPosition="above" class="fa fa-question-circle"></i><br><br><br>
+      </div>
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput #message maxlength="200" [(ngModel)]="code.ethnic[0].description"  placeholder="Description">
+        <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+        </md-input-container><br><br><br>
+      </div>
+      <div  class="col-md-12" style="margin-top: 5%">
+        <button  *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(code);show=!show"> Save</button>
+        <button *ngIf="updatebutton"  class="btn btn-outline-success btn-sm" (click)="update(code);show=!show;updatebutton=!updatebutton"> Update</button>
+        <button class="btn btn-outline-warning btn-sm" (click) = "cancel(code);show=!show;updatebutton=!updatebutton"> Cancel </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<md2-dialog #deptModal>
+    <md2-dialog-title>Ethnic Code</md2-dialog-title>
+    <div class=" row box">
+      <div class="emp-info">
+        Ethnic Code  : {{code.ethnic[0].code}}
+      </div>
+      <div class="emp-info">
+        Ethnic Short Code  : {{code.ethnic[0].shortcode}}
+      </div><br>
+      <div class="emp-info alter-div">
+        Description : {{code.ethnic[0].description}}
+      </div>
+      <div class="emp-info alter-div"></div><br>
+    </div>
+  <md2-dialog-footer>
+      <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+  </md2-dialog-footer>
+</md2-dialog>

@@ -1,0 +1,99 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+    <div *ngIf = "!show" >
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employee Configuration</li>
+          <li class="breadcrumb-item active">EEOC Categories</li>
+        </ol>
+      </div>
+      <div>
+        <span style="font-weight:500">EEOC Categories</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "cancel();show = !show;updates=false;">Add</button>
+      </div><br><br>
+      <div class="row">
+        <div class="col-lg-12">
+          <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+            {{ message }}
+          </div>
+          <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+            {{ message }}
+          </div>
+          
+          <div>
+            <table  class="table table-bordered table-striped table-sm">
+              <thead class="bg-success">
+                <tr>
+                  <th>Action</th>
+                  <th>EEOC Category</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let eeoc of datas;let i = index " >
+                  <td> <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(eeoc)"></i>&nbsp;&nbsp;
+                    <i (click)="edit(eeoc);show = !show"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(eeoc,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                  <td>{{eeoc.eeoccategory[0].category}}</td>
+                  <td>{{eeoc.eeoccategory[0].description}}</td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <form class="form-horizontal" [formGroup]="form">
+    <div *ngIf= "show" >
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employee Configuration</li>
+          <li class="breadcrumb-item ">EEOC Categories </li>
+          <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+        </ol>
+      </div>
+      <br>
+      <div  class="row">
+        <div class="col-md-4">
+          <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="category.eeoccategory[0].category"  placeholder="EEOC Category" pattern="^[a-zA-Z0-9 ]*$" maxlength="50" class="form-control" formControlName="eeoc" required>
+          <md-error >
+            Please enter EEOC category
+          </md-error>
+        </md-input-container><i mdTooltip="Ex: Operatives,Sales Workers" class="fa fa-question-circle" ></i><br><br><br>
+        </div>
+        <div class="col-md-4">
+          <md-input-container class="example-full-width">
+          <input mdInput #message maxlength="200" [(ngModel)]="category.eeoccategory[0].description" placeholder="Description" class="form-control" formControlName="desc">
+          <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+          </md-input-container><br><br><br>
+        </div>
+        <div  class="col-md-12" style="margin-top: 5%">
+          <button  *ngIf="!updates"  class="btn btn-outline-success btn-sm"(click)="save(category);show=!show;" [disabled]="!form.valid"> Save</button>
+          <button *ngIf="updates"  class="btn btn-outline-success btn-sm" (click)="update(category);show=!show;updates=!updates" [disabled]="!form.valid"> Update</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "cancel(category);show=!show;updates=!updates"> Cancel </button>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+
+ 
+<md2-dialog #deptModal>
+      <md2-dialog-title>EEOC Categories</md2-dialog-title>
+      <div class=" row box">
+        <div class="emp-info">
+            EEOC Category : {{category.eeoccategory[0].category}}
+        </div>
+        <div class="emp-info">
+            Description : {{category.eeoccategory[0].description}}
+        </div>
+      </div>
+    <md2-dialog-footer>
+        <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+    </md2-dialog-footer>
+    </md2-dialog>

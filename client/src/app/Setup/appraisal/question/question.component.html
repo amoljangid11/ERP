@@ -1,0 +1,95 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%;" >
+  <div *ngIf = "!show"  >
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Appraisal</li>
+        <li class="breadcrumb-item ">Configuration</li>
+        <li class="breadcrumb-item active">Questions</li>
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:500">Questions</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false">Add</button>
+      
+    </div><br><br>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div class="row">
+      <div class="col-lg-12" >
+        <div >
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Parameter</th>
+                <th>Question</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr *ngFor="let qt of dataset;let i = index " >
+                <td><i  (click)="edit(qt);show = !show;hide=!hide"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(qt,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                <td >{{qt.question[0].parameter}}</td>
+                <td >{{qt.question[0].question}}</td>
+                <td >{{qt.question[0].description}}</td>
+              </tr>
+            </tbody>
+            
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf= "show" >
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Appraisal</li>
+        <li class="breadcrumb-item ">Configuration</li>
+        <li class="breadcrumb-item ">Questions</li>
+        <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+      </ol>
+    </div><br>
+    <div class="row">
+      <div class="col-md-4">
+        <md-select placeholder="Parameter" [(ngModel)]="questions.question[0].parameter">
+            <input type="search" [(ngModel)]="searchText" placeholder="Search text">
+          <md-option *ngFor="let pr of datas | filter: searchText" value="{{pr.parameter[0].parameter}}">
+            {{pr.parameter[0].parameter}}
+          </md-option>
+        </md-select>
+      </div>
+        </div><br>
+    <div class="row">
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput placeholder="Question" [(ngModel)]="questions.question[0].question" required>
+        <md-error>
+        Please enter question.
+        </md-error>
+        </md-input-container><br><br><br>
+      </div>
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput #message maxlength="200" [(ngModel)]="questions.question[0].description" placeholder="Description">
+        <md-hint align="end">{{message.value.length}} characters entered(200 maximum)</md-hint>
+        </md-input-container><br><br><br>
+      </div>
+    </div>
+
+    
+       <div  class="col-md-12" style="margin-top: 5%">
+        <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(questions);show=!show"> Save</button>
+        <button *ngIf="!updatebutton" class="btn btn-outline-danger btn-sm" (click) = "cancel(questions);show = !show;"> Cancel </button>
+        <button *ngIf="updatebutton"  class="btn btn-outline-success btn-sm" (click)="update(questions,questions,questions.question[0].questions);show = !show;hide=!hide"> Update</button>
+        <button *ngIf="updatebutton" class="btn btn-outline-danger btn-sm" (click) = "cancel(questions);show = !show;hide=!hide"> Cancel </button>
+      </div>
+    </div>
+  </div>
+  
+  

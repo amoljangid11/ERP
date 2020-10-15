@@ -1,0 +1,83 @@
+<div class="row " id="second_card" style="height: 100%">
+     
+    <div style="width: 100%;" class="nav-side-menu">
+       
+        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+      
+        <div class="menu-list">
+    <!--   
+            <ul id="menu-content" class="menu-content collapse out">
+               <li><a (click)="configuration()">Configuration</a></li>
+                       <li><a  (click)="categories()">Categories</a></li>
+                       <li> <a  (click)="request_type()">Request Type</a></li>
+                       <li> <a  (click)="priority()">Priority</a></li>
+                       <li><a  (click)="setting()">Setting</a></li>
+            </ul> -->
+    
+            <ul id="menu-content" class="menu-content collapse out">
+    
+              <li data-toggle="collapse" *ngIf="this.getuser.utype=='admin'" data-target="#request" class="collapsed "><a>Configuration 
+              <span class="arrow"></span></a></li>
+                  <ul class="sub-menu collapse" id="request">
+                      <li (click)="categories()"><a >Categories </a></li>
+                      <li  (click)="request_type()"><a>Request Type</a></li>
+                      <li  (click)="setting()"><a>setting</a></li>
+    
+                  </ul>
+    
+    
+    
+                  <li data-toggle="collapse" *ngIf="this.getuser.utype!='admin'" data-target="#myactionsumm" class="collapsed "><a>My request summary  
+                    <span class="arrow"></span></a></li>
+                        <ul class="sub-menu collapse" id="myactionsumm">
+                                        <li (click)="all()"><a >All {{this.allemp.length || 0}}</a></li>                   
+    
+                            <li  (click)="open()"><a>Open {{this.openemp.length || 0}}</a></li>
+                            <li  (click)="closed()"><a>Closed {{this.closeemp.length || 0}}</a></li>
+                            <li  (click)="rejected()"><a>Rejected  {{this.rejectemp.length || 0}}</a></li>
+                            <li  (click)="cancelled()"><a>Cancelled  {{this.cancelemp.length || 0}}</a></li>
+                        </ul>
+    
+            <li  data-toggle="collapse" *ngIf="this.getuser.utype!='admin'" data-target="#loc" class="collapsed "><a>My action summary
+                <span class="arrow"></span> </a></li>
+                <ul class="sub-menu collapse" id="loc">
+                    <li (click)="all1()"><a >All     {{this.obk.length || this.oobj1.length || this.oobj2.length || this.oobj11.length || this.oobj12.length || 0}}</a></li>
+                    <li  (click)="open1()"><a>Open   {{this.openexecutor.length || this.openmanager.length || this.openmanagement1.length || this.openmanagement2.length || this.openmanagement3.length || 0}}  </a></li>
+                    <li  (click)="pending1()"><a>Pending  {{this.pendingexecutor.length || 0}}</a></li>
+                    <li  (click)="closed1()"><a>Closed  {{this.closeexecutor.length || this.closemanagement1.length || this.closemanagement2.length || 0}}</a></li>
+                    <li  (click)="rejected1()"><a>Rejected {{this.rejectexecutor.length || this.rejectmanager.length || 0}}</a></li>
+                    <!-- <li  (click)="cancelled1()"><a>Cancelled</a></li> -->
+                    <li  (click)="duetoday1()"><a>Due today</a></li>
+                    <li  (click)="overdue1()"><a>Overdue</a></li>
+                    <li  (click)="sentforapproval1()"><a>Sent for approval {{this.sendexecutor.length || 0}}</a></li>
+                    <li >As a reporting manager<span class="arrow"></span></li>
+                    <!-- <li  (click)="all1()"><a>All</a></li> -->
+                    <li  (click)="toapproval1()"><a>To approve {{this.toapprovemanager.length || 0}}</a></li>
+                    <li  (click)="approval1()"><a>Approved  {{this.approvemanager1.length || 0 }}</a></li>
+                    <li  (click)="reject1()"><a>Rejected {{this.rejectmanager.length || 0}}</a></li>
+    
+    
+                </ul> 
+    
+    
+                <li data-toggle="collapse" *ngIf="this.getuser.utype=='Management' && this.getuser.utype!='admin'" data-target="#myactionmanagement" class="collapsed "><a>All request summary  
+                    <span class="arrow"></span></a></li>
+                        <ul class="sub-menu collapse" id="myactionmanagement">
+                            <li (click)="mall()"><a >All {{this.mall1.length || this.mall2.length || this.mall3.length || 0}}</a></li>
+                            <li  (click)="mopen()"><a>Open {{this.mopen1.length || this.mopen2.length || this.mopen3.length || 0}}</a></li>
+                            <li  (click)="mclosed()"><a>Closed/Rejected  {{this.mclosed1.length || this.mclosed2.length || this.mclosed3.length || 0}}</a></li>
+                            <li  (click)="mcancelled()"><a>Cancelled {{this.mcancelled1.length || this.mcancelled2.length || this.mcancelled3.length || 0}} </a></li>
+                            <li  (click)="moverdue()"><a>Overdue {{this.moverdue1.length || this.moverdue2.length || this.moverdue3.length || 0}}</a></li>
+                            <li  (click)="mduetoday()"><a>Due today {{this.mduetody1.length || this.mduetody2.length || this.mduetody3.length || 0}} </a></li>
+                            <li  (click)="mtoapprove()"><a>To approve {{this.mtoapprove1.lengh || this.mtoapprove2.length || this.mtoapprove3.length || 0}} </a></li>
+                            <li  (click)="mapprove()"><a>Approved {{this.mapprove1.length || this.mapprove2.length || this.mapprove3.length || 0}}</a></li>
+                            <li  (click)="mreject()"><a>Rejected  {{this.mreject1.length || this.mreject2.length || this.mreject3.length || 0}}</a></li>
+                        </ul>
+                
+                </ul>
+    </div>
+    </div>
+    </div>
+     
+    
+    

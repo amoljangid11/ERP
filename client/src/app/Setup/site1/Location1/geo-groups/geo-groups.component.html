@@ -1,0 +1,150 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div  *ngIf= "!show">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item ">Locations </li>
+        <li class="breadcrumb-item active">Geo Groups</li>
+      </ol>
+    </div>
+    <div  >
+      <span style="font-weight:  500">Geo Groups</span>
+      <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">
+      <i class="fa fa-plus"></i>   Add</button>
+    </div><br><br>
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+          <table  class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Geography Code</th>
+                <th>Default Geography Group</th>
+                <th>Geography Group</th>
+                <th>Geography Region </th>
+                <th>Currency</th>
+                <th>Geography city</th>
+              </tr>
+              
+            </thead>
+            <tbody *ngFor="let d of datas;let i=index " >
+              <tr >
+                <td><i class="fa  fa-eye"></i><i *ngIf="d.id !== editRowId" (click)="edit(d.id)" style="margin-left: 5%;" class="fa fa-pencil-square-o" aria-hidden="true"></i><i style="margin-left: 5%;" class="fa fa-trash" aria-hidden="true" (click)="remove(d,i)" ></i><i *ngIf="d.id == editRowId" style="float: right;" class="fa fa-floppy-o" aria-hidden="true" (click)="update(d)"></i></td>
+                <td *ngIf="d.id == editRowId">
+                  <input class="input" type="text" [(ngModel)]="d.geographycode">
+                </td>
+                <td *ngIf="d.id !== editRowId">{{d.geographycode}}</td>
+                <td *ngIf="d.id == editRowId">
+                  <input class="input" type="text" [(ngModel)]="d.defaultgeogroup">
+                </td>
+                <td *ngIf="d.id !== editRowId">{{d.defaultgeogroup}}</td>
+                <td *ngIf="d.id == editRowId">
+                  <input class="input" type="text" [(ngModel)]="d.geographygroup">
+                </td>
+                <td *ngIf="d.id !== editRowId">{{d.geographygroup}}</td>
+                <td *ngIf="d.id == editRowId">
+                  <input class="input" type="text" [(ngModel)]="d.geographyregion">
+                </td>
+                <td *ngIf="d.id !== editRowId">{{d.geographyregion}}</td>
+                <td *ngIf="d.id == editRowId">
+                  <input class="input" type="text" [(ngModel)]="d.currency">
+                </td>
+                <td *ngIf="d.id !== editRowId">{{d.currency}}</td>
+                <td *ngIf="d.id == editRowId">
+                  <input class="input" type="text" [(ngModel)]="d.geographycity">
+                </td>
+                <td *ngIf="d.id !== editRowId">{{d.geographycity}}</td>
+                
+              </tr>
+            </tbody>
+            
+          </table>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+  <div  *ngIf="show">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item ">Locations </li>
+        <li class="breadcrumb-item active">Geo Groups</li>
+        <li class="breadcrumb-item active">Add</li>
+      </ol>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <md-input-container class="example-full-width">
+          <input required mdInput placeholder="Geography Code" [(ngModel)]="geocode">
+          </md-input-container>
+          <md-input-container class="example-full-width">
+          <input mdInput placeholder=" Geography Region" [(ngModel)]="georegion">
+          </md-input-container>
+        </div>
+        <div class="col-md-3">
+          <md-input-container class="example-full-width">
+          <input mdInput placeholder="Default Geography Group" [(ngModel)]="d_geogroup">
+          </md-input-container>
+          <md-input-container class="example-full-width">
+          <input mdInput placeholder=" Geography City" [(ngModel)]="geocity">
+        </md-input-container></div>
+        <div class="col-md-3">
+          <md-input-container class="example-full-width">
+          <input mdInput placeholder=" Geography Group" [(ngModel)]="geogroup">
+          </md-input-container><br><br>
+          
+          <md-select placeholder="Currency" [(ngModel)]="selectedValue" name="money">
+          <md-option *ngFor="let d of currencyall" [value]="d.currencyname">
+          {{d.currencyname}}
+          </md-option>
+          </md-select><br>
+          <i style="color:#1565c0 ; "  data-toggle="modal" data-target="#basic">Add Currency</i>
+          
+        </div><br>
+        <div  class="col-md-12" style="margin-top: 5%">
+        <button class="btn btn-outline-success btn-sm" (click)="save(id);show=!show"> Save</button>
+          <button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+        </div>
+      </div>
+    </div>
+  <div class="modal fade" id="basic" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title" id="myModalLabel">Currency</h4>
+        </div>
+        
+        <div style="display: inline-flex;">
+          <div class="modal-body">
+            <div style="margin-left: 2%;" class="row">
+              <md-input-container class="example-full-width">
+              <input required mdInput placeholder="Currency" [(ngModel)]="Currencyn" >
+              </md-input-container><br><br><br>
+            </div>
+            <div style="margin-left: 2%;"  class="row">
+              <md-input-container class="example-full-width">
+              <input required mdInput placeholder="Currencycode"  [(ngModel)]="currencyc">
+              </md-input-container><br><br><br>
+            </div>
+            <div style="margin-left: 2%;"  class="row">
+              <md-input-container class="example-full-width">
+              <input mdInput #message maxlength="200" placeholder="Description" [(ngModel)]="desc">
+              <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+              </md-input-container><br><br><br>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-sm btn-primary" data-dismiss="modal" (click)="savechanges()">Save changes</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>

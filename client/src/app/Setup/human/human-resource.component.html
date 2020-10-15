@@ -1,0 +1,75 @@
+<div class="row " id="second_card" style="height: 100%">
+     
+<div style="width: 100%;" class="nav-side-menu">
+
+<i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+      <div class="menu-list">
+        <ul id="menu-content" class="menu-content collapse out">
+          <li (click)="employee()"> <a >Employees</a></li>
+          <li (click)="role()"> <a >Roles & Privileges</a></li>
+
+          <li data-toggle="collapse" data-target="#holiday" class="collapsed "><a>Holiday Management 
+          <span class="arrow"></span></a></li>
+              <ul class="sub-menu collapse" id="holiday">
+                  <li (click)="manage_holidaygroup()"><a >Manage Holiday Group</a></li>
+                  <li  (click)="manage_holiday()"><a>Manage Holidays</a></li>
+              </ul>
+ 
+          <li data-toggle="collapse" data-target="#leave" class="collapsed"><a>LeaveManagement
+          <span class="arrow"></span></a></li>
+              <ul class="sub-menu collapse" id="leave">
+                  <li (click)="leave_manageoption()"><a >Leave Management Options</a></li>
+                  <li (click)="employee_summary()"><a >Employee Leave Summary</a></li>
+                  <li (click)="add_empleave()"><a >Add Employee Leave</a></li>
+              </ul>
+
+          <li data-toggle="collapse" data-target="#exit" class="collapsed "><a>Exit Procedure<span class="arrow"></span></a></li>
+              <ul class="sub-menu collapse" id="exit"> 
+                  <li (click)="exit_type()"><a >Exit Types</a></li>
+                  <li (click)="exit_interview()"><a >Exit Interview Questions</a></li>
+                  <li (click)="exit_setting()"><a >Settings</a></li>
+                  <li (click)="initiate_check()"><a >Initiate/Check Status</a></li>
+                  <li (click)="all_exit_procedure()"><a >All Exit Procedures</a></li>
+              </ul>
+
+          <li data-toggle="collapse" data-target="#config" class="collapsed "><a>Employee Configuration<span class="arrow"></span></a></li>
+              <ul class="sub-menu collapse" id="config">
+                  <li (click)="employee_tabs()"><a>Employee Tabs</a></li>
+                  <li (click)="employment_status()"><a>Employment Status</a></li>
+                  <li (click)="employment_role()"><a>Employment Role</a></li>
+                  <li (click)="pay_frequency()"><a>Pay Frequency</a></li>
+                  <li (click)="remuneration()"><a>Remuneration Basis</a></li>
+                  <li (click)="job_title()"><a>Job Titles</a></li>
+                  <li (click)="position()"><a >Positions</a></li>
+                  <li  (click)="competency_level()"><a>Competency Levels</a></li>
+                  <li (click)="education_level()"><a >Education Levels</a></li>
+                  <li (click)="language()"><a >Languages</a></li>
+                  <li (click)="leave_types()"><a >Leave Types</a></li>
+                  <li (click)="attendance()"><a >Attendance Status</a></li>
+                  <li (click)="bank_account()"><a >Bank Account Types</a></li>
+                  <li (click)="identity()"><a >Identity Documents</a></li>
+                  <li (click)="eeoc()"><a >EEOC Categories</a></li>
+                  <li (click)="work_eligibility()"><a >Work Eligibility Document Types</a></li>
+                  <li (click)="veteran()"><a >Veteran Status</a></li>
+                  <li (click)="military_service()"><a >Military Service Types</a></li>
+               </ul>
+
+          <li data-toggle="collapse" data-target="#contact" class="collapsed "><a>Contacts<span class="arrow"></span></a></li>
+              <ul class="sub-menu collapse" id="contact">
+                  <li (click)="external_users()"><a >External Users</a></li>
+                  <li (click)="vendors()"><a >Vendors</a></li>
+                  <li  (click)="contact_clients()"><a>Clients</a></li>
+                  <li  (click)="contact_projects()"><a>Projects</a></li>
+              </ul>  
+
+       </ul>
+
+     </div>
+
+    </div>
+
+</div>
+
+ 
+       

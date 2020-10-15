@@ -1,0 +1,114 @@
+<div class="col-md-12 card card-outline-primary" style="height:auto">
+    <div *ngIf = "!show"  style="overflow:auto">
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Leave Management</li>
+          <li class="breadcrumb-item active">Employee Leave Summary</li>
+        </ol><br>
+        <div>
+          <span style="font-weight:500">Employees Leave Summary</span>
+        </div>
+      <div style="width:30%">
+          <md-select id="selectid" [(ngModel)]="status"  placeholder="Status" >
+          <md-option *ngFor="let sta of stat" [value]="sta.name" (click)="all(sta.name);" >
+          {{sta.name}}
+        <!-- style="overflow:auto" -->
+          </md-option>
+          </md-select><br><br><br>
+      </div>
+       
+    </div>
+      <div>
+        <span style="font-weight:500">Employee Leave Summary</span><br>
+     </div>
+      <div>
+        <div class="row" style="padding: 1% 0% 1% 1%">  
+          <div class="box" (click)="view='no'">  
+            <div class="status" (click)="start('Start');view='no'">
+         </div> 
+        </div>  
+       </div>  
+      </div>  
+      
+      <div class="row">
+        <div class="col-lg-12">
+          <div>
+            <table class="table table-bordered table-striped table-sm">
+              <thead class="bg-success">
+                <tr>
+                  <th>Action</th>
+                  <th>Employee</th>
+                  <th>Leave Type</th>
+                  <th>From Date</th>
+                  <th>To Date</th>
+                  <th>Leaves Count</th>
+                  <th>Applied Ön</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let eleave of this.obj ">
+                  <td><i class="fa fa-eye"  title="View1" (click)="open(deptModal);view1(eleave);"></i>
+                  </td>
+                  <td>{{eleave.username }}</td>
+                  <td>{{eleave.leaverequest.leavetype}}</td>
+                  <td>{{eleave.leaverequest.from_date}}</td>
+                  <td>{{eleave.leaverequest.to_date}}</td>
+                  <td>{{eleave.leaverequest.no_days}}</td>
+                  <td>{{eleave.leaverequest.applied_on}}</td>
+                  <td>{{eleave.leaverequest.status}}</td>
+  
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="border: solid">
+              <span style=" display:block;font: bold;
+              text-align: center;
+              width: 100%; font-size: 150%;color: red;" *ngIf="!status">
+                 Please select employee status
+               
+                </span>
+          </div>
+        </div>
+      
+      </div>
+      
+    </div>
+  </div>
+  
+  
+  
+  <md2-dialog #deptModal>
+      <md2-dialog-title>Employee Leave Summery</md2-dialog-title>
+      <div class=" row box">
+        <div class="emp-info">
+          Employee : {{this.service.username }}
+        </div>
+        <div class="emp-info">
+          Leave Type : {{this.service.leaverequest.leavetype}}
+        </div>
+        <div class="emp-info alter-div">
+          From Date : {{this.service.leaverequest.from_date}}
+        </div>
+        <div class="emp-info alter-div">
+          To Date : {{this.service.leaverequest.to_date}}
+        </div>
+        <div class="emp-info">
+          Leave Count : {{this.service.leaverequest.no_days}}
+        </div>
+        <div class="emp-info">
+          Applied On : {{this.service.leaverequest.applied_on}}
+        </div><br>
+        <div class="emp-info alter-div">
+          Status : {{this.service.leaverequest.status}}
+        </div>
+        <div class="emp-info alter-div"></div>
+        </div>
+    <md2-dialog-footer>
+        <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+    </md2-dialog-footer>
+    </md2-dialog>
+    

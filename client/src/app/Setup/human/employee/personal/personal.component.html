@@ -1,0 +1,447 @@
+<div class="col-md-12">
+  <div class="row">
+    <div  style="display: both" class="col-lg-12">
+      <span style="font-weight:500">Personal</span>
+      
+    </div><br><br>
+  </div>
+</div>
+
+
+<form class="form-horizontal" [formGroup]="form">
+
+<div class="col-md-12" *ngIf="service.visible" (click)="add(data)">
+  <div  class="row">
+    <div class="col-md-4"><br>
+      <md-select placeholder="Gender" [(ngModel)]="employee.personal[0].gendername"  class="example-full-width" formControlName="gen">
+      <md-option *ngFor="let ge of gen" [value]="ge.gender[0].gendertype" >
+      {{ge.gender[0].gendertype}}
+      </md-option>
+      </md-select><br><i style="color: #0d47a1" onclick="document.getElementById('basicgender').style.display='block'">Add Gender</i><br><br><br>
+      <md-select placeholder="Ethnic Code" [(ngModel)]="employee.personal[0].ethniccodes"  class="example-full-width" formControlName="ethcode">
+      <md-option *ngFor="let eti of edatas"   [value]="eti.ethnic[0].code" >
+      {{eti.ethnic[0].code}}
+      </md-option>
+      </md-select><br><i style="color: #0d47a1" onclick="document.getElementById('basicethnic').style.display='block'">Add Ethnic Code</i><br><br><br>
+      
+      <md-select placeholder="Language" [(ngModel)]="employee.personal[0].languagename" formControlName="lang">
+        <md-option *ngFor="let laname of lang" [value]="laname.language[0].language" >
+        {{laname.language[0].language}}
+        </md-option>
+        </md-select><br><i style="color: #0d47a1" onclick="document.getElementById('basiclang').style.display='block'">Add Language</i>
+      
+      
+      
+      
+      
+     <br><br><br><br>
+      <h6>IDENTITY DOCUMENTS</h6>
+      <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="employee.personal[0].aadhaarcard" placeholder="Aadhaar Card"  formControlName="aadhar" maxlength="12" pattern="[0-9.]+" minlength="12" required>
+      <md-error>Please enter aadhaar card.</md-error>
+      </md-input-container><br><br><br><br>
+      <md-input-container>
+        <input mdInput [(ngModel)]="employee.personal[0].drivinglic" placeholder="Driving Licence" formControlName="drivlic"  pattern="^[a-zA-Z0-9 ]*$" required>
+      <md-error>
+          Enter Document Name.
+        </md-error>  
+      </md-input-container>
+
+    </div>
+    <div class="col-md-4"><br>
+      <md-select placeholder="Marital Status" [(ngModel)]="employee.personal[0].Marital" formControlName="marital">
+      <md-option *ngFor="let ma of mart" [value]="ma.marital[0].maritalstatus" >
+      {{ma.marital[0].maritalstatus}}
+      </md-option>
+      </md-select><br><i style="color: #0d47a1" onclick="document.getElementById('basicMarital').style.display='block'" >Add Marital Status</i><br><br><br>
+      <!--
+      <md-select placeholder="Language" [(ngModel)]="employee.personal[0].languagename" class="example-full-width">
+      <md-option *ngFor="let laname of lang"   [value]="laname.language[0].language" >
+      {{laname.language[0].language}}
+      </md-option>
+      </md-select> -->
+      <md-select placeholder="Race Code" [(ngModel)]="employee.personal[0].race" formControlName="racecode">
+        <md-option *ngFor="let r of rc" [value]="r.race[0].racecode" >
+        {{r.race[0].racecode}}
+        </md-option>
+        </md-select><br><i style="color: #0d47a1" onclick="document.getElementById('basicMaritalRace').style.display='block'" >Add Race Code</i><br><br>
+
+
+        <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="employee.personal[0].bloodgroup" placeholder="Blood Group" formControlName="bloodgr" pattern="([AaBbOo]|[Aa][Bb])[\+-]">
+          <md-error>
+            Enter valid blood group.
+          </md-error>
+          </md-input-container><br><br>
+          <md-datepicker #picker1></md-datepicker>
+<br>
+
+
+     
+
+
+
+
+
+<br>
+      
+      <!-- <md-select placeholder="Race Code" [(ngModel)]="race">
+      <md-option *ngFor="let g of race"   [value]="g.racecode" >
+      {{g.racecode}}
+      </md-option>
+      </md-select><br><i style="color: #0d47a1" (click)="open(basicrace)">Add Race Code</i><br><br><br> -->
+      <br>
+      <md-input-container>
+        <input mdInput [(ngModel)]="employee.personal[0].passport" placeholder="Passport" formControlName="passpor"   pattern="^[a-zA-Z0-9 ]*$" maxlength="8" required>
+      <md-error>
+          Enter Document Name.
+        </md-error>  
+      </md-input-container>
+      <br><br><br><br>
+      <md-input-container>
+        <input mdInput [mdDatepicker]="pick1"  [(ngModel)]="employee.personal[0].deri_date" placeholder="Driving_Exp_Date" formControlName="drivlicexp" required>
+        <button mdSuffix [mdDatepickerToggle]="pick1"></button>
+        </md-input-container>
+      <md-datepicker #pick1></md-datepicker>
+        
+    </div>
+    <div class="col-md-4"><br>
+      <md-select placeholder="Nationality" [(ngModel)]="employee.personal[0].nationalityname" formControlName="national">
+      <md-option *ngFor="let na of nation " [value]="na.nationalities[0].nationality" >
+      {{na.nationalities[0].nationality}}
+      </md-option>
+      </md-select><br><i style="color: #0d47a1" onclick="document.getElementById('basicnation').style.display='block'">Add Nationality</i><br><br>
+      
+
+
+      <md-input-container>
+        <input mdInput [mdDatepicker]="picker1"  [(ngModel)]="employee.personal[0].date_of_birth" placeholder="Date of Birth" formControlName="dob" required>
+        <md-error>
+          Please select date 
+        </md-error>
+        <button mdSuffix [mdDatepickerToggle]="picker1"></button>
+        </md-input-container><br>
+        <br><br><br><br><br><br><br><br><br>
+
+
+      <md-input-container>
+        <input mdInput [mdDatepicker]="pick2"  [(ngModel)]="employee.personal[0].exp_passport" placeholder="Passport_Exp_Date" formControlName="pxd" required>
+        <button mdSuffix [mdDatepickerToggle]="pick2"></button>
+        </md-input-container>
+        <md-datepicker #pick2></md-datepicker>
+    </div>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+  </div>
+</div>
+<div style="float: right;margin:0% 2% 0% 0%" class="row" *ngIf="service.visible" (click)="add(data)">
+  <div  class="col-md-12" *ngIf="service.visible" (click)="add(data)">
+    <button class="btn btn-outline-success btn-sm" (click)="save(employee)" [disabled]="!form.valid"> Save</button>
+  </div>
+</div>
+</form>
+<form class="form-horizontal" [formGroup]="form1">
+
+<div id="basicgender" class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-teal bg-primary">
+      <span onclick="document.getElementById('basicgender').style.display='none'"
+        style="margin-top: -1%;font-weight: 500"
+      class=" w3-display-topright fa fa-times " ></span>
+      <h6>Gender</h6>
+    </header>
+    <div class="w3-container">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput [(ngModel)]="genders.gender[0].code"  placeholder="Gender Code" pattern="^[a-zA-Z0-9 ]*$" formControlName="gendC1" required >
+            <md-error>
+              Please enter gender code
+            </md-error>
+            </md-input-container><br><br><br>
+            <md-input-container class="example-full-width">
+            <input [(ngModel)]="genders.gender[0].description"  mdInput name="descripe" #message  maxlength="200" [(ngModel)]="descripe" placeholder="Description" formControlName="desc">
+            <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+            </md-input-container><br><br><br>
+            
+          </div>
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input  mdInput  [(ngModel)]="genders.gender[0].gendertype"  placeholder="Gender" formControlName="gend1"  pattern="[a-zA-Z]+$" required>
+            <md-error>
+              Please enter gender 
+            </md-error>
+            </md-input-container><br><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+      <div class="col-sm-12">
+        <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savegender(genders)" [disabled]="!form1.valid"  data-dismiss="model" >Save</button>
+      </div>
+    </footer>
+  </div>
+</div>
+</form>
+<form class="form-horizontal" [formGroup]="form2">
+<div id="basicethnic" class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-teal bg-primary">
+      <span onclick="document.getElementById('basicethnic').style.display='none'"
+        style="margin-top: -1%;font-weight: 500"
+      class=" w3-display-topright fa fa-times " ></span>
+      <h6>Ethnic Code</h6>
+    </header>
+    <div class="w3-container">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput [(ngModel)]="ethnics.ethnic[0].code" placeholder="Ethnic Code" formControlName="ethcd1" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" required>
+            <md-error>
+              Please enter ethnic code
+            </md-error>
+            
+            
+            </md-input-container><i mdTooltip="Ex:American Indian" class="fa fa-question-circle"></i><br><br><br>
+            <md-input-container class="example-full-width">
+            <input mdInput #message maxlength="200" [(ngModel)]="ethnics.ethnic[0].description"  placeholder="Description" formControlName="desc2">
+            <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+            </md-input-container><br><br><br>
+            
+          </div>
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput [(ngModel)]="ethnics.ethnic[0].shortcode" placeholder="Ethnic short code" formControlName="ethscd1" pattern="^[a-zA-Z0-9 ]*$" required >
+            <md-error>
+              Please enter ethnic short code
+            </md-error>
+            
+            </md-input-container><i mdTooltip="Ex:AI" mdTooltipPosition="above" class="fa fa-question-circle"></i><br><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+      <div class="col-sm-12">
+        <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="saveethnic(ethnics)"  [disabled]="!form2.valid" data-dismiss="model" >Save</button>
+      </div>
+    </footer>
+  </div>
+</div>
+</form>
+<form class="form-horizontal" [formGroup]="form3">
+
+<div id="basicMarital" class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-teal bg-primary">
+      <span onclick="document.getElementById('basicMarital').style.display='none'"
+        style="margin-top: -1%;font-weight: 500"
+      class=" w3-display-topright fa fa-times " ></span>
+      <h6>Marital Status</h6>
+    </header>
+    <div class="w3-container">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput  [(ngModel)]="maritaltype.marital[0].maritalcode" placeholder="Mariatl Code" pattern="^[a-zA-Z0-9 ]*$" maxlength="3" formControlName="marc1" required>
+            <md-error>
+              Please enter marital code
+            </md-error>
+            </md-input-container><i mdTooltip="Ex:M,S,D" class="fa fa-question-circle"></i><br><br><br>
+            <md-input-container class="example-full-width">
+            <input [(ngModel)]="maritaltype.marital[0].description"  mdInput name="descripe" #message  maxlength="200" [(ngModel)]="descripe" placeholder="Description" formControlName="desc3">
+            <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+            </md-input-container><br><br><br>
+            
+          </div>
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput  [(ngModel)]="maritaltype.marital[0].maritalstatus" placeholder="Marital Status" formControlName="marst1" maxlength="20"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" required>
+            <md-error>
+              Please enter marital status 
+            </md-error>
+            </md-input-container><i mdTooltip="Ex:Married,Single,Divorced" mdTooltipPosition="above" class="fa fa-question-circle"></i><br><br><br>
+            
+          </div>
+        </div>
+      </div></div>
+      <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+        <div class="col-sm-12">
+          <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savemarital(maritaltype)" [disabled]="!form3.valid" data-dismiss="model" >Save</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+  </form>
+
+  <form class="form-horizontal" [formGroup]="form4">
+
+  <div id="basiclang" class="w3-modal w3-animate-opacity">
+    <div class="w3-modal-content w3-card-4">
+      <header class="w3-container w3-teal bg-primary">
+        <span onclick="document.getElementById('basiclang').style.display='none'"
+          style="margin-top: -1%;font-weight: 500"
+        class=" w3-display-topright fa fa-times " ></span>
+        <h6>Language</h6>
+      </header>
+      <div class="w3-container">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <md-input-container class="example-full-width">
+              <input mdInput  [(ngModel)]="languages.language[0].language"  placeholder="Language" formControlName="lang1"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" required>
+              <md-error>Please enter language.</md-error>
+              </md-input-container><i mdTooltip="English,Spanish" class="fa fa-question-circle" ></i>
+              <br><br><br>
+            </div>
+            <div class="col-md-6">
+              <md-input-container class="example-full-width">
+              <input mdInput #message maxlength="200" [(ngModel)]="languages.language[0].description" placeholder="Description" formControlName="desc4">
+              <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+              </md-input-container><br><br><br>
+            </div></div>
+          </div>
+        </div>
+        <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+          <div class="col-sm-12">
+            <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savenlanguage(languages)" [disabled]="!form4.valid"  data-dismiss="model" >Save</button>
+          </div>
+        </footer>
+      </div>
+    </div>
+    </form>
+    <form class="form-horizontal" [formGroup]="form5">
+
+    <div id="basicnation" class="w3-modal w3-animate-opacity">
+      <div class="w3-modal-content w3-card-4">
+        <header class="w3-container w3-teal bg-primary">
+          <span onclick="document.getElementById('basicnation').style.display='none'"  style="margin-top: -1%;font-weight: 500"
+          class=" w3-display-topright fa fa-times " ></span>
+          <h6>Nationality</h6>
+        </header>
+        <div class="w3-container">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <md-input-container class="example-full-width">
+                <input required name="nationality" [(ngModel)]="nationalitytype.nationalities[0].nationality" mdInput placeholder="Nationality" formControlName="natio1"  pattern="[a-zA-Z]+$" required>
+                <md-error>
+                  enter nationality
+                </md-error>
+                </md-input-container><i mdTooltip="Ex:Indian" class="fa fa-question-circle"></i><br><br><br>
+                
+              </div>
+              <div class="col-md-6">
+                <md-input-container class="example-full-width">
+                <input mdInput [(ngModel)]="nationalitytype.nationalities[0].description" #message maxlength="200" placeholder="Description" formControlName="desc5">
+                <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+                </md-input-container><br><br><br>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+          <div class="col-sm-12">
+            <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savenation(nationalitytype)"  [disabled]="!form5.valid"  data-dismiss="model" >Save</button>
+          </div>
+        </footer>
+      </div>
+    </div>
+    </form>
+
+
+
+
+
+    <form class="form-horizontal" [formGroup]="form6">
+    <div id="basicMaritalRace" class="w3-modal w3-animate-opacity">
+      <div class="w3-modal-content w3-card-4">
+        <header class="w3-container w3-teal bg-primary">
+          <span onclick="document.getElementById('basicMaritalRace').style.display='none'"
+            style="margin-top: -1%;font-weight: 500"
+          class=" w3-display-topright fa fa-times " ></span>
+          <h6>Race Code</h6>
+        </header>
+        <div class="w3-container">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <md-input-container class="example-full-width">
+                <input mdInput  [(ngModel)]="racetype.race[0].racecode" placeholder="Race Code" formControlName="racecd1" pattern="^[a-zA-Z0-9 ]*$"  required>
+                <md-error>
+                  Please enter race code
+                </md-error>
+                </md-input-container><i mdTooltip="Ex:M,S,D" class="fa fa-question-circle"></i><br><br><br>
+                <md-input-container class="example-full-width">
+                <input [(ngModel)]="racetype.race[0].description"  mdInput name="descripe" #message  maxlength="200" [(ngModel)]="descripes1" placeholder="Description" formControlName="descs1">
+                <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+                </md-input-container><br><br><br>
+                
+              </div>
+              <div class="col-md-6">
+                <md-input-container class="example-full-width">
+                <input mdInput  [(ngModel)]="racetype.race[0].raceshortcode" placeholder="Race short code" formControlName="races1"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" required>
+                <md-error>
+                  Please enter marital status 
+                </md-error>
+                </md-input-container><i mdTooltip="Ex:Married,Single,Divorced" mdTooltipPosition="above" class="fa fa-question-circle"></i><br><br><br>
+                
+              </div>
+            </div>
+          </div></div>
+          <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+            <div class="col-sm-12">
+              <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="saverace(racetype)" [disabled]="!form6.valid" data-dismiss="model" >Save</button>
+            </div>
+          </footer>
+        </div>
+      </div>
+      </form>
+
+
+
+
+
+
+
+
+
+
+<button  *ngIf="service.editview" class="btn btn-outline-primary btn-sm"  (click)="viewperson(data)">edit</button>
+    <div class="col-md-12" *ngIf="service.invisible" (click)="viewpersonal(data)">
+    <div  class="col-md-12 box">
+        <div class="emp-info">
+            Gender : {{employee.personal[0].gendername}}
+        </div>
+        <div class="emp-info">
+            Marital Status : {{employee.personal[0].Marital}}
+        </div>
+        <div class="emp-info alter-div">
+            Nationality : {{employee.personal[0].nationalityname}}
+        </div>
+        <div class="emp-info alter-div">
+            Ethnic Code : {{employee.personal[0].ethniccodes}}
+        </div>
+        <div class="emp-info">
+            Race Code : {{employee.personal[0].race}}
+        </div>
+        <div class="emp-info">
+            Language : {{employee.personal[0].languagename}}
+        </div>
+        <div class="emp-info alter-div">
+            Date of Birth : {{employee.personal[0].date_of_birth}}
+        </div>
+        <div class="emp-info alter-div">
+            Blood Group : {{employee.personal[0].bloodgroup}}
+        </div>
+    </div>
+    </div>
+
+
+   

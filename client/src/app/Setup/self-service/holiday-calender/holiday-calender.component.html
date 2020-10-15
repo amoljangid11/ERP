@@ -1,0 +1,133 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf="!show">
+    <div>
+      <ol class="breadcrumb row bg-primary">
+              <li class="breadcrumb-item "> <i class="fa  fa-home">Home</i></li>
+              <li class="breadcrumb-item ">Self Service </li>
+              <li class="breadcrumb-item ">My Holiday</li>
+      </ol>
+    </div>
+  <div>
+    <span style="font-weight:500">My Holiday</span>
+  
+  </div><br>
+  <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+    {{ message }} 
+  
+  </div>
+  <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+    {{ message }}
+  
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div>
+        <table class="table table-bordered table-striped table-sm">
+          <thead class="bg-success">
+          <tr>
+            <th>Action</th>
+            <th>Holiday</th>
+            <!-- <th>Holiday Group</th> -->
+            <th>Date</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let et of offemp;let i = index">
+                <!-- <td><i (click)="edit(ho);show=!show"  title="Edit" class="fa fa-pencil-square-o">
+  
+                </i>&nbsp;&nbsp;<i (click)="delete(ho,i)" title="Delete" class="fa fa-trash-o">
+  
+                </i></td> -->
+                <td><i  (click)="open(deptModal);view(et)" class="fa fa-eye" title="View" aria-hidden="true"></i>
+                  <!-- <i (click)="delete(et,i)"title="Delete" class="fa fa-ban text-warning" style="margin-left: 5%" ></i> -->
+                </td>
+                
+                <td>{{et.holiday[0].holiday}}</td>
+                
+                <!-- <td >{{et.manageholiday[0].groupname}}</td> -->
+                
+                <td>{{et.holiday[0].holidaydate | date}}</td>
+                
+                <td>{{et.holiday[0].description}}</td>
+              </tr>
+  
+        </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  <div *ngIf="show">
+  <div class="row">
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+          <input mdInput placeholder="Holiday" [(ngModel)]="holidays.manageholiday[0].holiday" required>
+          <md-error>Please enter holiday.</md-error>
+          </md-input-container><br><br><br>
+        </div>
+  
+    
+  <div class="col-md-4">
+   <md-input-container class="example-full-width">
+   <input mdInput placeholder="Holiday Date" [(ngModel)]="holidays.manageholiday[0].holidaydate" required>
+   <md-error>Please enter holiday date.</md-error>
+    </md-input-container><br><br><br>
+    </div>
+  
+  <div class="col-md-4">
+    <md-input-container class="example-full-width">
+    <input mdInput placeholder="Description" [(ngModel)]="holidays.manageholiday[0].description" required>
+    <md-error>Please give description.</md-error>
+      </md-input-container><br><br><br>
+      </div>
+     </div>
+    </div>
+   </div>
+
+<!-- 
+   <div id="identity" class="w3-modal w3-animate-opacity">
+    <div class="w3-modal-content w3-card-4">
+      <header class="w3-container w3-teal bg-primary">     
+        <h6>Do you want to cancel this holiday detail?</h6>
+      </header>
+      
+      <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+        <div class="col-sm-12">
+         <div style="float:right">       
+          <button  class="btn btn-primary btn-sm" 
+                   onclick="document.getElementById('identity').style.display='none'"  data-dismiss="model" >No</button>
+          <button  type="submit" class="btn btn-primary btn-sm" 
+                   onclick="document.getElementById('identity').style.display='none'"  (click)="delete(et,i)" data-dismiss="model" >Yes</button>
+        </div>
+        </div>
+      </footer>
+    </div>
+  </div> -->
+  
+  <md2-dialog #deptModal>
+    <md2-dialog-title>Holiday Details</md2-dialog-title>
+    <div class=" row box">
+      <div class="emp-info">
+          <span *ngFor="let hd of offemp ">
+        Holiday  : {{hd.holiday[0].holiday}}
+        </span>
+      </div>
+      <div class="emp-info">
+          <span *ngFor="let hd of offemp ">
+        Holiday Date : {{hd.holiday[0].holidaydate |date}}
+        </span>
+      </div>
+      <div class="emp-info alter-div">
+          <span *ngFor="let hd of offemp ">
+        Description : {{hd.holiday[0].description}}
+        </span>
+      </div>
+      <div class="emp-info alter-div"></div>
+    </div>
+  <md2-dialog-footer>
+      <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+  </md2-dialog-footer>
+</md2-dialog>
+  

@@ -1,0 +1,124 @@
+ <div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div  *ngIf= "!show">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Self Service </li>
+        <li class="breadcrumb-item ">Leaves </li>
+        <li class="breadcrumb-item active">Leave Request</li>
+      </ol>
+    </div>
+    <div >
+      <span style="font-weight:  500">Leave Request</span>
+      <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">App</button>
+    </div>
+    <br><br>
+    <div class="row">
+      <div class="col-md-12">
+        <div >
+        <table  class="table table-bordered table-striped table-sm ">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Account Class Types</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <i style="color: #0d47a1" onclick="document.getElementById('empsta').style.display='block'">Add Employment Satatus</i>
+          </table> 
+        </div></div>
+      </div>
+    </div>
+    <div *ngIf= "show" >
+      <div >
+        <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Self Service </li>
+        <li class="breadcrumb-item ">Leaves </li>
+        <li class="breadcrumb-item ">Leave Request</li>
+        <li class="breadcrumb-item active"> <i class="fa fa-plus">Add</i></li>
+          
+        </ol>
+      </div>
+    <div class="row">
+       <----write here----------->
+        <div  class="col-md-12" style="margin-top: 5%">
+          <button class="btn btn-outline-success btn-sm" (click)="save(account);show=!show"> Save</button>
+          <button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+<=========Modal window=================>
+
+<div id="empsta" class="w3-modal">
+  <div class="w3-modal-content">
+     <header class="w3-container w3-teal bg-primary" >
+      <div > 
+        <span onclick="document.getElementById('empsta').style.display='none'" 
+              style="margin-top: -1%;font-weight: 500" 
+        class=" w3-display-topright fa fa-times " ></span>
+        <span><h6 style="">Employment Status</h6></span>
+      </div>
+     </header>
+  <div class="w3-container">
+  <div class="col-md-12">
+    <div class="row">
+     <div class="col-md-6"><br>
+       <md-select placeholder="Work code"  [(ngModel)]="status.employmentstatus[0].workcode">
+         <md-option *ngFor="let work of codes; let i=index "  [value]="work.value">
+            {{ work.value }}
+         </md-option>
+       </md-select><br><br><br>
+       <md-input-container class="example-full-width">
+         < input mdInput #message maxlength="200" [(ngModel)]="status.employmentstatus[0].description" placeholder="Description">
+        <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+      </md-input-container><br><br><br>  
+    </div>
+
+<div class="col-md-6">
+   <md-input-container class="example-full-width">
+      <input name="shortcode" [(ngModel)]="status.employmentstatus[0].workshortcode" mdInput placeholder="Work Short Code">
+    </md-input-container><i mdTooltip="Ex: PT,FT" class="fa fa-question-circle" ></i><br><br><br>
+</div>
+</div>
+</div>
+</div>
+  <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+     <div class="col-sm-12">
+        <button style="float: right;" class="btn btn-primary btn-sm" (click)="savework(status)" >Save</button>
+     </div>
+   </footer>
+  </div>
+</div>
+
+
+<!--  <md-input-container class="example-full-width"  >
+      <input mdInput placeholder="Employee Code" [(ngModel)]="this.employeecode" [value]="general.identitycodes[0].employee"   required>
+      </md-input-container><br>
+      <i style="color: #1565c0" (click)="open(basic)">Configure Identity Codes</i>
+<md-select placeholder="Role"  [(ngModel)]="employee.official[0].role" class="example-full-width">
+      <md-option *ngFor="let ro of rname" (click)="roletype(ro.role[0].type)"  [value]="ro.role[0].name" required >
+      {{ro.role[0].name}}
+      </md-option>
+      </md-select> 
+<md-input-container>
+      <input mdInput [mdDatepicker]="picker1"  [(ngModel)]="employee.official[0].dateofjoing" placeholder="Date of Joining" required>
+      <button mdSuffix [mdDatepickerToggle]="picker1"></button>
+      </md-input-container>
+      <md-datepicker #picker1></md-datepicker>
+
+      <md-input-container class="example-full-width"  >
+          <textarea mdInput placeholder="Autosize textarea" matTextareaAutosize matAutosizeMinRows="2"
+            matAutosizeMaxRows="5"></textarea>
+         </md-input-container>
+
+    -->

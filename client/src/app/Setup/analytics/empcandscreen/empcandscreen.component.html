@@ -1,0 +1,134 @@
+<div class="col-md-12 card card-outline-info" style="height:100%;" >
+  
+  <div  id="rep" style="overflow: auto;"> 
+      <div><br>
+      <div class="box2" style="float: right;margin:0% 1% 0% 0%">
+        <img class="imageClass1" src="./assets/Images/pdf.png"/>&nbsp;<i style="color: #1565c0" (click)="downloadPDF()">Export to PDF</i> &nbsp;
+        <img class="imageClass1" src="./assets/Images/excel.ico"/>&nbsp;<i style="color: #1565c0" (click)="downloadExcel('candemptbl', 'employeedata')" >Export to Excel</i>
+      </div>
+      </div><br><br>
+   
+  
+    <div class="display_emp" >
+        <label>Generate Custom Report</label><br><br>
+     <div class="row">
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Select Employee/Candidate" (input)="peremp()"  [(ngModel)]="this.type">
+    </md-input-container><br><br><br>
+   
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Employee/Candidate Name" [(ngModel)]="this.name">
+    </md-input-container><br><br><br>
+  
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Agency Name" [(ngModel)]="this.agencyname">
+    </md-input-container><br><br><br>
+  
+    
+    <md-input-container class="example-full-width">
+      <input mdInput placeholder="Employee/Candidate" [(ngModel)]="this.empcand">
+  </md-input-container><br><br><br>
+
+  
+  <md-input-container class="example-full-width">
+      <input mdInput placeholder="Select Status" [(ngModel)]="this.status">
+  </md-input-container><br><br><br>
+
+  <md-input-container class="example-full-width">
+      <input mdInput placeholder="Select Month" [(ngModel)]="this.month">
+  </md-input-container><br><br><br>
+
+  
+  <md-input-container class="example-full-width">
+    <input mdInput placeholder="Select Year" [(ngModel)]="this.year">
+</md-input-container>
+
+            <div  class="col-md-12" style="margin-top: 5%">
+              <button type="button" class="btn btn-sm btn-primary" (click)="downloadExcel1('report', 'employeedata');show=!show"> GENERATE REPORT</button>
+              <button type="reset"  class="btn btn-sm btn-warning" (click)="reset();">Reset</button>
+            </div>
+    </div>
+</div>
+  
+  <div class= "row">
+         &nbsp;&nbsp;<i class="fa fa-arrow-down" aria-hidden="true"  (click)="displaybox();"></i>&nbsp;<label>Employee / Candidate Screening</label>     
+      <div id="emppcnd" class="col-md-12 box" style="float: right;">
+  
+          <angular2-multiselect [data]="itemList"  [(ngModel)]="team.Empteam" [settings]="settings" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
+             </angular2-multiselect>
+
+              <div>
+                 <br>
+                 <button type="reset" *ngIf="add"  class="btn btn-sm btn-success" (click)="save(team);">Apply</button>
+                 <button  class="btn btn-sm btn-success" *ngIf="!add" (click)="update1(team);" >Apply</button>   
+                 <i  class="btn btn-sm btn-warning" (click)="cancel1();">Cancel</i>
+              </div>
+                 <br>
+      </div>
+                <br><br>
+
+                <div class="row">
+                    <div class="col-lg-12" id="candidateemployees">
+                      <div  >
+                             <table id="candemptbl" class="table table-bordered table-striped table-sm">
+                               <thead class="bg-success">
+                        <tr>
+                            <th>Specimen</th>
+                            <th>Specimen type</th>
+                            <th>Agency</th>
+                            <th>Screening type</th>
+                            <th>Process status</th>
+                            <th>Sent by</th>
+                            <th>Sent On </th>
+                            <th>Active Status</th>
+                           
+                        </tr>
+                         </thead>
+                         <tbody>
+                           <tr *ngFor="let bu of empcan;let i = index " >
+                          <!-- <td>{{bu.employeecandidate[0].username}}</td>
+                          <td>{{bu.employeecandidate[0].firstname}}</td>
+                          <td>{{bu.employeecandidate[0].email}}</td>
+                          <td>{{bu.employeecandidate[0].phonenumber}}</td>
+                          <td>{{bu.employeecandidate[0].role}}</td>
+                          <td>{{bu.employeecandidate[0].reportingmanager}}</td>
+                          <td>{{bu.employeecandidate[0].jobtitle}}</td>
+                          <td>{{bu.employeecandidate[0].businessunit}}</td> -->
+                          
+                         </tr>                                 
+                       </tbody>                        
+                       </table>
+            </div>
+          </div>
+      </div>
+  </div>
+
+</div>
+</div>
+  
+<!--   
+<div  style="display: none">
+    <table id="report" class="table table-bordered table-striped table-sm">
+      <thead class="bg-success">
+<tr>
+   <th>Business Unit</th>
+   <th>Code</th>
+   <th>Country</th>
+   <th>Started On</th>
+</tr>
+</thead>
+<tbody>
+  <tr *ngFor="let bu of bureport ;let i = index ">
+ <td>{{bu.businessunits[0].name}}</td>
+ <td>{{bu.businessunits[0].code}}</td>
+ <td>{{bu.businessunits[0].country}}</td>
+ <td>{{bu.businessunits[0].starton | date}}</td>
+</tr>                                 
+</tbody>                        
+</table>
+</div> -->
+  
+  
+  
+  
+  

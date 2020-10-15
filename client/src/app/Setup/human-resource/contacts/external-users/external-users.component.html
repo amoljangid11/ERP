@@ -1,0 +1,194 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show" >
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Contacts</li>
+        <li class="breadcrumb-item active">External Users</li>
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:500">External Users</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "cancel();show = !show">Add</button>
+    </div><br><br>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div >
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>User ID</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ext of external;let i = index " >
+                <td><i class="fa fa-eye" title="View" aria-hidden="true" (click)="open(deptModal);view(ext)"></i>&nbsp;&nbsp;<i (click)="edit(ext);show = !show"   title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(ext,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                <td >{{general.identitycodes[0].employee}}</td>
+                <td>{{ext.externalusers[0].email}}</td>
+                <td >{{ext.externalusers[0].role}}</td>
+                <td >{{ext.externalusers[0].status}}</td>
+                
+              </tr>
+            </tbody>
+            
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form class="form-horizontal" [formGroup]="form">
+  <div *ngIf= "show" >
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Contacts</li>
+        <li class="breadcrumb-item ">External Users </li>
+        <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+      </ol>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-4">
+        <md-input-container class="example-full-width"  >
+        <input mdInput placeholder="User Type" [(ngModel)]="this.users" [value]="general.identitycodes[0].employee" [readonly]="true" formControlName="usertype" >
+        </md-input-container><br><i style="color: #1565c0" onclick="document.getElementById('identity').style.display='block'">Configure Identity Codes</i>
+        <br><br><br>
+        <md-input-container class="example-full-width">
+        <input mdInput placeholder="Email" [(ngModel)]="user.externalusers[0].email" formControlName="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+        <md-error>Please enter email.</md-error>
+        </md-input-container><br><br><br>
+        
+      </div>
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput placeholder="First Name" [(ngModel)]="user.externalusers[0].firstname" formControlName="firstname"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" required>
+        <md-error>Please enter first name.</md-error>
+        </md-input-container><br><br><br><br>
+        <br>
+        <md-select placeholder="Assign Role" [(ngModel)]="user.externalusers[0].role" (Change)="select()" name="assign" formControlName="assignrole" required>
+        <md-option *ngFor="let ar of roles" [value]="ar.role[0].name">
+        {{ar.role[0].name}}
+        </md-option>
+        </md-select><br>
+        <span  style="color: red" *ngIf="!user.externalusers[0].role">
+          please select role.
+        </span>
+        <br><br>
+        
+      </div>
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput placeholder="Last name" [(ngModel)]="user.externalusers[0].lastname" formControlName="lastname"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50"  required>
+        <md-error>Please enter last name.</md-error>
+        </md-input-container><br><br><br><br>
+        <md-input-container class="example-full-width">
+        <input mdInput  maxlength="100" [(ngModel)]="user.externalusers[0].comments" placeholder="Comments" formControlName="comment" >
+        </md-input-container><br><br><br>
+      </div>
+
+      <div class="col-md-4">
+          <p>Status</p>
+        <md-radio-group [(ngModel)]="user.externalusers[0].status " formControlName="sta">
+        <md-radio-button   value="Active">Active</md-radio-button>
+        <md-radio-button  value="Inactive">Inactive</md-radio-button>
+        </md-radio-group>
+      </div>
+      
+
+
+
+
+      <div  class="col-md-12" style="margin-top: 5%">
+        <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(user);show=!show" [disabled]="!form.valid"> Save</button>
+        <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(user);show=!show;updatebutton=!updatebutton;"[disabled]="!form.valid"> Update</button>
+        <button class="btn btn-outline-warning btn-sm" (click) = "cancel(user);show=!show;updatebutton=!updatebutton;"> Cancel </button>
+      </div>
+    </div>
+  </div>
+  </form>
+</div>
+<form class="form-horizontal" [formGroup]="form1">
+<div id="identity" class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-teal bg-primary">
+      <span onclick="document.getElementById('identity').style.display='none'" style="margin-top: -1%;font-weight: 500"
+      class=" w3-display-topright fa fa-times" ></span>
+      <h6>Identity Codes</h6>
+    </header>
+    <div class="w3-container">
+      <div class="col-md-12">
+        <div class="row">
+          <div  class="col-md-6" >
+            <md-input-container class="example-full-width">
+            <input  mdInput placeholder="Employee" [(ngModel)]="general.identitycodes[0].employee" formControlName="employee"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" minlength="5" maxlength="5" required>
+            </md-input-container><br><br><br>
+            <md-input-container class="example-full-width">
+            <input mdInput placeholder="Users" [(ngModel)]="general.identitycodes[0].users" formControlName="user" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" minlength="5" maxlength="5"  required>
+            </md-input-container>
+          </div>
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input  mdInput placeholder="Background Agency" [(ngModel)]="general.identitycodes[0].background" formControlName="agency" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" minlength="5" maxlength="5" required>
+            </md-input-container><br><br><br>
+            <md-input-container class="example-full-width">
+            <input mdInput placeholder="Requisition" [(ngModel)]="general.identitycodes[0].requisition" formControlName="requ" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" minlength="5" maxlength="5" required>
+            </md-input-container><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+      <div class="col-sm-12">
+        <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savechanges(general)" data-dismiss="model" [disabled]="!form1.valid" >Update</button>
+      </div>
+    </footer>
+  </div>
+</div>
+</form>
+
+
+
+
+<md2-dialog #deptModal>
+    <md2-dialog-title>External User</md2-dialog-title>
+    <div class=" row box">
+        <div class="emp-info">
+           User Type : {{this.users}}
+        </div>
+        <div class="emp-info ">
+           First Name : {{user.externalusers[0].firstname}}
+        </div><br>
+  
+        <div class="emp-info alter-div">
+           Last Name: {{user.externalusers[0].lastname}}
+      </div>
+  
+  
+        <div class="emp-info alter-div">
+              Email : {{user.externalusers[0].email}}
+        </div>
+        <br>
+        <div class="emp-info ">
+            Assign Role : {{user.externalusers[0].role}}
+        </div>
+        <div class="emp-info">
+            Comments : {{user.externalusers[0].comments}}
+        </div>
+        </div>
+        
+    <md2-dialog-footer>
+        <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+    </md2-dialog-footer>
+  </md2-dialog>

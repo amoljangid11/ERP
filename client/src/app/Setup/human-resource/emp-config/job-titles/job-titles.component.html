@@ -1,0 +1,214 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+    <div *ngIf = "!show">
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employee Configuration </li>
+          <li class="breadcrumb-item active">Job Titles</li>
+        </ol>
+      </div>
+      <div>
+        <span style="font-weight:500">Job Titles</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "cancel();show = !show;updates=false;">Add</button>
+      </div><br><br>
+      <div class="row">
+        <div class="col-lg-12">
+          <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+            {{ message }}
+          </div>
+          <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+            {{ message }}
+          </div>
+          <div >
+            <table  class="table table-bordered table-striped table-sm">
+              <thead class="bg-success">
+                <tr>
+                  <th>Action</th>
+                  <th>Job Title Code</th>
+                  <th>Job Title</th>
+                  <th>Job Description</th>
+                  <th>Min Experience Required</th>
+                  <th>Job Pay Grade Code</th>
+                  <th>Job Pay Frequency</th>
+                  <th>Comments</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let jt of datas;let i = index " >
+                  <td>
+                      <i class="fa fa-eye"  title="View" (click)="open(deptModal);view(jt);"></i>&nbsp;
+                      <i  (click)="edit(jt);show = !show"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;<i (click)="delete(jt,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                  
+                  <td>{{jt.jobtitle[0].jobtitle_code}}</td>
+                  
+                  <td>{{jt.jobtitle[0].jobtitle}}</td>
+                  
+                  <td>{{jt.jobtitle[0].description}}</td>
+                  
+                  <td>{{jt.jobtitle[0].min_experience}}</td>
+                  
+                  <td>{{jt.jobtitle[0].gradecode}}</td>
+                  <td>{{jt.jobtitle[0].payfrequency}}</td>
+                  <td>{{jt.jobtitle[0].comments}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="form-horizontal" [formGroup]="form">
+    <div *ngIf= "show" >
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employee Configuration </li>
+          <li class="breadcrumb-item ">Job Titles</li>
+          <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+        </ol>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-3">
+          <md-input-container class="example-full-width">
+          <input mdInput  [(ngModel)]="job.jobtitle[0].jobtitle_code"  placeholder="Job Title Code" pattern="[0-9.]+" maxlength="20" class="form-control" formControlName="jobtitlecode" required>
+          <md-error>Please enter numbers only.</md-error>
+          </md-input-container><i mdTooltip="Ex:SA" class="fa fa-question-circle" ></i><br><br><br>
+          <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="job.jobtitle[0].gradecode"  placeholder="Job Pay Grade Code" class="form-control" formControlName="jobpaygradecode" pattern="^[a-zA-Z0-9 ]*$" required>
+          <md-error>Please enter job pay grade code.</md-error>
+          </md-input-container><i mdTooltip="Ex: A,B,C" class="fa fa-question-circle" ></i><br><br><br>
+        </div>
+        <div class="col-md-3">
+          <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="job.jobtitle[0].jobtitle"  placeholder="Job Title" class="form-control"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" formControlName="jobtitle" required>
+          <md-error>Please enter job title.</md-error>
+          </md-input-container><i mdTooltip="Ex:System Analyst" class="fa fa-question-circle" ></i><br><br><br><br>
+          <md-select placeholder="Pay Frequency" [(ngModel)]="job.jobtitle[0].payfrequency" name="p" formControlName="payfrequency">
+              <md-option>Select Pay Frequency</md-option>
+            <md-option *ngFor="let p of pays" [value]="p.payfrequency[0].payfrequency">
+          {{p.payfrequency[0].payfrequency}}
+          </md-option>
+          </md-select><br>
+          <span  style="color: red"   *ngIf="!job.jobtitle[0].payfrequency">
+            please select pay frequency
+          </span><br>
+          <i style="color: #0d47a1"  onclick="document.getElementById('pay').style.display='block'" >Add Pay Frequency</i><br><br><br>
+          
+        </div>
+        <div class="col-md-3">
+          <md-input-container class="example-full-width">
+          <input mdInput #message maxlength="200" [(ngModel)]="job.jobtitle[0].description" placeholder="Description" class="form-control" formControlName="description">
+          <md-hint align="end">{{message.value.length}} charactered entered / 200</md-hint>
+          </md-input-container><br><br><br>
+          <md-input-container class="example-full-width">
+          <input mdInput #message maxlength="50" [(ngModel)]="job.jobtitle[0].comments" placeholder="Comments" class="form-control" formControlName="comments">
+          <md-hint align="end">{{message.value.length}} / 50</md-hint>
+          </md-input-container><br><br><br>
+        </div>
+        <div class="col-md-3">
+          <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="job.jobtitle[0].min_experience" placeholder="Min Experience Required" class="form-control" maxlength="5" pattern="^[0-9 \-]+$" formControlName="minexpreq">
+          </md-input-container><i mdTooltip="In years Ex:1,3.5" class="fa fa-question-circle" ></i><br><br><br>
+        </div>
+        <div class="col-md-12" style="margin-top: 5%">
+          <button  *ngIf="!updates"  class="btn btn-outline-success btn-sm"(click)="save(job);show=!show;"[disabled]="!form.valid || !job.jobtitle[0].payfrequency"> Save</button>
+          <button *ngIf="updates"  class="btn btn-outline-success btn-sm" (click)="update(job);show=!show;updates=!updates" [disabled]="!form.valid"> Update</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "cancel(job);show=!show;updates=!updates"> Cancel </button>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+  
+  
+  <form class="form-horizontal" [formGroup]="form1">
+  <div id="pay" class="w3-modal w3-animate-opacity">
+    <div class="w3-modal-content w3-card-4">
+       
+  
+      <header class="w3-container w3-teal bg-primary">
+        <span onclick="document.getElementById('pay').style.display='none'" style="margin-top: -1%;font-weight: 500"
+        class=" w3-display-topright fa fa-times "></span>
+        <h6>Pay Frequency</h6>
+      </header>
+      
+         
+         
+      <div class="w3-container">
+        <div class="col-md-12">
+           
+          <div class="row">
+            <div class="col-md-4">
+              <md-input-container class="example-full-width">
+              <input mdInput [(ngModel)]="pay.payfrequency[0].payfrequency"  placeholder="Pay Frequency" class="form-control" formControlName="payfr1" required>
+              <md-error>
+                Please enter pay frequency type.
+              </md-error>
+              </md-input-container><i mdTooltip="Ex: Hour,Day,Week" class="fa fa-question-circle" ></i><br><br><br>
+            </div>
+            <div class="col-md-4">
+              <md-input-container class="example-full-width">
+              <input mdInput [(ngModel)]="pay.payfrequency[0].shortcode"  placeholder="Short Code" name="shortcode" class="form-control" formControlName="shortcode1" required>
+              <md-error>Please enter pay frequency short code.</md-error>
+              </md-input-container><i mdTooltip="Ex: Hr,Dy,Wk" class="fa fa-question-circle" ></i><br><br><br>
+            </div>
+            <div class="col-md-4">
+              <md-input-container class="example-full-width">
+              <input mdInput #message maxlength="200" [(ngModel)]="pay.payfrequency[0].description" placeholder="Job Description" formControlName="desc1" >
+              <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+              </md-input-container><br><br><br>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br><br>
+        <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+          <div class="col-sm-12">
+            <button style="float: right;margin:0% 2% 0% 0%" class="btn btn-primary btn-sm" (click)="savechange(pay)" [disabled]="!form1.valid"> Save</button>
+          </div>
+        </footer>
+  
+      </div>
+      
+    </div>
+  </form>
+  
+
+  <md2-dialog #deptModal>
+      <md2-dialog-title>Job Titles</md2-dialog-title>
+      <div class="row">
+        <div class="col-md-12">
+         <!-- <div ngFor="let hg of datas;let i = index "> -->
+        <div class="emp-info  alter-div">
+            Job Title Code: {{job.jobtitle[0].jobtitle_code}}
+        </div>
+        <div class="emp-info alter-div">
+            Job Description: {{job.jobtitle[0].description}}
+        </div>
+        <div class="emp-info">
+            Job Pay Grade Code: {{job.jobtitle[0].gradecode}}
+        </div>
+        <div class="emp-info">
+            Comments: {{job.jobtitle[0].comments}}
+        </div>
+        <div class="emp-info alter-div">
+            Job Title: {{job.jobtitle[0].jobtitle}}
+        </div>
+        <div class="emp-info alter-div">
+            Min Experience Required: {{job.jobtitle[0].min_experience}}
+        </div>
+        <div class="emp-info">
+            Job Pay Frequency: {{job.jobtitle[0].payfrequency}}
+        </div>
+        </div>
+        <!-- </div> -->
+      </div><br><br> 
+      <md2-dialog-footer>
+        <button type="submit" class="btn btn-outline-success btn-sm" (click)="close(deptModal)">Cancel</button>
+    </md2-dialog-footer>
+    </md2-dialog>
+    
+  

@@ -1,0 +1,88 @@
+<div  style="display: both" class="col-lg-12">
+    <br><br>
+    <span style="font-weight:500">Dependency</span>
+    <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "open(depcy);show = !show">Add</button> 
+</div><br><br>
+
+ <div class="col-lg-12"><br>
+  <div class="table-responsive"> 
+  <table  class="table table-bordered table-hover ">
+ <thead class="thead-inverse">
+     <tr>
+      <th>Action</th>
+      <th>Dependent Name</th>
+      <th>Dependent Relation</th>
+       <th>Dependent DOB</th>
+     </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let dp of depend;let i = index " >
+            <td><i *ngIf="dp.id !== editRowId" (click)="edit(dp.id)"  title="Edit" class="fa fa-pencil-square-o"></i>/td>
+
+  <td *ngIf="dp.id == editRowId"> 
+       <input type="text" [(ngModel)]="dp.dependentname">
+  </td>
+  <td *ngIf="dp.id !== editRowId">{{dp.dependentname}}</td>
+
+  <td *ngIf="dp.id == editRowId"> 
+       <input type="text" [(ngModel)]="dp.dependentrelation">
+  </td>
+  <td *ngIf="dp.id !== editRowId">{{dp.dependentrelation}}</td>
+
+  <td *ngIf="dp.id == editRowId"> 
+       <input type="text" [(ngModel)]="dp.dependentdob">
+  </td>
+  <td *ngIf="dp.id !== editRowId">{{dp.dependentdob}}</td>
+ 
+</tr>                                         
+  </tbody>                             
+  </table>
+  </div></div>
+
+
+
+<md2-dialog #depcy>
+ <md2-dialog-title>Dependency</md2-dialog-title>
+   <div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-4">	<br>
+ <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="dep_name"  placeholder="Dependency Name"> 
+    </md-input-container><br><br><br><br>
+   
+  <md-select placeholder="Dependent Relation"  [(ngModel)]="relation" >
+  <md-option *ngFor="let e of rel  " [value]="e.viewValue" >
+      {{e.viewValue}}
+    </md-option>
+    </md-select><br><br><br><br>
+  
+  </div>
+
+<div class="col-md-4"><br>
+	  <md-input-container>
+     <input mdInput [mdDatepicker]="pick1"  [(ngModel)]="dep_dob" placeholder="Dependency DOB">
+     <button mdSuffix [mdDatepickerToggle]="pick1"></button>
+    </md-input-container>
+    <md-datepicker #pick1></md-datepicker> <br><br><br><br>
+
+	<md-select placeholder="Dependent Custody Code"  [(ngModel)]="cus" >
+  <md-option *ngFor="let cc of custody  " [value]="cc.viewValue" >
+      {{cc.viewValue}}
+    </md-option>
+    </md-select><br><br><br><br>
+
+  
+</div>
+<div class="col-md-4"><br>
+
+	 <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="dep_age"  placeholder="Dependency Age"> 
+    </md-input-container><br><br><br>
+
+  </div>
+
+</div>
+    <md2-dialog-footer>
+    <button type="submit" class="btn btn-primary" (click)="savedep()" >Save changes</button>
+      <button type="submit" class="btn btn-primary" (click)="close(depcy)">close</button>
+    </md2-dialog-footer>
+  </md2-dialog>

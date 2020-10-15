@@ -1,0 +1,240 @@
+<div  class="row">   
+  <div  class="col-md-12" ><br>
+    <div class="card" style="font-weight:500">
+     <div class="card-block" >
+     <div style="display: both" class="col-md-12" >
+         <button type="button" style="float: right" class="btn btn-outline-primary btn-sm"  (click) = "project_time();show = !show;">
+             <i class="fa fa-caret-left" aria-hidden="true"></i> Back</button>
+      <div *ngFor="let p of project.project"> 
+         <p class="card-text">
+           <b>Client: </b>{{p.client}} &nbsp;&nbsp; 
+           <b> Project Name:  </b>{{p.projectname}}</p>
+      </div> 
+       </div>
+      </div>
+     </div>    
+   
+  <div  class="col-md-12"> 
+    <div  class="col-md-4"> 
+      <!-- <md-input-container class="example-full-width">
+         <input mdInput [(ngModel)]="search"  placeholder="Search by Task" >
+      </md-input-container><br> -->
+      <md-input-container>
+         <input mdInput #myinput placeholder="Search by Task" [(ngModel)]="tesyt" (input)="filterTask(tesyt)">
+         <!-- <md-error>Please Enter Name</md-error> -->
+     </md-input-container> 
+     </div> 
+    </div>
+    <div  class="col-md-12"> 
+    <span style="font-weight:500"><b>Tasks</b></span>
+    <button  style="float: right;margin: 0% 2% 0% 0%" class="btn btn-outline-primary btn-sm" (click)="open(basictask)" >Add Task</button><br><br>      
+ </div>
+ 
+ 
+ <div class="row">
+  <div class="col-lg-12">
+  <div class=" "> 
+    <table  class="table table-bordered table-stripped table-sm">
+  <thead class="">
+      <tr>    
+       <th>Name</th> 
+       <th>Estimated hours</th>
+       <th>Billable Rate/hr(INR)</th>
+       <th>Billable</th> 
+       <th>Actions</th>
+        
+      </tr>
+       </thead>
+            <tbody >
+            <tr *ngFor="let projects of project.task_time;let i = index ">
+              
+              <td>{{projects.task }}</td>
+            <!-- <td *ngIf="projects.id == editRowId"> 
+                    <input type="text" [(ngModel)]="projects.tasktype">
+                 </td>
+                 <td *ngIf="projects.id !== editRowId">{{projects.tasktype}}</td> -->
+ 
+               <td> <input type="text" [(ngModel)]="projects.estimatedhour"> </td>
+               <td> <input type="text"  [(ngModel)]="projects.tbillablerate"></td>
+               <td> <input type="checkbox"  [(ngModel)]="projects.billable"></td>
+                <td><i (click)="open(actiontaskres);selectedTask(projects)"  title="Assign Resources" class="fa fa-user"></i>&nbsp;&nbsp;
+                 <i class="fa fa-eye"  title="View Resources" (click)="open(viewtaskres);view(projects,i);selectedTask(projects)"></i>&nbsp;&nbsp;
+                 <!-- <i (click)="selectedTask(projects);delete(project);" title="Delete" class="fa fa-trash-o"></i> -->
+               </td>
+            </tr>                        
+      </tbody>
+     </table>
+    </div>
+    </div>
+    <br><br>
+ <div  class="col-md-12">
+   <div style="float: left;" >
+     <button class="btn btn-outline-primary btn-sm" (click)="updatetask(project)">Update</button>
+ 
+   </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ 
+ 
+  <md2-dialog #basictask>
+    <md2-dialog-title>Add Tasks</md2-dialog-title>
+ 
+    <div  class="row">
+    <div  class="col-md-12"> 
+    <md-radio-group [(ngModel)]="Dt">
+      <md-radio-button  value="Dt" (click)="Showtask('Y')" >Default Tasks</md-radio-button>
+      <md-radio-button   value="Ft" (click)="Showtask('T')"  >Frequently Used Tasks</md-radio-button>
+      <md-radio-button  value="Nt" (click)="Showtask('N')">New Task</md-radio-button>
+     </md-radio-group><br><br>
+ 
+   <div  class="table-responsive" *ngIf="IsVisible" >
+   <table class="table table-bordered table-hover " *ngIf="tadatas.length!=0"  >
+     <tbody >
+      <tr *ngFor="let t of tadatas;let i=index ">
+         <td><input  type="checkbox"  style="float: right;" [(ngModel)]="t.status" (change)="changestatus(t)"  ></td>
+         <td >{{t.task}}</td>
+      </tr>
+     </tbody>
+   </table>
+   <div *ngIf="tadatas.length==0">
+    <span style="font-size: 10px;color: red;">
+     "No default tasks to select."
+   </span>
+   </div>
+   </div> 
+ 
+   <div  class="table-responsive" *ngIf="IsFrequent" >
+   <table class="table table-bordered table-hover " *ngIf="freq.length!=0" >
+     <tbody >
+     <tr *ngFor="let ft of freq;let i=index " > 
+        <td><input  type="checkbox" style="float: right;"  [(ngModel)]="ft.status" (change)="changestatus(ft)" ></td>
+        <td>{{ft.task}}</td>
+     </tr>
+     </tbody>
+   </table>
+   <div *ngIf="freq.length==0" >
+     <span style="font-size: 10px;color: red;">
+       "No frequent tasks to select."
+     </span>
+   </div>
+   </div> 
+ 
+   <div  class="col-md-12"> 
+     <div class="col-md-6" *ngIf="IsTask">
+       <md-input-container class="example-full-width"   >
+           <input mdInput placeholder="Name" [(ngModel)]="task_time.task" (change)="changestatus(task_time)" >
+       </md-input-container><br><br>
+     <div class="col-md-6">
+        <md-checkbox  [(ngModel)]="newcheck" >Default Task</md-checkbox>
+     </div>
+     </div>
+   </div>
+ </div>
+  </div><br><br>
+     <md2-dialog-footer>
+       <button type="submit" class="btn btn-sm btn-primary" data-dismiss="modal" (click)="projectsave()">ADD</button>
+       <button type="submit" class="btn btn-secondary btn-sm" (click)="close(basictask)">Cancel</button>
+     </md2-dialog-footer>
+ </md2-dialog>
+ 
+ 
+ 
+ 
+ <md2-dialog #viewtaskres>
+     <md2-dialog-title>View Task Resources</md2-dialog-title>
+     <div class="card" style="font-weight:500">
+         <div class="card-block">
+         <p class="card-text">
+           <b>Task:</b>
+           {{pertclrtask}}
+            &nbsp;&nbsp; 
+           <b>Estimated Hours:</b> 
+           {{pertclresthours}}
+         </p>
+     </div> 
+     </div><br>
+     <span style="font-weight:500"><b>Resources</b></span>
+     <div  class="col-md-12"> 
+         <div  class="col-md-6"> 
+           <md-input-container>
+             <input mdInput #myinput placeholder="Search" [(ngModel)]="filres" (input)="filterres(filres)">
+           </md-input-container> 
+         </div> 
+ 
+         <div style="height: 25%" class="col-md-3" *ngFor="let employee of viewres">
+            <div class="card card-info" style="background-color:white;width: 13rem;height: 9rem;">
+             <div class="card-block" >
+              <h5 class="card-title ">{{employee.official[0].firstname}} {{employee.official[0].lastname}}</h5> 
+              <h6 class="card-title ">{{employee.official[0].username}}</h6>  
+              <h6 class="card-title ">{{employee.official[0].jobtitle}}</h6>      
+             </div>
+           </div>        
+           </div> 
+     </div>
+    
+ </md2-dialog>
+ 
+  
+ <md2-dialog #actiontaskres>
+     <md2-dialog-title >Assign Resources To Task</md2-dialog-title>
+     <div class="card"  style="font-weight:500">
+       <div class="card-block" >
+           <p class="card-text">
+               <b>Task:</b>
+               {{pertclrtask}}
+                &nbsp;&nbsp; 
+               <b>Estimated Hours:</b> 
+               {{pertclresthours}}
+           </p>
+       </div> 
+     </div>
+   <br> 
+     <div  class="row">
+        <div  class="col-md-6">
+           <span style="font-weight:500"><b>Resources</b></span>
+          <md-input-container class="example-full-width">
+            <input mdInput  #myinput [(ngModel)]="search1"  placeholder="Search Resource" [(ngModel)]="filresource" (input)="filterresource(filresource)">
+          </md-input-container><br>
+        
+           <div  droppable  (onDrop)="onItemDrop1($event)">
+              <span class="card-heading"  style="font-size: 10px;color: red;"> 
+                  Resources (Drag resource for add to task & Drop resource to remove from task for that click here)
+                </span><br>
+            <div class="card card-info" style="background-color:white;width: 13rem;height: 9rem;"  draggable *ngFor="let employee of totalresources" [dragData]="employee">
+               <div class="card-block" >
+                <h4 class="card-title ">{{employee.official[0].firstname}} {{employee.official[0].lastname}}</h4> 
+                <h5 class="card-title ">{{employee.official[0].username}}</h5>  
+                <h5 class="card-title ">{{employee.official[0].jobtitle}}</h5>      
+               </div>
+             </div>        
+           </div> 
+     </div>
+ 
+     <div  class="col-md-6 vl"> 
+           <span style="font-weight:500"><b>Selected Resources</b>({{totalreslength}})</span>
+           <md-input-container class="example-full-width">
+            <input mdInput  #myinput placeholder="Search Selected Resource" [(ngModel)]="filselresource" (input)="filterselresource(filselresource)">
+          </md-input-container><br>
+         
+ 
+          <div  droppable   (onDrop)="onItemDrop($event)" >
+             <span class="card-heading" style="font-size: 10px;color: red;"> 
+                 Task Resources (Drag resource to remove from task & Drop resource for add to task for that click here)
+              </span><br>
+            <div class=" card card-info" style="background-color:white;width: 13rem;height: 9rem;" *ngFor="let pr of resourceassign"  draggable  [dragData]="pr" >
+             <div class="card-block">
+              <h4 class="card-title">{{pr.official[0].firstname}} {{pr.official[0].lastname}}</h4> 
+              <h5 class="card-title">{{pr.official[0].username}}</h5>  
+              <h5 class="card-title">{{pr.official[0].jobtitle}}</h5>      
+            </div> 
+         </div> 
+         </div> 
+       </div>
+      </div> 
+     <md2-dialog-footer>
+       <button type="submit" style="float: left;" class="btn btn-sm btn-primary" (click)="resourcesave(project);" data-dismiss="modal">ASSIGN RESOURCES</button>
+       <button   style="float: left;" class="btn btn-warning btn-sm" (click)="close(actiontaskres)">Cancel</button>
+     </md2-dialog-footer>
+ </md2-dialog>

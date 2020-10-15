@@ -1,0 +1,56 @@
+/*    th, td{
+      
+      border-bottom-color: #dbdbdb;
+    } 
+
+
+    
+  
+
+    
+        
+   
+      th{ 
+        color:#ECF0F1;
+        text-transform: uppercase;
+        cursor: pointer;
+  
+      }
+      
+      
+
+        
+    td:nth-last-child(1), th:nth-last-child(1)  {
+       max-width: 150px;
+    }
+       
+
+    th:nth-child(1)
+    {
+
+      border-top-left-radius: 10px;
+    }
+
+    th:nth-last-child(1){
+      border-top-right-radius: 10px;
+    }
+*/
+
+div.box{
+  border-style: groove;
+  height: auto;
+  width: 100%;
+  }
+  
+  .emp-info 
+  { margin:0; width:50%; padding:10px 0px; float: left; min-height:20px; }
+  
+  .alter-div{
+  background-color: #e2e2e1;
+  }
+  
+  div.box33
+  {
+    border-style:groove;
+    height: auto;
+  }

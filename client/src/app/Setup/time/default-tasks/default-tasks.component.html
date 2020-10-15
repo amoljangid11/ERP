@@ -1,0 +1,113 @@
+<div *ngIf="!show" class="col-md-12">
+  <div class="row">
+ 	 <div  style="display: both" class="col-md-12">
+ 	 	<br>
+          <span style="font-weight:500;">Default Tasks</span>
+        <button type="button" style="float: right;margin:0% 0% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button> 
+
+     </div>
+   </div> 
+
+ 	<div class="row">
+ 		<div class="col-md-12">
+
+  <div  class="table-responsive">
+  <table  class="table table-bordered table-hover ">
+  <thead class="thead-inverse">
+     <tr>
+      <th>Action</th>
+      <th>Default task</th>
+     
+     </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bu of dtasks;let i = index">
+        <td><i *ngIf="bu.id !== editRowId" (click)="edit(bu.id)"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;
+          <i (click)="delete(bu,i)" title="Delete" class="fa fa-trash-o"></i>&nbsp;&nbsp;<i  *ngIf="bu.id == editRowId" (click)="update(bu)" title="save" style="float: right" class="fa fa-floppy-o"></i></td>
+
+        <td *ngIf="bu.id == editRowId"> 
+          <input type="text" [(ngModel)]="bu.task">
+        </td>
+        <td *ngIf="bu.id !== editRowId">{{bu.task}}</td>
+
+
+      </tr>                                 
+    </tbody>                        
+    </table>
+   </div></div></div>
+</div>
+
+ <div *ngIf= "show" style="width: 100%;" class="row">
+<!--  <div  class="col-md-12">
+   
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">Time </li>
+      <li class="breadcrumb-item ">Default Task</li>
+      <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+    </ol>
+ </div><br> -->
+
+<!--  <md-card>
+  <md-card-title>Connection</md-card-title>
+  <md-card-content>
+    <form [formGroup]="loginForm">
+      <md-input-container [ngClass]="{'error': loginForm.controls['email'].errors && !loginForm.controls['email'].pristine}" dividerColor="{{loginForm.controls['email'].errors && !loginForm.controls['email'].pristine ? 'warn' : 'primary'}}">
+        <input type="email" mdInput formControlName="email" placeholder="Email" required>
+        <div *ngIf="loginForm.controls['email'].errors && !loginForm.controls['email'].pristine" class="error-msg">
+          <div [hidden]="!loginForm.controls['email'].errors.required">Email is required.</div>
+          <div [hidden]="!loginForm.controls['email'].errors.patternInvalid">Email is invalid.</div>
+        </div>
+      </md-input-container>
+      <md-input-container [ngClass]="{'error': loginForm.controls['password'].errors && !loginForm.controls['password'].pristine}"
+        dividerColor="{{loginForm.controls['password'].errors && !loginForm.controls['password'].pristine ? 'warn' : 'primary'}}">
+        <input type="password" mdInput formControlName="password" placeholder="Password" required>
+        <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine" class="error-msg">
+          <div [hidden]="!loginForm.controls['password'].errors.required">Password is required.</div>
+        </div>
+      </md-input-container>
+    </form>
+  </md-card-content>
+  <md-card-actions align="end">
+    <button md-raised-button class="btn" [disabled]="loginForm.invalid" (click)="login()">Login</button>
+  </md-card-actions>
+</md-card> -->
+
+<div   class="col-md-12">
+	<form  [formGroup]="loginForm" >
+	<div class="col-sm-3 form-group">
+    <md-input-container [ngClass]="{'error': loginForm.controls['tname'].errors && !loginForm.controls['tname'].pristine}" dividerColor="{{loginForm.controls['tname'].errors && !loginForm.controls['tname'].pristine ? 'warn' : 'primary'}}">
+
+      <input mdInput placeholder="Task Name" formControlName="tname" [(ngModel)]="tasks.task" required>
+       <md-hint *ngIf="loginForm.controls['tname'].errors && (loginForm.controls['tname'].dirty || loginForm.controls['tname'].touched)" [ngStyle]="{'color': 'red'}"> TaskName is required 
+       </md-hint>
+    </md-input-container>    
+  </div>
+</form>
+</div>
+<div  class="col-md-12">
+  <div style="float: right;" >
+    <button class="btn btn-outline-primary btn-sm" [disabled]="loginForm.invalid" (click)="save(tasks);show=!show"> Save</button>
+    <button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+  </div>
+</div>
+</div>
+
+<!-- <md-input-container>
+    <input mdInput placeholder="email" [formControl]="emailFormControl" required>
+    <md-error *ngIf="emailFormControl.hasError('required')">
+    This field is required
+    </md-error>
+    <md-error *ngIf="emailFormControl.hasError('pattern')">
+    Please enter a valid email address
+    </md-error>
+</md-input-container>
+TS:
+
+import { FormControl, Validators, NgModel } from '@angular/forms';
+
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+export class FormlayoutComponent {
+    private emailFormControl = new FormControl('', [Validators.required, Validators.pattern(EMAIL_REGEX)]);
+....
+} -->

@@ -1,0 +1,123 @@
+<div  class="row">
+<div *ngIf = "!show" style="display: both" class="col-lg-12">
+  <div >
+    <ol class="breadcrumb">
+       <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">HR </li>
+      <li class="breadcrumb-item ">Leave Management </li>
+      <li class="breadcrumb-item active">Employee Leave</li>
+    </ol>
+ </div>
+
+ <div  style="display: both" class="col-lg-12">
+
+        <button type="button" style="float: right;margin:0% 0% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button> 
+</div><br><br>
+
+<div class="row">
+ <div class="col-lg-12"> <div class="table-responsive"> 
+  <table  class="table table-bordered table-hover ">
+ <thead class="thead-inverse">
+ 
+     <tr>
+      <th>Action</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Employee ID</th>
+      <th>Allotted Leave Limit</th>
+      <th>Used Leaves</th>
+      <th>Leave Balance</th>
+      <th>Allotted Year</th>    
+     </tr>
+   </thead>
+   <tbody>
+                             	
+   </tbody>
+                                
+  </table>
+</div></div>
+</div></div>
+</div>
+
+
+ <div style="width: 100%;" class="row">
+ <div *ngIf= "show" class="col-lg-12">
+   <div >
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">HR </li>
+      <li class="breadcrumb-item ">Leave Management </li>
+      <li class="breadcrumb-item ">Add Employee Leave </li>
+      <li class="breadcrumb-item active">Add</li>
+    </ol>
+ </div><br>
+
+<div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-4"><br>
+     <md-select placeholder="Business Unit">
+  <md-option *ngFor="let bu of units" [value]="bu.businessunit">
+    {{ bu.businessunit }}
+  </md-option>
+</md-select><br><br><br>
+    </div>
+    <div class="col-md-4"><br>
+    <md-select placeholder="Department">
+  <md-option *ngFor="let dept of depts" [value]="dept.department">
+    {{ dept.department }}
+  </md-option>
+</md-select><br><br><br>
+    </div>
+
+    <div class="col-md-4"><br>
+    <md-select placeholder="Year">
+  <md-option *ngFor="let y of years" [value]="y.year">
+    {{ y.year }}
+  </md-option>
+</md-select><br><br><br>
+    </div> 
+</div>
+
+
+
+</div>
+<div *ngIf= "show" class="col-md-12">
+    <div class="row">
+    <div class="col-lg-12"> 
+      <div class="table-responsive"> 
+         <table  class="table table-bordered table-hover ">
+            <thead class="thead-inverse">
+ 
+              <tr>
+              <th>Employee</th>
+              <th>Leaves for 2017</th>
+              </tr>
+           </thead>
+                  <!-- <tr>
+                    <td></td>
+                    <td></td>                 
+                  </tr> -->
+            <tbody>
+                              
+          </tbody>
+                                 
+         </table>
+     </div>
+  <div style="float: right;margin:0% 0% 0% 0%" class="row">
+  <div  class="col-md-12">
+    <br>
+    <br>
+    <button class="btn btn-outline-primary btn-sm" (click)="save();show=!show"> Save</button>
+    <button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+   
+  </div>
+</div>
+</div>
+</div>
+    
+  
+</div>
+
+
+
+
+</div>

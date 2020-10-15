@@ -1,0 +1,103 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show" >
+    <div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item ">General </li>
+        <li class="breadcrumb-item active">Email Contacts</li>
+      </ol>
+    </div>
+    <div style="display: both" class="col-md-12">
+      <span style="font-weight:500">Email Contacts</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button>
+    </div><br><br>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    
+    
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <table  class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Business Unit</th>
+                <th>Group</th>
+                <th>Group Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let mail of datas;let i = index " >
+                <td>
+                    <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(mail)"></i>&nbsp;&nbsp;
+                  <i (click)="edit(mail);show = !show"   title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(mail,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                <td >{{mail.emailcontacts[0].businessunit}}</td>
+                <td>{{mail.emailcontacts[0].group}}</td>
+                <td >{{mail.emailcontacts[0].groupmail}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div></div>
+      </div>
+    </div>
+    <div *ngIf= "show">
+      <div>
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">Site </li>
+          <li class="breadcrumb-item ">General </li>
+          <li class="breadcrumb-item ">Email Contacts</li>
+          <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+        </ol>
+      </div>
+      <div class="row">
+        <div class="col-md-4"><br>
+          <md-select [(ngModel)]="contact.emailcontacts[0].businessunit" placeholder="Business Unit">
+          <md-option *ngFor="let b of bunit" [value]="b.businessunits[0].name">
+          {{ b.businessunits[0].name }}
+          </md-option>
+          </md-select><br><br><br>
+        </div>
+        <div class="col-md-4"><br>
+          <md-select [(ngModel)]="contact.emailcontacts[0].group" placeholder="Group">
+          <md-option *ngFor="let group of grp" [value]="group.value">
+          {{ group.value }}
+          </md-option>
+          </md-select><br><br><br>
+        </div>
+        <div class="col-md-4">
+          <md-input-container class="example-full-width">
+          <input required name="mail" [(ngModel)]="contact.emailcontacts[0].groupmail" mdInput placeholder="Group Email" >
+          </md-input-container><br><br><br>
+        </div>
+        <div  class="col-md-12" style="margin-top: 5%">
+          <button  *ngIf="!updatebutton"  class="btn btn-outline-success btn-sm"(click)="save(contact);show=!show;"> Save</button>
+          <button *ngIf="updatebutton"  class="btn btn-outline-success btn-sm" (click)="update(contact);show=!show;updatebutton=!updatebutton"> Update</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "cancel(contact);show=!show;updatebutton=!updatebutton"> Cancel </button>
+        </div>
+      </div></div>
+    </div>
+
+
+
+    <md2-dialog #deptModal>
+        <md2-dialog-title>Email Contacts</md2-dialog-title>
+        <div class=" row box">
+          <div class="emp-info">
+              Business Units : {{contact.emailcontacts[0].businessunit}}
+          </div>
+          <div class="emp-info">
+              Group    : {{contact.emailcontacts[0].group}}
+          </div><br>
+          <div class="emp-info alter-div">
+              Group Email : {{contact.emailcontacts[0].groupmail}}
+          </div>
+          <div class="emp-info alter-div"></div>
+        </div>
+      <md2-dialog-footer>
+          <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+      </md2-dialog-footer>
+    </md2-dialog>

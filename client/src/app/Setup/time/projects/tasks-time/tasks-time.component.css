@@ -1,0 +1,36 @@
+.nestedDemo .trashcan .dndPlaceholder {
+    display: none;
+}
+
+.vl {
+    border-left: 2px solid rgb(163, 162, 162);
+    height: auto;
+  }
+
+  .member_name {
+    text-align: left;
+    display: block;
+    float: left;
+    width: 113px;
+    font-family: 'Roboto Regular';
+    color: #2590c2;
+    font-size: 15px;
+    line-height: 14px;
+    word-wrap: break-word;
+    height: 16px;
+    overflow: hidden;
+}
+
+.member_data {
+    text-align: left;
+    display: block;
+    float: left;
+    width: 113px;
+    font-family: 'Roboto Regular';
+    color: black;
+    font-size: 12px;
+    line-height: 10px;
+    word-wrap: break-word;
+    height: 16px;
+    overflow: hidden;
+}

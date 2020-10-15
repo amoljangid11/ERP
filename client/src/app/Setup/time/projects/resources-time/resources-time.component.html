@@ -1,0 +1,348 @@
+<div  class="row">   
+  <div  class="col-md-12"  ><br>
+    <div class="card" style="font-weight:500">
+     <div class="card-block" >
+     <div style="display: both" class="col-md-12">
+         <button type="button" style="float: right" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;projects()">
+             <i class="fa fa-caret-left" aria-hidden="true"></i> Back</button>
+      <div *ngFor="let p of project.project "> 
+         <p class="card-text">
+           <b>Client: </b>{{p.client}} &nbsp;&nbsp; 
+           <b> Project Name:  </b>{{p.projectname}}
+         </p>
+      </div> 
+  
+       </div>
+      </div>
+     </div> 
+   
+ <br> 
+ <div style="display: inline-flex;" class="col-md-12"> 
+ <div  class="col-md-3"> <br>
+   <md-select placeholder="Role">
+     <md-option *ngFor="let r of rol" (click)="selectRole(r.viewValue)" [value]="r.viewValue">
+       {{ r.viewValue }}
+     </md-option>
+   </md-select>
+ </div>
+    <div  class="col-md-4"> 
+      <md-input-container class="example-full-width">
+         <input mdInput #myinput placeholder="Search by Employee" [(ngModel)]="tesyt" (input)="filterItem(tesyt)">
+      </md-input-container><br>
+     </div> 
+    </div>
+ <div  class="col-md-12"> 
+    <span style="font-weight:500"><b>Resources</b></span>
+    <button  style="float: right;margin: 0% 2% 0% 0%" class="btn btn-outline-primary btn-sm" (click)="open(basicres)" >Add Resources</button><br><br>
+ </div>
+ <div class="row">
+  <div class="col-lg-12">
+  <div class=""> 
+    <table  class="table table-bordered table-stripped table-sm ">
+    <thead class="">
+      <tr>    
+       <th>Employee</th>     
+       <th>Billable Rate/hr(INR)</th>
+       <th>Cost Rate/hr(INR)</th> 
+       <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody *ngIf='flag' >
+       <tr *ngFor="let projects of project.resource_time;let i = index ">
+         <td *ngIf="projects.official[0].role=='Manager' || projects.official[0].role=='HR Manager' || projects.official[0].role=='Management' ">{{projects.official[0].firstname}} {{projects.official[0].lastname}} (M)</td>
+         <td *ngIf="projects.official[0].role=='Employee' || projects.official[0].role=='System Admin'">{{projects.official[0].firstname}} {{projects.official[0].lastname}}</td>
+         <td> <input type="text" [(ngModel)]="projects.billablerate"> </td>
+         <td> <input type="text" [(ngModel)]="projects.costrate"></td>
+         <td><i  (click)="update(project)"  title="Assign Tasks" class="fa fa-user" (click)="open(basicassign);assignEmployee(projects);tasksave()"></i>&nbsp;&nbsp;
+           <i class="fa fa-eye"  title="View Task" (click)="open(viewtask);view(projects,i);taskview(project);assignEmployee(projects);tasksave()"></i>&nbsp;&nbsp;
+           <!-- <i (click)="delete(projects,i)" title="Delete" class="fa fa-trash-o"></i> -->
+         </td>
+       </tr>                        
+    </tbody>   
+    <tbody *ngIf="role=='Manager'"  >
+     <tr *ngFor="let projects of project.resource_time ;let i = index ">
+       <td *ngIf="projects.official[0].role=='Manager' || projects.official[0].role=='HR Manager' || projects.official[0].role=='Management' ">{{projects.official[0].firstname}} {{projects.official[0].lastname}} (M)</td>
+       <!-- <td *ngIf="projects.official[0].role=='Employee' || projects.official[0].role=='System Admin'">{{projects.official[0].firstname}} {{projects.official[0].lastname}}</td> -->
+       <td *ngIf="projects.official[0].role=='Manager' || projects.official[0].role=='HR Manager' || projects.official[0].role=='Management' "> <input type="text" [(ngModel)]="projects.billablerate"> </td>
+       <td *ngIf="projects.official[0].role=='Manager' || projects.official[0].role=='HR Manager' || projects.official[0].role=='Management' "> <input type="text" [(ngModel)]="projects.costrate"></td>
+       <td *ngIf="projects.official[0].role=='Manager' || projects.official[0].role=='HR Manager' || projects.official[0].role=='Management' "><i  (click)="update(project)"  title="Assign Resource" class="fa fa-user" (click)="open(basicassign);assignEmployee(projects);"></i>&nbsp;&nbsp;
+         <i class="fa fa-eye"  title="View Task" (click)="open(viewtask);view(projects,i);taskview(project);assignEmployee(projects);"></i>&nbsp;&nbsp;
+         <i (click)="delete(projects,i)" title="Delete" class="fa fa-trash-o"></i>
+       </td>
+     </tr>                        
+  </tbody>
+  <tbody *ngIf="role=='Employee'"  >
+   <tr *ngFor="let projects of project.resource_time ;let i = index ">
+     <!-- <td *ngIf="projects.official[0].role=='Manager' || projects.official[0].role=='Hr Manager' || projects.official[0].role=='Management' ">{{projects.official[0].firstname}} {{projects.official[0].lastname}} (M)</td> -->
+     <td *ngIf="projects.official[0].role=='Employee' || projects.official[0].role=='System Admin'">{{projects.official[0].firstname}} {{projects.official[0].lastname}}</td>
+     <td *ngIf="projects.official[0].role=='Employee' || projects.official[0].role=='System Admin'"> <input type="text" [(ngModel)]="projects.billablerate"> </td>
+     <td *ngIf="projects.official[0].role=='Employee' || projects.official[0].role=='System Admin'"> <input type="text" [(ngModel)]="projects.costrate"></td>
+     <td *ngIf="projects.official[0].role=='Employee' || projects.official[0].role=='System Admin'"><i  (click)="update(project)"  title="Assign Resource" class="fa fa-user" (click)="open(basicassign);assignEmployee(projects);"></i>&nbsp;&nbsp;
+       <i class="fa fa-eye"  title="View Task" (click)="open(viewtask);view(projects,i);taskview(project);assignEmployee(projects);"></i>&nbsp;&nbsp;
+       <i (click)="delete(projects,i)" title="Delete" class="fa fa-trash-o"></i>
+     </td>
+   </tr>                        
+ </tbody> 
+                   
+    </table>
+    </div>
+    </div><br><br>
+ 
+ <div  class="col-md-12">
+ <div style="float: left;" >
+   <button class="btn btn-outline-primary btn-sm" (click)="updateresource(project)">Update</button>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ 
+  
+ <md2-dialog  #basicres>
+     <md2-dialog-title>Add Resources</md2-dialog-title>
+  
+     <div  class="row">
+     <div  class="col-md-12" > 
+      
+     <md-radio-group [(ngModel)]="searchtype" (click)="filterResources();">
+       <md-radio-button value="Manager" (click)="Showtask('M')">Manager</md-radio-button>
+       <md-radio-button value="Employee" (click)="Showtask('E')" >Employee</md-radio-button>
+    </md-radio-group><br><br>
+    </div><br><br>
+  
+    <div  class="col-md-6" *ngIf="IsManager">
+       <span style="font-weight:500"><b>Managers</b></span>
+      <md-input-container class="example-full-width">
+        <input mdInput #myinput placeholder="Search Manager"  [(ngModel)]="filman" (input)="filtermanager(filman)" >
+      </md-input-container><br>
+    
+   <div droppable  (onDrop)="onMRItemDrop($event)">
+    <span class="card-heading" style="font-size: 10px;color: red;"> 
+      Drag manager resource into project & Drop manager resource from project for that click here
+     </span><br>
+    <div class="card card-info" style="background-color:white;width: 13rem;height: 9rem;"  draggable *ngFor="let employee of officiald1" [dragData]="employee"  >
+   <div class="card-block" >
+       <h4 class="card-title">{{employee.official[0].firstname}} {{employee.official[0].lastname}}</h4> 
+       <h5 class="card-title">{{employee.official[0].username}}</h5>  
+       <h5 class="card-title">{{employee.official[0].jobtitle}}</h5>        
+  </div>
+ </div>        
+ </div> 
+   </div>
+  
+   <div  class="col-md-6" *ngIf="IsEmployee">
+       <span style="font-weight:500"><b>Employees</b></span>
+    <md-input-container class="example-full-width">
+      <input mdInput #myinput  placeholder="Search Employee"  [(ngModel)]="filemp" (input)="filteremployee(filemp)" >
+    </md-input-container><br>
+
+ <div  droppable (onDrop)="onERItemDrop($event)"  >
+  <span class="card-heading" style="font-size: 10px;color: red;"> 
+    Drag employee resource into project & Drop employee resource from project for that click here
+   </span><br>
+ <div class="card card-info" style="background-color:white;width: 13rem;height: 9rem;" draggable *ngFor="let employee of officiald2" [dragData]="employee">
+ <div class="card-block" >
+  <h4 class="card-title ">{{employee.official[0].firstname}} {{employee.official[0].lastname}}</h4> 
+  <h5 class="card-title ">{{employee.official[0].username}}</h5>  
+  <h5 class="card-title ">{{employee.official[0].jobtitle}}</h5>      
+ </div>
+ </div>        
+ </div> 
+
+  </div>
+  
+    <div  class="col-md-6 vl" *ngIf="IsEmployee"> 
+       <span style="font-weight:500"><b>Selected Employees</b>({{employeecount}})</span>
+       <md-input-container class="example-full-width">
+        <input mdInput #myinput [(ngModel)]="filselemp"  placeholder="Search Selected Employee" (input)="filterselectemployee(filselemp)">
+      </md-input-container><br>
+  
+    <div  droppable (onDrop)="onEItemDrop($event)" >
+       <!-- <div class="card-heading" ><b>Drop Items Here</b> -->
+         <span class="card-heading" style="font-size: 10px;color: red;"> 
+            Drop employee resource into project & Drag employee resource from project for that click here
+        </span><br>
+      <div class=" card card-info" draggable style="background-color:white;width: 13rem;height: 9rem;" *ngFor="let pr of Eassign" [dragData]="pr" >
+      <!--  *ngIf="pr.official[0].role=='Employee' || pr.official[0].role=='System Admin'" -->
+       <div class="col-xs-3 card-block" >
+           <h4 class="card-title ">{{pr.official[0].firstname}} {{pr.official[0].lastname}}</h4> 
+           <h5 class="card-title ">{{pr.official[0].username}}</h5>  
+           <h5 class="card-title ">{{pr.official[0].jobtitle}}</h5>  
+      </div>
+      </div> 
+   </div> 
+   <!-- </div> -->
+   </div>
+  
+   <div  class="col-md-6 vl" *ngIf="IsManager"> 
+       <span style="font-weight:500"><b>Selected Managers</b>({{managercount}})</span>
+    <md-input-container class="example-full-width">
+     <input mdInput #myinput [(ngModel)]="filselman"  placeholder="Search Selected Manager" (input)="filterselectmanager(filselman)"  >
+   </md-input-container><br>
+
+  <div  droppable   (onDrop)="onMItemDrop($event)" >
+        <span class="card-heading" style="font-size: 10px;color: red;"> 
+         Drop manager resource into project & Drag manager resource from project for that click here
+     </span><br>
+    <div draggable  class=" card card-info" style="background-color:white;width: 13rem;height: 9rem;" *ngFor="let pr of Massign"  [dragData]="pr"  >
+      <!-- <div   *ngIf="pr.official[0].role=='Hr Manager' || pr.official[0].role=='Manager' || pr.official[0].role=='Management'"> -->
+     <div class="col-xs-3 card-block"  >
+         <h4 class="card-title ">{{pr.official[0].firstname}} {{pr.official[0].lastname}}</h4> 
+         <h5 class="card-title ">{{pr.official[0].username}}</h5>  
+         <h5 class="card-title ">{{pr.official[0].jobtitle}}</h5>      
+    </div>
+    </div> 
+    <!-- </div> -->
+ </div> 
+ 
+  </div>
+   <div *ngIf="IsManager">
+    <md2-dialog-footer>
+        <button type="submit" class="btn btn-sm btn-primary" data-dismiss="modal" (click)="resourcesave(resource_time);count()">Add Manager Resources</button>
+        <button type="submit" class="btn btn-secondary btn-sm" (click)="close(basicres)">Cancel</button>
+    </md2-dialog-footer> 
+    </div>
+    <div *ngIf="IsEmployee">
+      <md2-dialog-footer>
+          <button type="submit" class="btn btn-sm btn-primary" data-dismiss="modal" (click)="resourcesave(resource_time);count()">Add Employee Resources</button>
+          <button type="submit" class="btn btn-secondary btn-sm" (click)="close(basicres)">Cancel</button>
+      </md2-dialog-footer> 
+      </div>
+  </div>
+  </md2-dialog>
+  
+ 
+ 
+ <md2-dialog  #basicassign>
+     <md2-dialog-title>Assign Task To Resources</md2-dialog-title>
+   
+     <div  class="row">
+     <div  class="col-md-12">      
+      <div style="height: 20%" class="col-md-3" *ngFor="let employee of newemployee" (click)="assignEmployee(employee);">
+      <div class="card card-info" style="background-color:#F9F9F9;width: 13rem;height: 9rem;">
+      <div class="card-block" >
+       <h5 class="card-title ">{{employee.official[0].firstname}} {{employee.official[0].lastname}}</h5> 
+       <h6 class="card-title ">{{employee.official[0].username}}</h6>  
+       <h6 class="card-title ">{{employee.official[0].jobtitle}}</h6>      
+     </div>
+    </div>        
+   </div> 
+   <br><br>
+   
+   <md-radio-group [(ngModel)]="tasksassigntores" >
+     <md-radio-button value="Unassigned" (click)="Showtasks('US')">Unassigned</md-radio-button>
+     <md-radio-button value="Assigned"  (click)="Showtasks('AS')">Assigned</md-radio-button>
+     <md-radio-button value="All"  (click)="Showtasks('AL')">All</md-radio-button>
+   </md-radio-group><br><br>
+   
+     <div  class="table-responsive" *ngIf="IsUnassignTasks" >
+        <table class="table table-bordered table-hover "  >
+          <tbody >
+           <!-- <tr *ngFor="let t of tadatas;let i=index ">
+              <td><input  type="checkbox"  style="float: right;" [(ngModel)]="t.status" (change)="changestatus(t)"  ></td>
+              <td >{{t.task}}</td>
+           </tr> -->
+          </tbody>
+        </table>
+        <!-- <div *ngIf="tadatas.length==0"> -->
+       
+        <div class="alert alert-info"  style="margin-left:20%;padding: 0.5% 0.5% 0.5% 0.5%;width:60%;float:center">
+            <i class="fa fa-info-circle" aria-hidden="true" style="padding:0px  10px"></i>
+            <span  style="text-align:center;">No Data Found</span>
+          </div>
+        <!-- </div> -->
+        </div> 
+      
+        <div  class="table-responsive" *ngIf="IsAssignTasks" >
+        <table class="table table-bordered table-hover " >
+          <tbody >
+          <tr *ngFor="let AS of asstask;let i=index " > 
+             <td><input  type="checkbox" style="float: right;"  [(ngModel)]="AS.assigtask" ></td>
+             <td>{{AS}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <!-- <div *ngIf="freq.length==0" > -->
+            <!-- <div class="alert alert-info"  style="margin-left:20%;padding: 0.5% 0.5% 0.5% 0.5%;width:60%;float:center">
+                <i class="fa fa-info-circle" aria-hidden="true" style="padding:0px  10px"></i>
+                <span  style="text-align:center;">No Data Found</span>
+              </div> -->
+        <!-- </div> -->
+        </div> 
+      
+        <div  class="table-responsive" *ngIf="IsAllTasks" >
+            <table class="table table-bordered table-hover " >
+              <tbody >
+        <tr *ngFor="let AL of project.task_time;let i=index " > 
+             <td><input  type="checkbox" style="float: right;"   [(ngModel)]="AL.taskname" ></td>
+             <td>{{AL.task}}</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+   
+   </div>
+   </div><br><br>
+   <div *ngIf="IsAllTasks" >
+    <md2-dialog-footer>
+        <button type="submit" class="btn btn-sm btn-primary" data-dismiss="modal" (click)="tasksave()">Assign/Delete Task</button>
+        <button type="submit" class="btn btn-secondary btn-sm" (click)="close(basicassign)">Cancel</button>
+    </md2-dialog-footer> 
+   </div>
+   <div *ngIf="IsUnassignTasks" >
+      <md2-dialog-footer>
+          <button type="submit" class="btn btn-sm btn-primary" data-dismiss="modal">Assign Task</button>
+          <button type="submit" class="btn btn-secondary btn-sm" (click)="close(basicassign)">Cancel</button>
+      </md2-dialog-footer> 
+  </div>
+     <div *ngIf="IsAssignTasks" >
+        <md2-dialog-footer>
+            <button type="submit" class="btn btn-sm btn-primary" data-dismiss="modal">Delete Task</button>
+            <button type="submit" class="btn btn-secondary btn-sm" (click)="close(basicassign)">Cancel</button>
+        </md2-dialog-footer> 
+    </div>
+   </md2-dialog>
+   
+   
+ <md2-dialog  #viewtask>
+     <md2-dialog-title>View Employee Task</md2-dialog-title>
+   
+     <div style="height: 20%" class="col-md-3" *ngFor="let employee of newemployee" (click)="assignEmployee(employee);">
+       <div class="card card-info" style="background-color:#F9F9F9;width: 13rem;height: 7rem;">
+       <div class="card-block" >
+        <h5 class="card-title ">{{employee.official[0].firstname}} {{employee.official[0].lastname}}</h5> 
+        <h6 class="card-title ">{{employee.official[0].username}}</h6>  
+        <h6 class="card-title ">{{employee.official[0].jobtitle}}</h6>      
+      </div>
+     </div>        
+    </div> 
+    <br>
+     <md-input-container class="col-md-6">
+         <input mdInput [(ngModel)]="search2"  placeholder="Search Task" >
+     </md-input-container><br>
+   
+    <div class="row">
+       <table class="table table-bordered table-stripped table-sm">
+           <thead >
+           <tr>
+            <th>Task</th> 
+            <th> Estimated hours</th>
+            <th>Actual hours</th>
+           </tr>
+         </thead>
+         <tbody  *ngFor="let emp of project.resource_time;let i=index">
+           <tr>          
+             <td>{{emp.official[0].taskname}}</td>
+             <td>{{emp.official[0].estimatedhour}}</td>
+             <!-- <td>{{this.tskshow.resource_time[this.a].official[this.a].taskname}}</td>
+             <td>{{this.tskshow.resource_time[this.a].official[this.a].estimatedhour}}</td> -->
+             <td></td>
+           </tr>
+           <tr>
+       </tbody>      
+     </table>
+     </div>
+     </md2-dialog>
+ 
+ 
+ 

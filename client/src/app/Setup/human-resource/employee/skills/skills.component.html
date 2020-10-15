@@ -1,0 +1,124 @@
+<div *ngIf= "!show"  class="col-md-12">
+    <div class="row">
+      <div  style="display: both" class="col-md-12">
+        <span style="font-weight:500">Skills</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button>
+      </div><br><br>
+    </div>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div class="row">
+      <div class="col-md-12"><br>
+        <div>
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Skill</th>
+                <th>Years of Experience</th>
+                <th>Competency Level</th>
+                <th>Skill Last Used Year</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="haveskill">
+              <tr *ngFor=" let data of officiald.skill; let i = index " >
+                <td><i  (click)="edit(data,officiald,i);show = !show"  title="Edit" class="fa fa-pencil-square-o"></i>
+                  &nbsp;<i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(data,officiald,i)"></i></td>
+                <td >{{data.skillsname}}</td>
+                <td >{{data.experience}}</td>
+                <td >{{data.competency}}</td>
+                <td >{{data.skilllastdate}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+    </div>
+    <form class="form-horizontal" [formGroup]="form">
+    <div *ngIf= "show" class="col-lg-12">
+      <div   class="row">
+        <div class="col-md-6">
+          <md-input-container class="example-full-width">
+          <input mdInput  [(ngModel)]="employee.skill[i].skillsname"  placeholder="Skill" formControlName="skill"  pattern="^[a-zA-Z0-9 ]*$" >
+          <md-error>Please enter skill.</md-error>
+          </md-input-container><br><br><br>
+          <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="employee.skill[i].experience"  placeholder="Year of Experience" formControlName="exp" minlength="1" maxlength="5" pattern="[0-9.]+">
+          <md-error>Please enter year of experience.</md-error>
+          </md-input-container><br><br>
+        </div>
+        <div class="col-md-6">
+          <md-input-container>
+          <input mdInput type="date"  [(ngModel)]="employee.skill[i].skilllastdate" placeholder="Skill Last Used Year" formControlName="pick">
+          
+          </md-input-container>
+         
+          <md-select placeholder=" Competency Level " [(ngModel)]="employee.skill[i].competency" formControlName="comp" >
+            <md-option>Select Competency Level</md-option>
+            <md-option *ngFor="let com of datas" [value]="com.competencylevel[0].competencylevel" >
+          {{com.competencylevel[0].competencylevel}}
+          </md-option>
+          </md-select><br>
+          <span  style="color: red" *ngIf="!employee.skill[i].competency">
+            Please select competency level.
+          </span><br><br>
+        </div>
+      </div>
+      <div style="float: right;margin:0% 2% 0% 0%" class="row">
+        <div  class="col-md-12">
+          <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(employee);show=!show" [disabled]="!form.valid"> Save</button>
+          <button *ngIf="updatebutton"  class="btn btn-outline-success btn-sm" (click)="updateskill(employee);show=!show;updatebutton=!updatebutton;" [disabled]="!form.valid"> Update</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "cancel(employee);show=!show;updatebutton=!updatebutton;"> Cancel </button>
+        </div>
+      </div>
+    </div>
+    </form>
+  
+  
+    <md2-dialog #deptModal>
+        <md2-dialog-title>Skills</md2-dialog-title>
+        <div class="box">
+          <div style="display: inline-flex;"  class="col-md-12"><br>
+          <!-- <div class="emp-info">
+          
+                  Skill : {{employee.skill[i].skillsname}}
+    
+            </div>
+            <div class="emp-info">
+             
+                Years of Experience : {{employee.skill[i].experience}}
+              </div><br>
+           </div>
+           <div class="emp-info alter-div">
+             <span >Competency Level : {{employee.skill[i].competency}}</span>
+            </div>
+            <div class="emp-info alter-div">
+                <span>Skill Last Used Year : {{employee.skill[i].skilllastdate}}</span>
+               </div> -->
+  
+               <table class="table table-bordered table-striped table-sm">
+                 <tr>
+                   <td>Skill</td>
+                   <td>{{employee.skill[i].skillsname}}</td>
+                 </tr>
+                 <tr>
+                    <td>Years of Experience</td>
+                    <td>{{employee.skill[i].experience}}</td> 
+                 </tr>
+                 <tr>
+                    <td>Competency Level</td>
+                    <td>{{employee.skill[i].competency}}</td>
+                 </tr>
+                   <tr>
+                      <td>Skill Last Used Year</td>
+                      <td>{{employee.skill[i].skilllastdate}}</td>
+                   </tr>
+               </table>
+               </div>
+              </div>
+        <md2-dialog-footer>
+            <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+        </md2-dialog-footer>
+      </md2-dialog>

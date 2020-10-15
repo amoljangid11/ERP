@@ -1,0 +1,160 @@
+<form class="form-horizontal" [formGroup]="form">
+  <div class="col-md-12"><br>
+    <span style="font-size: 24px">Site Configuration</span>
+   <span>
+       <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "human();show=!show">ADD EMPLOYEE</button>
+   </span><br>
+
+    <div  class="row" style="padding-top:1% ">
+      <div class="col-md-3">
+        <md-input-container class="example-full-width">
+        <input  mdInput placeholder="Employee code"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" [(ngModel)]="site.siteconfig[0].employeecode" [value]="employeecode" formControlName="empcode">
+        <md-error>Please Enter Valid Employee Code.</md-error> 
+      </md-input-container> <p style="margin-top: -7%"> Example:TGT </p>
+        <br><br><br>
+        
+        <md-select placeholder="Default Time Zone" [(ngModel)]="site.siteconfig[0].zoneValue" name="zone" formControlName="tmzone">
+        <md-option *ngFor="let t of site_t" [value]="t.timezone">
+        {{t.timezone}}
+        </md-option>
+        </md-select><br>
+        <p class="btn btn-outline-primary btn-sm" (click)="open(timemodal)" >Add Time Zone</p>     
+      <br><br><br>
+        <md-select placeholder="Default password" [(ngModel)]="site.siteconfig[0].passwordValue" formControlName="pwd">
+        <md-option *ngFor="let pass of pswds" [value]="pass.value">
+        {{pass.value}}
+        </md-option>
+        </md-select>
+      </div>
+      <div  class="col-md-3">
+        <br>
+        <md-select placeholder="Currency" [(ngModel)]="site.siteconfig[0].selectedValue" name="money" formControlName="curr">
+        <md-option *ngFor="let c of currency_all; let i=index" [value]="c.currencies[0].type">
+        <!-- {{c.type}}    -->{{c.currencies[0].type}}
+        </md-option>
+        </md-select><br>
+        <p class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#basic">Add Other Currency</p>           
+        <br><br><br><br>
+        
+        <md-select placeholder="Country" [(ngModel)]="country3" formControlName="count">
+        <md-option *ngFor="let co of countri | unique: 'countryvalue';" (click)="selectst()" [value]="co.countryvalue">
+        {{co.countryvalue}}
+        </md-option>
+        </md-select><br><br> <br><br><br>
+  
+         <md-select placeholder="Employement Status" [(ngModel)]="site.siteconfig[0].status" formControlName="sts">
+          <md-option *ngFor="let wc of wcode"   [value]="wc.employmentstatus[0].workcode">
+          {{wc.employmentstatus[0].workcode}}
+          </md-option>
+          </md-select>
+        
+      </div>
+      <div  class="col-md-3">
+        <br>
+        <md-select placeholder="Date format" [(ngModel)]="site.siteconfig[0].datevalue" name="money" formControlName="dtval">
+        <md-option *ngFor=" let dt of dates" [value]=dt.value>{{dt.value}}</md-option>
+        </md-select>
+        <p> Example: {{dateValue}} </p>
+        <br><br><br>
+       
+        <md-select placeholder="State" [(ngModel)]="state3" formControlName="state" >
+          <md-option *ngFor="let stat of addst | unique: 'state1'" (click)="select1(stat.state1)" [value]="stat.state1">
+         {{stat.state1}}
+         </md-option>
+       </md-select>
+        <br><br><br><br>
+        <md-input-container class="example-full-width">
+        <input mdInput #postalCode maxlength="6" placeholder="Postal Code" value="" minlength="6" pattern="[0-9.]+" [(ngModel)]="site.siteconfig[0].postalcode" formControlName="post" number>
+        <md-hint align="end">{{postalCode.value.length}} / 6</md-hint>
+        <md-error>Please Enter Numbers Only.</md-error>
+        </md-input-container>
+      </div>
+      <div  class="col-md-3">
+        <br>
+        <md-select placeholder="Time format" [(ngModel)]="site.siteconfig[0].timeValue" name="time" formControlName="tval">
+        <md-option *ngFor=" let t of times" [value]=t.value>{{t.value}}</md-option>
+        </md-select>
+        
+        <p> Example: {{dte | date:'mediumDate'}} </p>
+        <br><br><br>
+        <!-- <md-select placeholder="City" [(ngModel)]="city2">
+        <md-option *ngFor="let city of citys" [value]="city.city2">
+        {{city.city2}}
+        </md-option>
+        </md-select> -->
+        <md-select placeholder="City" [(ngModel)]="site.siteconfig[0].city2" formControlName="cityy"> 
+          <md-option *ngFor="let ci of cityarry"  [value]="ci.city2">
+      {{ci.city2}}
+      </md-option>
+    </md-select>
+        <br><br><br>
+        
+      </div>
+      <div class="col-md-12">
+        <button style="float:right;" *ngIf="add" class="btn btn-sm btn-info" (click)="save(site);" [disabled]="!form.valid">Save</button>
+        <button style="float:right;" *ngIf="!add" class="btn btn-sm btn-info" (click)="update(site);" [disabled]="!form.valid">Save</button>
+      </div>
+      <br><br><br>
+      <div class="col-md-12"> 
+        <button type="button" style="float: left;" class="btn btn-outline-primary btn-sm"   (click)="module();show=!show"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Prev</button>  
+       <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"   (click)= "organization();show=!show">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+    </div>
+  </form>
+  
+    
+  <md2-dialog #timemodal>
+  <md2-dialog-title>Time Zone</md2-dialog-title>
+  <div  class="row">
+    
+    <div class="col-md-6">
+      <!-- <md-select placeholder="Timezone"  [(ngModel)]="timezone" >
+      <md-option *ngFor="let s of time_val" [value]="s.timezoneval">
+      {{s.timezoneval}}
+      </md-option>
+      </md-select>     -->
+      <md-input-container class="example-full-width">
+          <input mdInput placeholder="Timezone"  [(ngModel)]="timezone">
+          </md-input-container>
+    </div>
+    <div class="col-md-6">
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Description" [(ngModel)]="description">
+      </md-input-container> 
+    </div>    
+  </div>
+  <md2-dialog-footer>
+  <button type="submit" class="btn btn-primary btn-sm" (click)="savechang()"  data-dismiss="modal" >Save</button>
+  <button type="submit" class="btn btn-secondary btn-sm" (click)="close(timemodal)">Close</button>
+  </md2-dialog-footer>
+  </md2-dialog>
+  
+  
+  
+  <div class="modal fade" id="basic" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Currency format</h4>
+              </div>
+              <div class="modal-body">
+                <div style="margin-left: 2%;" class="row">
+                  <md-input-container class="example-full-width">
+                  <input  mdInput placeholder="Other currencyname" [(ngModel)]="currency.currencies[0].type">
+                  </md-input-container><br><br><br>
+                </div>
+                <div style="margin-left: 2%;"  class="row">
+                  <md-input-container class="example-full-width">
+                  <input mdInput placeholder="Other currencycode"  [(ngModel)]="currency.currencies[0].code">
+                  </md-input-container><br><br><br>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="savechanges(currency)">Save changes</button>
+              </div>
+             </div>
+          </div>
+        </div>
+  

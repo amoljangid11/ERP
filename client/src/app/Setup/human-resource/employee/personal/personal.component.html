@@ -1,0 +1,522 @@
+<div class="col-md-12">
+  <div class="row">
+    <div  style="display: both" class="col-lg-12">
+      <span style="font-weight:500">Personal</span>
+      
+    </div><br><br>
+  </div>
+</div>
+
+
+<form class="form-horizontal" [formGroup]="form">
+
+<div class="col-md-12" *ngIf="service.visible" >
+  <div  class="row">
+    <div class="col-md-4"><br>
+      <md-select placeholder="Gender" [(ngModel)]="employee.personal[0].gendername"  class="example-full-width" formControlName="gen">
+      <md-option *ngFor="let ge of gen" [value]="ge.gender[0].gendertype" >
+      {{ge.gender[0].gendertype}}
+      </md-option>
+      </md-select><br><i style="color: #0d47a1" onclick="document.getElementById('basicgender').style.display='block'">Add Gender</i><br><br><br>
+   
+        <br>
+        <md-select placeholder="Blood Group" [(ngModel)]="employee.personal[0].bloodgroup" formControlName="bloodgr">
+            <md-option *ngFor="let bg of bloodgroup" [value]="bg.value" >
+            {{bg.value}}
+            </md-option>
+            </md-select>
+            <br><br>
+ 
+
+       <!-- <span>Select Languages & Competency Levels</span> -->
+      
+
+          <div *ngIf="service.visible">
+          
+            <table class="col-md-12" >
+              <tr style="width: auto;" >
+                <td id="languages">
+            <!-- <angular2-multiselect [data]="alllang" [(ngModel)]="employee.personal[0].language" [settings]="settings"  formControlName="lang" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" >
+              </angular2-multiselect> -->
+              <md-select placeholder="Language" [(ngModel)]="language" formControlName="lang">
+                  <md-option *ngFor="let bg of lang" [value]="bg.language[0].language" >
+                  {{bg.language[0].language}}
+                  </md-option>
+                  </md-select>
+              <td>
+              <td id="competency">
+                  <!-- (click)="complevel()" -->
+              <angular2-multiselect [data]="comlevel" [(ngModel)]="langcomplevel" [settings]="settings"   (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)" formControlName="comlel">
+                </angular2-multiselect>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                  <button class="btn btn-outline-primary btn-sm"  (click)="xyz(language,langcomplevel,employee)">Add Lang & Complevel</button>
+              </td>
+              <tr>
+              </table>
+          </div>
+
+
+     <br><br>
+      <span><b>IDENTITY DOCUMENTS</b></span><br>
+
+      <md-input-container class="example-full-width">
+        <!-- (click)="check('Adhar Card')" -->
+      <input mdInput [(ngModel)]="employee.personal[0].adharcard" placeholder="Adhar Card" name="Adhar Card"  formControlName="aadhar" maxlength="12" pattern="[0-9.]+" minlength="12" required>
+      <md-error>Please enter adhar number</md-error>
+      </md-input-container><br><br><br>
+   
+      <md-input-container>
+          <input mdInput [(ngModel)]="employee.personal[0].passport" placeholder="Passport" name="Passport" formControlName="passnum" minlength="8" maxlength="8" pattern="^[a-zA-Z0-9 ]*$">
+        <md-error>
+           Please enter passport number
+          </md-error>  
+        </md-input-container><i style="color: #0d47a1" onclick="document.getElementById('passdetails').style.display='block'">Additonal Passport Details</i>
+        <br><br><br>
+
+      <md-input-container>
+        <input mdInput type="date"  [(ngModel)]="employee.personal[0].drivinglicexpdate" placeholder="Driving Licence Exp_Date" formControlName="drivlicexp">
+        <!-- <button mdSuffix [mdDatepickerToggle]="pick2"></button> -->
+        </md-input-container>
+      <!-- <md-datepicker #pick2></md-datepicker> -->
+
+    </div>
+    <div class="col-md-4"><br>
+      <md-select placeholder="Marital Status" [(ngModel)]="employee.personal[0].Marital" formControlName="marital">
+      <md-option *ngFor="let ma of mart" [value]="ma.marital[0].maritalstatus" >
+      {{ma.marital[0].maritalstatus}}
+      </md-option>
+      </md-select><br><i style="color: #0d47a1" onclick="document.getElementById('basicMarital').style.display='block'" >Add Marital Status</i><br><br><br>
+      <!--
+      <md-select placeholder="Language" [(ngModel)]="employee.personal[0].languagename" class="example-full-width">
+      <md-option *ngFor="let laname of lang"   [value]="laname.language[0].language" >
+      {{laname.language[0].language}}
+      </md-option>
+      </md-select> -->
+      <!-- <md-select placeholder="Race Code" [(ngModel)]="employee.personal[0].race" formControlName="racecode">
+        <md-option *ngFor="let r of rc" [value]="r.race[0].racecode" >
+        {{r.race[0].racecode}}
+        </md-option>
+        </md-select><br><i style="color: #0d47a1" onclick="document.getElementById('basicMaritalRace').style.display='block'" >Add Race Code</i><br><br> -->
+
+
+        <!-- <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="employee.personal[0].bloodgroup" placeholder="Blood Group" formControlName="bloodgr" pattern="([AaBbOo]|[Aa][Bb])[\+-]">
+          <md-error>
+            Enter valid blood group.
+          </md-error>
+          </md-input-container> -->
+          <md-input-container>
+              <input mdInput type="date"  [(ngModel)]="employee.personal[0].date_of_birth" placeholder="Date of Birth" formControlName="dob" required>
+              <md-error>
+                Please enter date of birth 
+              </md-error>
+              <!-- <button mdSuffix [mdDatepickerToggle]="picker1"></button> -->
+              </md-input-container>
+          <br><br><br>
+          <!-- <md-datepicker #picker1></md-datepicker> -->
+          
+
+      
+      <!-- <md-select placeholder="Race Code" [(ngModel)]="race">
+      <md-option *ngFor="let g of race"   [value]="g.racecode" >
+      {{g.racecode}}
+      </md-option>
+      </md-select><br><i style="color: #0d47a1" (click)="open(basicrace)">Add Race Code</i><br><br><br> -->
+      <br><br><br><br><br>
+      <md-input-container>
+      <input mdInput [(ngModel)]="employee.personal[0].pancard" placeholder="Pan Card" name="Pan Card" formControlName="pan"   pattern="^[a-zA-Z0-9 ]*$" maxlength="10" required>
+      <md-error>
+         Please enter pancard number
+        </md-error>  
+      </md-input-container>
+      <br><br><br>
+      <md-input-container>
+        <input mdInput type="date" [(ngModel)]="employee.personal[0].passportexpdate" placeholder="Passport Exp_Date" formControlName="passexp">
+        <!-- <button mdSuffix [mdDatepickerToggle]="pick1"></button> -->
+        </md-input-container><br><br><br><br>
+      <!-- <md-datepicker #pick1></md-datepicker> -->
+
+      <md-input-container>
+          <input mdInput [(ngModel)]="employee.personal[0].electricbill" placeholder="Electricity Bill" maxlength="12"  formControlName="elebill">
+          <md-error>
+             Please enter electricity bill number
+            </md-error>  
+          </md-input-container>
+        
+    </div>
+    <div class="col-md-4"><br>
+      <md-select placeholder="Nationality" [(ngModel)]="employee.personal[0].nationalityname" formControlName="national">
+      <md-option *ngFor="let na of nation " [value]="na.nationalities[0].nationality" >
+      {{na.nationalities[0].nationality}}
+      </md-option>
+      </md-select><br><i style="color: #0d47a1" onclick="document.getElementById('basicnation').style.display='block'">Add Nationality</i><br><br><br>
+  
+        <br><br><br>
+        <br><br><br><br><br><br><br>
+
+
+        <md-input-container>
+            <input mdInput [(ngModel)]="employee.personal[0].voterid" name="Voter ID" placeholder="Voter ID" minlength="10" maxlength="10" pattern = "^\d*[a-zA-Z][a-zA-Z\d]*$"  formControlName="voter">
+          <md-error>
+              Please enter voterid number
+            </md-error>  
+          </md-input-container><br><br><br>
+
+          <md-input-container>
+              <input mdInput [(ngModel)]="employee.personal[0].drivinglic" name="Driving Licence" placeholder="Driving Licence" formControlName="drivlic" minlength="15" maxlength="20">
+            <md-error>
+               Please enter driving licence number
+              </md-error>  
+            </md-input-container>
+    </div>
+    <!-- <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div> -->
+      <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+          {{ messagess }}
+        </div>
+  </div>
+</div>
+
+
+
+<div style="float: right;margin:0% 2% 0% 0%;padding-top: 10px;" class="row" *ngIf="service.visible">
+  <div  class="col-md-12" *ngIf="service.visible">
+    <button class="btn btn-outline-success btn-sm"  (click)="checkman(employee);save(employee)"  [disabled]="!form.valid"> Save</button>
+  </div>
+</div>
+</form>
+<form class="form-horizontal" [formGroup]="form1">
+
+<div id="basicgender" class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-teal bg-primary">
+      <span onclick="document.getElementById('basicgender').style.display='none'"
+        style="margin-top: -1%;font-weight: 500"
+      class=" w3-display-topright fa fa-times " ></span>
+      <!-- <h6>Gender</h6> -->
+      <span><b>Gender</b></span>
+    </header>
+    <div class="w3-container">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput [(ngModel)]="genders.gender[0].code"  placeholder="Gender Code" pattern="^[a-zA-Z0-9 ]*$" formControlName="gendC1" required >
+            <md-error>
+              Please enter gender code
+            </md-error>
+            </md-input-container><br><br><br>
+            <md-input-container class="example-full-width">
+            <input [(ngModel)]="genders.gender[0].description"  mdInput name="descripe" #message  maxlength="200" [(ngModel)]="descripe" placeholder="Description" formControlName="desc">
+            <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+            </md-input-container><br><br><br>
+            
+          </div>
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input  mdInput  [(ngModel)]="genders.gender[0].gendertype"  placeholder="Gender" formControlName="gend1"  pattern="[a-zA-Z]+$" required>
+            <md-error>
+              Please enter gender 
+            </md-error>
+            </md-input-container><br><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+      <div class="col-sm-12">
+        <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savegender(genders)" [disabled]="!form1.valid"  data-dismiss="model" >Save</button>
+      </div>
+    </footer>
+  </div>
+</div>
+</form>
+<form class="form-horizontal" [formGroup]="form2">
+<div id="basicethnic" class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-teal bg-primary">
+      <span onclick="document.getElementById('basicethnic').style.display='none'"
+        style="margin-top: -1%;font-weight: 500"
+      class=" w3-display-topright fa fa-times " ></span>
+      <!-- <h6>Ethnic Code</h6> -->
+      <span><b>Ethnic Code</b></span>
+    </header>
+    <div class="w3-container">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput [(ngModel)]="ethnics.ethnic[0].code" placeholder="Ethnic Code" formControlName="ethcd1" pattern="^[a-zA-Z0-9 ]*$" required>
+            <md-error>
+              Please enter ethnic code
+            </md-error>
+            
+            
+            </md-input-container><i mdTooltip="Ex:American Indian" class="fa fa-question-circle"></i><br><br><br>
+            <md-input-container class="example-full-width">
+            <input mdInput #message maxlength="200" [(ngModel)]="ethnics.ethnic[0].description"  placeholder="Description" formControlName="desc2">
+            <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+            </md-input-container><br><br><br>
+            
+          </div>
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput [(ngModel)]="ethnics.ethnic[0].shortcode" placeholder="Ethnic short code" formControlName="ethscd1" pattern="^[a-zA-Z0-9 ]*$" required >
+            <md-error>
+              Please enter ethnic short code
+            </md-error>
+            
+            </md-input-container><i mdTooltip="Ex:AI" mdTooltipPosition="above" class="fa fa-question-circle"></i><br><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+      <div class="col-sm-12">
+        <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="saveethnic(ethnics)"  [disabled]="!form2.valid" data-dismiss="model" >Save</button>
+      </div>
+    </footer>
+  </div>
+</div>
+</form>
+<form class="form-horizontal" [formGroup]="form3">
+
+<div id="basicMarital" class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-teal bg-primary">
+      <span onclick="document.getElementById('basicMarital').style.display='none'"
+        style="margin-top: -1%;font-weight: 500"
+      class=" w3-display-topright fa fa-times " ></span>
+      <!-- <h6>Marital Status</h6> -->
+      <span><b>>Marital Status</b></span>
+    </header>
+    <div class="w3-container">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput  [(ngModel)]="maritaltype.marital[0].maritalcode" placeholder="Mariatl Code" pattern="^[a-zA-Z0-9 ]*$" formControlName="marc1" required>
+            <md-error>
+              Please enter marital code
+            </md-error>
+            </md-input-container><i mdTooltip="Ex:M,S,D" class="fa fa-question-circle"></i><br><br><br>
+            <md-input-container class="example-full-width">
+            <input [(ngModel)]="maritaltype.marital[0].description"  mdInput name="descripe" #message  maxlength="200" [(ngModel)]="descripe" placeholder="Description" formControlName="desc3">
+            <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+            </md-input-container><br><br><br>
+            
+          </div>
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput  [(ngModel)]="maritaltype.marital[0].maritalstatus" placeholder="Marital Status" formControlName="marst1"  pattern="[a-zA-Z]+$" required>
+            <md-error>
+              Please enter marital status 
+            </md-error>
+            </md-input-container><i mdTooltip="Ex:Married,Single,Divorced" mdTooltipPosition="above" class="fa fa-question-circle"></i><br><br><br>
+            
+          </div>
+        </div>
+      </div></div>
+      <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+        <div class="col-sm-12">
+          <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savemarital(maritaltype)" [disabled]="!form3.valid" data-dismiss="model" >Save</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+  </form>
+
+  <form class="form-horizontal" [formGroup]="form4">
+
+  <div id="basiclang" class="w3-modal w3-animate-opacity">
+    <div class="w3-modal-content w3-card-4">
+      <header class="w3-container w3-teal bg-primary">
+        <span onclick="document.getElementById('basiclang').style.display='none'"
+          style="margin-top: -1%;font-weight: 500"
+        class=" w3-display-topright fa fa-times " ></span>
+        <span><b>Language</b></span>
+      </header>
+      <div class="w3-container">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <md-input-container class="example-full-width">
+              <input mdInput  [(ngModel)]="languages.language[0].language"  placeholder="Language" formControlName="lang1"  pattern="[a-zA-Z]+$" required>
+              <md-error>Please enter language.</md-error>
+              </md-input-container><i mdTooltip="English,Spanish" class="fa fa-question-circle" ></i>
+              <br><br><br>
+            </div>
+            <div class="col-md-6">
+              <md-input-container class="example-full-width">
+              <input mdInput #message maxlength="200" [(ngModel)]="languages.language[0].description" placeholder="Description" formControlName="desc4">
+              <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+              </md-input-container><br><br><br>
+            </div></div>
+          </div>
+        </div>
+        <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+          <div class="col-sm-12">
+            <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savenlanguage(languages)" [disabled]="!form4.valid"  data-dismiss="model" >Save</button>
+          </div>
+        </footer>
+      </div>
+    </div>
+    </form>
+    <form class="form-horizontal" [formGroup]="form5">
+
+    <div id="basicnation" class="w3-modal w3-animate-opacity">
+      <div class="w3-modal-content w3-card-4">
+        <header class="w3-container w3-teal bg-primary">
+          <span onclick="document.getElementById('basicnation').style.display='none'"  style="margin-top: -1%;font-weight: 500"
+          class=" w3-display-topright fa fa-times " ></span>
+          <span><b>Nationality</b></span>
+        </header>
+        <div class="w3-container">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <md-input-container class="example-full-width">
+                <input required name="nationality" [(ngModel)]="nationalitytype.nationalities[0].nationality" mdInput placeholder="Nationality" formControlName="natio1"  pattern="[a-zA-Z]+$" required>
+                <md-error>
+                 Please enter your nationality.
+                </md-error>
+                </md-input-container><i mdTooltip="Ex:Indian" class="fa fa-question-circle"></i><br><br><br>
+                
+              </div>
+              <div class="col-md-6">
+                <md-input-container class="example-full-width">
+                <input mdInput [(ngModel)]="nationalitytype.nationalities[0].description" #message maxlength="200" placeholder="Description" formControlName="desc5">
+                <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+                </md-input-container><br><br><br>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+          <div class="col-sm-12">
+            <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savenation(nationalitytype)"  [disabled]="!form5.valid"  data-dismiss="model" >Save</button>
+          </div>
+        </footer>
+      </div>
+    </div>
+    </form>
+
+    <form class="form-horizontal" [formGroup]="form6">
+
+        <div id="passdetails" class="w3-modal w3-animate-opacity">
+          <div class="w3-modal-content w3-card-4">
+            <header class="w3-container w3-teal bg-primary">
+              <span onclick="document.getElementById('passdetails').style.display='none'"  style="margin-top: -1%;font-weight: 500"
+              class=" w3-display-topright fa fa-times " ></span>
+              <span><b>Passport Details</b></span>
+            </header>
+            <div class="w3-container">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-6">
+                    <md-input-container class="example-full-width">
+                    <input required name="Passport" [(ngModel)]="Passport" mdInput placeholder="Passport" formControlName="pass"  required>
+                    <md-error>
+                     Please enter passport number.
+                    </md-error>
+                    </md-input-container><br><br><br>
+                  </div>
+                  <div class="col-md-6">
+                      <md-input-container>
+                          <input mdInput type="date" [(ngModel)]="Passportexpdate" placeholder="Passport Exp_Date" formControlName="passexp">
+                      </md-input-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+              <div class="col-sm-12">
+                <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savepass(employee)"  [disabled]="!form6.valid"  data-dismiss="model" >Save</button>
+              </div>
+            </footer>
+          </div>
+        </div>
+        </form>
+
+
+
+
+
+
+
+
+
+
+<!-- <button  *ngIf="service.invisible" class="btn btn-outline-primary btn-sm" (click)="viewperson(data)">edit</button> -->
+ 
+  <div class="box3" *ngIf="service.invisible" (click)="viewpersonal(data)">
+    <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+      <tr>
+          <td><b>Gender</b></td>
+          <td>{{employee.personal[0].gendername}}<td>
+          <td><b>Marital Status</b></td> 
+          <td>{{employee.personal[0].Marital}}</td>
+          <!-- <td><ul *ngFor="let bb of locview;let i=index"><li *ngIf="bb.holidayname==holidays.manageholiday[0].holiday">{{bb.locname}}</li></ul><td> -->
+      </tr>
+      <tr>
+          <td><b>Nationality</b></td>
+          <td>{{employee.personal[0].nationalityname}}<td>
+          <td><b>Blood Group</b></td> 
+          <td >{{employee.personal[0].bloodgroup}}<td>
+      </tr>
+      <tr>
+          <td><b>Date Of Birth</b></td>
+          <td>{{employee.personal[0].date_of_birth | date}}<td>
+              <td><b>Adhar Card</b></td>
+              <td>{{employee.personal[0].adharcard}}<td>
+      </tr>
+      <tr>
+          <td><b>VoterID Card</b></td>
+          <td>{{employee.personal[0].voterid}}<td>
+          <td><b>Pan Card</b></td> 
+          <td >{{employee.personal[0].pancard}}<td>
+     </tr>
+      <tr>
+         
+           <td><b>Passport</b></td> 
+           <td *ngIf="passview!=undefined"><ul *ngFor="let bb of passview;let i=index"><li>{{bb.Passport}}</li></ul><td>
+           <td><b>Passport_Exp_Date</b></td>
+          <td *ngIf="passview!=undefined"><ul *ngFor="let bb of passview;let i=index"><li>{{bb.Passportexpdate}}</li></ul><td>
+      </tr>
+      <tr>
+         
+          <td><b>Driving Licence</b></td> 
+          <td >{{employee.personal[0].drivinglic}}<td>
+              <td><b>Driving Licence Exp_Date</b></td>
+              <td>{{employee.personal[0].drivinglicexpdate}}<td>
+     </tr>
+     <tr>
+       
+        <td><b>Electricity Bill</b></td> 
+        <td >{{employee.personal[0].electricbill}}<td>
+          <td></td>
+          <td></td>
+
+   </tr>
+  </table>
+   
+</div><br>
+<div class="box3" *ngIf="service.invisible" (click)="viewpersonal(data)"> 
+<table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+<tbody>
+  <tr>
+    <th>Language</th>
+    <th>Compentancy Level</th>
+  </tr>
+  <tr *ngFor="let aa of langview;let i=index">
+    <td><ul><li>{{aa.Languagename}}</li></ul></td>                      
+    <td><ul *ngFor="let b of alllangs;let k=length"><li *ngIf="b.Languagename==aa.Languagename">{{b.Complevel}}</li></ul></td>
+  </tr>
+</tbody>
+</table>
+</div>

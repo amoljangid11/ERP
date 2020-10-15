@@ -1,0 +1,104 @@
+<div *ngIf= "!show"  class="col-lg-12">
+  <div class="row">
+    <div  style="display: both" class="col-lg-12">
+      <span style="font-weight:500">Leave</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button>
+    </div><br><br>
+  </div>
+  <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+    {{ message }}
+  </div>
+  <div class="row">
+    <div class="col-lg-12"><br>
+      <div>
+        <table class="table table-bordered table-striped table-sm">
+          <thead class="bg-success">
+            <tr>
+              <th>Action</th>
+              <th>Leave Type</th>
+              <th>Alloted Leave Limit</th>
+              <th>Used Leave</th>
+              <th>Leave Balance</th>
+              <th>Alloted Year</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="edu">
+            <tr *ngFor="let ed of official.leave;let i = index " >
+              <td><i (click)="edit(ed,official,i);show = !show"   title="Edit" class="fa fa-pencil-square-o"></i>
+              <i class="fa fa-eye"  title="View" (click)="open(deptModal);view(ad,official,i)"></i></td>
+              <td>{{ed.leavetype}}</td>
+              <td>{{ed.leavelimit}}</td>
+              <td>{{ed.usedleaves}}</td>
+              <td>{{ed.leavebalance}}</td>
+              <td>{{ed.year}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+  </div>
+  <div *ngIf= "show" class="col-lg-12">
+      <div class="row">
+          <div  style="display: both" class="col-lg-12">
+            <span style="font-weight:500">Leave</span>
+          </div><br><br>
+        </div>
+        <form class="form-horizontal" [formGroup]="form">
+        <div  class="col-md-12">
+          <div class="row">
+    <br>
+              <div class="col-md-4">
+                  <md-select placeholder="Leave Type" [(ngModel)]="employee.leave[i].leavetype" formControlName="levetype" required [disabled]="moe">
+                      <md-option *ngFor="let r of datas" [value]="r.leavetype[0].leavetype" (click)="ltype(r.leavetype[0].leavetype)">
+                          {{r.leavetype[0].leavetype}}
+                      </md-option>
+                    </md-select>
+                
+              </div>
+            <div class="col-md-4">
+              <md-input-container class="example-full-width">
+              <input  mdInput placeholder="Add or Remove Leaves" [(ngModel)]="employee.leave[i].leavelimit" formControlName="addleave" required pattern="^-?\d+$" maxlength="3">
+              <md-error>
+                Please enter leave
+              </md-error>
+              </md-input-container>
+              
+            </div>
+            <div class="col-md-4">
+              <md-input-container class="example-full-width">
+              <input  mdInput placeholder="Year" [(ngModel)]="employee.leave[i].year" [value]="this.year" [readonly]="true" formControlName="year" >
+              </md-input-container>
+            </div><br><br>
+          </div>
+    <div style="float: right;margin:0% 2% 0% 0%" class="row">
+      <div  class="col-md-12">
+        <button *ngIf="!updatebutton"  id="ss" class="btn btn-outline-success btn-sm" (click)="save(employee);show=!show;" [disabled]="!form.valid"> Save</button>
+        <button *ngIf="updatebutton" id="ss1" class="btn btn-outline-success btn-sm"  (click)="updateleave(employee,i);show=!show;updatebutton=!updatebutton;" [disabled]="!form.valid"> Update</button>
+        <button class="btn btn-outline-warning btn-sm" (click) = "cancel(employee);show=!show;updatebutton=!updatebutton;"> Cancel </button>
+      </div>
+    </div>
+  </div>
+  </form>
+</div>
+
+
+  <md2-dialog #deptModal>
+      <md2-dialog-title>Leave</md2-dialog-title>
+      <div class="box">
+        <div class="display_emp">
+          <div class="emp-info">
+             Leave Type : {{employee.leavetype}}
+          </div>
+          <div class="emp-info ">
+              Alloted Leave Limit : {{employee.leavelimit}}
+          </div><br>
+          <div class="emp-info alter-div">
+              Year : {{employee.year}}
+          </div>
+         </div>
+         </div>
+         
+      <md2-dialog-footer>
+          <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+      </md2-dialog-footer>
+  </md2-dialog>

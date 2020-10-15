@@ -1,0 +1,196 @@
+<div class="col-md-12">
+<div class="row">
+<div  style="display: both" class="col-lg-12">
+    <span style="font-weight:500">Contact</span>
+    
+</div><br><br>
+</div>  
+</div>
+ <div class="col-md-12">
+ <br>
+ <md-input-container class="example-full-width">
+    <input mdInput [(ngModel)]="personal"  placeholder="Personal Email"> 
+ </md-input-container><br><br><br>
+
+</div>
+<div   class="col-md-12">
+      <h5>PERMANENT ADDRESS</h5><br>
+<div style="display: inline-flex;"  class="col-md-12">
+
+<div class="col-md-4">	
+  <md-input-container class="example-full-width">
+    <input mdInput [(ngModel)]="permanent_address.street"  placeholder="Street Address"> 
+  </md-input-container><br><br><br><br>
+   
+   <md-select placeholder="City"  [(ngModel)]="permanent_address.city" >
+    <md-option *ngFor="let ci of cityarry  " [value]="ci.cityname" >
+      {{ci.cityname}}
+    </md-option>
+  </md-select><br><i style="color: #1565c0" (click)="open(ciModal)" >Add City</i><br><br><br>
+
+</div>
+
+<div class="col-md-4"><br>
+  <md-select placeholder="Country"  [(ngModel)]="permanent_address.country2" >
+    <md-option *ngFor="let co of datas1  ; let i=index "  (click)="select(i,co)" [value]="co.countryal" >
+      {{co.countryal}}
+    </md-option>
+  </md-select><br><i style="color: #1565c0" (click)="open(bModal)" >Add Country</i><br><br><br>	
+   <md-input-container class="example-full-width">
+    <input mdInput max="10" [(ngModel)]="permanent_address.postal"  placeholder="Postal Code"> 
+  </md-input-container><br><br><br>
+	
+</div>
+
+<div class="col-md-4">	<br>
+	<md-select placeholder="State"  [(ngModel)]="permanent_address.state2" >
+    <md-option *ngFor="let st of statearry ; let i=index " (click)="select1(i,st)" [value]="st.statename" >
+      {{st.statename}}
+    </md-option>
+  </md-select><br><i style="color: #1565c0" (click)="open(sModal)" >Add State</i><br><br><br>
+</div>
+
+</div>
+
+<md-checkbox  [checked]="false" (change)="updateAddrs($event,permanent_address)" 
+              [indeterminate]="!checked" >
+              Check if permanent and current address are same<br>
+</md-checkbox><br><br>
+
+  <h5>CURRENT ADDRESS</h5><br>
+<div style="display: inline-flex;"   class="col-md-12">
+
+<div class="col-md-4">	
+  <md-input-container class="example-full-width">
+    <input mdInput [(ngModel)]="current_address.street"  placeholder="Street Address"> 
+  </md-input-container><br><br><br><br>
+   
+  <md-select placeholder="City"  [(ngModel)]="current_address.city" >
+    <md-option *ngFor="let ci1 of cityarray  " [value]="ci1.cityname" >
+      {{ci1.cityname}}
+    </md-option>
+  </md-select><br><br><br><br>
+
+</div>
+
+<div class="col-md-4"><br>
+   <md-select placeholder="Country"  [(ngModel)]="current_address.country2">
+    <md-option *ngFor="let co1 of datas1  ; let i=index "  (click)="selectcou(i,co1)" [value]="co1.countryal" >
+      {{co1.countryal}}
+    </md-option>
+  </md-select><br><br><br><br>	
+   <md-input-container class="example-full-width">
+    <input mdInput max="10" [(ngModel)]="current_address.postal"  placeholder="Postal Code"> 
+  </md-input-container><br><br><br>
+	
+</div>
+
+<div class="col-md-4">	<br>
+	<md-select placeholder="State"  [(ngModel)]="current_address.state2" >
+    <md-option *ngFor="let st1 of statearray ; let i=index " (click)="selectsta(i,st1)" [value]="st1.statename" >
+      {{st1.statename}}
+    </md-option>
+  </md-select><br><br><br><br>
+</div>
+
+</div>
+
+  <h5>EMERGENCT DETAILS</h5><br><br>
+<div style="display: inline-flex;"   class="col-md-12">
+  <div class="col-md-4">
+   <md-input-container class="example-full-width">
+    <input mdInput  [(ngModel)]="name"  placeholder="Name"> 
+  </md-input-container><br><br><br>
+  <h6>WORK ADDRESS</h6>
+
+</div>
+<div class="col-md-4">
+   <md-input-container class="example-full-width">
+    <input mdInput  [(ngModel)]="mail"  placeholder="Email"> 
+  </md-input-container><br><br><br>
+</div>
+<div class="col-md-4">
+   <md-input-container class="example-full-width">
+    <input mdInput [(ngModel)]="pnumber"  placeholder="Number"> 
+  </md-input-container><br><br><br>
+</div>
+</div>
+
+</div>
+
+ <md2-dialog #ciModal>
+    <md2-dialog-title>Add City</md2-dialog-title><br>
+   <div style="display: inline-flex;"  class="col-md-12">
+   <div class="col-md-6">
+   <md-select placeholder="Country"  [(ngModel)]="cicountry" >
+    <md-option *ngFor="let cour of datas1  ; let i=index "  (click)="select2(i,datas1)" [value]="cour.countryal" >
+      {{cour.countryal}}
+    </md-option>
+  </md-select><br><br><br>
+  <div class="input-group">
+      <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="cicity" placeholder="City"> 
+    </md-input-container><br><br><br><br>
+            </div>
+   </div>
+    <div class="col-md-6">
+     <md-select placeholder="State"  [(ngModel)]="cistate" >
+    <md-option *ngFor="let str of statearrys ; let i=index "  [value]="str.statename" >
+      {{str.statename}}
+    </md-option>
+  </md-select><br><br><br>
+    </div>
+   </div>
+    <md2-dialog-footer>
+      <button type="submit" class="btn btn-primary" (click)="saveci()"  data-dismiss="modal" >Save changes</button>
+      <button type="submit" class="btn btn-secondary" (click)="close(ciModal)">Cancel</button>
+    </md2-dialog-footer>
+  </md2-dialog>
+
+
+
+
+  <md2-dialog #bModal>
+    <md2-dialog-title>Country</md2-dialog-title>
+       <div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-6">
+    <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="bcountry" placeholder="Country"> 
+    </md-input-container><br><br><br><br>
+</div>
+<div class="col-md-6">
+   <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="bcode" placeholder="Country Code"> 
+    </md-input-container><br><br><br><br>
+</div>
+</div>
+    <md2-dialog-footer>
+      <button type="submit" class="btn btn-primary" (click)="saves()"  data-dismiss="modal" >Save changes</button>
+      <button  type="submit" class="btn btn-smal btn-sml-primary" (click)="close(bModal)">Cancel</button>
+    </md2-dialog-footer>
+   </md2-dialog>
+
+
+
+
+
+ <md2-dialog #sModal>
+    <md2-dialog-title>State</md2-dialog-title>
+      <div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-6">
+   <md-select placeholder="Country" [(ngModel)]="scountry" >
+       <md-option *ngFor="let op of datas1" [value]="op.countryal" >
+       {{op.countryal}} </md-option>
+   </md-select><br><br><br>
+</div>
+<div class="col-md-6">
+ <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="sstates" placeholder="State"> 
+    </md-input-container><br><br><br><br>
+</div>
+</div>
+    <md2-dialog-footer>
+     <button type="submit" class="btn btn-primary" (click)="savestate()"  data-dismiss="modal" >Save changes</button>
+      <button type="submit" class="btn btn-sml btn-secondary" (click)="close(sModal)">Cancel</button>
+    </md2-dialog-footer>
+  </md2-dialog>

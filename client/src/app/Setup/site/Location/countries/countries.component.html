@@ -1,0 +1,78 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf="!show">
+    <div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item ">Location </li>
+        <li class="breadcrumb-item active">Countries</li>
+      </ol>
+    </div>
+    
+    <div>
+      <span style="font-weight:500">Country</span>
+      <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;">Add</button>
+    </div><br><br>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+          <table  class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Country</th>
+                <th>Country Code</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr *ngFor="let cntryval of datas; let i=index " >
+                <td><i (click)="delete(cntryval,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                
+                <td>{{cntryval.countryvalue}}</td>
+                <td>{{cntryval.codevalue}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="show">
+    <div >
+      <ol class="breadcrumb  row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item ">Location </li>
+        <li class="breadcrumb-item ">Countries</li>
+        <li class="breadcrumb-item active"> <i class="fa fa-plus">Add</i></li>
+      </ol>
+    </div><br>
+    <div class="row">
+      <div class="col-md-4">
+        <md-select placeholder="Country" [(ngModel)]="selectedValue" name="cnt">
+        <md-option *ngFor="let cntry of all;let i=index " [value]="cntry.countryal"  (click)="select(i,all)">
+        {{cntry.countryal}}
+        </md-option>
+        </md-select>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" type="button">Country code</button>
+          </span>
+          <input type="text" class="form-control" placeholder="code"  [(ngModel)]="codevalue"   [value]="codevalue">
+        </div>
+      </div>
+      
+      <div  class="col-md-12" style="margin-top: 5%">
+        <button class="btn btn-outline-success btn-sm" (click)="save();show=!show"> Save</button>
+        <button class="btn btn-outline-warning btn-sm" (click) = "show=!show;"> Cancel </button>
+      </div>
+    </div>
+  </div>
+</div>

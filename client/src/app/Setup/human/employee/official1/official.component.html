@@ -1,0 +1,217 @@
+<div class="row">
+  
+
+<div style="display: inline-flex;" class="col-md-12">
+
+  <div class="col-md-4">
+    <md-input-container class="example-full-width"  >
+    <input mdInput placeholder="Employee Code"  [value]="employeecode" [readonly]="true" required>
+
+    </md-input-container>
+    <a style="display: both;margin-top: -10%" class="btn btn-sm btn-info" data-toggle="modal" data-target="#basic">Configure Identity Codes</a>
+
+    <br><br>
+    <md-input-container style="display: both;margin-top: -10%" class="example-full-width">
+    <input mdInput placeholder="First Name" [(ngModel)]="fname" required>
+    <md-error >
+      Please enter First Name.
+    </md-error>
+    </md-input-container>
+    <br><br><br>
+    <md-select placeholder="Role" [(ngModel)]="role"> 
+        <md-option *ngFor="let city of cityarry"   [value]="role" required>
+    
+    </md-option>
+    </md-select> 
+    <br><br><br><br>
+    <md-select placeholder="Department" [(ngModel)]="dept"> 
+        <md-option *ngFor="let city of cityarry"   [value]="" required>
+    
+       </md-option>
+    </md-select>
+    <br><br><br>
+    <md-input-container class="example-full-width">
+    <input mdInput placeholder="Date of Leaving" [(ngModel)]="doleaving" required>
+    <md-error >
+      Please enter First Name.
+    </md-error>
+    </md-input-container>
+    <br><br>
+  <md-input-container class="example-full-width">
+    <input mdInput placeholder="Extension" [(ngModel)]="extension" required>
+    
+    </md-input-container>
+    <br><br>
+    <md-input-container class="example-full-width">
+    <input mdInput placeholder="Years of Experience" [(ngModel)]="yoe" required>
+   
+    </md-input-container>
+     
+  </div> 
+
+
+  <div class="col-md-4">
+    <md-input-container class="example-full-width">
+    <input mdInput placeholder="Employee Id" [(ngModel)]="empid" required>
+    <md-error >
+      Please enter Employee Id.
+    </md-error>
+    </md-input-container><br><br>
+     <md-input-container class="example-full-width">
+    <input mdInput placeholder="Last Name" [(ngModel)]="lname" required>
+    <md-error >
+      Please enter LastName.
+    </md-error>
+    </md-input-container>
+    <br><br>
+    <md-input-container class="example-full-width">
+    <input mdInput placeholder="Email" [(ngModel)]="email" required>
+    <md-error >
+      Please enter First Name.
+    </md-error>
+    </md-input-container>
+    <br><br><br>
+    <md-select placeholder="Reporting Manager" [(ngModel)]="rmanager"> 
+        <md-option *ngFor="let city of cityarry"   [value]="" required>
+    
+    </md-option>
+    </md-select>
+    <br><br><br><br>
+    <md-select placeholder="Position" [(ngModel)]="position"> 
+        <md-option *ngFor="let city of cityarry"   [value]="" required>
+    
+    </md-option>
+    </md-select>
+    <br><br><br><br>
+    <md-select placeholder="Employee Status" [(ngModel)]="estatus"> 
+        <md-option *ngFor="let city of cityarry"   [value]="" required>
+    
+    </md-option>
+    </md-select>
+    <br><br><br>
+    <md-input-container class="example-full-width">
+    <input mdInput placeholder="Fax" [(ngModel)]="fax" required>
+    
+    </md-input-container>
+    
+  </div> 
+
+
+  <div class="col-md-4">
+    <br>
+    <md-select placeholder="Prefix" [(ngModel)]="prefix"> 
+        <md-option *ngFor="let city of cityarry"   [value]="" required >
+    
+    </md-option>
+    </md-select>
+    <br><br><br><br>
+    <md-select placeholder="Mode of Employment" [(ngModel)]="moemp"> 
+        <md-option *ngFor="let city of cityarry"   [value]="" required>
+    
+    </md-option>
+    </md-select>
+    <br><br><br><br>
+    <md-select placeholder="Business Unit" [(ngModel)]="businessunit"> 
+        <md-option *ngFor="let b of bunit"   [value]="b.businessname" required>
+       {{b.businessname}}
+    </md-option>
+    </md-select>
+    <br><br><br><br>
+    <md-select placeholder="Job Title" [(ngModel)]="jtitle"> 
+        <md-option *ngFor="let city of cityarry"   [value]="" required>
+    
+    </md-option>
+    </md-select>
+    <br><br><br>
+    <md-input-container>
+     <input mdInput [mdDatepicker]="picker1"  [(ngModel)]="doj" placeholder="Date of Joining" required>
+     <md-error>This field is required</md-error>
+     <button mdSuffix [mdDatepickerToggle]="picker1"></button>
+   </md-input-container>
+   <br><br>
+   <md-datepicker #picker1></md-datepicker>
+      <md-input-container class="example-full-width">
+    <input mdInput placeholder="Work Telephone Number" [(ngModel)]="wtnumber" required>
+    <md-error >
+      Please enter First Name.
+    </md-error>
+    </md-input-container>
+   
+  </div> 
+      
+    
+</div>
+<div class="col-md-12">
+  <div style="float:right;">
+           <button type="submit" class="btn btn-primary btn-sm" data-dismiss="modal" (click)="savechanges()">Save</button>
+          <button type="submit" class="btn btn-primary btn-sm" data-dismiss="modal" (click)="cancel()">ancel</button>
+  </div>
+  
+</div>
+</div>
+<div  class="modal fade" id="basic" tabindex="-10" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+      <div class="modal-dialog" >
+        <div class="modal-content" style="width: 120%;height:50%;margin-left: -10%">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Identity Codes</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          </div>
+          
+          
+          <div class="modal-body">
+            <!-- <div class="row">
+              <table >
+                <tbody class="col-md-12">
+                 <tr class="row">
+                      <td style="padding: 2% 0% 0% 10%" class="col-md-6" *ngFor="let v of datas; let i=index " > 
+                             <md-input-container class="example-full-width" >
+                                  <input  mdInput placeholder={{v.iname}} [(ngModel)]="v.icode"   required >
+                            </md-input-container>
+
+                      </td>
+                 </tr>
+  
+                 </tbody>
+            </table>
+              
+            </div> -->
+            <div style="margin-left: 2%;" class="row">
+            <div class="col-md-12" style="display: inline-flex;">
+              <div  class="col-md-6" >
+                     <md-input-container class="example-full-width">
+                        <input  mdInput placeholder="Employee" [(ngModel)]="empcode" [value]="employeecode"   required>
+                     </md-input-container>
+              </div>
+              <div class="col-md-6">
+                    <md-input-container class="example-full-width">
+                     <input  mdInput placeholder="Background Agency" [(ngModel)]="bga" [value]="backgroundagency"   required>
+                    </md-input-container>
+                                <br><br><br>
+
+              </div>
+            </div>
+              
+            </div>
+            <div style="margin-left: 2%;"  class="row">
+                 <div class="col-md-12" style="display: inline-flex;">
+                    <div class="col-md-6">
+                      <md-input-container class="example-full-width">
+                       <input mdInput placeholder="Users"  [(ngModel)]="usr" [value]="users"  required>
+                      </md-input-container>
+                    </div>
+                    <div class="col-md-6">
+                      <md-input-container class="example-full-width">
+                       <input mdInput placeholder="Requisition"  [(ngModel)]="requi" [value]="requisition" required>
+                      </md-input-container>
+                    </div>
+                 </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="savechanges()">Save</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,108 @@
+<div class="col-md-12 card card-outline-info" style="height:100%">
+  <!-- style="overflow:auto" -->
+  <div *ngIf = "!show"  >
+    <div >
+      <ol class="breadcrumb row">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Employee Configuration</li>
+        <li class="breadcrumb-item active">Employee Tabs</li>
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:500">Employee Tabs</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show=!show"><i class="fa fa-pencil">Edit</i></button>
+      <br><hr>
+      <p><span class="fa fa-check-circle text-info">&nbsp;</span><label>Configured</label>&nbsp;&nbsp;&nbsp;<span class="fa fa-times-circle text-primary">&nbsp;</span><label>Not Configured</label></p>
+    </div>
+ 
+  <div class="col-md-12">
+    <div class="table-responsive">
+
+     
+
+       <table class="">
+       <tbody *ngIf="datas.length==0">
+            <tr class="emp-info span" *ngFor="let v of emp; let i=index">
+                <td class=''  > 
+                  {{v.name}} 
+                    <span style="float:left;"><i class="fa fa-times-circle text-primary" *ngIf="!v.selected"></i></span>
+                    <span style="float:left;"><i class="fa fa-check-circle text-info" *ngIf="v.selected" ></i></span>
+                </td>
+            </tr>
+          </tbody>
+        <tbody *ngIf="datas.length!=0">
+          <tr class="emp-info span" *ngFor="let v of finddata; let i=index">
+            <td class='' > {{v.name}} 
+                <span style="float:left;"><i class="fa fa-times-circle text-primary" *ngIf="!v.selected"></i></span>
+                <span style="float:left;"><i class="fa fa-check-circle text-info" *ngIf="v.selected" ></i></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<form class="form-horizontal" [formGroup]="form">
+ <div *ngIf= "show">
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "><i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employee Configuration</li>
+          <li class="breadcrumb-item ">Employee Tabs</li>
+          <li class="breadcrumb-item active"><i class="fa fa-pencil">Edit</i></li>
+        </ol>
+      </div>
+ <!-- <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+          {{ message }}
+ </div> -->
+    <span style="font-weight:500" aria-required="true">Employee Configuration</span>
+   
+    <br><hr>
+    <div class="table-responsive " class="col-md-12">
+      <table class="col-md-12">
+        <tbody >
+          <tr class="row">
+            <td class="box1 col-md-6" *ngFor="let v of emp; let i=index ">
+              <!-- <md-checkbox  style="margin: 5% 0% 0% 0%" [checked]="v.name"  [indeterminate]="!v.checked" [(ngModel)]="v.selected" (change)="checkIfAllSelected();>
+              {{v.name}}
+              </md-checkbox> -->
+              <input type="checkbox" minlength="1" [indeterminate]="!v.selected" name="emp" [(ngModel)]="v.selected" [value]="v.name" (change)="checkIfAllSelected();" formControlName="checkone" required>
+              {{v.name}}
+
+              <!-- <md-checkbox style="margin: 5% 0% 0% 0%" [(ngModel)]="v.selected"  name="emp" (change)="checkIfAllSelected(v);" [value]="v.name" formControlName="checkone" required>
+                {{v.name}} 
+              </md-checkbox>
+              -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      {{log | json}}
+    </div>
+    <!-- {{ today | date }}     -->
+      <br>
+      <div class="col-md-12">
+        <!-- <input type="checkbox" (change)="checkAll($event)" [indeterminate]="!checked"  [(ngModel)]="selectedAll" (change)="selectAll();">Check all
+        </md-checkbox> -->
+        <input type="checkbox"  [(ngModel)]="selectedAll"  (change)="selectAll();" formControlName="checkall"/>Check All
+      </div>
+      <!-- <md-checkbox style="margin: 5% 0% 0% 0%"  [(ngModel)]="selectedAll" (change)="selectAll();" value="v.name" formControlName="checkall">Check All
+      </md-checkbox>
+    </div>
+      -->
+      <div class="col-md-12" style="margin-top: 5%">
+          <button class="btn btn-outline-success btn-sm" (click)="save();show=!show" [disabled]="!form.valid"> Save</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "cancel(employee);show=!show;"> Cancel </button>
+      </div>  
+
+      <div style="float: right;margin:0% 2% 0% 0%" class="row">
+        <div  class="col-md-12">
+         
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+ 

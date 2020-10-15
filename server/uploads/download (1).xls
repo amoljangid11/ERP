@@ -1,0 +1,52 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Worksheet</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>
+                          <thead _ngcontent-c35="" class="bg-info">
+                            <tr _ngcontent-c35="">
+                             <!--bindings={
+  "ng-reflect-ng-for-of": ""
+}-->
+                             <th _ngcontent-c35="">Employee Id</th>
+                              <th _ngcontent-c35="">Employee</th>
+                              <th _ngcontent-c35="">Email</th>
+                              <th _ngcontent-c35="">Mobile</th>
+                              <th _ngcontent-c35="">Role</th>
+                              <th _ngcontent-c35="">Date of Joining</th>
+                              <th _ngcontent-c35="">Job Title</th>
+                              <th _ngcontent-c35="">Position</th>
+                              <th _ngcontent-c35="">Business Unit</th>
+                              <th _ngcontent-c35="">Department</th>
+                              <th _ngcontent-c35="">Employment Status</th>
+                              <th _ngcontent-c35="">Work Phone</th>
+                              <th _ngcontent-c35="">Mode of Entry(Other)</th>
+                              <th _ngcontent-c35="">Referred By</th> 
+                              <th _ngcontent-c35="">Date of Leaving</th>
+                              <th _ngcontent-c35="">Holiday Group</th>
+                              <th _ngcontent-c35="">Extension Number</th>
+                              <th _ngcontent-c35="">Background Check Status</th>
+                              <th _ngcontent-c35="">Pay Frequency</th>
+                              <th _ngcontent-c35="">Salary</th>  
+                        </tr>
+                          </thead>
+                           <tbody _ngcontent-c35="" style="overflow:auto">
+                            <!--bindings={
+  "ng-reflect-ng-for-of": "[object Object]"
+}--><tr _ngcontent-c35="" class="">
+                              
+                            
+                            <td _ngcontent-c35="">TGT004</td>
+                             <td _ngcontent-c35="">Salman Khan</td> 
+                            <td _ngcontent-c35="">amoljangid33@gmail.com</td>
+                            <td _ngcontent-c35=""></td>
+                            <td _ngcontent-c35="">Employee</td>
+                            <td _ngcontent-c35="">May 2, 2019</td>
+                            <td _ngcontent-c35=""></td>
+                            <td _ngcontent-c35=""></td>
+                            <td _ngcontent-c35="">Software Testing</td>
+                            <td _ngcontent-c35="">Testing</td>
+                            <td _ngcontent-c35="">Permanent</td>
+                            <td _ngcontent-c35=""></td>
+                            <td _ngcontent-c35="">Direct</td>
+                            <td _ngcontent-c35="">Me</td>
+                            <td _ngcontent-c35="">Active</td>
+                        
+                          </tr></tbody> 
+                        </table></body></html>

@@ -1,0 +1,113 @@
+<div *ngIf= "!show"  class="col-lg-12">
+ <div class="row">
+<div  style="display: both" class="col-lg-12">
+		
+    <span style="font-weight:500">Job History</span>
+    <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button> 
+</div><br><br>
+</div>
+<div class="row"> 
+  <div class="col-lg-12"><br>
+  <div class="table-responsive"> 
+  <table  class="table table-bordered table-hover ">
+ <thead class="thead-inverse">
+     <tr>
+      <th>Action</th>
+      <th>Department</th>
+      <th>Client</th>
+      <th>From</th>
+      <th>To</th>
+     </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let ba of account;let i = index " >
+            <td><i *ngIf="ba.id !== editRowId" (click)="edit(ba.id)"  title="Edit" class="fa fa-pencil-square-o"></i>/td>
+
+  <td *ngIf="ba.id == editRowId"> 
+       <input type="text" [(ngModel)]="ba.departmentname">
+  </td>
+  <td *ngIf="ba.id !== editRowId">{{ba.departmentname}}</td>
+
+  <td *ngIf="ba.id == editRowId"> 
+       <input type="text" [(ngModel)]="ba.clientname">
+  </td>
+  <td *ngIf="ba.id !== editRowId">{{ba.clientname}}</td>
+
+  <td *ngIf="ba.id == editRowId"> 
+       <input type="text" [(ngModel)]="ba.fromdate">
+  </td>
+  <td *ngIf="ba.id !== editRowId">{{ba.fromdate}}</td>
+
+  <td *ngIf="ba.id == editRowId"> 
+       <input type="text" [(ngModel)]="ba.todate">
+  </td>
+  <td *ngIf="ba.id !== editRowId">{{ba.todate}}</td>
+</tr>                                        	
+  </tbody>                             
+  </table>
+  </div></div>
+  </div>
+
+  </div>
+
+
+
+
+<div *ngIf= "show" class="col-md-12">
+   <div class="row">
+<div class="col-md-4"><br>
+    <md-select placeholder=" Department" [(ngModel)]="competency" >
+      <md-option *ngFor="let d of dunit" [value]="d.departmentname" >
+       {{d.departmentname}}
+       </md-option>
+    </md-select><br><br><br>
+    <md-input-container>
+       <input mdInput [mdDatepicker]="pick1"  [(ngModel)]="from" placeholder="From">
+       <button mdSuffix [mdDatepickerToggle]="pick1"></button>
+    </md-input-container>
+    <md-datepicker #pick1></md-datepicker> <br><br><br><br>
+      <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="vendor"  placeholder="Vendor"> 
+    </md-input-container><br><br> <br>
+  </div>
+
+<div class="col-md-4"><br>
+
+<md-select placeholder=" Job Title" [(ngModel)]="job" >
+    <md-option *ngFor="let j of jobs" [value]="j.jobtitle" >
+       {{j.jobtitle}}
+    </md-option>
+    </md-select><br><br><br>
+    <md-input-container>
+     <input mdInput [mdDatepicker]="pick"  [(ngModel)]="to" placeholder="To">
+     <button mdSuffix [mdDatepickerToggle]="pick"></button>
+    </md-input-container>
+    <md-datepicker #pick></md-datepicker> <br><br><br><br>
+    <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="amountrec"  placeholder="Amount Received"> 
+    </md-input-container><br><br> <br>
+</div>
+<div class="col-md-4"><br>
+	 <md-select placeholder=" Position" [(ngModel)]="competency" >
+    <md-option *ngFor="let ps of pos" [value]="ps.position" >
+       {{ps.position}}
+    </md-option>
+    </md-select><br><br><br><br>
+     <md-select placeholder=" Client " [(ngModel)]="clients" >
+    <md-option *ngFor="let cli of client" [value]="cli.clientname" >
+       {{cli.clientname}}
+    </md-option>
+    </md-select><br><br><br><br><br>
+     <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="amountpaid"  placeholder="Amount Paid"> 
+    </md-input-container><br><br> <br>
+	</div>
+
+</div>
+ <div style="float: right;margin:0% 2% 0% 0%" class="row">
+<div  class="col-md-12">
+<button class="btn btn-outline-primary btn-sm" (click)="save();show=!show"> Save</button>
+<button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+</div>
+</div>
+</div>

@@ -1,0 +1,103 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+    <div *ngIf = "!show">
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employee Configuration</li>
+          <li class="breadcrumb-item active">Veteran Status</li>
+        </ol>
+      </div>
+      <div>
+        <span style="font-weight:500">Veteran Status</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "cancel();show = !show;updates=false">Add</button>
+      </div><br><br>
+      <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+      <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div>
+            <table  class="table table-bordered table-striped table-sm">
+              <thead class="bg-success">
+                <tr>
+                  <th>Action</th>
+                  <th> Veteran Status</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let status of datas;let i = index " >
+                  <td>
+                      <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(status)"></i>&nbsp;&nbsp;
+
+                    <i (click)="edit(status);show = !show"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(status,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                  <td>{{status.veteranstatus[0].veteranstatus}}</td>
+                  <td>{{status.veteranstatus[0].description}}</td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <form class="form-horizontal" [formGroup]="form">
+    <div *ngIf= "show" >
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employee Configuration</li>
+          <li class="breadcrumb-item ">Veteran Status</li>
+          <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+        </ol>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-4">
+          <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="veteran.veteranstatus[0].veteranstatus"  placeholder=" Veteran Status" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" class="form-control" formControlName="veteran" required>
+          <md-error >
+            Please enter veteran status.
+            </md-error>
+        </md-input-container><i mdTooltip="Ex: Protected Veteran" class="fa fa-question-circle" ></i><br><br><br>
+          
+        </div>
+        <div class="col-md-4">
+          <md-input-container class="example-full-width">
+          <input mdInput #message maxlength="200" [(ngModel)]="veteran.veteranstatus[0].description" placeholder="Description" class="form-control" formControlName="desc">
+          <md-hint align="end">{{message.value.length}} Characters / 200</md-hint>
+          </md-input-container><br><br><br>
+        </div>
+        <div  class="col-md-12" style="margin-top: 5%">
+          <button  *ngIf="!updates"  class="btn btn-outline-success btn-sm"(click)="save(veteran);show=!show;" [disabled]="!form.valid"> Save</button>
+          <button *ngIf="updates"  class="btn btn-outline-success btn-sm" [disabled]="!form.valid" (click)="update(veteran);show=!show;updates=!updates"> Update</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "cancel(veteran);show=!show;updates=!updates"> Cancel </button>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+
+
+ 
+
+ <md2-dialog #deptModal>
+      <md2-dialog-title>Veteran Status</md2-dialog-title>
+      <div class=" row box">
+        <div class="emp-info">
+          Veteran Status : {{veteran.veteranstatus[0].veteranstatus}}
+        </div>
+        <div class="emp-info">
+          Description : {{veteran.veteranstatus[0].description}}
+        </div>
+      </div>
+    <md2-dialog-footer>
+        <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+    </md2-dialog-footer>
+    </md2-dialog>

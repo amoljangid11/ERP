@@ -1,0 +1,27 @@
+.card-deck{
+	padding: 2em;
+}
+
+.btn-circle.btn-xl {
+	margin-left: 37%;
+	margin-top: 5%;
+  width: 5%;
+  height: 20%;
+  padding: 10% 10% ;
+  font-size: 100%;
+  line-height: 1.33;
+  border-radius: 50%;
+}
+
+
+.btnchild-circle.btn-xl {
+	margin-right: 20%;
+	margin-top: 4%;
+  width: 5%;
+  height: 10%;
+  padding: 7% 7% ;
+  font-size: 100%;
+  line-height: 1.33;
+  border-radius: 50%;
+}
+

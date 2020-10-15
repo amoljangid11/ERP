@@ -1,0 +1,93 @@
+
+<div  *ngIf = "!show" style="display: both" class="col-md-12">
+ 
+    <span style="font-weight:  800">Visa Immigration </span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">
+        <i class="fa fa-plus"></i>   Add</button>
+        <br><br>
+
+</div>
+<div *ngIf= "show"  class="col-md-12">
+<div  style="display: both" class="row">
+  <div class="col-md-12">
+    <span style="font-weight:  800">Visa Immigration</span>
+       
+        <br><br>
+</div></div>
+
+<div class="row">
+		
+<div class="col-md-4">
+    <md-input-container class="example-full-width">
+      <input mdInput   placeholder="Passport Number" required >
+    </md-input-container><br><br>
+    <md-input-container class="example-full-width">
+      <input mdInput   placeholder="Visa Type Code" >
+    </md-input-container><br><br>
+     <md-input-container>
+      <input mdInput [mdDatepicker]="datepicker"  placeholder="Visa Expiry Date" required>
+      <button mdSuffix [mdDatepickerToggle]="datepicker"></button>
+    </md-input-container>
+    <md-datepicker #datepicker></md-datepicker><br><br>
+    <md-input-container class="example-full-width">
+      <input mdInput   placeholder="Issuing Authority" >
+    </md-input-container><br><br>
+</div>
+
+<div class="col-md-4">
+	<md-input-container>
+      <input mdInput [mdDatepicker]="datepicker1"  placeholder="Passport Issued Date" required>
+      <button mdSuffix [mdDatepickerToggle]="datepicker1"></button>
+    </md-input-container>
+    <md-datepicker #datepicker1></md-datepicker><br><br>
+     <md-input-container class="example-full-width">
+      <input mdInput   placeholder="Visa Number " required >
+    </md-input-container>
+    <br><br>
+    <md-input-container class="example-full-width">
+      <input mdInput   placeholder="I-9 Status" >
+    </md-input-container>
+    <br><br>
+    <md-input-container class="example-full-width">
+      <input mdInput   placeholder="I-94 Status" >
+    </md-input-container> 
+</div>
+
+<div class="col-md-4">     
+     <md-input-container>
+      <input mdInput [mdDatepicker]="datepicker2"  placeholder="Passport Expiry Date" required>
+      <button mdSuffix [mdDatepickerToggle]="datepicker2"></button>
+    </md-input-container>
+    <md-datepicker #datepicker2></md-datepicker><br><br>
+    <md-input-container>
+      <input mdInput [mdDatepicker]="datepicker3"  placeholder="Visa Issued Date" >
+      <button mdSuffix [mdDatepickerToggle]="datepicker3"></button>
+    </md-input-container>
+    <md-datepicker #datepicker3></md-datepicker><br><br>
+    <md-input-container>
+      <input mdInput [mdDatepicker]="datepicker4"  placeholder="I-94 Review Date" >
+      <button mdSuffix [mdDatepickerToggle]="datepicker4"></button>
+    </md-input-container>
+    <md-datepicker #datepicker4></md-datepicker><br><br>
+    <md-input-container>
+      <input mdInput [mdDatepicker]="datepicker5"  placeholder="I-94 Review Date" >
+      <button mdSuffix [mdDatepickerToggle]="datepicker5"></button>
+    </md-input-container>
+    <md-datepicker #datepicker5></md-datepicker><br><br>
+</div>
+</div>
+  	<div class="col-md-12">
+<div  class="row" style="float: right" >
+<div >
+	<br><br><br>
+<button class="btn btn-outline-primary btn-sm" (click)="save();show=!show"> Save</button>
+<button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+

@@ -1,0 +1,113 @@
+
+ <div style="" class="col-md-12">
+  
+    <span style="font-weight:  800">Working Eligibility</span>   <br><br>
+</div>
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-4">
+    <br>
+    <md-select placeholder="Document Type" [(ngModel)]="type" name="job">
+    <md-option *ngFor="let type of datas"   [value]="type.documenttype.type" required>
+    {{type.documenttype.type}}
+    </md-option>
+    </md-select>
+    <br><i style="color: #1565c0" (click)="open(work)">Add Document Type</i>
+    <br><br>
+
+    <md-input-container class="example-full-width" >
+      <input mdInput  placeholder="Issued Authority Name" [(ngModel)]="authority">
+    </md-input-container>
+    <br><br>
+    <md-input-container class="example-full-width" >
+      <input mdInput  placeholder="Issued Authority State" [(ngModel)]="authoritystate">
+    </md-input-container>
+    </div>
+
+    <div class="col-md-4">
+     <md-input-container >
+      <input mdInput [mdDatepicker]="datepicker1" [(ngModel)]="issueddate" placeholder="Document Issued Date" required>
+      <button mdSuffix [mdDatepickerToggle]="datepicker1"></button>
+    </md-input-container>
+    <md-datepicker #datepicker1></md-datepicker>
+    <br><br>
+    <md-input-container class="example-full-width" >
+      <input mdInput  placeholder="Issued Authority Postal Code" [(ngModel)]="postalcode">
+    </md-input-container>         
+    <br><br>
+    <md-input-container class="example-full-width" >
+      <input mdInput  placeholder="Issued Authority City" [(ngModel)]="authoritycity" >
+    </md-input-container>
+    <br>  
+   </div>
+
+   <div class="col-md-4">  
+     <md-input-container>
+    <input mdInput [mdDatepicker]="datepicker2" [(ngModel)]="expirydate" placeholder="Document Expiry Date" required>
+      <button mdSuffix [mdDatepickerToggle]="datepicker2"></button>
+    </md-input-container>
+    <md-datepicker #datepicker2></md-datepicker>
+    <br><br>
+    <md-input-container class="example-full-width" >
+      <input mdInput  placeholder="Issued Authority Country" [(ngModel)]="authoritycountry">
+    </md-input-container>
+     
+    <br><br>
+ 
+</div>
+
+</div> 
+</div>
+
+<div class="col-md-12">
+<div  class="row" style="float: right;padding: 5%" >
+<div>
+  <br><br><br>
+<button class="btn btn-outline-primary btn-sm" (click)="save()"> Save</button>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+<md2-dialog #work>
+ <md2-dialog-title>Working Eligibility Document Types</md2-dialog-title>
+   <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-6">
+      <md-input-container >
+        <input mdInput  [(ngModel)]="document.type" placeholder="Document Type" required> 
+      </md-input-container>
+      <br><br>
+      <md-input-container >
+        <input mdInput   #message maxlength="200" [(ngModel)]="document.description" placeholder="Description" > 
+            <md-hint align="end">{{message.value.length}} characters entered / 200</md-hint>
+
+      </md-input-container>
+    
+    </div>
+    <div class="col-md-6">
+      <br>
+    <md-select placeholder="Issuing Authority" [(ngModel)]="document.authority" name="job">
+     <md-option *ngFor="let data of Authority"   [value]="data.name" required>
+    {{data.name}}
+    </md-option>
+    </md-select>
+    </div>
+    <div class="col-md-4">
+      <br>
+    
+      
+    </div>
+    </div>
+   
+  </div>
+    <md2-dialog-footer>
+    <button type="submit" class="btn btn-primary" (click)="savedocument(alert,document)" >Save</button>
+    </md2-dialog-footer>
+  </md2-dialog>

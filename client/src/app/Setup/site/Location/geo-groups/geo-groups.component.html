@@ -1,0 +1,149 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show" >
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item ">Location</li>
+        <li class="breadcrumb-item active">Geo Groups</li>
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:  500">Geo Groups</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button>
+    </div><br><br>
+
+      <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+          {{ message }}
+        </div>
+       
+
+    <div class="row">
+      <div  class=" col-md-12">
+        <div >
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Geography Code</th>
+                <th>Default Geography Group</th>
+                <th>Geography Group</th>
+                <th>Geography Region </th>
+                <th>Currency</th>
+                <th>Geography city</th>
+              </tr>
+              
+            </thead>
+            <tbody *ngFor="let d of datas;let i=index " >
+              <tr >
+                <td><i (click)="delete(d,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                <td >{{d.geographycode}}</td>
+                <td >{{d.defaultgeogroup}}</td>
+                <td>{{d.geographygroup}}</td>
+                <td >{{d.geographyregion}}</td>
+                <td>{{d.currency}}</td>
+                <td>{{d.geographycity}}</td>
+                
+              </tr>
+            </tbody>
+            
+          </table>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+  <div *ngIf="show">
+    <div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item ">Location</li>
+        <li class="breadcrumb-item ">Geoo Groups</li>
+        <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+      </ol>
+    </div>
+    <br>
+
+    <div class="row">
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input required mdInput placeholder="Geography Code" [(ngModel)]="geocode">
+        </md-input-container><br><br>
+        <md-input-container class="example-full-width">
+        <input mdInput placeholder=" Geography Region" [(ngModel)]="georegion">
+        </md-input-container>
+      </div><br><br>
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput placeholder="Default Geography Group" [(ngModel)]="d_geogroup">
+        </md-input-container><br><br>
+        <md-input-container class="example-full-width">
+        <input mdInput placeholder=" Geography City" [(ngModel)]="geocity">
+        </md-input-container>
+      </div><br><br>
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput placeholder=" Geography Group" [(ngModel)]="geogroup">
+        </md-input-container><br><br><br>
+        
+        <md-select placeholder="Currency" [(ngModel)]="selectedValue" name="money">
+        <md-option *ngFor="let d of curr" [value]="d.currencies[0].type">
+        {{d.currencies[0].type}}
+        </md-option>
+        </md-select><br>
+        <i style="color:#0d47a1"  onclick="document.getElementById('basic').style.display='block'"  >Add Currency</i>
+      </div><br><br>
+      
+      <div  class="col-md-12" style="margin-top: 5%">
+        <button class="btn btn-outline-success btn-sm" (click)="save(id);show=!show"> Save</button>
+        <button class="btn btn-outline-warning btn-sm" (click) = "show=!show"> Cancel </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="basic" class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-teal bg-primary">
+      <span onclick="document.getElementById('basic').style.display='none'" style="margin-top: -1%;font-weight: 500"
+      class=" w3-display-topright fa fa-times "></span>
+      <h6>Pay Frequency</h6>
+    </header>
+    <div class="w3-container">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+    <md-input-container class="example-full-width">
+    <input mdInput placeholder="Currency" [(ngModel)]="currency.type"  required>
+    <md-error >
+      Please enter Currency.
+    </md-error>
+  </md-input-container><i mdTooltip="Ex:Dollar,Rupee" class="fa fa-question-circle"></i><br><br><br>
+</div>
+<div class="col-md-4">
+     <md-input-container class="example-full-width">
+    <input mdInput placeholder="Currency code" [(ngModel)]="currency.code"  required>
+    <md-error >
+      Please enter Currency code.
+    </md-error>
+  </md-input-container><i mdTooltip="Ex:Rs,Dol"  class="fa fa-question-circle"></i><br><br><br>  
+</div>
+<div class="col-md-4">
+     <md-input-container class="example-full-width">
+    <input mdInput #message maxlength="200" placeholder="Description" [(ngModel)]="currency.description" >
+    <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+  </md-input-container><br><br><br>  
+</div>
+        </div>
+      </div></div><br><br>
+      <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+        <div class="col-sm-12">
+          <button style="float: right;margin:0% 2% 0% 0%" class="btn btn-primary btn-sm" (click)="savechanges(currency)"> Save</button>
+        </div>
+      </footer>
+    </div>
+  </div>

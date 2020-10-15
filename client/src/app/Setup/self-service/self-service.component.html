@@ -1,0 +1,28 @@
+<div class="row " id="second_card" style="height: 100%">
+     
+<div style="width: 100%;" class="nav-side-menu">
+   
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+  
+    <div class="menu-list">
+       
+        <ul id="menu-content" class="menu-content collapse out">
+            <li data-toggle="collapse" data-target="#lrequest" class="collapsed "><a>Leaves
+            <span class="arrow"></span></a></li>
+              <ul class="sub-menu collapse" id="lrequest">
+                  <li (click)="leaves()"><a >Leave Request </a></li>
+                  <li  (click)="myleave()"><a>My Leave</a></li>
+                  <li  (click)="empleave()"><a>Employee Leave</a></li>
+              </ul>
+            <li *ngFor="let data of leavemanagement" (click)="details();viewoff(data)"><a >My Detail</a></li>
+            
+            <li (click)="team()"><a >My Team</a></li>
+        </ul>
+           
+</div>
+</div>
+
+</div>
+ 
+      
+

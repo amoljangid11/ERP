@@ -1,0 +1,199 @@
+<div  class="col-md-12"><br>
+  <div style="font-weight:500;">
+   <div class="card-block" >
+   <div style="display: both" class="col-md-12"> 
+       <p class="card-text"><b>Client: </b>&nbsp;&nbsp; <b> Project Name:  </b>
+       <button type="button" style="float: right" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;project_time()">
+       <i class="fa fa-caret-left" aria-hidden="true"></i> Back</button></p>
+     </div> 
+    </div> 
+   </div>  
+</div> 
+<div  class="col-md-12">       
+  <div  class="col-md-6">         
+    <md-input-container class="example-full-width">    
+       <input mdInput [(ngModel)]="search"  placeholder="Search by Task">
+    </md-input-container><br>     
+   </div>  
+  </div>  
+  <div  class="col-m d-12">     
+  <span style="font-weight:500">Tasks</span>   
+  <button  style="float: right;margin: 0% 2% 0% 0%" class="btn btn-outline-secondary btn-sm" (click)="open(basictask)" >Add Task</button><br><br>
+</div>   
+<div class="row">  
+<div class="col-lg-12">  
+<div class="table-responsive">    
+  <table  class="table table-bordered table-hover">  
+<thead class="thead-inverse">  
+    <tr>    
+     <th>Name</th> 
+     <th>Estimated hours</th>  
+     <th>Billable Rate/hr(USD)</th>   
+     <th>Billable</th>   
+     <th>Actions</th>  
+    </tr>
+     </thead>
+    <tbody *ngFor="let pt of tadatas;let i = index ">    
+          <tr>
+            <td *ngIf="pt.id !== editRowId">{{pt.tasksname}}</td>
+
+           <td *ngIf="pt.id == editRowId"> 
+      <input type="text" [(ngModel)]="pt.estimatedhour">
+ </td>
+           <td *ngIf="pt.id !== editRowId">{{pt.estimatedhour}}</td>
+           <td *ngIf="pt.id == editRowId"> 
+      <input type="text" [(ngModel)]="pt.tbillablerate">
+ </td>
+            <td *ngIf="pt.id !== editRowId">{{pt.tbillablerate}}</td>
+
+             <td *ngIf="pt.id == editRowId"> 
+      <input type="checkbox" [(ngModel)]="pt.billable">
+ </td>
+            <td *ngIf="pt.id !== editRowId">{{pt.billable}}</td>
+
+
+              <td><i *ngIf="pt.id !== editRowId" (click)="assign(id)"  title="Assign Resource" class="fa fa-user"></i>&nbsp;&nbsp;<i (click)="delete(pt,i)" title="Delete" class="fa fa-trash-o"></i></td>
+          </tr>                        
+    </tbody>
+                               
+   </table>
+  </div>
+  </div>
+ </div>
+<md2-dialog #basictask>
+  <md2-dialog-title>Add Tasks</md2-dialog-title>
+
+  <div  class="row">
+  <div  class="col-md-12"> 
+  <md-radio-group [(ngModel)]="type">
+    <md-radio-button  value="1">Default Tasks</md-radio-button>
+    <md-radio-button value="2">Frequently used Tasks</md-radio-button>
+    <md-radio-button value="3">New Task</md-radio-button>
+   </md-radio-group><br><br>
+ <div  class="col-md-12">
+    
+   <div class="col-md-4">
+ 
+   <md-input-container class="example-full-width">
+     
+      <input mdInput placeholder="Name" [(ngModel)]="task">
+   </md-input-container><br><br>
+   </div>
+   <div class="col-md-4">
+   <md-checkbox [(ngModel)]="check">Default Task</md-checkbox>
+</div>
+</div>
+  </div>
+</div><br><br>
+   <md2-dialog-footer>
+     <button type="submit" class="btn btn-sm btn-primary" data-dismiss="modal" (click)="savetask()">ADD</button>
+     <button type="submit" class="btn btn-secondary btn-sm" (click)="close(basictask)">Cancel</button>
+   </md2-dialog-footer>
+ </md2-dialog> 
+
+
+
+<!-- <div style="width: 100%;" class="row">   
+<div  class="col-md-12" *ngFor="let ta of pro | filter:search" ><br>
+  <div class="card" style="font-weight:500">
+   <div class="card-block">
+   <div style="display: both" class="col-md-12"> 
+       <p class="card-text"><b>Client: </b>{{ta.clientname}} &nbsp;&nbsp; <b> Project Name:  </b>{{ta.projectname}}
+       <button type="button" style="float: right" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;project_time()">
+       <i class="fa fa-caret-left" aria-hidden="true"></i> Back</button></p>
+     </div>
+    </div>
+   </div> 
+
+<div  class="col-md-12"> 
+  <div  class="col-md-6"> 
+    <md-input-container class="example-full-width">
+       <input mdInput [(ngModel)]="search"  placeholder="Search by Task" >
+    </md-input-container><br>
+   </div> 
+  </div>
+  <div  class="col-md-12"> 
+  <span style="font-weight:500">Tasks</span>
+  <button  style="float: right;margin: 0% 2% 0% 0%" class="btn btn-outline-secondary btn-sm" (click)="open(basictask)" >Add Task</button><br><br>
+</div>
+
+<div class="row">
+<div class="col-lg-12">
+<div class="table-responsive"> 
+  <table  class="table table-bordered table-hover ">
+<thead class="thead-inverse">
+    <tr>    
+     <th>Name</th> 
+     <th>Estimated hours</th>
+     <th>Billable Rate/hr(USD)</th>
+     <th>Billable</th> 
+     <th>Actions</th>
+     
+    </tr>
+     </thead>
+    <tbody *ngFor="let pt of tadatas;let i = index ">
+          <tr>
+            <td *ngIf="pt.id !== editRowId">{{pt.tasksname}}</td>
+
+             <td *ngIf="pt.id == editRowId"> 
+      <input type="text" [(ngModel)]="pt.estimatedhour">
+ </td>
+            <td *ngIf="pt.id !== editRowId">{{pt.estimatedhour}}</td>
+
+             <td *ngIf="pt.id == editRowId"> 
+      <input type="text" [(ngModel)]="pt.tbillablerate">
+ </td>
+            <td *ngIf="pt.id !== editRowId">{{pt.tbillablerate}}</td>
+
+             <td *ngIf="pt.id == editRowId"> 
+      <input type="checkbox" [(ngModel)]="pt.billable">
+ </td>
+            <td *ngIf="pt.id !== editRowId">{{pt.billable}}</td>
+
+
+              <td><i *ngIf="pt.id !== editRowId" (click)="assign(id)"  title="Assign Resource" class="fa fa-user"></i>&nbsp;&nbsp;<i (click)="delete(pt,i)" title="Delete" class="fa fa-trash-o"></i></td>
+          </tr>                      	
+    </tbody>
+                               
+   </table>
+  </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+
+<md2-dialog #basictask>
+  <md2-dialog-title>Add Tasks</md2-dialog-title>
+
+  <div  class="row">
+  <div  class="col-md-12"> 
+  <md-radio-group [(ngModel)]="type">
+    <md-radio-button  value="1">Default Tasks</md-radio-button>
+    <md-radio-button value="2">Frequently used Tasks</md-radio-button>
+    <md-radio-button value="3">New Task</md-radio-button>
+   </md-radio-group><br><br>
+ <div  class="col-md-12"> 
+    
+   <div class="col-md-4">
+ 
+   <md-input-container class="example-full-width" >
+     
+      <input mdInput placeholder="Name" [(ngModel)]="task" >
+   </md-input-container><br><br>
+   </div>
+   <div class="col-md-4">
+   <md-checkbox [(ngModel)]="check">Default Task</md-checkbox>
+</div>
+</div>
+  </div>
+</div><br><br>
+   <md2-dialog-footer>
+     <button type="submit" class="btn btn-sm btn-primary" data-dismiss="modal" (click)="savetask()">ADD</button>
+     <button type="submit" class="btn btn-secondary btn-sm" (click)="close(basictask)">Cancel</button>
+   </md2-dialog-footer>
+ </md2-dialog> 
+
+
+-->

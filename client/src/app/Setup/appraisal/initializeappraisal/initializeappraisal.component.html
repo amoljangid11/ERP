@@ -1,0 +1,177 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%;" >
+    <div *ngIf = "!show"  >
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">Appraisal</li>
+          <li class="breadcrumb-item ">Initialize Appraisal </li>
+         
+        </ol>
+      </div>
+      <div>
+        <span style="font-weight:500">Initialize Appraisal</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false">Add</button>
+        
+      </div><br><br>
+      <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+      <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+      <div class="row">
+        <div class="col-lg-12" >
+          <div >
+            <table class="table table-bordered table-striped table-sm">
+              <thead class="bg-success">
+                <tr>
+                    <th>Action</th>
+                    <th>Business Unit</th>
+                    <th>Department</th>
+                    <th>Financial Year</th>
+                    <th>Appraisal Mode</th>
+                    <th>Period</th>
+                    <th>Appraisal Status</th>
+                    <th>Process Status</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let ip of data2;let i = index " >
+                  <td><i  (click)="edit(ip);show = !show;hide=!hide"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(ip,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                  <td >{{ip.initializeappraisal[0].businessunit}}</td>
+                  <td >{{ip.initializeappraisal[0].department}}</td>
+                  <td >{{ip.initializeappraisal[0].financialyear}}</td>
+                  <td >{{ip.initializeappraisal[0].appraisalmode}}</td>
+                  <td >{{ip.initializeappraisal[0].period}}</td>
+                  <td >{{ip.initializeappraisal[0].appraisalstatus}}</td>
+                  <td >{{ip.initializeappraisal[0].processstatus}}</td>
+                 </tr>
+              </tbody>
+             </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf= "show" >
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">Appraisal</li>
+          <li class="breadcrumb-item ">Initialize Appraisal </li>
+          <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+        </ol>
+      </div><br>
+      <div style="display: both" class="col-lg-12">
+          <span style="font-weight:500">Configure Appraisal Details</span>
+                 
+        </div><br><br>
+        <div class="row">
+            <div class="col-md-3">
+            
+                <md-select placeholder="Business Unit" [(ngModel)]="initializeappraisals.initializeappraisal[0].businessunit">
+                    <input type="search" [(ngModel)]="searchText" placeholder="Search text">
+                  <md-option *ngFor="let bu of bunit | filter: searchText" value="{{bu.businessunits[0].name}}">
+                      {{bu.businessunits[0].name}}
+                  </md-option>
+                </md-select>
+                </div>
+                <div class="col-md-3">
+                    <md-select placeholder="Department" [(ngModel)]="initializeappraisals.initializeappraisal[0].department">
+                        <input type="search" [(ngModel)]="searchText" placeholder="Search text">
+                      <md-option *ngFor="let dp of dunitcoll  | filter: searchText" value="{{dp.department[0].departmentname}}">
+                          {{dp.department[0].departmentname}}
+                      </md-option>
+                    </md-select>
+                    </div>
+                <div class="col-md-0">
+                        <md-select placeholder="From"  [(ngModel)]="initializeappraisals.initializeappraisal[0].financialyear">
+                          <md-option *ngFor="let data of range | filter: searchText" value="{{data.year}}">
+                              {{data.year}}
+                          </md-option>
+                        </md-select>
+                    </div><br>
+                    <div class="col-md-0">
+                        <md-select placeholder="To"  [(ngModel)]="initializeappraisals.initializeappraisal[0].financialyear">
+                          <md-option *ngFor="let data of year1 | filter: searchText" value="{{data.year}}">
+                              {{data.year}}
+                          </md-option>
+                        </md-select>
+                    </div>
+                   </div><br>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <md-select placeholder="Period">
+                                <input type="search" [(ngModel)]="searchText" placeholder="Search text">
+                              <md-option *ngFor="let data of dataset | filter: searchText" value=[data.name]>
+                                {{data.name}}
+                              </md-option>
+                            </md-select><br><br><br>
+                        </div>
+                        <div class="col-md-3">
+                            <md-select placeholder="Appraisal Status" [(ngModel)]="initializeappraisals.initializeappraisal[0].appraisalstatus">
+                                <input type="search" [(ngModel)]="searchText" placeholder="Open">
+                              <md-option *ngFor="let at of stat | filter: searchText" value={{at.name}}>
+                                {{at.name}}
+                              </md-option>
+                            </md-select>
+                        </div>
+                        <div class="col-md-3">
+                            <md-select placeholder="Enable To" [(ngModel)]="initializeappraisals.initializeappraisal[0].enableto">
+                                <input type="search" [(ngModel)]="searchText" placeholder="Search text">
+                              <md-option *ngFor="let s of sel | filter: searchText" value="{{s.name}}">
+                                {{s.name}}
+                              </md-option>
+                            </md-select>
+                        </div>
+                         <div class="col-md-3">
+                            <md-input-container>
+                               <input mdInput [mdDatepicker]="pi" placeholder="Manager's Due Date" [(ngModel)]="initializeappraisals.initializeappraisal[0].duedate" >
+                                <button mdSuffix [mdDatepickerToggle]="pi"></button>
+                            </md-input-container>
+                            <md-datepicker #pi></md-datepicker>
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <md-select placeholder="Eligibility">
+                                <input type="search" [(ngModel)]="searchText" placeholder="Search text">
+                              <md-option *ngFor="let data of dataset | filter: searchText" value=[data.name]>
+                                {{data.name}}
+                              </md-option>
+                            </md-select><br><br><br>
+                        </div>
+                        <div class="col-md-3">
+                            <md-select placeholder="Parameter" [(ngModel)]="initializeappraisals.initializeappraisal[0].parameter">
+                                <input type="search" [(ngModel)]="searchText" placeholder="Search text">
+                              <md-option *ngFor="let pr of datas | filter: searchText" value="{{pr.parameter[0].parameter}}">
+                                  {{pr.parameter[0].parameter}}
+                              </md-option>
+                            </md-select>
+                        </div>
+                        <div class="col-md-3">
+                            <md-select placeholder="Appraisal Ratings" [(ngModel)]="initializeappraisals.initializeappraisal[0].rating">
+                                <input type="search" [(ngModel)]="searchText" placeholder="Search text">
+                              <md-option *ngFor="let r of ret | filter: searchText" value="{{r.name}}">
+                                {{r.name}}
+                              </md-option>
+                            </md-select>
+                        </div>
+                        <div class="col-md-3">
+                            <md-select placeholder="Appraisal Mode" [(ngModel)]="initializeappraisals.initializeappraisal[0].appraisalmode">
+                                <input type="search" [(ngModel)]="searchText" placeholder="Search text">
+                              <md-option *ngFor="let sta of mode | filter: searchText" value="{{sta.name}}">
+                                {{sta.name}}
+                              </md-option>
+                            </md-select>
+                        </div>
+                    </div>
+        <div  class="col-md-12" style="margin-top: 5%">
+          <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(initializeappraisals);show=!show"> Save</button>
+          <button *ngIf="!updatebutton" class="btn btn-outline-danger btn-sm" (click) = "cancel(initializeappraisals);show = !show;"> Cancel </button>
+          <button *ngIf="updatebutton"  class="btn btn-outline-success btn-sm" (click)="update(initializeappraisals,initializeappraisals,initializeappraisals.initializeappraisal[0].initializeappraisals);show = !show;hide=!hide"> Update</button>
+          <button *ngIf="updatebutton" class="btn btn-outline-danger btn-sm" (click) = "cancel(initializeappraisals);show = !show;hide=!hide"> Cancel </button>
+        </div>
+      </div>
+    </div>
+  

@@ -1,0 +1,34 @@
+   /* th, td{
+      
+      border-bottom-color: #dbdbdb;
+    } 
+
+    th{ 
+        
+        text-transform: uppercase;
+        cursor: pointer;
+        background-color: rgb(17, 67, 87);
+        border: none;
+      }
+      
+      tr:nth-child(1):hover{
+          background-color: #fff;
+      }
+           */
+           div.box1{
+            padding-left: 10px;
+            height:auto;
+            width:70%;
+            background-color: rgb(231, 228, 228);
+          }
+          
+          .emp-info 
+          { margin:0; width:50%; padding:10px 0px; float: left;  min-height:20px; }
+          
+          .alter-div{
+            background-color: #e2e2e1;
+          }
+          div.box{
+            border-style:groove;
+            height:230;
+          }

@@ -1,0 +1,191 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+    <div *ngIf = "!show" >
+      <div >
+        <ol class="breadcrumb  row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employee Configuration</li>
+          <li class="breadcrumb-item active">Positions</li>
+        </ol>
+      </div>
+      <div>
+        <span style="font-weight:500">Positions</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "cancel();show = !show;updates=false;">Add</button>
+      </div><br><br>
+      <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+      <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div>
+            <table class="table table-bordered table-striped table-sm">
+              <thead class="bg-success">
+                <tr>
+                  <th>Action</th>
+                  <th>Position</th>
+                  <th>Job Title</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let data of positionsdata;let i = index ">
+                <tr>
+                  <td><i class="fa fa-eye"  title="View" (click)="open(deptModal);view(data);"></i>&nbsp;&nbsp;<i (click)="edit(data);show = !show"   title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(data,i)" title="Delete" class="fa fa-trash-o"></i> </td>
+                  <td>{{data.position[0].position}}</td>
+                  <td>{{data.position[0].jobtitle}}</td>
+                  <td>{{data.position[0].description}}</td>
+                </tr >
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="form-horizontal" [formGroup]="form">
+    <div *ngIf= "show">
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employee Configuration</li>
+          <li class="breadcrumb-item">Positions</li>
+          <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+        </ol>
+      </div><br>
+      <div class="row">
+        <div class="col-lg-4"><br>
+          <md-select placeholder="Job Title" [(ngModel)]="positions.position[0].jobtitle" name="job" formControlName="jobt" required>
+              <md-option>Select Job Title</md-option>
+            <md-option *ngFor="let j of jdatas" [value]="j.jobtitle[0].jobtitle">
+          {{j.jobtitle[0].jobtitle}}
+          </md-option>
+          </md-select><br>
+          <span style="color: red" *ngIf="!positions.position[0].jobtitle">
+            please select job title
+          </span><br>
+          <i style="color: #1565c0" onclick="document.getElementById('position').style.display='block'" >Add Job Title</i><br><br><br>
+        </div>
+        <div class="col-lg-4">
+          <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="positions.position[0].position" placeholder="Position" formControlName="pos" maxlength="50" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" required>
+          <md-error>
+            Please enter valid position.
+          </md-error>
+          </md-input-container><br><br><br>
+        </div>
+        <div class="col-lg-4">
+          <md-input-container class="example-full-width">
+          <input mdInput #message maxlength="200" [(ngModel)]="positions.position[0].description" placeholder="Description" formControlName="desc">
+          <md-hint align="end">{{message.value.length}} characters entered / 200</md-hint>
+          </md-input-container><br><br><br>
+        </div>
+        <div  class="col-md-12" style="margin-top: 5%">
+          <button  *ngIf="!updates"  class="btn btn-outline-success btn-sm"(click)="save(positions);show=!show;" [disabled]="!form.valid"> Save</button>
+          <button *ngIf="updates"  class="btn btn-outline-success btn-sm" [disabled]="!form.valid" (click)="update(positions);show=!show;updates=!updates"> Update</button>
+          <button  class="btn btn-outline-warning btn-sm" (click) = "cancel(positions);show=!show;updates=!updates"> Cancel </button>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+  
+  <form class="form-horizontal" [formGroup]="form1">
+  <div id="position" class="w3-modal w3-animate-opacity">
+    <div class="w3-modal-content w3-card-4">
+      <header class="w3-container w3-teal bg-primary">
+        <span onclick="document.getElementById('position').style.display='none'" style="margin-top: -1%;font-weight: 500"
+        class=" w3-display-topright fa fa-times"></span>
+        <h6>Job Title</h6>
+      </header>
+      <div class="w3-container">
+          <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <md-input-container class="example-full-width">
+              <input mdInput  [(ngModel)]="job.jobtitle[0].title_code"  placeholder="Job Title Code" pattern="^\d*[a-zA-Z][a-zA-Z\d]*$" maxlength="20"  formControlName="code" required>
+              <md-error>
+                Please enter job title code.
+              </md-error>
+              </md-input-container><br>
+            </div>
+            <div class="col-md-4">
+                <md-input-container class="example-full-width">
+                    <input mdInput [(ngModel)]="job.jobtitle[0].jobtitle"  placeholder="Job Title" pattern="^\d*[a-zA-Z][a-zA-Z\d]*$" maxlength="50" formControlName="title" required>
+                    <md-error>
+                        Please enter job title.
+                      </md-error>
+                    </md-input-container><br>
+            </div>
+            <div class="col-md-4">
+                <md-input-container class="example-full-width">
+                    <input mdInput #message maxlength="200" [(ngModel)]="job.jobtitle[0].description" placeholder="Job Description"  formControlName="desc">
+                    <md-hint align="end">{{message.value.length}} charactered entered / 200</md-hint>
+                    </md-input-container><br>
+            </div>
+          </div><br>
+          <div class="row">
+              <div class="col-md-4">
+                  <md-input-container class="example-full-width">
+                      <input mdInput [(ngModel)]="job.jobtitle[0].experience" placeholder="Min Experience Required" pattern="[0-9.]+" maxlength="99"  formControlName="exp">
+                      <md-error>Enter Number between 1 to 99</md-error>
+                      </md-input-container><br>
+              </div>
+              <div class="col-md-4">
+                  <md-input-container class="example-full-width">
+                      <input mdInput [(ngModel)]="job.jobtitle[0].grade_code"  placeholder="Job Pay Grade Code"   pattern="[a-zA-Z0-9]+([\s][a-zA-Z0-9]+)*" maxlength="20" formControlName="gradecode" required>
+                      <md-error>
+                        Please enter job pay grade code.
+                      </md-error>
+                      </md-input-container><br>
+              </div>
+              <div class="col-md-4">
+                <br>
+                  <md-select placeholder=" Pay Frequency " [(ngModel)]="job.jobtitle[0].payfrequency"  formControlName="payf" required >
+                      <md-option *ngFor="let p of paydata" [value]="p.payfrequency[0].payfrequency" >
+                      {{p.payfrequency[0].payfrequency}}
+                      </md-option>
+                      </md-select><br>
+              </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <md-input-container class="example-full-width">
+                        <input mdInput #message maxlength="50" [(ngModel)]="job.jobtitle[0].comment" placeholder="Comments"  formControlName="comment">
+                        <md-hint align="end">{{message.value.length}} / 50</md-hint>
+                        </md-input-container><br>
+                </div>
+            </div>
+            </div>
+          </div> 
+      <footer class="w3-container w3-teal "  style="border-top: 0.5px solid lightgrey">
+        <div class="col-sm-12">
+          <button style="float: right;margin:0% 2% 0% 0%" class="btn btn-primary btn-sm" (click)="savejobtitle(job)"  [disabled]="!form1.valid" > Save</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+  </form>
+
+  <md2-dialog #deptModal>
+      <md2-dialog-title>Positions</md2-dialog-title>
+      <div class="row">
+        <div class="col-md-12">
+        <div class="emp-info alter-div">
+            Job Title: {{positions.position[0].jobtitle}}
+        </div>
+        <div class="emp-info  alter-div">
+            Position: {{positions.position[0].position}}
+        </div>
+        <div class="emp-info">
+            Description: {{positions.position[0].description}}
+        </div>
+        
+        </div>
+        <!-- </div> -->
+      </div><br><br> 
+      <md2-dialog-footer>
+        <button type="submit" class="btn btn-outline-success btn-sm" (click)="close(deptModal)">Cancel</button>
+    </md2-dialog-footer>
+    </md2-dialog>

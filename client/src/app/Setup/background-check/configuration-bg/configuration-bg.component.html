@@ -1,0 +1,314 @@
+
+  <!-- // function showData()
+  // {
+   
+  //   var selectItem = document.getElementById('selbox').value;
+  //   var userInput = selectItem.options[selectItem.selectedIndex].value;
+  //   if(selectItem)
+  //   {
+  //     document.getElementById('empData').style.visibility='visible';
+  //   }
+  //   else{
+  //     return false;
+  //   }
+  // return admOptionValue=document.getElementById('selbox').value;
+  // } 
+  
+// function admSelectCheck(nameSelect)
+// {
+  
+//     console.log(nameSelect);
+//     if(nameSelect){
+//         admOptionValue = nameSelect.value;
+//         if(admOptionValue != 0){
+//             document.getElementById('admDivCheck').style.display = "";
+//         }
+//         else{
+//           document.getElementById('admDivCheck').style.display = "none";
+//         }
+//     }
+//     else{
+//       document.getElementById('admDivCheck').style.display = "none";
+//     }
+// }
+   -->
+
+
+
+   <div class="col-md-12 card card-outline-primary" style="height:100%">
+    <div *ngIf = "!show" >
+      <div>
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">Background </li>
+          <li class="breadcrumb-item active">Employee/Candidate Screening</li>
+        </ol>
+     </div>
+     
+      <br>
+
+<div class="col-md-8">
+            <md-select placeholder="Change Background Check Status" [(ngModel)]="bunits.agenciesunits[0].status" id="dropdown">
+              <md-option *ngFor="let con of status1" [value]="con.name" >
+                {{con.name}}
+                </md-option>
+            </md-select>
+
+            <!-- <div class="row">   -->
+                 <!-- <div  class="col-md-4"> -->
+                  <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(bunits);open(deptModal1); show=show"> Save</button> 
+                  <button class="btn btn-outline-warning btn-sm" (click) = "cancel(empcans);show=!show"> Cancel </button>  
+                
+                <!-- <div>
+                <input [(ngModel)]="bunits.agenciesunits[0].startedon" type="date" name="startDate"/>
+                </div> -->  
+            </div>
+            <br>
+            <br>
+      
+       <div>
+
+
+<div class="display_emp">  
+        <div style="padding:10px;" class="row"  style="border:1px; text-align:left; position: relative;" *ngFor="let employee of officiald">
+          <div class="col">
+            <img class="imageClass" src="./assets/Images/creimg.png"/>
+           </div>
+          <div class="col-8">
+            <div>
+                <div style="border-bottom:2px dotted rgb(167, 165, 165);line-height: 3;">     
+                <a> <b>Name</b></a>&nbsp;:&nbsp;<a></a> {{employee.official[0].firstname}} {{employee.official[0].lastname}}
+                </div>
+               
+                <div style="border-bottom:2px dotted rgb(167, 165, 165);line-height: 3;">     
+                 <a><b>Email</b></a>&nbsp;:&nbsp;<a></a><a>{{employee.official[0].email}}</a>
+                </div>
+               
+                <div style="line-height: 3;">     
+                 <a><b>Status</b></a>&nbsp;:&nbsp;<a></a> {{employee.official[0].status}}
+               </div>  
+              </div>             
+             </div>
+            </div>
+           </div>
+          </div>
+          
+     <br>
+     <div>
+      <span style="font-weight:500">Background Check Process</span>
+             <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button> 
+     </div><br><br>
+    
+      <div *ngIf="edited" [ngClass]="messageClass" style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+           {{ message }}
+     </div>
+     <div *ngIf="deleted" [ngClass]="messageClass" style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+           {{ message }}
+     </div>
+
+                     <table  class="table table-bordered table-striped table-sm">
+                        <thead class="bg-success">
+                            <tr>
+                                 <th>Action</th>
+                                 <th>Check Type</th>
+                                 <th>Agency Name</th>
+                                 <th>POC Email</th>
+                                 <th>Process States</th>
+                                 <th>Explanation</th>
+                                 <th>Active Status</th>
+                                 <th>Started On</th>
+                                 <th>Ended On</th>
+                                 <th>Recently Commented On</th>
+                            </tr>
+                        </thead>
+                             <tbody>
+                        <tr *ngFor="let bu1 of bunit;let i = index">
+                           <td><i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(bu1)"></i>
+                               <i (click)="edit(bu);show=!show;"  title="Edit" class="fa fa-pencil-square-o"></i>
+                               <i (click)="delete(bu1,i)" title="Delete" class="fa fa-trash-o"></i>
+                          </td>
+                           <!-- <td>{{bu.official[0].firstname}}{{bu.official[0].lastname}}</td> -->
+                           <td>{{bu1.agenciesunits[0].screeningtypes}}</td> 
+                           <td>{{bu1.agenciesunits[0].agencyname}}</td>
+                           <td>{{bu1.agenciesunits[0].email}}</td>
+                           <td>{{bunits.agenciesunits[0].status}}</td>
+                           <td>{{bu1.agenciesunits[0].explain}}</td>
+                           <td>Active</td>
+                           <td>{{bu1.agenciesunits[0].startedon | date}}</td>  
+                           <td>{{bu1.agenciesunits[0].endedon}}</td> 
+                           <td>{{bu1.agenciesunits[0].rco}}</td>   
+                       </tr>                                                                   
+                           </tbody>                     
+                   </table>   
+              </div>   
+         
+       <div *ngIf= "show">      
+        <div>    
+         <ol class="breadcrumb row bg-primary">   
+           <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+           <li class="breadcrumb-item ">Background </li>
+           <li class="breadcrumb-item ">Employee/Candidate Screening</li>
+           <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+         </ol>
+      </div>
+     
+      
+  <div>
+     <span style="font-weight:500">Screening Types*</span><br>
+     <md-checkbox *ngFor="let b of scrn; let i=index;" name="grp" [(ngModel)]="b.selected" (click)="checkScreen(b,i);" [value]="b.screeningtype[0].screentype">
+      {{b.screeningtype[0].screentype}}
+  </md-checkbox>
+  <br><br>
+  </div>
+  <!-- (change)="checkAll($event)"            -->
+     <!-- <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+          {{ message }}
+        </div>
+    <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+          {{ message }}
+    </div>
+   -->
+
+   <!-- <div *ngIf='this.flg==true'>
+    wwwwwwwwww
+   </div> -->
+
+<div *ngIf='flg'>
+
+   <div id="con">
+    <label>CHOOSE AGENCY</label>&nbsp;<small>*</small>
+            <div class="col-md-4">
+                <md-select [(ngModel)]="selected" id="dropdown">
+
+                <md-option *ngFor="let bu of bunit;" value="{{bu.agenciesunits[0].agencyname}}">
+                  {{bu.agenciesunits[0].agencyname}}</md-option>
+                </md-select>
+      </div>
+      <div style="overflow: auto;">
+       <div class="absolute">
+        <table  style="border:1px; text-align:right; position: relative; overflow: auto;">
+          <tbody *ngFor="let bu of bunit;let i = index">
+          <input type="radio" ng-model="myVar" value="contact" style="border:1px; text-align: right;">
+                      Contact {{i}} (Primary)         
+           
+                    <tr>
+                 <td> {{bu.agenciesunits[0].firstname}} {{bu.agenciesunits[0].lastname}}<br></td>
+                 <td> {{bu.agenciesunits[0].phone}}<br>
+                      {{bu.agenciesunits[0].email}}<br>
+                      {{bu.agenciesunits[0].location}}</td>
+                 </tr>
+                 <hr>
+                </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="row">
+      <div class="col-md-12" style="margin-top: 5%">
+        <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(empcans);view(empcans);show=show"> Save</button>   
+        <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(empcans);show=!show;updatebutton=!updatebutton;"> Update</button>
+        <button class="btn btn-outline-warning btn-sm" (click) = "cancel(empcans);show=!show"> Cancel </button>
+        <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+          {{ message }}
+       </div>
+      </div>
+     </div> 
+    </div>
+   </div>
+    
+    <md2-dialog #deptModal>
+          <md2-dialog-title>Background Check Process</md2-dialog-title>
+
+          <div class="col-md-8">
+            <md-select placeholder="Change Background Check Status" [(ngModel)]="bunits.agenciesunits[0].status" id="dropdown">
+              <md-option *ngFor="let con of status1" [value]="con.name">
+                {{con.name}}
+                </md-option>
+            </md-select>
+          </div>
+          <br>
+          
+          <h4><b>AGENCY AND POC DETAILS</b></h4>
+          <br>
+        
+          <div class="row box">
+            <div class="emp-info">
+                Check Type : {{this.bunits.agenciesunits[0].screeningtypes}}
+            </div>
+            <div class="emp-info">
+                Agency Name : {{this.bunits.agenciesunits[0].agencyname}}
+            </div><br>
+            <div class="emp-info alter-div">
+              Contact Person Name : {{this.bunits.agenciesunits[0].firstname}} {{this.bunits.agenciesunits[0].lastname}}
+            </div>
+            <div class="emp-info alter-div">
+                Contact Number: {{this.bunits.agenciesunits[0].phone}}
+            </div>
+            <div class="emp-info">
+                Email : {{this.bunits.agenciesunits[0].email}}
+            </div>
+            <div class="emp-info">
+                Address : {{this.bunits.agenciesunits[0].location}}
+            </div>
+            </div>
+            <h5><b>FEEDBACK DOCUMENT</b></h5>
+            Feedback Document is not available.
+            <br>
+            <h5><b>COMMENT/FEEDBACK</b></h5>
+            No Comments Posted.
+            
+            <md2-dialog-footer>
+            <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+        </md2-dialog-footer>
+      </md2-dialog>
+
+
+      <md2-dialog #deptModal1   >
+        <md2-dialog-title>Confirmation</md2-dialog-title>
+        You are trying to close the background check process. Please confirm.
+
+        <button class="btn btn-outline-success btn-sm" (click) = "open(deptModal2);view(bu1); show=!show"> Yes </button> 
+                  <button class="btn btn-outline-warning btn-sm" (click) = "show=!show"> No </button>  
+      </md2-dialog>
+
+      <md2-dialog #deptModal2>
+        <md2-dialog-title>Background Check Status</md2-dialog-title>
+        <div>
+          <table>          
+              
+            <div style="border-bottom:2px dotted rgb(167, 165, 165);line-height: 3;">
+            <a> <b>Name</b></a>&nbsp;:&nbsp;<a></a> {{employee.official[0].firstname}} {{employee.official[0].lastname}}
+            </div>
+            <div style="border-bottom:2px dotted rgb(167, 165, 165);line-height: 3;">
+         
+            <h3>Agency Information</h3>
+            </div>
+            <div style="border-bottom:2px dotted rgb(167, 165, 165);line-height: 3;">
+         
+              <a> Check type</a>&nbsp;:&nbsp;<a></a>{{bunits.agenciesunits[0].screeningtypes}}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a>Agency Assigned</a>&nbsp;:&nbsp;<a></a>{{bunits.agenciesunits[0].agencyname}}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a>Status</a>:&nbsp;<a></a>{{bunits.agenciesunits[0].status}}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+              <a>Explanation</a>&nbsp;:&nbsp;<a></a>{{bunits.agenciesunits[0].explain}}
+              <textarea aria-setsize=""></textarea> 
+              <!-- <input type="text" name="explain">  -->
+           </div>
+
+          <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="savechanges(empcans);show=show"> Save</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "cancel(empcans);show=!show"> Cancel </button>
+        </table>
+          </div>
+          </md2-dialog>
+          
+    
+  
+    
+    
+  
+  
+    

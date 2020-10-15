@@ -1,0 +1,244 @@
+
+<div *ngIf = "!show" style="display: both" class="col-md-12">
+    <span style="font-weight:  800">Medical Claims </span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">
+        <i class="fa fa-plus warning"></i>   Add</button>
+        <br><br>
+</div>
+
+<div *ngIf= "show"  class="col-md-12">
+<div class="row">
+<div  style="display: both" class="col-md-12">
+ 
+    <span style="font-weight:  800">Medical Claims</span><br><br><br>
+        
+</div>
+<div class="col-md-12">
+<div class="row">
+		
+<div class="col-md-4">
+	<br>
+	<md-select placeholder="Medical Claim Type"  [(ngModel)]="claim" name="job">
+     <md-option *ngFor="let j of temparray"  (click)="changeval()" [value]="j.name" required>
+     {{j.name}}
+    </md-option>
+    </md-select><br><br>
+
+     <md-input-container  *ngIf="!status">
+      <input mdInput [mdDatepicker]="datepicker3"  placeholder="Date of Joining" required>
+      <button mdSuffix [mdDatepickerToggle]="datepicker3"></button>
+    </md-input-container>
+    <md-datepicker #datepicker3></md-datepicker><br><br>
+     
+     <md-select *ngIf="claim=='Injury'" placeholder="Severity" [(ngModel)]="severity" name="job">
+     <md-option *ngFor="let j of age"   [value]="j.name" required>
+     {{j.name}}
+    </md-option>
+    </md-select>
+
+    <md-select *ngIf="claim=='Disability'" placeholder="Disability Type" [(ngModel)]="disabilitytype" name="job">
+     <!-- <md-option *ngFor="let j of options"   [value]="j.opts" required>
+     {{j.opts}}
+    </md-option> -->
+    <md-option value="">Disability</md-option>
+    </md-select>
+
+    <br>
+   
+</div>
+
+<div class="col-md-4">
+	
+	<md-input-container *ngIf="claim=='Paternity'" class="example-full-width">
+      <input mdInput   placeholder="Paternity" required>
+    </md-input-container>
+    <md-input-container *ngIf="claim=='Maternity'"  class="example-full-width">
+      <input mdInput   placeholder="Maternity" required>
+    </md-input-container>
+
+	<md-input-container *ngIf="claim=='Injury'" >
+      <input mdInput [mdDatepicker]="datepicker1"  placeholder="Date of Injury" required>
+      <button mdSuffix [mdDatepickerToggle]="datepicker1"></button>
+    </md-input-container>
+    <md-datepicker #datepicker1></md-datepicker>
+
+    <md-input-container *ngIf="claim=='Disability'">
+      <input mdInput [mdDatepicker]="datepicker2"  placeholder="Disability Applied date" required>
+      <button mdSuffix [mdDatepickerToggle]="datepicker2"></button>
+    </md-input-container>
+    <md-datepicker #datepicker2></md-datepicker>
+
+     <md-input-container *ngIf="!status" class="example-full-width">
+      <input mdInput   placeholder="Medical insurer" required>
+    </md-input-container><br><br>
+    
+    
+</div>
+
+<div class="col-md-4">   
+    <md-input-container *ngIf="claim=='Disability'" class="example-full-width">
+      <input mdInput   placeholder="Disability" required>
+      
+    </md-input-container>
+
+     <md-input-container *ngIf="claim=='Injury'" class="example-full-width">
+      <input mdInput   placeholder="Injury" required>
+      
+    </md-input-container> 
+
+    <md-input-container *ngIf="!status" class="full-width">
+    <textarea mdInput #message maxlength="200" mdTextareaAutosize minRows="6" placeholder="Description/Reason" id="description" ></textarea>
+    <md-hint align="end">{{message.value.length}} characters entered / 200</md-hint>
+    </md-input-container> <br><br>
+     
+    
+   
+</div>
+</div>
+
+<div *ngIf="!status" style="display: both" class="row">
+ 	<div class="col-md-12">
+ 	       	 <br>
+ 	       	 <span style="font-weight:  500"><b>Applied Leave Details</b></span>
+    
+            <br> <br>
+ 	</div>
+
+ 	   <div class="col-md-4">
+      	    <md-input-container >
+            <input mdInput [mdDatepicker]="datepicker6"  placeholder="Leave Start date" required>
+            <button mdSuffix [mdDatepickerToggle]="datepicker6"></button>
+            </md-input-container>
+            <md-datepicker #datepicker6></md-datepicker>
+            <br>
+      </div>
+      <div class="col-md-4">
+      	    <md-input-container >
+            <input mdInput [mdDatepicker]="datepicker7"  placeholder="Leave End  date" required>
+             <button mdSuffix [mdDatepickerToggle]="datepicker7"></button>
+            </md-input-container>
+            <md-datepicker #datepicker7></md-datepicker>
+      </div>
+      <div class="col-md-4">
+      	     <md-input-container  class="example-full-width">
+              <input mdInput   placeholder="No of Leaves Applied" required>
+              </md-input-container>
+      </div>
+           
+</div>
+
+<div *ngIf="claim!='Disability' && !status" style="display: both" class="row">
+ 	<div class="col-md-12">
+ 		    <br>
+ 	       	 <span style="font-weight:  500"><b>Approved Leave Details</b></span>
+       
+            <br> <br>
+ 	</div>
+
+ 	   <div class="col-md-4">
+      	    <md-input-container >
+            <input mdInput [mdDatepicker]="datepicker8"  placeholder="Leave Start date" required>
+            <button mdSuffix [mdDatepickerToggle]="datepicker8"></button>
+            </md-input-container>
+            <md-datepicker #datepicker8></md-datepicker>
+            <br>
+      </div>
+      <div class="col-md-4">
+      	    <md-input-container >
+            <input mdInput [mdDatepicker]="datepicker9"  placeholder="Leave End  date" required>
+             <button mdSuffix [mdDatepickerToggle]="datepicker9"></button>
+            </md-input-container>
+            <md-datepicker #datepicker9></md-datepicker>
+      </div>
+      <div class="col-md-4">
+      	     <md-input-container  class="example-full-width">
+              <input mdInput   placeholder="No of Leaves Applied" required>
+              </md-input-container>
+      </div>
+           
+</div>
+	
+
+<div  *ngIf="claim=='Disability'" style="display: both" class="row">
+ 	 <div class="col-md-12">
+ 	       	 <br>
+ 	       	 <span style="font-weight:  500"><b>Medical Claim Details</b></span>
+       
+            <br> <br>
+ 	 </div>
+ 	 <div class="col-md-4">
+      	    <md-input-container  class="example-full-width">
+              <input mdInput   placeholder="Amount Claimed" required>
+            </md-input-container>
+      </div>
+      
+      <div class="col-md-4">
+      	     <md-input-container  class="example-full-width">
+              <input mdInput   placeholder="Amount Approved" required>
+             </md-input-container>
+      </div>
+           
+</div>
+
+<div *ngIf="claim!='Disability' && !status" style="display: both" class="row">
+ 	 <div class="col-md-12">
+ 	       	 <br>
+ 	       	 <span style="font-weight:  500"><b>Hospital & Medical Claim Details</b></span>
+              <br> <br>
+ 	 </div>
+ 	 <div class="col-md-4">
+ 	 	    <md-input-container  class="example-full-width">
+              <input mdInput   placeholder="Hospital Name" required>
+            </md-input-container><br>
+
+            <md-input-container  class="example-full-width">
+              <input mdInput   placeholder="Name of Concerned GP" required>
+            </md-input-container><br>
+
+      	    <md-input-container  class="example-full-width">
+              <input mdInput   placeholder="Amount Claimed" required>
+            </md-input-container>
+      </div>
+      
+      <div class="col-md-4">
+      	    <md-input-container  class="full-width">
+            <textarea mdInput #message mdTextareaAutosize minRows="8" placeholder="Hospital Address" id="HospitalAddress" required></textarea>
+            
+            </md-input-container><br>
+
+             <md-input-container  class="full-width">
+             <textarea mdInput #message  mdTextareaAutosize minRows="8" placeholder="Treatment Details" id="Treatmentdeatils" required></textarea>
+            
+             </md-input-container><br>
+
+      	     <md-input-container  class="example-full-width">
+              <input mdInput   placeholder="Amount Approved" required>
+             </md-input-container>
+      </div>
+
+      <div class="col-md-4">
+      	     <md-input-container  class="example-full-width">
+              <input mdInput   placeholder="Room/Ward Number" required>
+             </md-input-container><br>
+             <md-input-container  class="example-full-width">
+              <input mdInput   placeholder="Total Cost" required>
+             </md-input-container>
+      </div>
+           
+</div>
+
+
+<div class="col-md-12">
+<div  class="row" style="float: right" >
+<div >
+	<br><br><br>
+<button class="btn btn-outline-primary btn-sm" (click)="save();show=!show"> Save</button>
+<button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+

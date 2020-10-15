@@ -1,0 +1,97 @@
+<div class="col-md-12 card card-outline-info" style="height:100%;" >
+  
+  <div  style="overflow: auto;"> 
+      <div><br>
+      <div class="box2" style="float: right;margin:0% 1% 0% 0%">
+        <img class="imageClass1" src="./assets/Images/pdf.png"/>&nbsp;<i style="color: #1565c0" (click)="downloadPDF()">Export to PDF</i> &nbsp;
+        <img class="imageClass1" src="./assets/Images/excel.ico"/>&nbsp;<i style="color: #1565c0" (click)="downloadExcel('useremp', 'employeedata')" >Export to Excel</i>
+      </div>
+      </div><br><br>
+   
+  
+    <div class="display_emp" >
+        <label>Generate Custom Report</label><br><br>
+     <div class="row">
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Role" (input)="peruser()"  [(ngModel)]="this.utype">
+    </md-input-container><br><br><br>
+   
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Status" [(ngModel)]="this.status">
+    </md-input-container><br><br><br>
+  
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Created Date"  [(ngModel)]="this.dateofcreate">
+    </md-input-container><br><br><br>
+  
+    
+    <md-input-container class="example-full-width">
+      <input mdInput placeholder="Last Login Date" [(ngModel)]="this.dateoflogin">
+  </md-input-container>
+
+            <div  class="col-md-12" style="margin-top: 5%">
+              <button type="button" class="btn btn-sm btn-primary" (click)="downloadExcel1('report', 'employeedata');show=!show"> GENERATE REPORT</button>
+              <button type="reset"  class="btn btn-sm btn-warning" (click)="reset();">Reset</button>
+            </div>
+    </div>
+</div>
+  
+  <div class= "row">
+         &nbsp;&nbsp;<i class="fa fa-arrow-down" aria-hidden="true"  (click)="displaybox();"></i>&nbsp;<label><b>Users & Employees</b></label><br><br>
+      <div id="usrempp" class="col-md-12 box" style="float: right;">
+  
+          <angular2-multiselect [data]="itemList"  [(ngModel)]="team.Empteam" [settings]="settings" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
+             </angular2-multiselect>
+
+              <div>
+                 <br>
+                 <button type="reset" *ngIf="add"  class="btn btn-sm btn-success" (click)="save(team);">Apply</button>
+                 <button  class="btn btn-sm btn-success" *ngIf="!add" (click)="update1(team);" >Apply</button>   
+                 <i  class="btn btn-sm btn-warning" (click)="cancel1();">Cancel</i>
+              </div>
+                 <br>
+      </div>
+                <br><br>
+
+                <div class="row">
+                    <div class="col-lg-12" id="useremps">
+                      <div  >
+                             <table id="useremp" class="table table-bordered table-striped table-sm">
+                               <thead class="bg-success">
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Email</th>
+                            <th>ID</th>
+                            <th>Last Login</th>
+                            <th>Status</th>
+                            <th>Created On</th>
+                        </tr>
+                         </thead>
+                         <tbody>
+                           <tr *ngFor="let bu of user;let i = index " >
+                          <td></td>
+                          <td>{{bu.utype}}</td>
+                          <td>{{bu.email}}</td>
+                          <td>{{bu.username}}</td>
+                          <!-- <td>{{bu.official[0].role}}</td> -->
+                          <!-- <td>{{bu.official[0].reportingmanager}}</td> -->
+                          <!-- <td>{{bu.official[0].jobtitle}}</td> -->
+                        
+                         </tr>                                 
+                       </tbody>                        
+                       </table>
+            </div>
+          </div>
+      </div>
+  </div>
+
+</div>
+</div>
+  
+
+  
+  
+  
+  
+  

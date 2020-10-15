@@ -1,0 +1,90 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">      
+<div  *ngIf= "!show">
+<div >
+<ol class="breadcrumb row bg-primary">
+  <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+  <li class="breadcrumb-item ">Site </li>
+  <li class="breadcrumb-item ">General </li>
+  <li class="breadcrumb-item active">Ethnic-Code</li>
+</ol>
+</div>
+   <div>
+      <span style="font-weight:500">Ethnic-Code </span>
+      <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add
+      </button>
+    </div><br><br>
+
+<div class="row">
+<div class="col-md-12">
+<div>
+<table  class="table table-bordered table-striped table-sm">
+  <thead class="bg-success">
+    <tr>
+      <th>Action</th>
+      <th>Ehnic Code</th>
+      <th>Ethnic Short Code</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let ec of datas;let i = index ">
+      <td><i *ngIf="ec.id !== editRowId" (click)="edit(ec.id)"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(ec,i)" title="Delete" class="fa fa-trash-o"></i>&nbsp;&nbsp;<i  *ngIf="ec.id == editRowId" (click)="update(ec)" title="save" class="fa fa-floppy-o"></i></td>
+      <td *ngIf="ec.id == editRowId">
+        <input type="text" [(ngModel)]="ec.ethnic[0].code">
+      </td>
+      <td *ngIf="ec.id !== editRowId">{{ec.ethnic[0].code}}</td>
+      <td *ngIf="ec.id == editRowId">
+        <input type="text" [(ngModel)]="ec.ethnic[0].shortcode">
+      </td>
+      <td *ngIf="ec.id !== editRowId">{{ec.ethnic[0].shortcode}}</td>
+      <td *ngIf="ec.id == editRowId">
+        <input type="text" [(ngModel)]="ec.ethnic[0].description">
+      </td>
+      <td *ngIf="ec.id !== editRowId">{{ec.ethnic[0].description}}</td>
+    </tr>
+  </tbody>
+  
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+<div *ngIf= "show">
+<div>      
+  <ol class="breadcrumb row bg-primary">      
+  <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+  <li class="breadcrumb-item ">Site </li>
+  <li class="breadcrumb-item ">General </li>
+  <li class="breadcrumb-item ">Ethnic-Code</li>
+  <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+  </ol> <br>
+ </div>
+
+<div   class="row">
+<div class="col-md-4">
+  <md-input-container class="example-full-width">
+  <input mdInput [(ngModel)]="ethnic.code" placeholder="Ethnic Code" >  
+  </md-input-container><i mdTooltip="Ex:American Indian" class="fa fa-question-circle"></i><br>
+</div>
+<div class="col-md-4">
+  <md-input-container class="example-full-width">
+  <input mdInput [(ngModel)]="ethnic.shortcode" placeholder="Ethnic short code" >  
+  </md-input-container><i mdTooltip="Ex:AI" mdTooltipPosition="above" class="fa fa-question-circle"></i><br>
+</div>
+<div class="col-md-4">
+  <md-input-container class="example-full-width">
+  <input mdInput #message maxlength="200" [(ngModel)]="ethnic.description"  placeholder="Description">
+  <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+  </md-input-container><br>
+</div>
+<div  class="col-md-12" style="margin-top: 5%">
+<button class="btn btn-outline-success btn-sm" (click)="save(ethnic);show=!show"> Save</button>
+<button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+</div>
+</div>
+
+</div> 
+
+</div>

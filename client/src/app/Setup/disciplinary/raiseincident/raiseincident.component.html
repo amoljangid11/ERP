@@ -1,0 +1,252 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+    <div *ngIf = "!show">
+      <div>
+          <ol class="breadcrumb row bg-primary">
+              <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+              <li class="breadcrumb-item ">Disciplinary </li>
+              <li class="breadcrumb-item ">Raise An Incident </li>
+              
+            </ol>
+      </div>
+      <div>
+          <span style="font-weight:500">Raise An Incident</span>
+         <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm" id="btn"  (click) = "show = !show;updatebutton=false;">Raise an Incident</button>
+       
+        </div><br>
+        <div class="row">
+            <div class="col-lg-12">
+              <div>
+                  <table class="table table-bordered table-striped table-sm">
+                      <thead class="bg-success">
+                        <tr>
+                          <th>Action</th>
+                          <th>Employee Name</th>
+                          <th>Business Unit</th>
+                          <th>Department</th>
+                          <th>Violation Name</th>
+                          <th>Date of Occurence</th>
+                          <th>Appealed</th>
+                          <th>Verdict</th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let et of datas;let i = index " >
+                              <td><i class="fa fa-eye"  title="View" (click)="open(typeModal);view(et)"></i>&nbsp;&nbsp;<i (click)="edit(et);show=!show;"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(et,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                
+                              <th>{{et.raiseincident[0].reportingmanager}}</th>
+                              <th>{{et.raiseincident[0].name}}</th>
+                              <th>{{et.raiseincident[0].departmentname}}</th>
+                              <th>{{et.raiseincident[0].violationtype}}</th>
+                              <th>{{et.raiseincident[0].createdate}}</th>
+                              <th>{{et.raiseincident[0].employeeappeal}}</th>
+                              <th>{{et.raiseincident[0].verdict}}</th></tr>
+
+                              
+                      </tbody>
+                  </table>
+              </div>
+        </div>
+
+        </div></div>
+        <form class="form-horizontal" [formGroup]="form">
+        <div *ngIf= "show">
+          <div>
+            <ol class="breadcrumb row bg-primary">
+              <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+              <li class="breadcrumb-item ">Disciplinary </li>
+              <li class="breadcrumb-item ">Raise An Incident</li>
+              
+              <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+            </ol>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <md-input-container class="example-full-width">
+                <input  mdInput placeholder="Incident Raised By" [(ngModel)]="raise.raiseincident[0].incident" pattern="^[a-zA-Z0-9 ]*$" maxlength="50" required formControlName="incident" >
+      </md-input-container>
+            </div>
+            <div class="col-md-3">
+              <br>
+              <md-select placeholder="Business Unit" [(ngModel)]="raise.raiseincident[0].name" formControlName="busi" required>
+                <md-option>Select Business Unit</md-option>
+                <md-option *ngFor="let bunits of assu ; let i=index " [value]= "bunits.businessunits[0].name"  >
+                    {{bunits.businessunits[0].name}}
+                    </md-option>
+                </md-select><br>
+                <span style="color: red" *ngIf="!raise.raiseincident[0].name">
+                    please select Business Unit
+              </span><br>
+            </div>
+            <div class="col-md-3">
+              <br>
+              <md-select placeholder="Department" [(ngModel)]="raise.raiseincident[0].departmentname" formControlName="depart">
+                <md-option>Select Department</md-option>
+                <md-option *ngFor="let dunits of assu1"  [value]="dunits.department[0].departmentname" >
+                  {{dunits.department[0].departmentname}}
+                  </md-option>
+                
+                </md-select>
+            </div>
+            <div class="col-md-3">
+              <br>
+              <md-select placeholder="Employee Name" [(ngModel)]="raise.raiseincident[0].reportingmanager" formControlName="emp" required>
+                <md-option>Select Employee Name</md-option>
+                <md-option *ngFor="let employee of assu3"  value="{{employee.official[0].firstname}} {{employee.official[0].lastname}}">
+                    {{employee.official[0].firstname}} {{employee.official[0].lastname}}
+                </md-option>
+                
+                
+                </md-select><br>
+                <span style="color: red" *ngIf="!raise.raiseincident[0].reportingmanager">
+                    please select Employee Name
+              </span><br>
+            </div>
+            <div class="col-md-3">
+                <md-input-container class="example-full-width">
+                    <input  mdInput placeholder="Employee Id" [(ngModel)]="raise.raiseincident[0].empid" pattern="^[a-zA-Z0-9 ]*$" maxlength="50" formControlName="empid" readonly required >
+          </md-input-container><br><span style="color: red">
+              employee id can not be empty
+            </span>
+            </div>
+            <div class="col-md-3">
+                <md-input-container class="example-full-width">
+                    <input  mdInput placeholder="Job Title" [(ngModel)]="raise.raiseincident[0].jobtitle" pattern="^[a-zA-Z0-9 ]*$" maxlength="50" formControlName="job" readonly >
+          </md-input-container>
+            </div>
+            <div class="col-md-3">
+                <md-input-container class="example-full-width">
+                    <input  mdInput placeholder="Reporting Manager" [(ngModel)]="raise.raiseincident[0].report" pattern="^[a-zA-Z0-9 ]*$" maxlength="50" formControlName="report" readonly required >
+          </md-input-container><br><span style="color: red">
+              reporting manager can not be empty
+            </span>
+            </div>
+            <div class="col-md-3">
+                <md-input-container>
+                    <input mdInput [mdDatepicker]="picker" placeholder="Date of Occurence" [(ngModel)]="raise.raiseincident[0].createdate" formControlName="date"  required>
+                    <button mdSuffix [mdDatepickerToggle]="picker"></button>
+                    </md-input-container>
+                    <md-datepicker #picker></md-datepicker>
+            </div>
+            <div class="col-md-3">
+                <md-input-container>
+                    <input mdInput [mdDatepicker]="picker1" placeholder="Expiry Date" [(ngModel)]="raise.raiseincident[0].enddate" formControlName="expiry"  required>
+                    <button mdSuffix [mdDatepickerToggle]="picker1"></button>
+                    </md-input-container>
+                    <md-datepicker #picker1></md-datepicker>
+            </div>
+            <div class="col-md-3">
+              <br>
+                <md-select placeholder="Type of Violation" [(ngModel)]="raise.raiseincident[0].violationtype" formControlName="violation" required>
+                    <md-option>Select Type of Violation</md-option>
+                    <md-option *ngFor="let type of assu2" [value]="type.violationtype[0].violationtype">
+                        {{type.violationtype[0].violationtype}}
+                        </md-option>
+                    
+                    </md-select><br>
+                    <span style="color: red" *ngIf="!raise.raiseincident[0].violationtype">
+                        please select violation type
+                  </span>
+            </div>
+            <div class="col-md-3">
+                <md-input-container class="example-full-width">
+                    <input  mdInput placeholder="Violation Description" [(ngModel)]="raise.raiseincident[0].descri" pattern="^[a-zA-Z0-9 ]*$" maxlength="50" formControlName="description" required >
+          </md-input-container><br><span style="color: red" *ngIf="!raise.raiseincident[0].descri">
+              please enter violation Description
+        </span>
+            </div>
+            <div class="col-md-3">
+              <br>
+                <p>Employee Appeal</p>
+                <md-radio-group [(ngModel)]="raise.raiseincident[0].employeeappeal" formControlName="appeal">
+                <md-radio-button value="Yes">Yes</md-radio-button>
+                <md-radio-button value="No">No</md-radio-button>
+                </md-radio-group>
+            </div>
+            <div class="col-md-3">
+                <md-input-container class="example-full-width">
+                    <input  mdInput placeholder="Employee Statement" [(ngModel)]="raise.raiseincident[0].empstatement" pattern="^[a-zA-Z0-9 ]*$" maxlength="50" formControlName="statement">
+          </md-input-container>
+            </div>
+            <div class="col-md-3">
+              <br>
+                <p>Verdict</p>
+                <md-radio-group [(ngModel)]="raise.raiseincident[0].verdict" formControlName="verdict">
+                <md-radio-button value="Yes">Guilty</md-radio-button>
+                <md-radio-button value="No">Not Guilty</md-radio-button>
+                </md-radio-group>
+            </div>
+            <div class="col-md-3">
+              <br>
+                <md-select placeholder="Corrective Action" [(ngModel)]="raise.raiseincident[0].action" formControlName="corrective" required>
+                    <md-option>Select Corrective Action</md-option>
+                    <md-option *ngFor="let s of status" [value]="s.value">
+                      {{s.value}}
+                      </md-option>
+                    
+                    </md-select>
+            </div>
+            <div  class="col-md-12" style="margin-top: 5%">
+              <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(raise);show=!show"> Save</button>
+            <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(raise);show=!show;updatebutton=!updatebutton;"> Update</button>
+            <button class="btn btn-outline-warning btn-sm" (click) = "cancel(type);show=!show"> Cancel </button>
+           
+            </div>
+            
+          </div>
+        </div>
+        </form>
+      </div>
+      <md2-dialog #typeModal>
+        <md2-dialog-title>Raise an Incident</md2-dialog-title>
+        <div class="row">
+          <div style="" class="emp-info"><br>
+                <div class="emp-info alter-div">
+                  Incident Raised By : {{raise.raiseincident[0].incident}}
+                </div>  
+                <div class="emp-info alter-div">
+                  Business Unit : {{raise.raiseincident[0].name}}
+              </div> 
+              <div class="emp-info alter-div">
+                Department : {{raise.raiseincident[0].departmentname}}
+            </div> 
+            <div class="emp-info alter-div">
+              Employee : {{raise.raiseincident[0].reportingmanager}}
+          </div> 
+          <div class="emp-info alter-div">
+            Employee ID : {{raise.raiseincident[0].empid}}
+        </div> 
+        <div class="emp-info alter-div">
+          Job Title : {{raise.raiseincident[0].jobtitle}}
+      </div>   
+      <div class="emp-info alter-div">
+        Reporting Manager : {{raise.raiseincident[0].report}}
+    </div>
+    <div class="emp-info alter-div">
+      Date of Occurence : {{raise.raiseincident[0].createdate}}
+  </div>  
+  <div class="emp-info alter-div">
+    Expiry Date : {{raise.raiseincident[0].enddate}}
+</div> 
+<div class="emp-info alter-div">
+  Type of Violation : {{raise.raiseincident[0].violationtype}}
+</div>  
+<div class="emp-info alter-div">
+  Employee Appeal : {{raise.raiseincident[0].employeeappeal}}
+</div>   
+<div class="emp-info alter-div">
+  Employee Statement : {{raise.raiseincident[0].empstatement}}
+</div> 
+<div class="emp-info alter-div">
+  Verdict : {{raise.raiseincident[0].verdict}}
+</div>   
+<div class="emp-info alter-div">
+  Corrective Action : {{raise.raiseincident[0].action}}
+</div> 
+           </div>
+           </div>
+           
+        <md2-dialog-footer>
+            <button type="submit" class="btn btn-secondary" (click)="close(typeModal)">Cancel</button>
+        </md2-dialog-footer>
+      </md2-dialog>

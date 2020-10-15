@@ -1,0 +1,212 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf= "!updates" >
+    <div *ngIf = "!show" >
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Leave Management </li>
+          <li class="breadcrumb-item active">Employee Leave</li>
+        </ol>
+      </div>
+      <div>
+        <span style="font-weight:500">Employees Leave Details</span>
+        <button type="button" style="float: right;margin:0% 0% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updates=false;">Add</button>
+      </div><br><br>
+      <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div >
+            <table class="table table-bordered table-striped table-sm">
+              <thead class="bg-success">
+                
+                <tr>
+                  <th>Action</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Employee ID</th>
+                  <th>Allotted Leave Limit</th>
+                  <th>Used Leaves</th>
+                  <th>Leave Balance</th>
+                  <th>Allotted Year</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let addemp of levoptions;let i = index ">
+                  <td>
+                     <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(addemp)"></i>
+                    <i (click)="edits(addemp);"  title="Edit" class="fa fa-pencil-square-o"></i></td>
+                  <td>{{addemp.official[0].firstname}}</td>
+                  <td>{{addemp.official[0].lastname}}</td>
+                  <td>{{addemp.official[0].code}}{{addemp.official[0].id}}</td>
+                  <td>{{addemp.leave[0].leavelimit}}</td>
+                  <td>{{addemp.leave[0].usedleaves}}</td>
+                  <td>{{addemp.leave[0].leavebalance}}</td>
+                  <td>{{addemp.leave[0].year}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form class="form-horizontal" [formGroup]="form">
+  <div *ngIf= "show">
+    <div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Leave Management </li>
+        <li class="breadcrumb-item ">Add Employee Leave </li>
+        <li class="breadcrumb-item active">Add</li>
+      </ol>
+    </div><br>
+    <div   class="row">
+      <div class="col-md-4"><br>
+        <md-select placeholder="Business Unit" [(ngModel)]="businessname"  formControlName="business" required>
+            <md-option>Select Business Unit</md-option>
+          <md-option *ngFor="let bu of bunit ; let i=index " (click)="selectdept(bu.businessunits[0].name,bu);" [value]= "bu.businessunits[0].name"  >
+        {{bu.businessunits[0].name}}
+        </md-option>
+        </md-select><br>
+        <span  style="color: red"   *ngIf="!businessname">
+          Please select business unit.
+        </span>
+        <br><br>
+      </div>
+      <div class="col-md-4"><br>
+        <md-select placeholder="Department" [(ngModel)]="department" formControlName="department" required>
+            <md-option>Select Department</md-option>
+          <md-option *ngFor="let dp of dptoptions" (click)="selectname(dp.department[0].departmentname,dp)" [value]="dp.department[0].departmentname" >
+        {{dp.department[0].departmentname}}
+        </md-option>
+        </md-select><br>
+        <span  style="color: red"   *ngIf="!department">
+          Please select department.
+        </span>
+        <br><br>
+      </div>
+      <div class="col-md-4">
+        <md-input-container  class="example-full-width" >
+        <input mdInput placeholder="Year"  [(ngModel)]="currentYear" value="currentYear" [readonly]="true"  formControlName="year" required>
+        </md-input-container><br><br><br>
+      </div>
+      <div class="col-md-12">
+        <div >
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Employee</th>
+                <th>Leaves for {{currentYear}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let add of offdata;let i = index ">
+                
+                <td>{{add.official[0].username}}</td>
+                
+                <td *ngIf="add.id == editRowId">
+                  <input type="text" (change)="edit(add.id,add,$event)" [(ngModel)]="leavelimit" value="{{add.leave[0].leavelimit}}" pattern="[0-9.]+" minlength="1" maxlength="2" formControlName="leavelimit" required >
+                  <i title="Edit" class="fa fa-pencil-square-o"></i><br>
+                  <span style="color: red"  *ngIf="!leavelimit" >
+                    please enter leaves.
+                  </span>
+                </td>
+                <td *ngIf="add.id !== editRowId">
+                  <input type="text"  [readonly]="true"  [disabled]="true" value="{{add.leave[0].leavelimit}}">
+                  <i  (click)="edit1(add.id)"  title="Edit" class="fa fa-pencil-square-o"  ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div  class="col-md-12" style="margin-top: 5%">
+          <br>
+          <br>
+          <button *ngIf="!updates" class="btn btn-outline-success btn-sm" (click)="updateleave(offdata);show=!show" [disabled]="!form.valid"> Save</button>
+          <!-- <button *ngIf="updates" class="btn btn-outline-success btn-sm" (click)="update(offdata);show=!show"> Update</button> -->
+          <button class="btn btn-outline-warning btn-sm" (click) = "cancel();show=!show"> Cancel </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+ <form class="form-horizontal" [formGroup]="form1">
+  <div  *ngIf= "updates" >
+    <div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Leave Management </li>
+        <li class="breadcrumb-item ">Add Employee Leave </li>
+        <li class="breadcrumb-item active">Edit</li>
+      </ol>
+    </div><br>
+    <div class="row" >
+      <div class="col-md-3">
+        <md-input-container  class="example-full-width">
+        <input mdInput placeholder="Business Unit"  [(ngModel)]="employee1.official[0].businessunit" [readonly]="true" formControlName="busiunit">
+        
+        </md-input-container><br><br><br>
+        
+        <md-input-container  class="example-full-width" >
+        <input mdInput placeholder="Add or Remove Leaves"  (change)="edit(add.id,add,$event)" pattern="[0-9.]+" maxlength="2" minlength="1" [(ngModel)]="employee.leave[0].leavelimit" formControlName="leave"  required>
+        <md-error>Please enter leaves.</md-error>
+        </md-input-container><br><br><br>
+      </div>
+      <div class="col-md-3">
+        <md-input-container  class="example-full-width">
+        <input mdInput placeholder="Department"  [(ngModel)]="employee1.official[0].departments"  [readonly]="true" formControlName="department">
+        
+        </md-input-container><br><br><br>
+        <md-input-container  class="example-full-width">
+        <input mdInput placeholder="Year"  [(ngModel)]="currentYear" [value]="currentYear" [readonly]="true" formControlName="year" >
+        
+        </md-input-container><br><br><br>
+      </div>
+      <div class="col-md-3">
+        <md-input-container  class="example-full-width">
+        <input mdInput placeholder="Employee" [(ngModel)]="employee1.official[0].firstname"  value="{{employee1.official[0].firstname}} {{employee1.official[0].lastname}}" [readonly]="true" formControlName="employee">
+        
+        </md-input-container><br><br><br>
+      </div>
+      <div  class="col-md-12"><br><br>
+        
+        <button *ngIf="updates" class="btn btn-outline-success btn-sm" (click)="update(employee1,employee);updates=!updates" [disabled]="!form1.valid"> Update</button>
+        <button *ngIf="updates" class="btn btn-outline-warning btn-sm" (click) = "cancel(); updates=!updates"> Cancel </button>
+        
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+
+<md2-dialog #deptModal>
+    <md2-dialog-title>Add Employee Leave</md2-dialog-title>
+     <div class=" row box">
+    <div class="emp-info">
+        Business Unit : {{employee1.official[0].businessunit}}
+    </div>
+    <div class="emp-info ">
+        Department : {{employee1.official[0].departments}}
+    </div><br>
+    <div class="emp-info alter-div">
+        Employee : {{employee1.official[0].firstname}}
+    </div>
+    <div class="emp-info alter-div">
+        Allot Leave Limit : {{employee.leave[0].leavelimit}}
+    </div><br>
+    <div class="emp-info">
+        Year : {{currentYear}}
+    </div>
+    <div class="emp-info "></div>
+  </div>
+    <md2-dialog-footer>
+        <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+    </md2-dialog-footer>
+  </md2-dialog>
+  

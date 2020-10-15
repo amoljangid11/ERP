@@ -1,0 +1,194 @@
+<div *ngIf= "!show"  class="col-lg-12">
+  <div class="row">
+    <div  style="display: both" class="col-lg-12">
+      <span style="font-weight:500">Job History</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button>
+    </div><br><br>
+  </div>
+  <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+    {{ message }}
+  </div>
+  <div class="row">
+    <div class="col-lg-12"><br>
+      <div>
+        <table class="table table-bordered table-striped table-sm">
+          <thead class="bg-success">
+            <tr>
+              <th>Action</th>
+              <th>Company Name</th>
+              <th>Company Website</th>
+              <th>Designation</th>
+              <th>From</th>
+              <th>To</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="haveexp">
+            <tr *ngFor=" let ex of official.experience; let i = index " >
+              <td><i  (click)="edit(ex,official,i);show = !show"  title="Edit" class="fa fa-pencil-square-o"></i>
+              <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(ad,official,i)"></i></td>
+              <td>{{ex.companyname}}</td>
+              <td>{{ex.companywebsite}}</td>
+              <td>
+                <ul *ngFor="let pp of official.experience[i].position; let i = index ">
+                  <li>{{pp.itemName}}</li>
+                </ul>
+                <!-- {{ex.designation}} -->
+              </td>
+              <td>{{ex.fromdate | date}}</td>
+              <td>{{ex.todate | date}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<form class="form-horizontal" [formGroup]="form">
+<div *ngIf= "show" class="col-lg-12">
+  <div class="row">
+    <div class="col-md-4"><br><br>
+      <!-- <md-select placeholder=" Department" [(ngModel)]="employee.experience[i].department" formControlName="depart" >
+        <md-option *ngFor="let d of dunit" [value]="d.department[0].departmentname" >
+        {{d.department[0].departmentname}}
+        </md-option>
+        </md-select> -->
+        <angular2-multiselect [data]="loclist" [(ngModel)]="employee.experience[i].department" [settings]="settings" formControlName="depart" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
+          </angular2-multiselect>
+        <br><br><br><br>
+        <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="employee.experience[i].companyname"  placeholder="Company Name" formControlName="compname" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" required>
+          <md-error>Please enter company name.</md-error>
+          </md-input-container>
+       <br><br><br><br>
+          <md-input-container class="example-full-width">
+            <input mdInput name="reason" [(ngModel)]="employee.experience[i].reason"  #message maxlength="200" placeholder="Reason for Leaving" formControlName="reason"    required>
+            <md-error>Please enter reason for leaving</md-error>
+            </md-input-container> 
+      <br><br><br>
+      <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="employee.experience[i].refercontact"  placeholder="Referrer Contact" formControlName="ref" minlength="10" maxlength="10" pattern="[0-9.]+" required>
+          <md-error>Please enter referrer contact.</md-error>
+          </md-input-container>
+      <br><br><br><br>
+       <!-- <br><br> <br> -->
+    </div>
+    <div class="col-md-4"><br><br>
+      <!-- <md-select placeholder="Job Title" [(ngModel)]="employee.experience[i].jobtitle" formControlName="jobtitle">
+        <md-option *ngFor="let j of jobt"   [value]="j.jobtitle[0].jobtitle">
+        {{j.jobtitle[0].jobtitle}}
+        </md-option>
+        </md-select> -->
+        <angular2-multiselect [data]="loclist2" [(ngModel)]="employee.experience[i].jobtitle" [settings]="settings2" formControlName="jobtitle" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
+          </angular2-multiselect>
+        <br><br><br><br>
+      <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="employee.experience[i].companywebsite"  placeholder="Company Website" formControlName="comp" pattern="w{3}\.[a-z]+\.[a-z]{2,3}(|\.[a-z]{2,3})" required>
+      <md-error>Please enter company website.</md-error>
+      </md-input-container><br><br> <br><br>
+          <md-input-container class="example-full-width">
+              <input mdInput [(ngModel)]="employee.experience[i].referrer"  placeholder="Referrer Name" formControlName="ref1"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" required>
+              <md-error>Please enter referrer name.</md-error>
+              </md-input-container>
+      <br><br><br>
+      <md-input-container>
+          <input mdInput [mdDatepicker]="pick1"  [(ngModel)]="employee.experience[i].fromdate" placeholder="From" formControlName="from" required>
+          <button mdSuffix [mdDatepickerToggle]="pick1"></button>
+          <md-error>Please select from date</md-error>
+          </md-input-container>
+          <md-datepicker #pick1></md-datepicker> <br><br> <br>
+    </div>
+    <div class="col-md-4"><br><br>
+      <!-- <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="employee.experience[i].designation"  placeholder="Designation" formControlName="des"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" required>
+      <md-error>Please enter designation.</md-error>
+      </md-input-container><br><br> <br> -->
+      <!-- <md-select placeholder="Position" [(ngModel)]="employee.experience[i].position" formControlName="des">
+        <md-option *ngFor="let po of positionsdata"   [value]="po.position[0].position">
+        {{po.position[0].position}}
+        </md-option>
+        </md-select> -->
+        <angular2-multiselect [data]="loclist1" [(ngModel)]="employee.experience[i].position" [settings]="settings1" formControlName="des" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
+          </angular2-multiselect>
+        <br><br> <br><br>
+        <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="employee.experience[i].clientname"  placeholder=" Client " formControlName="client" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" required>
+          <md-error>Please enter client name.</md-error>
+          </md-input-container> <br><br><br> <br>
+      <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="employee.experience[i].refermail"  placeholder="Referrer Email" formControlName="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+      <md-error>Please enter referrer email.</md-error>
+      </md-input-container><br><br> <br>
+      <md-input-container>
+          <input mdInput [mdDatepicker]="pick"  [(ngModel)]="employee.experience[i].todate" placeholder="To" formControlName="to" id="EndDate" required>
+          <md-error>Please select to date.</md-error>
+          <button mdSuffix [mdDatepickerToggle]="pick"></button>
+          </md-input-container>
+          <md-datepicker #pick></md-datepicker>
+    </div>
+  </div>
+  <div style="float: right;margin:0% 2% 0% 0%" class="row">
+    <div  class="col-md-12">
+      <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(employee);show=!show;" [disabled]="!form.valid"> Save</button>
+      <button *ngIf="updatebutton"  class="btn btn-outline-success btn-sm" (click)="updateexperience(employee);updatebutton=!updatebutton;show=!show;" [disabled]="!form.valid"> Update</button>
+      <button class="btn btn-outline-warning btn-sm" (click) = "cancel(employee);show=!show;updatebutton=!updatebutton;"> Cancel </button>
+    </div>
+  </div>
+</div>
+</form>
+
+<md2-dialog #deptModal>
+    <md2-dialog-title>Job History</md2-dialog-title>
+    <div class=" row box">
+        <div class="emp-info alter-div">
+            Department :
+          <tr *ngFor="let nee of newarr1; let i = index "><td>
+              {{nee}}
+          </td></tr>
+          
+        </div>
+        <div class="emp-info alter-div">
+            Job Title :
+          <tr *ngFor="let jb of jbtitle; let i = index "><td>
+              {{jb}}
+          </td></tr>
+          
+        </div><br>
+    </div>
+    <div class=" row box">
+        Designation :<tr *ngFor="let pp of posi; let i = index "><td>{{pp}}
+      </td></tr>
+    </div>
+    <div class=" row box">
+        
+        <div class="emp-info">
+            Company Name : {{employee.experience[i].companyname}}
+        </div>
+        <div class="emp-info ">
+            Company Website : {{employee.experience[i].companywebsite}}
+        </div><br>
+        <div class="emp-info alter-div">
+          Client : {{employee.experience[i].clientname}}
+        </div>
+        <div class="emp-info alter-div">
+            Reason of leaving : {{employee.experience[i].reason}}
+          </div><br>
+          <div class="emp-info">
+              Referrer name : {{employee.experience[i].referrer}}
+          </div>
+          <div class="emp-info ">
+              Referrer email : {{employee.experience[i].refermail}}
+          </div><br>
+        <div class="emp-info alter-div">
+            Referrer contact : {{employee.experience[i].refercontact}}
+        </div>
+        <div class="emp-info alter-div">
+            From : {{employee.experience[i].fromdate | date}}
+        </div><br>
+        <div class="emp-info">
+            To : {{employee.experience[i].todate | date}}
+        </div>
+      </div>
+    <md2-dialog-footer>
+        <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+    </md2-dialog-footer>
+</md2-dialog>

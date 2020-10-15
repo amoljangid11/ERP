@@ -1,0 +1,253 @@
+<div class="col-md-12"  style="height: 90%" *ngIf="!show"><br>  
+   <div class="row">  
+    <div class="col-md-12">  
+     <span style="font-weight: 500"><h6>Weekly View</h6></span> &nbsp;&nbsp; &nbsp;&nbsp;
+     <div class="col-md-4"> 
+        <input class="form-control mr-sm-2" type="search" placeholder="Search by Employee" aria-label="Search" [(ngModel)]="searchText" (input)="filterItem(searchText)"> 
+     </div>
+        <nav class="navbar navbar-light bg-light box" style="float: right">  
+        <form class="form-inline">            
+            <a class="navbar-brand" id="all" (click)="all('all')"><h6>All</h6></a>
+            <a class="navbar-brand" id="for" (click)="forapproval('For Approval')"><h6>For Approval</h6></a>
+            <a class="navbar-brand" id="rej" (click)="rejected('Rejected')"><h6>Rejected</h6></a>
+            <a class="navbar-brand" id="blk" (click)="blocked('Blocked')"><h6>Blocked</h6></a>
+            <a class="navbar-brand" id="enb" (click)="enabled('Enabled')"><h6>Enabled</h6></a>
+            <a class="navbar-brand" id="apv" (click)="approved('Approved')"><h6>Approved</h6></a></form>
+        </nav>  
+       <br>    
+  </div>
+ </div>   
+ <br><br>
+  <div class="row" *ngIf="alll">     
+     <div class="col-md-3" *ngFor="let official of officiald">  
+     <div  *ngFor="let tms of alltime" (click)="viewTimesheet(tms);"> 
+     <div style="font-weight: 500" class="card card-block card-default">  
+     <h6 *ngIf="(official._id==tms.employee_id) && (tms.status=='For Approval')">{{official.official[0].firstname}} {{official.official[0].lastname}}</h6>
+     <h6 *ngIf="(official._id==tms.employee_id) && (tms.status=='Approved')">{{official.official[0].firstname}} {{official.official[0].lastname}}</h6>
+     <h6 *ngIf="(official._id==tms.employee_id) && (tms.status=='Rejected')">{{official.official[0].firstname}} {{official.official[0].lastname}}</h6>
+     <h6 *ngIf="(official._id!=tms.employee_id) && (tms.status!='For Approval')">{{official.official[0].firstname}} {{official.official[0].lastname}}</h6>
+     <table class="table table-sm">  
+        <tbody> 
+        <tr>
+               <th>Status</th>
+               <td *ngIf="(official._id==tms.employee_id) && (tms.status=='For Approval')" style="color:orange;background-color: whitesmoke;">{{tms.status}}</td> 
+               <td *ngIf="(official._id==tms.employee_id) && (tms.status=='Approved')" style="color:green;background-color: whitesmoke;">{{tms.status}}</td> 
+               <td *ngIf="(official._id==tms.employee_id) && (tms.status=='Rejected')" style="color:red;background-color: whitesmoke;">{{tms.status}}</td> 
+               <td *ngIf="(official._id!=tms.employee_id) && (tms.status!='For Approval')" style="color:brown;background-color: whitesmoke;">No Entry</td>
+        </tr>
+        <tr>
+               <th>Total Hrs</th> 
+               <td *ngIf="(official._id!=tms.employee_id) && (tms.status!='For Approval')" style="color:brown;background-color: whitesmoke;">00:00</td>
+               <td *ngIf="(official._id==tms.employee_id) && (tms.status=='Approved')" style="background-color: whitesmoke;">{{tms.total}} &nbsp;&nbsp;&nbsp;&nbsp;<i title="View Time" (click)="viewTimesheet(tms);show=!show;" class="fa fa-eye" style="color:skyblue">&nbsp;View Time</i></td>
+               <td *ngIf="(official._id==tms.employee_id) && (tms.status=='Rejected')" style="background-color: whitesmoke;">{{tms.total}} &nbsp;&nbsp;&nbsp;&nbsp;<i title="View Time" (click)="viewTimesheet(tms);show=!show;" class="fa fa-eye" style="color:skyblue">&nbsp;View Time</i></td>
+        </tr>
+ 
+        <tr *ngIf="(tms.status=='For Approval')" style="background-color: white">
+             <td>
+                <button type="submit" style="float: left;" class="btn btn-success btn-sm" (click)="updateStatus('Approved',tms)"><i class="fa fa-check" style="color:white"></i>&nbsp;Approve</button>
+              </td>
+             <td>  
+                <button   style="float: left;" class="btn btn-danger btn-sm" (click)="updateStatus('Rejected',tms)"><i class="fa fa-ban" aria-hidden="true" style="color:white"></i>&nbsp;Reject</button>
+             </td>
+        </tr> 
+        </tbody>         
+     </table>   
+      <div>          
+       </div> 
+      </div> 
+     </div>    
+    </div>    
+   </div>     
+ 
+ 
+ 
+   <div class="row" *ngIf="forapprovall">
+ 
+       <div *ngIf="formsg" class="alert alert-info"  style="margin-left:20%;padding: 0.5% 0.5% 0.5% 0.5%;width:60%;float:center">
+             <i class="fa fa-info-circle" aria-hidden="true" style="padding:0px  10px"></i>
+             <span  style="text-align:center;">No Data Found</span>
+           </div>
+ 
+       <div class="col-md-3"  *ngFor="let tms of alltime"> 
+         <div *ngFor="let official of officiald"> 
+          <div *ngIf="(tms.employee_id==official._id) && (tms.status=='For Approval')" style="font-weight: 500" class="card card-block card-default">  
+           <h6 *ngIf="(tms.employee_id==official._id)">{{official.official[0].firstname}} {{official.official[0].lastname}}</h6>
+            <table class="table  table-sm">  
+             <tbody *ngIf="(tms.employee_id==official._id)"> 
+             <tr>
+                    <th>Status</th>
+                    <td style="color:orange;background-color: whitesmoke;">{{tms.status}}</td> 
+             </tr>
+             <tr>
+                    <th>Total Hrs</th> 
+                    <td style="background-color: whitesmoke;">{{tms.total}} &nbsp;&nbsp;&nbsp;&nbsp;<i title="View Time" (click)="viewTimesheet(tms);show=!show;" class="fa fa-eye" style="color:skyblue">&nbsp;View Time</i></td>
+             </tr>
+             <tr style="background-color: white">
+                <td>
+                   <button type="submit" style="float: left;" class="btn btn-success btn-sm" (click)="updateStatus('Approved',tms)"><i class="fa fa-check" style="color:white"></i>&nbsp;Approve</button>
+                 </td>
+                <td>  
+                   <button   style="float: left;" class="btn btn-danger btn-sm" (click)="updateStatus('Rejected',tms)"><i class="fa fa-ban" aria-hidden="true" style="color:white"></i>&nbsp;Reject</button>
+                 </td>
+               </tr> 
+             </tbody>
+             </table>
+          </div>
+       </div>
+    </div>
+    </div>
+ 
+ 
+    <div class="row" *ngIf="approve">
+       
+          <div *ngIf="appmsg" class="alert alert-info"  style="margin-left:20%;padding: 0.5% 0.5% 0.5% 0.5%;width:60%;float:center">
+                <i class="fa fa-info-circle" aria-hidden="true" style="padding:0px  10px"></i>
+                <span  style="text-align:center;">No Data Found</span>
+              </div>
+ 
+          <div class="col-md-3" *ngFor="let tms of alltime">  
+            <div *ngFor="let official of officiald">  
+             <div *ngIf="(tms.employee_id==official._id) && (tms.status=='Approved')" style="font-weight: 500"   class="card card-block card-default">  
+             <h6 *ngIf="(tms.employee_id==official._id)">{{official.official[0].firstname}} {{official.official[0].lastname}}</h6>
+               <table class="table  table-sm">  
+                <tbody *ngFor="let tms of alltime"> 
+                <tr *ngIf="(tms.employee_id==official._id) && (tms.status=='Approved')">
+                       <th>Status</th>
+                       <td style="color:green;background-color: whitesmoke;">{{tms.status}}</td> 
+                </tr>
+                <tr *ngIf="(tms.employee_id==official._id) &&  (tms.status=='Approved')">
+                       <th>Total Hrs</th> 
+                       <td style="background-color: whitesmoke;">{{tms.total}} &nbsp;&nbsp;&nbsp;&nbsp;<i title="View Time" (click)="viewTimesheet(tms);show=!show;" class="fa fa-eye" style="color:skyblue">&nbsp;View Time</i></td>
+                </tr>
+                </tbody>
+                </table>
+             </div>
+          </div>
+       </div>
+       </div>
+ 
+       
+       <div class="row" *ngIf="rejecte">
+            
+          <div *ngIf="rejmsg" class="alert alert-info"  style="margin-left:20%;padding: 0.5% 0.5% 0.5% 0.5%;width:60%;float:center">
+                   <i class="fa fa-info-circle" aria-hidden="true" style="padding:0px  10px"></i>
+                   <span  style="text-align:center;">No Data Found</span>
+          </div>
+ 
+          <div class="col-md-3"  *ngFor="let tms of alltime">  
+                <div  *ngFor="let official of officiald"> 
+             <div *ngIf="(tms.employee_id==official._id) && (tms.status=='Rejected')" style="font-weight: 500"   class="card card-block card-default">  
+               
+              <h6 *ngIf="(tms.employee_id==official._id) && (tms.status=='Rejected')">{{official.official[0].firstname}} {{official.official[0].lastname}}</h6>
+               <table class="table  table-sm">  
+                <tbody> 
+                <tr *ngIf="(tms.employee_id==official._id) && (tms.status=='Rejected')">
+                       <th>Status</th>
+                       <td style="color:red;background-color: whitesmoke;">{{tms.status}}</td> 
+                </tr>
+                <tr *ngIf="(tms.employee_id==official._id) && (tms.status=='Rejected')">
+                       <th>Total Hrs</th> 
+                       <td style="background-color: whitesmoke;">{{tms.total}} &nbsp;&nbsp;&nbsp;&nbsp;<i title="View Time" (click)="viewTimesheet(tms);show=!show;" class="fa fa-eye" style="color:skyblue">&nbsp;View Time</i></td>
+                </tr>
+                </tbody>
+                </table>
+             </div>    
+  </div>  
+ </div>
+ </div>
+ 
+ 
+ 
+ <div class="row" *ngIf="block">
+            
+       <div *ngIf="blkmsg" class="alert alert-info"  style="margin-left:20%;padding: 0.5% 0.5% 0.5% 0.5%;width:60%;float:center">
+                <i class="fa fa-info-circle" aria-hidden="true" style="padding:0px  10px"></i>
+                <span  style="text-align:center;">No Data Found</span>
+       </div>
+ 
+       <div class="col-md-3"  *ngFor="let tms of alltime">  
+             <div  *ngFor="let official of officiald"> 
+          <div *ngIf="(tms.employee_id==official._id) && (tms.status=='Blocked')" style="font-weight: 500"   class="card card-block card-default">  
+            
+           <h6 *ngIf="(tms.employee_id==official._id) && (tms.status=='Blocked')">{{official.official[0].firstname}} {{official.official[0].lastname}}</h6>
+            <table class="table  table-sm">  
+             <tbody> 
+             <tr *ngIf="(tms.employee_id==official._id) && (tms.status=='Blocked')">
+                    <th>Status</th>
+                    <td style="color:red;background-color: whitesmoke;">{{tms.status}}</td> 
+             </tr>
+             <tr *ngIf="(tms.employee_id==official._id) && (tms.status=='Blocked')">
+                    <th>Total Hrs</th> 
+                    <td style="background-color: whitesmoke;">{{tms.total}} &nbsp;&nbsp;&nbsp;&nbsp;<i title="View Time" (click)="viewTimesheet(tms);show=!show;" class="fa fa-eye" style="color:skyblue">&nbsp;View Time</i></td>
+             </tr>
+             </tbody>
+             </table>
+          </div>    
+ </div>  
+ </div>
+ </div>
+ 
+ 
+ 
+ <div class="row" *ngIf="enable">
+            
+       <div *ngIf="enbmsg" class="alert alert-info"  style="margin-left:20%;padding: 0.5% 0.5% 0.5% 0.5%;width:60%;float:center">
+                <i class="fa fa-info-circle" aria-hidden="true" style="padding:0px  10px"></i>
+                <span  style="text-align:center;">No Data Found</span>
+       </div>
+ 
+       <div class="col-md-3"  *ngFor="let tms of alltime">  
+             <div  *ngFor="let official of officiald"> 
+          <div *ngIf="(tms.employee_id==official._id) && (tms.status=='Enabled')" style="font-weight: 500"   class="card card-block card-default">  
+            
+           <h6 *ngIf="(tms.employee_id==official._id) && (tms.status=='Enabled')">{{official.official[0].firstname}} {{official.official[0].lastname}}</h6>
+            <table class="table  table-sm">  
+             <tbody> 
+             <tr *ngIf="(tms.employee_id==official._id) && (tms.status=='Enabled')">
+                    <th>Status</th>
+                    <td style="color:red;background-color: whitesmoke;">{{tms.status}}</td> 
+             </tr>
+             <tr *ngIf="(tms.employee_id==official._id) && (tms.status=='Enabled')">
+                    <th>Total Hrs</th> 
+                    <td style="background-color: whitesmoke;">{{tms.total}} &nbsp;&nbsp;&nbsp;&nbsp;<i title="View Time" (click)="viewTimesheet(tms);show=!show;" class="fa fa-eye" style="color:skyblue">&nbsp;View Time</i></td>
+             </tr>
+             </tbody>
+             </table>
+          </div>    
+ </div>  
+ </div>
+ </div>
+ 
+ </div>
+ 
+ 
+ 
+ <div class="col-md-12" style="height: 90%;background-color: blanchedalmond" *ngIf="show">
+ <div class="row">
+    <div class="col-md-3" style="padding-top: 20px">
+          <!-- style="background-color: blanchedalmond" -->
+       <div style="font-weight: 500;background-color: white" class="card card-block card-default">
+          <h6>{{name}}</h6>
+          <table class="table  table-sm">  
+           <tbody>
+              <tr>
+                 <th>Status</th>
+                 <td style="background-color: whitesmoke;color:red;" *ngIf="status=='Rejected'">{{status}}</td>
+                 <td style="background-color: whitesmoke;color:green;" *ngIf="status=='Approved'">{{status}}</td>
+              </tr> 
+              <tr>
+                 <th>Manager</th>
+                 <td style="background-color: whitesmoke;">{{reportman}}</td>
+              </tr> 
+           </tbody>
+          </table>
+       </div>
+    </div>
+ 
+    <div class="col-md-9" style="background-color: white;padding-top: 20px">
+       <span style="font-weight: 500;color: chocolate"><h5>Weekly View</h5></span>
+          <router-outlet name="timesheetchild"></router-outlet>
+    </div>
+ </div>
+ </div>
+ 

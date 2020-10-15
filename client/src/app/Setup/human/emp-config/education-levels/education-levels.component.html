@@ -1,0 +1,71 @@
+<div  class="row">
+<div *ngIf = "!show" style="display: both" class="col-lg-12">
+  <div >
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">HR </li>
+      <li class="breadcrumb-item ">Employee Configuration</li>
+      <li class="breadcrumb-item active">Education Levels</li>
+    </ol>
+ </div>
+ 
+ <div  style="display: both" class="col-lg-12">
+ <span style="font-weight:500">Education Levels</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button> 
+</div><br><br>
+
+<div class="row">
+ <div class="col-lg-12">
+  <div class="table-responsive"> 
+    <table  class="table table-bordered table-hover ">
+ <thead class="thead-inverse">
+     <tr>
+      <th>Action</th>
+      <th>Education Level</th>
+      <th>Description</th>
+     </tr>
+      </thead>
+     <tbody>
+                                	
+     </tbody>                             
+    </table>
+   </div></div>
+</div>
+</div>
+</div>
+<br>
+ <div style="width: 100%;" class="row">
+ <div *ngIf= "show" class="col-lg-12">
+   <div >
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item "><i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">HR </li>
+      <li class="breadcrumb-item ">Employee Configuration</li>
+      <li class="breadcrumb-item ">Education Levels</li>
+       <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+    </ol>
+ </div><br>
+
+<div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-3">
+    <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="education"  placeholder="Education Level" required> 
+      <md-error>Please enter education level.</md-error>
+    </md-input-container><i mdTooltip="Secondary,Master Degree" class="fa fa-question-circle" ></i><br><br><br>
+</div>
+<div class="col-md-3">     
+  <md-input-container class="example-full-width">
+     <input mdInput #message maxlength="200" [(ngModel)]="des" placeholder="Description"> 
+     <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+  </md-input-container><br><br><br>  
+</div>
+
+  </div>
+
+<div style="float: right;margin:0% 2% 0% 0%" class="row">
+<div  class="col-md-12">
+<button class="btn btn-outline-primary btn-sm" (click)="save();show=!show"> Save</button>
+<button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+</div>
+</div>
+</div></div>

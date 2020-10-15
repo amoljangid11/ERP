@@ -1,0 +1,116 @@
+<div class="col-md-12 card card-outline-info" style="height:100%;" >
+  <!-- <div style="padding-top: 0.5%" >
+      <ol class="breadcrumb" >
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Analytics </li>   
+        <li class="breadcrumb-item ">Service Request</li>
+        <li class="breadcrumb-item ">Service Request Report </li>         
+      </ol>        
+  </div>  -->
+
+  <div  style="overflow: auto;"> 
+      <div><br>
+      <div class="box2" style="float: right;margin:0% 1% 0% 0%">
+        <img class="imageClass1" src="./assets/Images/pdf.png"/>&nbsp;<i style="color: #1565c0" (click)="downloadPDF()">Export to PDF</i> &nbsp;
+        <img class="imageClass1" src="./assets/Images/excel.ico"/>&nbsp;<i style="color: #1565c0" (click)="downloadExcel('servicereq', 'employeedata')" >Export to Excel</i>
+      </div>
+      </div><br><br>
+   
+  
+    <div class="display_emp" >
+        <label><b>Generate Custom Report</b></label><br><br>
+     <div class="row">
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Raised By" (input)="peremp()"  [(ngModel)]="this.raisedby">
+    </md-input-container><br><br><br>
+   
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Category" [(ngModel)]="this.category">
+    </md-input-container><br><br><br>
+  
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Requested Type" [(ngModel)]="this.requesttype">
+    </md-input-container><br><br><br>
+  
+  <md-input-container class="example-full-width">
+      <input mdInput placeholder="Priority" [(ngModel)]="this.priority">
+  </md-input-container><br><br><br>
+
+  <md-input-container class="example-full-width">
+      <input mdInput placeholder="Status" [(ngModel)]="this.status">
+  </md-input-container><br><br><br>
+
+  
+  <md-input-container class="example-full-width">
+    <input mdInput placeholder="Raised On" [(ngModel)]="this.raisedon">
+</md-input-container>
+
+            <div  class="col-md-12" style="margin-top: 5%">
+              <button type="button" class="btn btn-sm btn-primary" (click)="show=!show"> GENERATE REPORT</button>
+              <button type="reset"  class="btn btn-sm btn-warning" (click)="reset();">Reset</button>
+            </div>
+    </div>
+</div>
+  
+  <div class= "row">
+         &nbsp;&nbsp;<i class="fa fa-arrow-down" aria-hidden="true"  (click)="displaybox();"></i>&nbsp;<label><b>Service Request</b></label>     
+      <div id="servreqs" class="col-md-12 box" style="float: right;">
+  
+          <angular2-multiselect [data]="itemList"  [(ngModel)]="team.Empteam" [settings]="settings" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
+             </angular2-multiselect>
+
+              <div>
+                 <br>
+                 <button type="reset" *ngIf="add"  class="btn btn-sm btn-success" (click)="save(team);">Apply</button>
+                 <button  class="btn btn-sm btn-success" *ngIf="!add" (click)="update1(team);" >Apply</button>   
+                 <i  class="btn btn-sm btn-warning" (click)="cancel1();">Cancel</i>
+              </div>
+                 <br>
+      </div>
+                <br><br>
+
+                <div class="row">
+                    <div class="col-lg-12" id="servicereqs">
+                      <div  >
+                             <table id="servicereq" class="table table-bordered table-striped table-sm">
+                               <thead class="bg-success">
+                        <tr>
+                            <th>Ticket#</th>
+                            <th>Raised By</th>
+                            <th>Raised On</th>
+                            <th>Category</th>
+                            <th>Request Type/Asset Name</th>
+                            <th>Priority</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                           
+                        </tr>
+                         </thead>
+                         <tbody>
+                           <tr *ngFor="let bu of aservreq;let i = index " >
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                         </tr>                                 
+                       </tbody>                        
+                       </table>
+            </div>
+          </div>
+      </div>
+  </div>
+
+</div>
+</div>
+  
+
+  
+  
+  
+  
+  

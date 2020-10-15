@@ -1,0 +1,271 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show" style="overflow: auto" id="mn">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Exit Procedure </li>
+        <li class="breadcrumb-item active">All Exit Procedures</li>
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:500">All Exit Procedures</span>
+    </div>
+  
+    <div >
+        <div class="row" style="padding: 1% 0% 1% 1%;">
+          <div class="box" (click)="all('All');view='no'">
+           <div class="box2" >
+             <span>All</span><br><span class="text-info">{{countall}}</span>
+           </div>    			
+          </div>
+          <div class="box"   (click)="all('Pending for approval');view='yes'">
+            <div style="background-color: #fff4c6 " >
+              
+              <span>Pending</span><br><span class="text-success">{{pendingcount}}</span>
+             
+            </div>  	
+          </div>
+          <div class="box"  (click)="all('Cancelled');view='no'">
+            <div class="box2" >
+              <span>Approved</span><br><span class="text-warning">{{approvedcount}}</span>
+            </div>
+          </div>  
+            <div class="box"   (click)="all('Approved');view='no'">
+            <div class="box2" >
+              <span>Rejected</span><br><span class="text-primary">{{rejectedcount}}</span>
+            </div>  
+          </div> 		
+        </div>
+      </div><br>
+  
+    <div class="row">
+      <div class="col-lg-12">
+        <div >
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr> 
+                <th>Action</th>
+                <th>Employee</th>
+                <th>Employee ID</th>
+                <th>Business Unit</th>
+                <th>Department</th>
+                <th>Exit Type</th>
+                <th>Overall Status</th>
+                <th>Initiated Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let dt of alldata; let i=index">
+              <td>
+                <i  (click)="edit(dt);hide=!show;"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;
+                <!-- <i (click)="delete(dt,i)" title="Delete" class="fa fa-trash-o"></i>&nbsp;&nbsp; -->
+                <i class="fa fa-exclamation-circle" title="Answer & View Questions/Comments " (click)="show=!show"></i>
+                <i  *ngIf="dt.id == editRowId" (click)="update(dt)" title="save" class="fa fa-floppy-o"></i>
+              </td>
+              <td>{{dt.official[0].firstname}} {{dt.official[0].lastname}}</td>
+              <td>{{dt.official[0].code}}{{dt.official[0].id}}</td>
+              <td>{{dt.official[0].businessunit}}</td>
+              <td>{{dt.official[0].departments}}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div  *ngIf="show" id="question">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Exit Procedure </li>
+        <li class="breadcrumb-item active">All Exit Procedures</li>
+      </ol>
+    </div>
+    <div>
+    <div>
+      <span style="font-weight:500">Configure Questions for Employee</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm" (click)="open(extModal);"><i class="fa fa-plus" aria-hidden="true">&nbsp;&nbsp;Add New Questions</i></button>
+    </div><br>
+          <div class="row">
+            <div class="col-lg-12">
+              <div >
+                <table class="table table-bordered ">
+                  <thead class="bg-primary">
+                    <tr> 
+                       <td style=""><input type="checkbox" (change)="selectAll();" [(ngModel)]="selectedAll"> Check All </td>
+                       <td>Questions</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let v of datas; let i=index ">
+                      <td><input type="checkbox" (change)="checkIfAllSelected();" [(ngModel)]="v.selected"></td>
+                      <td>{{v.exitinterviewquestion.question}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                  <button  class="btn btn-outline-success btn-sm"> Save</button>
+                 <button class="btn btn-outline-warning btn-sm" (click) = "cancel1();show=!show"> Cancel </button>       
+              </div>
+             </div>
+          </div>       
+    </div>
+  </div>
+
+<div id="statusedit" *ngIf="hide">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Exit Procedure </li>
+        <li class="breadcrumb-item active">All Exit Procedures</li>
+      </ol>
+    </div>
+  <div>
+    <div class="row">
+        <div class="col-md-4"><br>
+          <md-select placeholder="Status" [(ngModel)]="initialstatus.initiatecheckstatus.status"  class="example-full-width">
+          <md-option  *ngFor="let st of status"  [value]="st.value" >
+          {{st.viewValue}}
+          </md-option>
+          </md-select><br>        
+        </div>
+        <div class="col-md-4">
+          <md-input-container class="example-full-width">
+          <input mdInput #message maxlength="200" [(ngModel)]="initialstatus.initiatecheckstatus.comments"  placeholder="Comments">
+          <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+          </md-input-container><br>
+        </div>
+        <div class="col-md-4">
+            <md-input-container>
+              <input mdInput [mdDatepicker]="picker1" placeholder="Relieving Date"   [(ngModel)]="initialstatus.initiatecheckstatus.relievingdate" required >
+            <button mdSuffix [mdDatepickerToggle]="picker1" ></button>
+           </md-input-container>
+           <md-datepicker #picker1  ></md-datepicker>
+          </div><br>
+        <div  class="col-md-12" style="margin-top: 5%" >
+          <button class="btn btn-outline-success btn-sm" (click)="save(initialstatus);"> Update</button>
+          <button class="btn btn-outline-warning btn-sm" (click)="cancel();show=!show"> Cancel</button>
+        </div><br>
+      </div><br>
+      <span><h5 style="margin: 3;">Employee Details</h5></span>
+      <div class="row box5">
+          <div class="col-md-12">
+           <div class="emp-info">
+             Business Unit : {{employee.official[0].businessunit}}
+           </div>
+           <div class="emp-info">
+             Department : {{employee.official[0].departments}}
+           </div>
+           <div class="emp-info alter-div">
+             Employee : {{employee.official[0].firstname}} {{employee.official[0].lastname}}
+           </div>
+           <div class="emp-info alter-div">
+             Employee Id : {{employee.official[0].username}}
+           </div>
+           <div class="emp-info">
+            Job Title : {{employee.official[0].jobtitle}}
+           </div>
+           <div class="emp-info">
+              Joining Date : {{employee.official[0].dateofjoining | date}}
+             </div>
+           </div>
+         </div><br>
+      <span><h5 style="margin: 3;">Exit Procedure Details</h5></span>
+      <div class="row box5">
+          <div class="col-md-12">
+           <div class="emp-info">
+             Exit Type : {{initialstatus.initiatecheckstatus[0].exittype}}
+           </div>
+           <div class="emp-info">
+             Raised On : {{initialstatus.initiatecheckstatus[0].date | date}}
+           </div>
+           <div class="emp-info alter-div">
+             Comments : {{initialstatus.initiatecheckstatus[0].comments}}
+           </div>
+           <div class="emp-info alter-div">
+             Process Status : {{initialstatus.initiatecheckstatus[0].status}}
+           </div>
+           <div class="emp-info">
+            Relieving Date : {{initialstatus.initiatecheckstatus[0].date | date}}
+           </div>
+           </div>
+         </div><br>
+          <div class="row box5">
+           <div class="col-md-12"><br>
+             <div class="emp-info  alter-div">
+               L1 Manager : 
+               <!-- {{extsetdata.exitsetting[0].l1_manager}} -->
+             </div>
+             <div class="emp-info  alter-div">
+               Status : {{initialstatus.initiatecheckstatus[0].status}}
+             </div>
+             <div class="emp-info">
+               Comments : {{initialstatus.initiatecheckstatus[0].comments}}
+             </div></div><br>
+             <div class="col-md-12">
+             <div class="emp-info  alter-div">
+               L2 Manager : 
+               <!-- {{extsetdata.exitsetting[0].l2_manager}} -->
+             </div>
+             <div class="emp-info  alter-div">
+               Status : {{initialstatus.initiatecheckstatus[0].status}}
+             </div>
+             <div class="emp-info">
+               Comments : {{initialstatus.initiatecheckstatus[0].comments}}
+             </div></div><br>
+             <div class="col-md-12">
+             <div class="emp-info  alter-div">
+                 HR Manager : 
+                 <!-- {{extsetdata.exitsetting[0].hr_manager}} -->
+             </div>
+             <div class="emp-info  alter-div">
+                 Status : {{initialstatus.initiatecheckstatus[0].status}}
+             </div>
+             <div class="emp-info">
+                 Comments : {{initialstatus.initiatecheckstatus[0].comments}}
+             </div>
+             </div>
+         </div>
+    </div>
+  </div>
+</div>
+  <!-- </div> -->
+<!-- </div>
+</div> -->
+
+
+
+<md2-dialog #extModal>
+    <md2-dialog-title>Exit Interview Questions</md2-dialog-title>
+    <div class="row">
+    <!-- <div class="col-md-12"> -->
+        <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput placeholder="Questions" [(ngModel)]="exit.exitinterviewquestion[0].question" maxlength="100" required>
+            <md-error>Please enter question.</md-error>
+            </md-input-container><br><br><br>
+          </div>
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput #message maxlength="200" [(ngModel)]="exit.exitinterviewquestion[0].description" placeholder="Description">
+            <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+            </md-input-container><br><br><br>
+          </div>
+          <br> 
+      <!-- </div> -->
+    </div>
+       
+    <md2-dialog-footer>
+        <button  class="btn btn-outline-success btn-sm" (click)="saveque(exit);show=show"> Save</button>
+        <button class="btn btn-outline-warning btn-sm" (click) = "close(extModal)"> Cancel </button>
+    </md2-dialog-footer>
+  </md2-dialog>

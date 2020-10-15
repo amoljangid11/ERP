@@ -1,0 +1,133 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div >
+    <ol class="breadcrumb row bg-primary">
+      <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">HR </li>
+      <li class="breadcrumb-item ">Employees </li>
+    </ol>
+ </div> 
+
+  <div >
+ <span style="font-weight:500">Management Details</span>
+ </div>
+ 
+ <form [formGroup]="form">
+
+<div  class="col-md-12">
+
+<div class="row" style="padding:2% 2% 2% 2%">
+  <div class="col-md-4">
+    <md-input-container class="example-full-width"  >
+      <input mdInput placeholder="Employee Code" [(ngModel)]="this.employeecode" [value]="site.siteconfig[0].employeecode" [readonly]="true" formControlName="empcode">
+    </md-input-container><br>
+
+      <md-input-container class="example-full-width">
+          <input mdInput placeholder="First Name"  [(ngModel)]="employee.official[0].firstname" pattern="[a-zA-Z]+$" formControlName="firstname" required>
+          <md-error >
+          Please enter First Name.
+          </md-error>
+          </md-input-container><br><br>
+
+          <md-select placeholder="Role"  [(ngModel)]="this.employeeutype" class="example-full-width" formControlName="role">
+              <md-option  required value='CEO & MD'>CEO & MD</md-option>
+          </md-select>
+          <!-- <span  style="color: red"   *ngIf="!employee.employeemanage[0].role">
+              please select role.
+        </span> -->
+           <br><br>
+    
+              <md-input-container>
+                  <input mdInput [mdDatepicker]="picker1"  [(ngModel)]="employee.official[0].dateofjoing" placeholder="Date of Joining" formControlName="dateofjoin" required>
+                  <button mdSuffix [mdDatepickerToggle]="picker1"></button>
+                  <md-error>
+                      please select date
+                  </md-error>
+                  </md-input-container>
+            
+                  <md-datepicker #picker1></md-datepicker><br>
+      
+
+      </div>
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+          <input mdInput placeholder="Employee ID"  [(ngModel)]="this.employeeid" formControlName="empid"  pattern="[0-9.]+" maxlength="5" readonly>
+          <md-error >
+              Please enter Employee Id.
+          </md-error>
+        </md-input-container><br>
+
+
+        <md-input-container class="example-full-width">
+            <input mdInput placeholder="Middle Name" [(ngModel)]="employee.official[0].middlename" pattern="[a-zA-Z]+$" formControlName="middlename" >
+            <md-error >
+            Please enter LastName.
+            </md-error>
+            </md-input-container><br><br>
+
+       
+      <md-select placeholder="Position"  [(ngModel)]="employee.official[0].position" class="example-full-width" formControlName="pos" >
+          <md-option *ngFor="let po of positionsdata"   [value]="po.position[0].position">
+              {{po.position[0].position}}
+              </md-option>
+          </md-select>
+          <!-- <span  style="color: red"   *ngIf="!employee.employeemanage[0].position">
+              please select position.
+        </span> -->
+           <br><br>
+
+          <md-input-container class="example-full-width">
+              <input mdInput placeholder="Management Description" [(ngModel)]="employee.official[0].managdesc" formControlName="desc">
+            </md-input-container><br>
+       
+
+       
+      </div><br>
+
+      <div class="col-md-4"> <br>  
+          <md-select placeholder="Prefix"  [(ngModel)]="employee.official[0].prefix" class="example-full-width" formControlName="prefix" >
+              <md-option *ngFor="let prf of pre" [value]="prf.prefixes[0].prefixcode">
+                  {{prf.prefixes[0].prefixcode}}
+              </md-option>
+      </md-select>
+      <!-- <span  style="color: red"   *ngIf="!employee.employeemanage[0].prefix">
+          please select prefix.
+    </span> -->
+      <br><br>
+      <md-input-container  class="example-full-width">
+        <input mdInput placeholder="Last Name"  [(ngModel)]="employee.official[0].lastname"  formControlName="lastname" required>
+        <md-error >
+        Please enter User Name.
+        </md-error>
+        </md-input-container>
+        <br>
+   
+    <md-input-container class="example-full-width">
+      <input type="email" mdInput placeholder="Email" [(ngModel)]="this.employeeemail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="email">
+      <md-error >
+      Please enter Email address.
+      </md-error>
+      </md-input-container><br><br>
+
+      
+      <md-select placeholder="Job Title" [(ngModel)]="employee.official[0].jobtitle" formControlName="jobtitle">
+          <md-option  *ngFor="let j of jdatas; let i=index " (click)="selectjob(j.jobtitle[0].jobtitle)"  [value]="j.jobtitle[0].jobtitle">
+           {{j.jobtitle[0].jobtitle}}
+          </md-option>
+          </md-select>
+          <!-- <span  style="color: red"   *ngIf="!employee.employeemanage[0].jobtitle">
+              please select jobtitle.
+        </span> -->
+          <br>
+      
+    
+      </div>
+      
+      
+  </div>
+
+  <button  class="btn btn-outline-success btn-sm" (click)="save(employee);createuser(employee);" [disabled]="form.invalid"> Save</button>
+  <button  class="btn btn-outline-warning btn-sm" (click)="cancel()"> Cancel</button>
+
+  </div>
+  </form>
+  </div>

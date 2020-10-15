@@ -1,0 +1,87 @@
+<div class="row" style="height: 90%" style="padding: 0% 2% 1% 2%">
+    <div class="col-md-12">
+      <div style="padding-top: 0.5%" >
+          <button style="float:right;" class="btn btn-outline-primary btn-sm">
+          <i class="fa fa-caret-left" aria-hidden="true"></i> Back to Dashboard</button>
+          <ol class="breadcrumb" >
+            <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+            <li class="breadcrumb-item ">Analytics </li>          
+          </ol>   
+               
+      </div>    
+      <div class="card card-outline-primary col-md-12" style="border-style: 2px solid black;padding:0%;
+                                               margin-top:-0.9%;height: 85%;" >
+          <div style="padding: 0% 0% 0% 0%;" class="card-header bg-secondary" style="overflow:auto">
+            <nav  class="navbar navbar-toggleable-sm " style="height: 5%">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                 <span class="navbar-toggler-icon"></span>
+                </button>
+         <div class="menu-list">             
+            <ul  id="navbarNav" class="navbar-nav collapse navbar-collapse  navbar-sm" >          
+              <li class="nav-item nav-link vl" ><a><i  class="fa fa-sitemap" style="font-size: 50px; padding-right: 10px;" ></i></a><a data-toggle="collapse" data-target="#org" class=""><b>Organization</b></a></li>
+              <ol class=" sub-menu collapse" id="org">
+                    <li  (click)="businessunit()"  style="font-size: 13px"><a><b>Business Units</b> </a></li>
+                    <li  (click)="department()"  style="font-size: 13px"><a><b>Departments</b></a></li>
+              </ol>
+              <li class="nav-item nav-link vl " ><a><img class="imageClass" align="middle"  style="padding: 0px,10px,0px,10px" src="./assets/Images/user.png"/></a><a  data-toggle="collapse" data-target="#user" class=""><b>Users</b></a></li>
+              <ol class="sub-menu collapse" id="user">
+                    <li (click)="grprole()" style="font-size: 13px"><a><b>Groups & Roles</b></a></li>
+                    <li (click)="grproleemp()" style="font-size: 13px"><a><b>Grops,Roles & Employees</b></a></li>
+                    <li (click)="usersemp()" style="font-size: 13px"><a><b>Users & Employees</b></a></li>
+              </ol>
+              <li class="nav-item nav-link vl" ><a><img class="imageClass2" align="middle" src="./assets/Images/emp.png"/></a><a data-toggle="collapse" data-target="#emp" class=""><b>Employees</b></a></li>
+              <ol class="sub-menu collapse" id="emp">
+                    <li  (click)=" employee()"  style="font-size: 13px"><a><b>Employee Details</b> </a></li>
+              </ol>
+              <li class="nav-item nav-link vl" ><a><img class="imageClass3" align="middle"   src="./assets/Images/recruitment.png"/></a><a data-toggle="collapse" data-target="#rec" class=""><b>Recruitments</b></a></li>
+              <ol class="sub-menu collapse" id="rec">
+                    <li  (click)="recruit()" style="font-size: 13px"><a><b>Recruitments</b></a></li>
+                    <li  (click)="candidetails()" style="font-size: 13px"><a><b>Candidate Details</b></a></li>
+                    <li  (click)="scheduleinter()" style="font-size: 13px"><a><b>Schedule Interviews</b></a></li>
+              </ol>
+              <li class="nav-item nav-link vl" ><a><img class="imageClass" align="middle"  src="./assets/Images/leaves.png"/></a><a data-toggle="collapse" data-target="#empleave" class=""><b>Employee Leaves</b></a></li>
+              <ol class="sub-menu collapse" id="empleave">
+                    <li  (click)="empleave()"  style="font-size: 13px"><a><b>Employee Leave Summary</b></a></li>
+                    <li  (click)="leavemanopt()"  style="font-size: 13px"><a><b>Leave Management Options</b></a></li>
+              </ol>
+              <li class="nav-item nav-link vl" ><a><img class="imageClass" align="middle"  src="./assets/Images/holidays.png"/></a><a data-toggle="collapse" data-target="#holiday" class=""><b>Holidays</b></a></li>
+              <ol class="sub-menu collapse" id="holiday">
+                    <li  (click)="holigrp()"  style="font-size: 13px"><a><b>Holiday Groups & Holidays</b></a></li>
+              </ol>
+              <li class="nav-item nav-link vl" ><a><img class="imageClass" src="./assets/Images/backcheck.png"/></a><a data-toggle="collapse" data-target="#backcheck" class=""><b>Background Check</b></a></li>
+              <ol class="sub-menu collapse" id="backcheck">
+                    <li  (click)="backcheckagen()"  style="font-size: 13px"><a><b>Back Check Agencies</b></a></li>
+                    <li  (click)="empcandscren()"  style="font-size: 13px"><a><b>Employee/Candidate Screening</b></a></li>
+              </ol>
+              <li class="nav-item nav-link vl" ><a><img class="imageClass" src="./assets/Images/logs.png"/></a><a data-toggle="collapse" data-target="#log" class=""><b>Logs</b></a></li>
+              <ol class="sub-menu collapse" id="log">
+                    <li  (click)="uselog()"  style="font-size: 13px"><a><b>User Log</b></a></li>
+                    <li  (click)="activelog()"  style="font-size: 13px"><a><b>Activity Log</b></a></li>
+              </ol>
+              <li class="nav-item nav-link vl" ><a><img class="imageClass1" src="./assets/Images/servicereq.png"/></a><a data-toggle="collapse" data-target="#serreq" class=""><b>Service Request</b></a></li>
+              <ol class="sub-menu collapse" id="serreq">
+                    <li  (click)="servreq()"  style="font-size: 13px"><a><b>Service Request</b></a></li>
+              </ol>
+              <li class="nav-item nav-link vl" ><a><img class="imageClass" src="./assets/Images/appraisals.png"/></a><a data-toggle="collapse" data-target="#appraisal" class=""><b>Appraisal</b></a></li>
+              <ol class="sub-menu collapse" id="appraisal">
+                    <li  (click)="empapprai()"  style="font-size: 13px"><a><b>Employee Appraisal</b></a></li>
+              </ol>
+              <li class="nav-item nav-link vl" ><a><img class="imageClass" src="./assets/Images/time.png"/></a><a data-toggle="collapse" data-target="#time" class=""><b>Time</b></a></li>
+              <ol class="sub-menu collapse" id="time">
+                    <li  (click)="time()"  style="font-size: 13px"><a><b>Time Management Analytics</b></a></li>
+              </ol> 
+            </ul>
+            </div>
+          </nav>
+          </div>
+          <div style="background-position: relative;overflow:  auto;overflow-x: hidden;" class="card-body row" >        
+              <div class="col-md-12" style="">
+                <router-outlet name="fourthchild"></router-outlet>
+              </div>         
+          </div>
+        </div>
+      
+    </div>
+  </div>
+
+    

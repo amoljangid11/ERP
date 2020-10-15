@@ -1,0 +1,217 @@
+
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show" >
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Contacts</li>
+        <li class="breadcrumb-item active">Vendors</li>
+      </ol>
+    </div>
+    <span style="font-weight:500">Vendors</span>
+    <div style="float: right;" >
+      
+      <button type="button"  class="btn btn-outline-primary btn-sm"  (click) = "cancel();show = !show;updatebutton=false;">Add</button>
+      <img class="imageClass1" src="./assets/Images/excel.ico"/>&nbsp;<i style="color: #1565c0" (click)="downloadExcel('vendortbl')" >Export to Excel</i>&nbsp;&nbsp;
+    </div><br><br>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div  class="row">
+           <div class="col-md-3" style="padding-bottom: 5px">
+            <md-select placeholder="Select Search Option">
+              <md-option *ngFor="let ser of searchrelt" (click)="searchSelect(ser)" [value]="ser.value">{{ser.value}}</md-option>
+            </md-select>
+           </div>
+              
+           <div class="col-md-3" style="padding-bottom: 5px" *ngIf="vn">      
+             <input placeholder="Search by Vendor Name" [(ngModel)]="tesyt" (input)="filterItem(tesyt)">       
+           </div>
+           <div class="col-md-3" style="padding-bottom: 5px" *ngIf="cp">
+             <input placeholder="Search by Contact Person" [(ngModel)]="tesyt" (input)="filterItem(tesyt)">
+           </div>
+    </div><br>
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              
+              <tr>
+                <th>Action</th>
+                <th>Vendor Name</th>
+                <th>Contact Person</th>
+                <th>Email Id</th>
+                <th>Location</th>
+                <th>Primary Phone</th>
+                <th>Secondary Phone</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ven of vend;let i = index " >
+                <td><i class="fa fa-eye" title="View" aria-hidden="true" (click)="open(deptModal);view(ven)"></i>&nbsp;&nbsp;<i (click)="edit(ven);show = !show"   title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(ven,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                <td>{{ven.vendors[0].name}}</td>
+                <td>{{ven.vendors[0].contact_person}}</td>
+                <td>{{ven.vendors[0].emailid}}</td>
+                <td>{{ven.vendors[0].location}}</td>
+                <td>{{ven.vendors[0].primary_phone}}</td>
+                <td>{{ven.vendors[0].secondary_phone}}</td>
+                <td>{{ven.vendors[0].status}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="display: none;">
+            <table class="table table-bordered table-striped table-sm" id="vendortbl">
+              <thead class="bg-success">
+                
+                <tr>
+                  <th>Vendor Name</th>
+                  <th>Contact Person</th>
+                  <th>Email Id</th>
+                  <th>Location</th>
+                  <th>Primary Phone</th>
+                  <th>Secondary Phone</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ven of vend;let i = index " >
+                  <!-- <td><i class="fa fa-eye" title="View" aria-hidden="true" (click)="open(deptModal);view(ven)"></i>&nbsp;&nbsp;<i (click)="edit(ven);show = !show"   title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(ven,i)" title="Delete" class="fa fa-trash-o"></i></td> -->
+                  <td>{{ven.vendors[0].name}}</td>
+                  <td>{{ven.vendors[0].contact_person}}</td>
+                  <td>{{ven.vendors[0].emailid}}</td>
+                  <td>{{ven.vendors[0].location}}</td>
+                  <td>{{ven.vendors[0].primary_phone}}</td>
+                  <td>{{ven.vendors[0].secondary_phone}}</td>
+                  <td>{{ven.vendors[0].status}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+  </div>
+  <form class="form-horizontal" [formGroup]="form">
+  <div *ngIf= "show">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Contacts</li>
+        <li class="breadcrumb-item ">Vendors</li>
+        <li class="breadcrumb-item active">Add</li>
+      </ol>
+    </div><br>
+    
+    <div class="row">
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput [(ngModel)]="vendor.vendors[0].name"  placeholder="Name" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" class="form-control" formControlName="name" maxlength="50"required>
+        <md-error>Enter vendor name.</md-error>
+        </md-input-container><br><br><br>
+      </div>
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput [(ngModel)]="vendor.vendors[0].contact_person"  placeholder="Contact Person" class="form-control" formControlName="contperson" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" required>
+        <md-error>Please enter contact person.</md-error>
+        </md-input-container><br><br><br>
+    
+      </div>
+      <div class="col-md-4">
+          <md-input-container class="example-full-width">
+          <input mdInput placeholder="Email" [(ngModel)]="vendor.vendors[0].emailid"  formControlName="maill" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+          <md-error >
+          Please enter email address.
+          </md-error>
+          </md-input-container>
+      </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-4">
+            <md-input-container class="example-full-width">
+            <input mdInput  maxlength="100" placeholder="Address" class="form-control" [(ngModel)]="vendor.vendors[0].address" formControlName="address" >
+            </md-input-container><br><br><br>  
+          </div>
+        <div class="col-md-4">
+            <md-input-container class="example-full-width">
+                <input mdInput [(ngModel)]="vendor.vendors[0].location"  placeholder="Location" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" class="form-control" formControlName="loc" maxlength="50"required>
+                <md-error>Please enter location name.</md-error>
+                </md-input-container><br><br><br>  
+        </div>
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input  name="pphone" [(ngModel)]="vendor.vendors[0].primary_phone" maxlength="10"  mdInput placeholder="Primary Phone" class="form-control" formControlName="priphone" pattern="[0-9.]+" maxlength="10" minlength="10" required>
+        <md-error>Please enter primary phone number.</md-error>
+        </md-input-container>
+      </div>
+     
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <md-input-container class="example-full-width">
+                <input mdInput  [(ngModel)]="vendor.vendors[0].secondary_phone" maxlength="10"  placeholder="Secondary Phone" [(ngModel)]="vendor.vendors[0].secondary_number" class="form-control" pattern="[0-9.]+" maxlength="10" minlength="10" formControlName="seconphone">
+                </md-input-container>
+        </div>
+        <div class="col-md-4"><br>
+            <md-select placeholder="Status" [(ngModel)]="vendor.vendors[0].status" formControlName="stat" required>
+                <md-option *ngFor="let po of status"   [value]="po.name" required>
+                {{po.name}}
+                </md-option>
+                <!-- <md-option [value]="Active">{{Active}}</md-option>
+                <md-option [value]="InActive"> {{InActive}}</md-option> -->
+            </md-select>
+        </div>
+    </div>
+    <br><br><br>
+    <div class="row">
+        <!-- <div  class="col-md-12" style="margin-top: 5%"> -->
+            <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(vendor);show=!show" [disabled]="!form.valid"> Save</button>
+            <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(vendor);show=!show;updatebutton=!updatebutton;"  [disabled]="!form.valid"> Update</button>
+            <button class="btn btn-outline-warning btn-sm" (click) = "cancel();show=!show;updatebutton=!updatebutton;"> Cancel </button>
+          <!-- </div> -->
+    </div>
+  </div>
+  </form>
+</div>
+
+
+<md2-dialog #deptModal>
+  <md2-dialog-title>Vendors</md2-dialog-title>
+  <div class=" row box">
+      <div class="emp-info">
+         Name : {{vendor.vendors[0].name}}
+      </div>
+      <div class="emp-info ">
+         Contact Person : {{vendor.vendors[0].contact_person}}
+      </div><br>
+
+      <div class="emp-info alter-div">
+         Address: {{vendor.vendors[0].address}}
+    </div>
+    <div class="emp-info alter-div">
+        Location: {{vendor.vendors[0].location}}
+   </div>
+      <div class="emp-info">
+          Primary Phone Number : {{vendor.vendors[0].primary_phone}}
+      </div>
+      <div class="emp-info ">
+          Secondary Phone Number : {{vendor.vendors[0].secondary_number}}
+      </div>
+      <div class="emp-info alter-div">
+        Status: {{vendor.vendors[0].status}}
+   </div>
+   <div class="emp-info alter-div">
+  </div>
+
+    </div>
+  <!-- <md2-dialog-footer>
+      <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+  </md2-dialog-footer> -->
+</md2-dialog>

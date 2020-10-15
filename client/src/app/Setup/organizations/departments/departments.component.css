@@ -1,0 +1,7 @@
+md-backdrop.md-select-backdrop {
+    z-index:103;
+}
+
+.md-select-menu-container {
+    z-index:104;
+}

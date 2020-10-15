@@ -1,0 +1,102 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+    <div *ngIf = "!show" >
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employee Configuration</li>
+          <li class="breadcrumb-item active">Remuneration Basis</li>
+        </ol>
+      </div>
+      <div>
+        <span style="font-weight:500">Remuneration Basis</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "cancel();show = !show;updates=false">Add</button>
+      </div><br><br>
+      <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+      <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div>
+            <table  class="table table-bordered table-striped table-sm">
+              <thead class="bg-success">
+                <tr>
+                  <th>Action</th>
+                  <th>Remuneration Type</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let rem of datas;let i = index " >
+                  <td>
+                      <i class="fa fa-eye"  title="View" (click)="open(remModal);view(rem);"></i>&nbsp;&nbsp;<i  (click)="edit(rem);show=!show;"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(rem,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                  <td>{{rem.remuneration[0].remunerationtype}}</td>
+                  <td>{{rem.remuneration[0].description}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></div>
+        </div>
+      </div>
+      <form class="form-horizontal" [formGroup]="form">
+      <div *ngIf= "show" >
+        <div >
+          <ol class="breadcrumb row bg-primary">
+            <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+            <li class="breadcrumb-item ">HR </li>
+            <li class="breadcrumb-item ">Employee Configuration</li>
+            <li class="breadcrumb-item ">Remuneration Basis</li>
+            <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+          </ol>
+        </div><br>
+        <div class="row">
+          <div class="col-md-4">
+            <md-input-container class="example-full-width">
+            <input  mdInput [(ngModel)]="basis.remuneration[0].remunerationtype" placeholder="Remuneration Type" class="form-control" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" formControlName="remunerationtype" required>
+            <md-error>Please enter remuneration type.</md-error>
+            </md-input-container><i mdTooltip="Ex: Commission,Compensation" class="fa fa-question-circle" ></i><br><br><br>
+          </div>
+          <div class="col-md-4">
+            <md-input-container class="example-full-width">
+            <input mdInput #message maxlength="200" [(ngModel)]="basis.remuneration[0].description" placeholder="Description" class="form-control" formControlName="description">
+            <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+            </md-input-container><br><br><br>
+          </div>
+          <div  class="col-md-12" style="margin-top: 5%">
+            <button  *ngIf="!updates"  class="btn btn-outline-success btn-sm"(click)="save(basis);show=!show;" [disabled]="!form.valid"> Save</button>
+            <button *ngIf="updates"  class="btn btn-outline-success btn-sm" [disabled]="!form.valid" (click)="update(basis);show=!show;updates=!updates"> Update</button>
+            <button class="btn btn-outline-warning btn-sm" (click) = "cancel(basis);show=!show;updates=!updates"> Cancel </button>
+          </div>
+        </div></div>
+        </form>
+      </div>
+
+
+      <md2-dialog #remModal>
+          <md2-dialog-title>Remuneration Basis</md2-dialog-title>
+          <div class="row">
+            <div style="" class="col-md-12"><br>
+                  <div class="emp-info alter-div">
+                      Remuneration Type : {{basis.remuneration[0].remunerationtype}}
+                  </div>  
+                  <div class="emp-info alter-div">
+                      Description : {{basis.remuneration[0].description}}
+                  </div>  
+                  <div class="emp-info">
+                     
+                  </div>  
+                  <div class="emp-info">
+                    
+                  </div>  
+             </div>
+             </div>
+             
+          <md2-dialog-footer>
+              <button type="submit" class="btn btn-secondary" (click)="close(remModal)">Cancel</button>
+          </md2-dialog-footer>
+        </md2-dialog>
+        
+

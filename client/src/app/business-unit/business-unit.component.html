@@ -1,0 +1,238 @@
+<!-- <div class="">
+  <ol class="breadcrumb row bg-warning" >
+  <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+  
+  <li class="breadcrumb-item active">Business-Units </li>
+  </ol> 
+</div> -->
+<form class="form-horizontal" [formGroup]="form">
+  <div class="col-md-12"><br>
+    <span style="font-size: 24px">Business Unit And Departments</span>
+    <span>
+        <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"  (click) = "human();show=!show">ADD EMPLOYEE</button>
+    </span><br>
+  <div class="row">
+    <div class="col-md-3">
+      <br><br>
+      <md-select  class="example-full-width" placeholder="Business units" [(ngModel)]="dunits.department[0].businessunit" formControlName="business" required>
+      <md-option *ngFor="let buss of bunit"  (click)="selectbusiness(buss,dunits,businessunit)" value="{{buss.businessunits[0].name}}">
+      {{buss.businessunits[0].name}}
+      </md-option>
+      </md-select><br>
+      <a  style="color: #1565c0" class="" data-toggle="modal" data-target="#basicModal">Other</a><br><br>
+    </div>
+  </div>
+      <div class="row">
+          <div class="col-md-3">
+      <md-input-container class="example-full-width">    
+          <input mdInput placeholder="Department" [(ngModel)]="dunits.department[0].departmentname" pattern="^[A-Za-z0-9]+$" maxlength="100" formControlName="department" required>
+          <md-error>Please enter department name.</md-error>
+      </md-input-container>
+     </div>
+     <div class="col-md-3">
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Street address" [(ngModel)]="dunits.department[0].streetadd" formControlName="street" required>
+      <md-error>Please enter street address.</md-error>
+    </md-input-container>
+     <br><br><br>
+     
+    </div>
+    </div>
+    <i  style="color:#1565c0 ;" id="ab1" (click)="showDiv1();hide();" onclick="getElementById['ab1'].style.display = 'block'; this.style.display = 'none'"> Add Department 1</i>
+    <div id="welcomeDiv1"  style="display:none;"  class=" w3-animate-opacity" >
+        <br>
+        <div class="col-md-12 panel">
+            <header class=" bg-primary">
+                <span onclick="document.getElementById('welcomeDiv1').style.display='none'" class=" w3-display-topright fa fa-times" (click)="a();" ></span>
+              </header>
+        <div class="row">
+          <div class="col-md-3">
+      <md-input-container class="example-full-width">    
+          <input mdInput placeholder="Department" [(ngModel)]="dunits.department[0].departmentname1" pattern="^[A-Za-z0-9]+$" maxlength="100" formControlName="department1">
+          <md-error>Please enter department name.</md-error>
+        </md-input-container>
+     </div>
+     <div class="col-md-3">
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Street address" [(ngModel)]="dunits.department[0].streetadd1" formControlName="street1">
+      <md-error>Please enter street address.</md-error>
+    </md-input-container>
+     <br><br><br>
+     </div>
+    </div>
+    </div>
+    <i style="color:#1565c0 ;" id="ab2" (click)="showDiv2();hide1();" onclick="getElementById['ab2'].style.display = 'block'; this.style.display = 'none'">Add Department 2</i>
+    </div>
+    <div id="welcomeDiv2" style="display:none;"  class=" w3-animate-opacity" >
+        <br>
+        <div class="col-md-12 panel">
+            <header class=" bg-primary">
+                <span onclick="document.getElementById('welcomeDiv2').style.display='none'" class=" w3-display-topright fa fa-times" (click)="b();" ></span>
+              </header>
+        <div class="row">
+          <div class="col-md-3">
+      <md-input-container class="example-full-width">    
+          <input mdInput placeholder="Department" [(ngModel)]="dunits.department[0].departmentname" pattern="^[A-Za-z0-9]+$" maxlength="100" formControlName="department2">
+          <md-error>Please enter department name.</md-error>
+        </md-input-container>
+     </div>
+     <div class="col-md-3">
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Street address" [(ngModel)]="dunits.department[0].streetadd" formControlName="street2" >
+      <md-error>Please enter street address.</md-error>
+    </md-input-container>
+     <br><br><br>
+     </div>
+    </div>
+    </div>
+    
+       
+    <i style="color:#1565c0 ;" id="ab3" (click)="showDiv3();hide2();" onclick="getElementById['ab3'].style.display = 'block'; this.style.display = 'none'">Add Department 3</i>
+  </div>
+    <div id="welcomeDiv3"  style="display:none;"  class=" w3-animate-opacity" >
+        <br>
+        <div class="col-md-12 panel">
+            <header class=" bg-primary">
+                <span onclick="document.getElementById('welcomeDiv3').style.display='none'" class=" w3-display-topright fa fa-times" (click)="c();" ></span>
+              </header>
+        <div class="row">
+          <div class="col-md-3">
+      <md-input-container class="example-full-width">    
+          <input mdInput placeholder="Department" [(ngModel)]="dunits.department[0].departmentname" pattern="^[A-Za-z0-9]+$" maxlength="100" formControlName="department3">
+          <md-error>Please enter department name.</md-error>
+        </md-input-container>
+     </div>
+     <div class="col-md-3">
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Street address" [(ngModel)]="dunits.department[0].streetadd" formControlName="street3" >
+      <md-error>Please enter street address.</md-error>
+    </md-input-container>
+     <br><br><br>
+     </div>
+    </div>
+    </div>
+   
+
+    <i style="color:#1565c0 ;" id="ab4" (click)="showDiv4();hide3();" onclick="getElementById['ab4'].style.display = 'block'; this.style.display = 'none'">Add Department 4</i>
+  </div>
+    <div id="welcomeDiv4"  style="display:none;"  class=" w3-animate-opacity" >
+        <br>
+        <div class="col-md-12 panel">
+            <header class=" bg-primary">
+                <span onclick="document.getElementById('welcomeDiv4').style.display='none'" class=" w3-display-topright fa fa-times" (click)="d();" ></span>
+              </header>
+        <div class="row">
+          <div class="col-md-3">
+      <md-input-container class="example-full-width">    
+          <input mdInput placeholder="Department" [(ngModel)]="dunits.department[0].departmentname" pattern="^[A-Za-z0-9]+$" maxlength="100" formControlName="department4">
+          <md-error>Please enter department name.</md-error>
+        </md-input-container>
+     </div>
+     <div class="col-md-3">
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Street address" [(ngModel)]="dunits.department[0].streetadd" formControlName="street4">
+      <md-error>Please enter street address.</md-error>
+    </md-input-container>
+     <br><br><br>
+    </div>
+    </div>
+    </div>
+    
+    <i style="color:#1565c0 ;" id="ab5" (click)="showDiv5();hide4();" onclick="getElementById['ab5'].style.display = 'block'; this.style.display = 'none'">Add Department 5</i>
+  </div>
+    <div id="welcomeDiv5"  style="display:none;"  class=" w3-animate-opacity" >
+        <br>
+        <div class="col-md-12 panel">
+            <header class=" bg-primary">
+                <span onclick="document.getElementById('welcomeDiv5').style.display='none'" class=" w3-display-topright fa fa-times" (click)="e();" ></span>
+              </header>
+        <div class="row">
+          <div class="col-md-3">
+      <md-input-container class="example-full-width">    
+          <input mdInput placeholder="Department" [(ngModel)]="dunits.department[0].departmentname" pattern="^[A-Za-z0-9]+$" maxlength="100" formControlName="department5">
+          <md-error>Please enter department name.</md-error>
+        </md-input-container>
+     </div>
+     <div class="col-md-3">
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Street address" [(ngModel)]="dunits.department[0].streetadd" formControlName="street5">
+      <md-error>Please enter street address.</md-error>
+    </md-input-container>
+     <br><br><br>
+     </div>
+    </div>
+    </div>
+    </div>
+     <!-- <i style="color:#1565c0 ;" id="nn" (click)="showDiv()" onclick="style.display = 'block'; this.style.display = 'none'">Add Department 1</i>  -->
+   <div>
+      <br><br>
+      <button class="btn btn-success btn-sm" style="float: left;" (click)="save(dunits)" [disabled]="!form.valid">save</button>
+   </div>
+   
+    
+  </div>
+  </form>
+    
+  <form class="form-horizontal" [formGroup]="form1">
+    <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="myModalLabel">Add Units</h4>
+          </div>
+              <div class="modal-body">
+            <div style="margin-left: 2%;" class="row">
+              <md-input-container class="example-full-width">
+              <input  mdInput placeholder="Name" [(ngModel)]="bunits.businessunits[0].name" pattern="^[A-Za-z0-9]+$" maxlength="50" formControlName="business" required >
+              <md-error>Please enter name.</md-error>
+            </md-input-container><br><br><br>
+            </div>
+            <div style="margin-left: 2%;"  class="row">
+              <md-input-container class="example-full-width">
+              <input mdInput placeholder="Street Address" [(ngModel)]=" bunits.businessunits[0].streetad" formControlName="street" required >
+              <md-error>Please enter street address.</md-error>
+            </md-input-container><br><br><br>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary btn-sm" data-dismiss="modal" (click)="savechange(bunits)" [disabled]="!form1.valid">Save changes</button>
+          </div>
+          </div>
+          </div>
+          </div>
+          </form>
+          
+          <!-- <form class="form-horizontal" [formGroup]="form2">
+              <md2-dialog #department>
+              <md2-dialog-title>Add Department</md2-dialog-title>
+              <div  class="row">
+                <div class="col-md-6">
+                  <md-input-container class="example-full-width">
+                  <input mdInput placeholder="Department"  [(ngModel)]="dunits.department[0].departmentname" pattern="^[A-Za-z0-9]+$" maxlength="100" formControlName="department" required>
+                  <md-error>Please enter department name.</md-error>
+                </md-input-container>                
+                </div>
+                <div class="col-md-6">
+                  <md-input-container class="example-full-width">
+                  <input mdInput placeholder="Street Address" [(ngModel)]="dunits.department[0].streetad" formControlName="street" required>
+                  <md-error>Please enter street address.</md-error>
+                </md-input-container>
+                </div>
+              </div>
+              <md2-dialog-footer>
+                  <button class="btn btn-success btn-sm"  (click)="save(dunits)" [disabled]="!form2.valid">save</button>
+              </md2-dialog-footer>
+                </md2-dialog>
+                </form> -->
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+              <button type="button" class="btn btn-outline-primary btn-sm"   (click)="site();show=!show"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Prev</button>  
+              <button type="button" class="btn btn-outline-primary btn-sm"  style="float: right;" (click)= "organization();show=!show">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+  
+     
+  
+  

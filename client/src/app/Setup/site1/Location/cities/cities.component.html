@@ -1,0 +1,85 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div  *ngIf= "!show">
+    <div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item ">Location </li>
+        <li class="breadcrumb-item active">Cities</li>
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:500">Cities</span>
+      <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;">Add</button>
+    </div><br><br>
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <table  class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>City</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <tr *ngFor="let cityval of datas3; let i=index ">
+                  <td><i (click)="delete(cityval,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                  <td>{{cityval.country2}}</td>
+                  <td>{{cityval.state2}}</td>
+                  <td>{{cityval.city2}}</td>
+                  
+                </tr>
+              </tbody>
+              
+            </table>
+          </div>
+        </div>
+      </div>
+ 
+    </div>
+
+    <div *ngIf= "show" >
+      <div>
+        <ol class="breadcrumb  row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">Site </li>
+          <li class="breadcrumb-item ">Location </li>
+          <li class="breadcrumb-item ">Cities</li>
+          <li class="breadcrumb-item active"> <i class="fa fa-plus">Add</i></li>
+        </ol>
+      </div><br><br>
+
+      <div class="row">
+        <div class="col-md-4">
+          <md-select placeholder="Country" [(ngModel)]="country2">
+          <md-option *ngFor="let cntry of datas1  | unique: 'country1' ; let i=index " (click)="select(i,datas1)" [value]="cntry.country1" >
+          {{cntry.country1}}
+          </md-option>
+          </md-select>
+        </div>
+        <div class="col-md-4">
+          <md-select placeholder="State" [(ngModel)]="state2">
+          <md-option *ngFor="let state of statearry; let i=index  " (click)="select1(i,statearry)" [value]="state.state1">
+          {{state.state1}}
+          </md-option>
+          </md-select>
+        </div>
+        <div class="col-md-4">
+          <md-select placeholder="City" [(ngModel)]="city2">
+          <md-option *ngFor="let city of cityarry" [value]="city.cityname">
+              {{city.cityname}}
+          </md-option>
+          </md-select>
+        </div>
+        
+        <div  class="col-md-12" style="margin-top: 5%">
+          <button  class="btn btn-outline-success btn-sm" (click)="save();show=!show"> Save</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "show=!show;"> Cancel </button>
+        </div>
+      </div>
+    </div>
+  </div>

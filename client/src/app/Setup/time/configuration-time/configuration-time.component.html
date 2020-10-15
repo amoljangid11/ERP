@@ -1,0 +1,196 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show">
+    <div>
+        <ol class="breadcrumb row bg-primary">
+            <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+            <li class="breadcrumb-item ">Time </li>
+            <li class="breadcrumb-item "> Configuration</li>
+            
+          </ol>
+    </div>
+   <div>
+      <span style="font-weight:500">Configuration</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button>
+      </div><br><br>
+      <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+          {{ message }}
+        </div>
+        <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+            {{ message }}
+          </div>
+          <div class="row">
+              <div class="col-lg-12">
+                <div>
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead class="bg-success">
+                          <tr>
+                             <th>Action</th>
+                              <th>Weekly Submission Reminder</th>
+                              <th>Timesheet Blocking Range</th>
+
+                          </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let est of wcode;let i = index " >
+                                <td>
+                                    <i (click)="edit(est);show = !show"   title="Edit" class="fa fa-pencil-square-o"></i>
+                                </td>
+                                <td >{{est.configtime[0].workcode}}</td>
+                  <td>{{est.configtime[0].workcode1}}</td></tr>
+                          </tbody></table>
+                </div>
+          </div>
+   </div> </div>
+   <form class="form-horizontal" [formGroup]="form">
+      <div *ngIf = "show">
+        <div>
+            <ol class="breadcrumb row bg-primary">
+                <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+                <li class="breadcrumb-item ">Time </li>
+                <li class="breadcrumb-item "> Configuration</li>
+               
+                <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+                
+              </ol>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-md-4"><br>
+              <md-select placeholder="Weekly Submission Reminder"  [(ngModel)]="status.configtime[0].workcode" formControlName="Workcode" required>
+              <md-option *ngFor="let work of codes; let i=index"  [value]="work.value">
+                  {{ work.value }}
+                  </md-option>
+                </md-select>
+                <br>
+                <span  style="color: red"   *ngIf="!status.configtime[0].workcode">
+                  Please select Weekly Submission Reminder
+                </span>
+               <br><br>
+              </div>
+              <div class="col-md-4"><br>
+                <md-select placeholder="Timesheet Blocking Range"  [(ngModel)]="status.configtime[0].workcode1" formControlName="Workcode1" required>
+              <md-option *ngFor="let work of codes1; let i=index"  [value]="work.value1">
+                  {{ work.value1 }}
+                  </md-option>
+                </md-select>
+                
+                <br>
+                <span  style="color: red"   *ngIf="!status.configtime[0].workcode">
+                  Please select Timesheet Blocking Range
+                </span>
+               <br><br>
+        </div>
+        <div  class="col-md-12" style="margin-top: 5%">
+            <button  *ngIf="!updatebutton"  class="btn btn-outline-success btn-sm"(click)="save(status);show=!show;" [disabled]="!form.valid"> Save</button>
+            <button *ngIf="updatebutton"  class="btn btn-outline-success btn-sm" (click)="edit(status);show=!show;updatebutton=!updatebutton" [disabled]="!form.valid"> Update</button>
+            <button class="btn btn-outline-warning btn-sm" (click) = "cancel(status);show=!show;updatebutton=!updatebutton"> Cancel </button>
+
+        </div>
+        </div></div>
+   </form>
+
+   <div class="col-md-6">
+      <b style="color: #33b5e5">Weekly Submission Reminder:</b> Set a day in a week for mailing weekly reminders to
+      notify your employees about sending their timesheets for approval.<br>
+      <b style="color: #33b5e5">Timesheet Blocking Range:</b> Set monthly timesheet blocking range<br>
+
+      <b>1st - End of month</b><br>
+      1. By the end of every month, all employees must submit their timesheets<br>
+      2. Two days of grace period i.e. 1st and 2nd of the next month, is provided to the employees to submit their
+      timesheets. On 2nd of every month, a notification will be sent as a reminder about blocking the timesheet.<br>
+      3. On 3rd of every month, if the employees have not submitted their timesheets, their previous month's timesheet
+      will be blocked.<br><br>
+      <b>26th previous month - 25th next month</b><br>
+      1. By 25th of every month, all employees must submit their timesheets.<br>
+      2. Two days of grace period i.e. 27th and 28th of the next month, is provided to the employees to submit their
+      timesheets. On 27th of every month, a notification will be sent as a reminder about blocking the timesheet.<br>
+      3. On 28th of every month, if the employees have not submitted their timesheets, their previous month's timesheet
+      will be blocked.
+    </div></div>
+<!-- <div style="width: 100%;" class="row">
+<div *ngIf = "!show" style="display: both" class="col-lg-12"><br><br>
+
+ <div style="display: both" class="col-md-12">
+ <span style="font-weight:500">Configuration</span>
+        <button type="button" style="float: right;margin: 0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Edit</button>
+</div>
+<br><br>
+
+<div  style="display: inline-flex;" class="col-md-12">
+<div class="col-md-6">
+<table class="table table-bordered " >
+
+    <tr>
+      <th scope="row">Weekly Submission Reminder</th>
+      <td  *ngIf="dats">{{dats.week}}</td>
+    </tr>
+    
+    <tr>
+      <th scope="row">Timesheet Blocking Range</th>
+      <td>{{dats?.range}}</td>
+    </tr>
+ 
+
+</table>
+</div>
+
+<div class="col-md-6">
+<b style="color: #33b5e5">Weekly Submission Reminder:</b> Set a day in a week for mailing weekly reminders to notify your employees about sending their timesheets for approval.<br>
+<b style="color: #33b5e5">Timesheet Blocking Range:</b> Set monthly timesheet blocking range<br>
+
+<b>1st - End of month</b><br>
+   1. By the end of every month, all employees must submit their timesheets<br>
+   2. Two days of grace period i.e. 1st and 2nd of the next month, is provided to the employees to submit their timesheets. On 2nd of every month, a notification will be sent as a reminder about blocking the timesheet.<br>
+   3. On 3rd of every month, if the employees have not submitted their timesheets, their previous month's timesheet will be blocked.<br><br>
+<b>26th previous month - 25th next month</b><br>
+   1. By 25th of every month, all employees must submit their timesheets.<br>
+   2. Two days of grace period i.e. 27th and 28th of the next month, is provided to the employees to submit their timesheets. On 27th of every month, a notification will be sent as a reminder about blocking the timesheet.<br>
+   3. On 28th of every month, if the employees have not submitted their timesheets, their previous month's timesheet will be blocked.
+</div>
+</div>
+
+
+</div>
+</div>
+
+<div style="width: 100%;" class="row">
+<div *ngIf = "show" style="display: both" class="col-lg-12"><br><br><br>
+
+ <div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-6">
+<md-select placeholder="Weekly Submission Reminder"  [(ngModel)]="dats.week">
+  <md-option *ngFor="let wk of rem"  [value]="wk.viewValue" >
+    {{ wk.viewValue }}
+  </md-option> 
+</md-select>
+<md-select placeholder="Timesheet Blocking Range" [(ngModel)]="dats.range">
+  <md-option *ngFor="let tm of rang"   [value]="tm.viewValue" >
+    {{ tm.viewValue }}
+  </md-option>
+</md-select><br><br>
+   <button class="btn btn-outline-primary btn-sm" (click)="savechange();show=!show"> Update</button>
+    <button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+</div>
+<div class="col-md-6">
+<b style="color: #33b5e5">Weekly Submission Reminder:</b> Set a day in a week for mailing weekly reminders to notify your employees about sending their timesheets for approval.<br>
+<b style="color: #33b5e5">Timesheet Blocking Range:</b> Set monthly timesheet blocking range<br>
+
+<b>1st - End of month</b><br>
+ 1. By the end of every month, all employees must submit their timesheets<br>
+  2. Two days of grace period i.e. 1st and 2nd of the next month, is provided to the employees to submit their timesheets. On 2nd of every month, a notification will be sent as a reminder about blocking the timesheet.<br>
+    3. On 3rd of every month, if the employees have not submitted their timesheets, their previous month's timesheet will be blocked.<br><br>
+<b>26th previous month - 25th next month</b><br>
+  1. By 25th of every month, all employees must submit their timesheets.<br>
+  2. Two days of grace period i.e. 27th and 28th of the next month, is provided to the employees to submit their timesheets. On 27th of every month, a notification will be sent as a reminder about blocking the timesheet.<br>
+  3. On 28th of every month, if the employees have not submitted their timesheets, their previous month's timesheet will be blocked.
+</div>
+</div>
+
+
+</div>
+<br><br>
+
+</div>-->
+
+
+   

@@ -1,0 +1,73 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div  *ngIf= "!show">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site Config </li>
+        <li class="breadcrumb-item ">Location </li>
+        <li class="breadcrumb-item active">States</li>
+      </ol>
+    </div>
+    <div >
+      <span style="font-weight:  500">States</span>
+      <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">
+      <i class="fa fa-plus"></i>   Add</button>
+    </div><br><br>
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+          <table  class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Country</th>
+                <th>State</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let state of datas2; let i=index ">
+                <td><i class="fa fa-eye" aria-hidden="true"></i><i style="margin-left: 2%; " class="fa fa-trash" aria-hidden="true"  (click)="remove(state,i)"></i></td>
+                <td>{{state.country1}}</td>
+                <td>{{state.state1}}</td>
+                
+              </tr>
+            </tbody>
+            
+          </table>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <div  *ngIf="show">
+    <div >
+      <ol class="breadcrumb row ">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site Config </li>
+        <li class="breadcrumb-item ">Location </li>
+        <li class="breadcrumb-item ">States</li>
+        <li class="breadcrumb-item active">Edit</li>
+      </ol>
+    </div><br>
+    <div class="row">
+      <div class="col-md-3">
+        <md-select placeholder="Country" [(ngModel)]="country1" >
+        <md-option *ngFor="let opt of datas; let i=index " [value]="opt.countryvalue" (click)="select(i,datas)">
+        {{opt.countryvalue}}--{{i}}</md-option>
+        </md-select>
+      </div>
+      <div class="col-md-3">
+        <md-select placeholder="State" [(ngModel)]="state1">
+        <md-option *ngFor="let stats of statearry"  [value]="stats" >
+        {{stats.statename}}
+        </md-option>
+        </md-select>
+      </div><br>
+      <div  class="col-md-12" style="margin-top: 5%">
+        <button class="btn btn-outline-success btn-sm" (click)="save();show=!show" >save</button>
+        <button  class="btn btn-outline-danger btn-sm" (click)="show=!show" >cancel</button>
+      </div>
+    </div>
+    
+  </div>
+</div>

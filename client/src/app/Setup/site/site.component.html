@@ -1,0 +1,46 @@
+<div style="height: 100%;" class="row">
+     
+  <div style="width: 100%;" class="nav-side-menu">
+
+   <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+   <div class="menu-list">
+
+     <ul id="menu-content" class="menu-content collapse out">
+         <li (click)="siteprf()"><a > Site Preferences</a></li>
+         <li  data-toggle="collapse" data-target="#genral" class="collapsed ">   <a  >General <span class="arrow"></span></a></li>
+         <ul class="sub-menu collapse" id="genral">
+            <li (click)="ethinic()">  <a >Ethnic Code </a></li>
+            <li (click)="gender()"> <a >Gender </a></li>
+            <li  (click)="time_zone()">  <a> TimeZone</a></li>
+            <li (click)="marital()"> <a  > Marital Status</a></li>
+            <li (click)="prefix()">  <a  > Prefixes</a></li>
+            <!-- <li> <a > Race Codes</a></li> -->
+            <li (click)="ncontext()">  <a  >Nationality Context Codes</a></li>
+            <li (click)="nationality()"> <a > Nationalities</a></li>
+            <li (click)="account()">  <a  > Account Class Types</a></li>
+            <li (click)="license()"> <a >Licence Types </a></li>
+            <li (click)="identity_codes()">  <a > Employee Codes</a></li>
+            <li (click)="email()" > <a >Email Contacts</a></li>
+            <li (click)="number()">  <a > Number Formats</a></li>
+           
+         </ul>
+           <li  data-toggle="collapse" data-target="#loc" class="collapsed ">  <a   >Locations
+            <span class="arrow"></span> </a></li>
+           <ul class="sub-menu collapse" id="loc">
+             <li (click)="country()"><a  >Countries</a></li>
+             <li (click)="state()"> <a >States</a></li>
+             <li (click)="city()">  <a  >Cities </a></li>
+            <li (click)="geo()"> <a >Geo Groups </a></li>
+           </ul>
+         <li  data-toggle="collapse" data-target="#currency" class="collapsed ">  <a   >Currency
+            <span class="arrow"></span> </a></li>
+           <ul class="sub-menu collapse" id="currency">
+             <li (click)="currency()"><a >Currencies</a></li>
+             <li (click)="conversion()"> <a  >Currency Conversions</a></li>
+           </ul>
+         
+     </ul>
+</div>
+</div>
+</div>

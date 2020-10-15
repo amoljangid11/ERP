@@ -1,0 +1,45 @@
+.navbar {
+  padding: 0.20rem 1rem;
+}
+
+.example-icon {
+padding: 0 15px;
+}
+
+.example-spacer {
+flex: 1 1 auto;
+}
+
+/* body {
+height:2000px;
+background-color: blue;
+} */
+.navshadow
+{
+box-shadow: 0px 0px 0px 1px white;
+}
+
+.imageClass{
+width: 15px;
+color: #fff;
+}
+
+/* .configurewizard a {
+text-decoration: none;
+color: #fff;
+font-size: 14px;
+height: 31px;
+padding: 0 13px 0 35px;
+background: url(../images/wizard_icon.png) 10px center #1e3241 no-repeat;
+line-height: 27px;
+display: block;
+} */
+
+
+
+
+
+
+
+
+

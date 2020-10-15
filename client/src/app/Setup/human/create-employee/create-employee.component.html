@@ -1,0 +1,86 @@
+
+<div class="col-md-12 card card-outline-info" style="height:100%">
+<div class="">
+ <ol class="breadcrumb row">
+  <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+  <li class="breadcrumb-item ">HR </li>
+  <li class="breadcrumb-item ">Employees </li>
+    <li class="breadcrumb-item Active">Add </li>
+
+  </ol> 
+
+</div>
+  <!-- style="padding: 0% 0% 0% 2%;margin-top: 2%;position:relative;" -->
+  <div class="row" style="">
+  <div class="" style="width:17%;overflow: auto">
+<ul class="nav nav-pills nav-pills flex-column">
+  <li class="nav-item "  (click)="official()" >
+    <a class="nav-link"  >Official</a>
+  </li>
+  <li class="nav-item" (click)="documents()" role="tab">
+    <a class="nav-link" >Documents</a>
+  </li>
+  <li class="nav-item" (click)="leave()">
+    <a class="nav-link">Leave</a>
+  </li>
+  <li class="nav-item" (click)="holidays()">
+    <a class="nav-link ">Holidays</a>
+  </li>
+  <li class="nav-item" (click)="salary()">
+    <a class="nav-link ">Salary</a>
+  </li>
+  <li class="nav-item" (click)="personal()">
+    <a class="nav-link ">Personal</a>
+  </li>
+  <li class="nav-item" (click)="contact()">
+    <a class="nav-link ">Contact</a>
+  </li>
+  <li class="nav-item" (click)="skills()">
+    <a class="nav-link ">Skills</a>
+  </li>
+  <li class="nav-item" (click)="jobHistory()">
+    <a class="nav-link ">JobHistory</a>
+  </li>
+  <li class="nav-item" (click)="experience()">
+    <a class="nav-link ">Experience</a>
+  </li>
+  <li class="nav-item" (click)="education()">
+    <a class="nav-link ">Education</a>
+  </li>
+  <li class="nav-item" (click)="trcer()">
+    <a class="nav-link ">Training & Certifications</a>
+  </li>
+  <li class="nav-item" (click)="medical()">
+    <a class="nav-link ">Medical Claims</a>
+  </li>
+  <li class="nav-item" (click)="disablity()">
+    <a class="nav-link ">Disability</a>
+  </li>
+  <li class="nav-item" (click)="dependency()">
+    <a class="nav-link ">Dependency</a>
+  </li>
+  <li class="nav-item" (click)="visa()">
+    <a class="nav-link ">Visa & Immigration</a>
+  </li>
+   <li class="nav-item" (click)="corpcard()">
+    <a class="nav-link ">Corparate Card</a>
+  </li>
+  <li class="nav-item" (click)="weligib()">
+    <a class="nav-link ">Working Eligibility</a>
+  </li>
+  <li class="nav-item" (click)="adetails()">
+    <a class="nav-link ">Additional Details</a>
+  </li>
+
+</ul>
+  </div>
+  <div class="" style="width:83% ;overflow: auto">
+  <div >
+        <router-outlet name="fourthchild"></router-outlet>
+
+  </div>
+
+  </div>
+  </div>       
+ 
+</div>

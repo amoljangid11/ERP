@@ -1,0 +1,32 @@
+
+div.box1{
+  padding-left: 10px;
+  height:auto;
+  width:70%;
+  background-color: rgb(231, 228, 228);
+}
+
+.emp-info 
+{ margin:0; width:50%; padding:10px 0px; float: left;  min-height:20px; }
+
+.alter-div{
+  background-color: #e2e2e1;
+}
+div.box{
+  border-style:groove;
+  height:auto;
+}
+
+
+
+div.box5{
+padding: 4px;
+border-style: groove;
+height: auto;
+width: 99%;
+margin: 7;
+overflow: auto;
+}
+.imageClass{
+  width: 100px;
+}

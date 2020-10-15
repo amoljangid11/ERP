@@ -1,0 +1,281 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">      
+  <div  *ngIf= "!show">
+   
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item active">Roles & Privileges</li>
+      </ol>
+   
+    <div>
+      <span style="font-weight:500">Competency Levels</span>
+      <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button>
+    </div><br><br>
+    <div  class="row">
+      <div class="col-lg-12">
+        <div class="row ">
+        <div class="col-sm-2" >
+          <span class="border border-primary"  *ngFor="let arr of array;">{{arr.head}}</span>
+          
+        </div>
+        <div class="col-sm-10 border border-warning">
+          hgggjj
+        </div>
+        </div>
+        <div class="table-responsive">
+          <table  class="table table-bordered table-sm">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Action</th>
+                <th>Role Name</th>
+                <th>Role Type</th>
+                <th>Role Decription</th>
+                <th>Group</th>
+              </tr>
+            </thead>
+            <!-- <tbody>
+              <tr *ngFor="let data of roledata;let i=index " >
+                <td>
+                  <i *ngIf="data.id !== editRowId" (click)="edit(data.id)"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;
+                  <i (click)="delete(data,i)" title="Delete" class="fa fa-trash-o"></i>&nbsp;&nbsp;
+                  <i *ngIf="data.id == editRowId" (click)="update(employee)" title="save" class="fa fa-floppy-o"></i>
+                  
+                </td>
+                
+                <td>{{data.role[0].name}}</td>
+                
+                <td>{{data.role[0].type}}</td>
+                
+                <td>{{data.role[0].description}}</td>
+                <td>{{data.role[0].group}}</td>
+                
+                
+                
+              </tr>
+            </tbody> -->
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+   <div *ngIf= "show">
+    <div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Roles & Privileges </li>
+        <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+      </ol>
+    </div>
+    <br>
+  <div class="row" style="">
+  <div  class="card-block">
+          <div *ngFor="let arr of jsn;" class="card card-outline-primary" style="margin-top: 0.2%;">
+            <div  class="card-heading card-primary"  style="padding: 0.5%" (click)="hidev=arr.name;hideb=!hideb">     {{arr.name}}
+              <i *ngIf="(hidev!=arr.name )" style="float: right" class=" fa fa-angle-up"></i>
+              <i *ngIf="(hidev==arr.name)"  style="float: right" class=" fa fa-angle-down"></i>
+              
+            </div>
+            
+            <div *ngIf="(hidev==arr.name && hideb)"  style="height: 60%;overflow-y:hidden;overflow:auto" class="">
+                 <div class="row" style="padding:1%;">
+                      <div class="col-md-4">
+                        <md-input-container class="example-full-width">
+                        <input  [(ngModel)]="roles.role[0].name" mdInput placeholder="Role Name">
+                        </md-input-container><br><br><br>
+                      </div>
+                      <div class="col-md-4">
+                        <md-input-container class="example-full-width">
+                        <input  [(ngModel)]="roles.role[0].type" mdInput placeholder="Role Type">
+                        </md-input-container><br><br><br>
+                      </div>
+                      <div class="col-md-4">
+                        <md-input-container class="example-full-width">
+                        <input mdInput #message maxlength="200" [(ngModel)]="roles.role[0].description"  placeholder="Description">
+                        <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+                      </md-input-container><br><br><br>
+                     </div>
+                  <div class="col-md-12">
+                     <table st-table="" style="margin-top: 20px;text-align:left;" class="table table-sm">
+                          <thead>
+                            <tr class="bg-success">
+                              <th >Module</th>
+                              <th ng-if="number">Sub Module</th> 
+                              <th ><span style="margin-left:20%;width:100%">Data  Name</span></th>         
+                              <th >Add</th>
+                              <th >Edit</th>
+                              <th >View</th>
+                              <th >Delete</th>
+                            </tr>
+                          </thead>
+                          <tbody context-menu="menuOptions" *ngFor="let json of jsn">
+                            <tr >
+                              <td class="bg-primary" *ngIf="json.module.length >0"   >
+                                <span style="text-align:left;" >
+                                  {{ json.name}}
+                                </span>
+                              </td>
+                               <td  *ngIf="json.module.length >0" >
+                                <span style="text-align:left;" >
+                                  {{ json.name}}
+                                </span>
+                              </td>
+                              <td   >
+                                <span style="text-align:left;" >
+                                  {{ json.add}}
+                                </span>
+                              </td>
+                              <td   >
+                                <span style="text-align:left;" >
+                                  {{ json.edit}}
+                                </span>
+                              </td>
+                              <td   >
+                                <span style="text-align:left;" >
+                                  {{ json.delete}}
+                                </span>
+                              </td> 
+                            </tr>
+
+                       
+                      
+                            <!-- <tr *ngIf="json.module.length >0"  *ngFor="let json of jsn">
+                              <td >
+                                 <span style="text-align:left;" >
+                                  {{ json.sm}}
+                                </span>
+                              </td>
+                              
+                            </tr> -->
+                               </tbody> 
+                       </table>               
+                  </div>
+                  <div  class="col-md-12">
+                    <div style="float:right">
+                      <button class="btn btn-outline-primary btn-sm" (click)="save(roles);show=!show"> Save</button>
+                      <button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+                    </div>
+                  </div>
+                 </div>
+            </div>
+          </div>
+  </div> 
+  
+   </div>
+    
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
+        e.preventDefault();
+        $(this).siblings('a.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+}); 
+</script>
+
+<!--  <div class="table"> 
+                        <table  class="table table-sm">
+                          <thead class="bg-success">
+                          <tr>
+                          <th>Roles</th>
+                          <th>Create</th>
+                          <th>Update</th>
+                          <th>View</th>
+                          <th>Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let json of arr.module">
+                        <tr>
+                          <td>{{json.sm}}</td>
+                          <td><input type="checkbox" style="margin-left:10%" [value]="" />{{json.option.add}}</td>
+                          <td><input type="checkbox" style="margin-left:10%" [value]="" />{{json.option.edit}}</td>
+                          <td><input type="checkbox" style="margin-left:10%" [value]="" />{{json.option.view}}</td>
+                          <td><input type="checkbox" style="margin-left:10%" [value]="" />{{json.option.delete}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div> -->
+<!--  <div class="col-md-12 " >
+      <ul class="nav nav-tabs nav-justified pills-secondary" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link " data-toggle="tab" (click)="selecttab('management')" role="tab"> Management</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" (click)="selecttab('manager')" role="tab"> Manager</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" (click)="selecttab('hr')" role="tab"> HR</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" (click)="selecttab('employee')" role="tab">Employees</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" (click)="selecttab('externaluser')" role="tab"> External Users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" (click)="selecttab('admin')" role="tab"> System Admin</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-12" style="">
+      <div  [ngSwitch]="view" class="col-md-12" style="height: 75%;background-color: white;margin-left: -0.03cm" >
+        <br>
+        <div class="row" *ngSwitchCase="'management'" >
+          <div class="col-md-4">
+            <md-input-container class="example-full-width">
+            <input  [(ngModel)]="roles.role[0].name" mdInput placeholder="Role Name">
+            </md-input-container><br><br><br>
+          </div>
+          <div class="col-md-4">
+            <md-input-container class="example-full-width">
+            <input  [(ngModel)]="roles.role[0].type" mdInput placeholder="Role Type">
+            </md-input-container><br><br><br>
+          </div>
+          <div class="col-md-4">
+            <md-input-container class="example-full-width">
+            <input mdInput #message maxlength="200" [(ngModel)]="roles.role[0].description"  placeholder="Description">
+            <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+          </md-input-container><br><br><br>
+         </div>
+         <div class="col-md-12">
+            Management            
+          </div>
+        </div>
+
+        <div class="row" *ngSwitchCase="'manager'" >
+          <div class="col-md-12">
+            Manager            
+          </div>
+        </div>
+
+        <div class="row" *ngSwitchCase="'hr'" >
+          <div class="col-md-12">
+            Hr            
+          </div>
+        </div>
+
+        <div class="row" *ngSwitchCase="'employee'" >
+          <div class="col-md-12">
+            Employees            
+          </div>
+        </div>
+
+        <div class="row" *ngSwitchCase="'externaluser'" >
+          <div class="col-md-12">
+            External Users            
+          </div>
+        </div>
+
+        <div class="row" *ngSwitchCase="'admin'" >
+          <div class="col-md-12">
+            System Admin            
+          </div>
+        </div>
+      </div>
+    </div> -->

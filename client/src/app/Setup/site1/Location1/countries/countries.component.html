@@ -1,0 +1,83 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div  *ngIf= "!show">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site Config </li>
+        <li class="breadcrumb-item ">Location </li>
+        <li class="breadcrumb-item active">Countries</li>
+        
+      </ol>
+    </div>
+    <div  >
+      <span style="font-weight:  500">Countries</span>
+      <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">
+      <i class="fa fa-plus"></i>   Add</button>
+    </div><br><br>
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+          <table  class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Country</th>
+                <th>Country Code</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr *ngFor="let cntryval of datas; let i=index " >
+                <td><i *ngIf="cntryval.id !== editRowId" (click)="toggle(cntryval.id)"  class="fa fa-eye" aria-hidden="true"></i><i style="margin-left: 2%; " class="fa fa-trash" aria-hidden="true" (click)="remove(cntryval,i)"></i></td>
+                <td *ngIf="cntryval.id == editRowId">
+                  <input type="text" [(ngModel)]="cntryval.countryvalue">
+                </td>
+                <td *ngIf="cntryval.id !== editRowId" >{{cntryval.countryvalue}}</td>
+                <td *ngIf="cntryval.id == editRowId">
+                  <input type="text" [(ngModel)]="cntryval.codevalue">
+                </td>
+                <td *ngIf="cntryval.id !== editRowId" >{{cntryval.codevalue}}</td>
+                
+              </tr>
+            </tbody>
+            
+          </table>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <div *ngIf="show">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site Config </li>
+        <li class="breadcrumb-item ">Location </li>
+        <li class="breadcrumb-item ">Countries</li>
+        <li class="breadcrumb-item active">Edit</li>
+        
+      </ol>
+      
+    </div><br>
+    <div class="row">
+      <div class="col-md-3">
+        <md-select placeholder="Country" [(ngModel)]="selectedValue" name="cnt">
+        <md-option *ngFor="let cntry of all;let i=index " [value]="cntry.countryal"  (click)="select(i,all)">
+        {{cntry.countryal}}--{{i}}
+        </md-option>
+        </md-select>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" type="button">Country code</button>
+          </span>
+          <input type="text" class="form-control" placeholder="code"  [(ngModel)]="codevalue"   [value]="codevalue">
+        </div>
+      </div>
+      <div  class="col-md-12" style="margin-top: 5%">
+        <button class="btn btn-outline-success btn-sm" (click)="save();show=!show" >save</button>
+        <button   class="btn btn-outline-danger btn-sm" (click)="show=!show" >cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

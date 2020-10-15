@@ -1,0 +1,254 @@
+<form class="form-horizontal" [formGroup]="form">
+  <div class="row"><br>
+   
+  <div style="display: both" class="col-md-12"><br>
+   <span style="font-weight:500"><h5>Configure Project Details</h5></span>
+    <!-- <button type="button" style="float: right;margin: 0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "projects()">Back</button>  -->
+  </div>
+  <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+    <!-- {{ message }} -->Added Successfully
+</div>
+<div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+    <!-- {{ message }} -->Deleted Successfully
+</div>
+<div *ngIf="updated" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+  <!-- {{ message }} --> Updated Successfully
+</div>
+  <br><br>
+  
+  <div class="col-md-12">
+  <div class="row">
+  <div class="col-md-3">
+    <md-input-container class="example-full-width">
+    <input  [(ngModel)]="projecttime.project[0].projectname" mdInput placeholder="Project" class="form-control" formControlName="project" pattern="^[a-zA-Z0-9 ]*$" maxlength="50" required>  
+    <md-error>
+        Please enter project name.
+    </md-error>
+  </md-input-container>
+  </div>
+  <div class="col-md-3"><br>
+    <md-select placeholder="Status" [(ngModel)]="projecttime.project[0].status" name="status" formControlName="status">
+      <md-option disabled>--Select Status--</md-option>
+      <!-- <input type="search" [(ngModel)]="searchTexts2" placeholder="Search"> -->
+      <md-option *ngFor="let s of status" [value]="s.value">
+      {{s.value}}
+      </md-option>
+    </md-select>
+  </div>
+  <div class="col-md-3"><br>
+    <md-select placeholder="Base Project" [(ngModel)]="projecttime.project[0].base" formControlName="base"  >
+      <md-option disabled>--Select Base Project--</md-option>
+      <!-- <input type="search" [(ngModel)]="searchTexts3" placeholder="Search"> -->
+      <md-option *ngFor="let b of pro" [value]="b.project[0].projectname">
+      {{b.project[0].projectname}}
+      </md-option>
+    </md-select>
+  </div>
+  <div class="col-md-3"><br>
+    <md-select placeholder="Client" [(ngModel)]="projecttime.project[0].client" name="client" formControlName="client">
+      <md-option disabled>--Select Client--</md-option>
+      <!-- <input type="search" [(ngModel)]="searchTexts" placeholder="Search"> -->
+      <md-option *ngFor="let b of cli" [value]="b.clients[0].client">
+          {{b.clients[0].client}}
+      </md-option>
+    </md-select>
+    <!-- <i style="color:#1565c0;" (click)="open(basicclient)"><br>Add Client</i> -->
+    <p style="color: #1565c0;" onclick="document.getElementById('client').style.display='block'">Add Client</p>
+   </div>
+  </div>      
+  
+  <div class="row">
+    <div class="col-md-3"><br>
+    <md-select placeholder="Currency" [(ngModel)]="projecttime.project[0].currency" name="currency" formControlName="currency">
+    <md-option disabled>--Select Currency--</md-option>
+    <md-option value="European Euro">European Euro</md-option>
+    <md-option value="Indian Rupee">Indian Rupee</md-option>
+    <md-option value="US Doller">US Doller</md-option>
+    <md-option value="Pound Sterling">Pound Sterling</md-option>
+    <md-option *ngFor="let c of currencyall" [value]="c.currencies[0].type">
+    {{c.currencies[0].type}}
+    </md-option>
+  </md-select><br>
+  <!-- <i style="color:#1565c0" (click)="open(basiccur)" >Add Currency</i> -->
+    <span  style="color: red" *ngIf="!projecttime.project[0].currency">
+      please select currency.
+    </span>
+   <p style="color:#1565c0 ;" onclick="document.getElementById('basiccurr').style.display='block'">Add Currency</p>
+  </div>
+  <div class="col-md-3"><br>
+      <p>Project type</p>
+      <md-radio-group [(ngModel)]="projecttime.project[0].type" formControlName="type" >
+      <md-radio-button value="Billable">Billable</md-radio-button>
+      <md-radio-button value="Non Billable">Non Billable</md-radio-button>
+      <md-radio-button value="Revenue generation">Revenue generation</md-radio-button> 
+      </md-radio-group>
+  </div>
+  </div>
+  <div>
+      <h6>Estimate</h6>
+  </div>
+  <div class="row">
+      <div class="box1">
+          <div class="row">
+          <div class="col-md-4">
+            <md-input-container>
+            <input mdInput [mdDatepicker]="picker" placeholder="From Date" [(ngModel)]="projecttime.project[0].fromdate" formControlName="fromdate" >
+            <button mdSuffix [mdDatepickerToggle]="picker"></button>
+            </md-input-container>                                  
+            <md-datepicker #picker></md-datepicker>
+          </div>
+            <div class="col-md-4">
+            <md-input-container>
+            <input mdInput [mdDatepicker]="pick" placeholder="To Date" [(ngModel)]="projecttime.project[0].todate" formControlName="todate" id="ToDate" >
+            <button mdSuffix [mdDatepickerToggle]="pick"></button>
+            </md-input-container>
+            <md-datepicker #pick></md-datepicker>
+            </div>
+            <div class="col-md-4">
+            <md-input-container class="example-full-width">
+                <input name="estimate" [(ngModel)]="projecttime.project[0].estimate" mdInput placeholder="Estimation Hours" formControlName="hour" pattern="[0-9.]+" minlength="1" maxlength="5" >   
+            </md-input-container>
+            </div>
+           </div>
+        </div>
+         <div class="col-md-3">
+          <md-input-container class="example-full-width">               
+          <input   mdInput name="descripe" #message  maxlength="200" [(ngModel)]="projecttime.project[0].prjdes" formControlName="desc" placeholder="Description">
+          <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+         </md-input-container>
+  </div>
+  </div>
+  </div>
+  <br>
+  <div  class="col-md-12">
+    <div style="float: left">
+      <button *ngIf="updatebutton" class="btn btn-outline-primary btn-sm" (click)="save(projecttime);show=!show" [disabled]="!form.valid"> Save</button>
+      <button *ngIf="!updatebutton" class="btn btn-outline-primary btn-sm" (click)="updateproj(projecttime);show=!show" [disabled]="!form.valid">Update</button>
+  
+      <button class="btn btn-outline-warning btn-sm" (click) = "projects();show=!show">Cancel </button>
+    </div>
+  </div>
+  </div>
+  </form>
+  
+  <!-- client -->
+  <form class="form-horizontal" [formGroup]="form1">
+      <div id="client" class="w3-modal">
+        <div class="w3-modal-content">
+          <header class="w3-container w3-teal bg-primary">
+            <span onclick="document.getElementById('client').style.display='none'" style="margin-top: -1%;font-weight: 500"
+            class="w3-display-topright fa fa-times"></span>
+            <h6>Client</h6>
+          </header>
+          <div class="w3-container">
+            <div   class="col-md-12">
+              
+              <div  class="row">
+                <div class="col-md-3" >
+                  <md-input-container class="example-full-width">
+                  <input mdInput placeholder="Client" [(ngModel)]="client.clients[0].client" class="form-control" formControlName="cli"  pattern="^[a-zA-Z0-9 ]*$" required>
+                  <md-error>
+                    Please enter client name.
+                  </md-error>
+  
+                  </md-input-container><br><br><br>
+                  <md-input-container class="example-full-width">
+                  <input  mdInput placeholder="Email"  [(ngModel)]="client.clients[0].email" formControlName="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                  </md-input-container><br><br><br>
+                </div>
+                <div class="col-md-3 ">
+                  <md-input-container class="example-full-width">
+                  <input  mdInput [(ngModel)]="client.clients[0].address" maxlength="100"  placeholder="Address" formControlName="add">
+                  </md-input-container><br><br><br>
+                  <md-input-container class="example-full-width">
+                  <input mdInput  [(ngModel)]="client.clients[0].phone_number"  maxlength="10" placeholder="Phone Number" formControlName="no" pattern="[0-9.]+" minlength="10" maxlength="10">
+                  <md-error>
+                      Phone number must contain at least 10 characters.
+                    </md-error>
+                  </md-input-container><br><br><br>
+                </div>
+                <div class="col-md-3 "><br>
+                  <md-select placeholder="Country"  name="country"  [(ngModel)]="client.clients[0].country" formControlName="coun" >
+                  <md-option *ngFor="let co of datas1 "  (click)="select(co.countryal)" [value]="co.countryal" >
+                  {{co.countryal}}
+                  </md-option>
+                  </md-select><br><br><br><br>
+                  <md-input-container class="example-full-width">
+                  <input mdInput [(ngModel)]="client.clients[0].fax" placeholder="Fax" formControlName="fax"  pattern="[0-9.]+" minlength="10" maxlength="10">
+                  <md-error>
+                      Fax must contain at least 10 characters.
+                  </md-error>
+                </md-input-container><br><br><br>
+                </div>
+                <div class="col-md-3"><br>
+                  <md-select placeholder="State"  name="state" [(ngModel)]="client.clients[0].state" formControlName="sta">
+                  <md-option *ngFor="let st of statearry ; let i=index " (click)="select1(st.statename)" [value]="st.statename" >
+                  {{st.statename}}
+                  </md-option>
+                  </md-select><br><br><br><br>
+                  <md-input-container class="example-full-width">
+                  <input mdInput [(ngModel)]="client.clients[0].point_of_contact" placeholder="Point Of Contact" class="form-control" formControlName="point"  pattern="^[a-zA-Z0-9 ]*$"  required >
+                  <md-error>
+                      Please enter point of contact.
+                  </md-error>
+                </md-input-container><br><br>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+            <div class="col-sm-12">
+              <button style="float: right;" class="btn btn-primary btn-sm" (click)="saveclient(client)" [disabled]="!form1.valid" >Save</button>
+            </div>
+          </footer>
+        </div>
+      </div>
+      </form>
+      
+       <!-- currency -->
+       <form class="form-horizontal" [formGroup]="form2">
+      <div id="basiccurr" class="w3-modal">
+        <div class="w3-modal-content">
+          <header class="w3-container w3-teal bg-primary">
+            <span onclick="document.getElementById('basiccurr').style.display='none'" style="margin-top: -1%;font-weight: 500"
+            class=" w3-display-topright fa fa-times"></span>
+            <h6>Currency</h6>
+          </header>
+          <div class="w3-container">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-6">
+                  <md-input-container class="example-full-width">
+                  <input required name="prefix" [(ngModel)]="currency.type" mdInput placeholder=" Currency" class="form-control" formControlName="curr" pattern="^[a-zA-Z0-9 ]*$" maxlength="20"  required >
+                  <md-error>
+                      Please enter currency.
+                  </md-error>
+                </md-input-container><i mdTooltip="Ex:Dollar" class="fa fa-question-circle"></i><br><br><br>
+                  <md-input-container class="example-full-width">
+                  <input mdInput name="description" [(ngModel)]="currency.description"  #message maxlength="200" placeholder="Description" formControlName="desc">
+                  <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+                  </md-input-container><br><br><br>
+                </div>
+                <div class="col-md-6">
+                  <md-input-container class="example-full-width">
+                  <input required [(ngModel)]="currency.code" mdInput placeholder=" Currency Code" class="form-control" formControlName="code" pattern="^[a-zA-Z0-9 ]*$"  maxlength="20" required  >
+                  <md-error>
+                      Please enter currency code.
+                  </md-error>
+                </md-input-container><i mdTooltip="Ex:USD" class="fa fa-question-circle"></i><br><br><br>
+                  
+                </div>
+              </div>
+            </div>
+            </div>
+              
+              <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+                <div class="col-sm-12">
+                  <button style="float: right;" class="btn btn-primary btn-sm" (click)="savecurrency(currency)" [disabled]="!form2.valid" >Save</button>
+                </div>
+              </footer>
+            </div>
+          </div>
+        </form>
+      
+        

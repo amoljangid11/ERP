@@ -1,0 +1,328 @@
+<div *ngIf= "!show"  class="col-lg-12">
+    <div class="row">
+      <div  style="display: both" class="col-lg-12">
+        <span style="font-weight:500">Insurance</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button>
+      </div>
+      <br><br>
+    </div>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div class="row">
+      <div class="col-lg-12"><br>
+        <div>
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Insurance Type</th>
+                <th>Approved Leaves</th>
+                <th>Employee Applied Leaves</th>
+                <th>Date of Joining</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="haveclaim">
+              <tr *ngFor=" let ex of official.medicalclaim; let i = index " >
+                <td><i  (click)="edit(ex,official,i);show = !show"  title="Edit" class="fa fa-pencil-square-o"></i>
+                <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(ad,official,i)"></i></td>
+                <td>{{ex.claimtype}}</td>
+                <td>{{ex.approvedleaves}}</td>
+                <td>{{ex.appliedleave}}</td>
+                <td>{{ex.joiningdate}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="form">
+  <div *ngIf= "show"  class="col-md-12">
+    <div class="row">
+      <div  style="display: both" class="col-md-12">
+        
+        <span style="font-weight:  800">Insurance</span><br><br><br>
+        
+      </div>
+        <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <br>
+            <md-select placeholder="Insurance Type"  [(ngModel)]="employee.medicalclaim[i].claimtype" name="job" formControlName="medClamtype" >
+            <md-option *ngFor="let j of temparray"  (click)="changeval(employee.medicalclaim[i].claimtype,employee.medicalclaim[i])" [value]="j.name"  >
+            {{j.name}}
+            </md-option>
+            </md-select><br><br>
+            <md-input-container  *ngIf="!status">
+            <input mdInput [mdDatepicker]="datepicker3" [(ngModel)]="employee.medicalclaim[i].joiningdate" placeholder="Date of Joining" formControlName="joindate" >
+            <md-error>
+              Select valid date.
+            </md-error>
+            <button mdSuffix [mdDatepickerToggle]="datepicker3"></button>
+            </md-input-container>
+            <md-datepicker #datepicker3></md-datepicker><br><br>
+            
+            <md-select *ngIf="employee.medicalclaim[i].claimtype=='Injury'" placeholder="Severity" [(ngModel)]="employee.medicalclaim[i].severity" formControlName="savrity" name="job">
+            <md-option *ngFor="let j of age"   [value]="j.name" required>
+            {{j.name}}
+            </md-option>
+            </md-select>
+            <md-select *ngIf="employee.medicalclaim[i].claimtype=='Disability'" placeholder="Disability Type" [(ngModel)]="employee.medicalclaim[i].disabilitytype" formControlName="distype" name="job">
+            <md-option *ngFor="let j of distype"   [value]="j.name" >
+            {{j.name}}
+            </md-option>
+            
+            </md-select>
+            <br>
+            
+          </div>
+
+<div class="col-md-4">
+            
+            <!-- <md-input-container *ngIf="employee.medicalclaim[i].claimtype=='Paternity'" class="example-full-width">
+            <input mdInput [(ngModel)]="employee.medicalclaim[i].paternity" [mdDatepicker]="datepicker6"  placeholder="Paternity_date"   formControlName="Paternity" required>
+            <md-error>
+              select valid date
+            </md-error>
+            <button mdSuffix [mdDatepickerToggle]="datepicker6"></button>
+            </md-input-container>
+            <md-datepicker #datepicker6></md-datepicker>
+            <md-input-container *ngIf="employee.medicalclaim[i].claimtype=='Maternity'"  class="example-full-width">
+            <input mdInput [(ngModel)]="employee.medicalclaim[i].maternity" [mdDatepicker]="datepicker6" placeholder="Maternity"  formControlName="Maternity" required>
+            <md-error>
+                select valid date
+              </md-error>
+              <button mdSuffix [mdDatepickerToggle]="datepicker6"></button>
+              </md-input-container>
+              <md-datepicker #datepicker6></md-datepicker> -->
+            <!-- <md-input-container *ngIf="injury" >
+            <input mdInput [mdDatepicker]="datepicker4" [(ngModel)]="employee.medicalclaim[i].injurydate" placeholder="Date of Injury" required>
+            <button mdSuffix [mdDatepickerToggle]="datepicker4"></button>
+            </md-input-container>
+            <md-datepicker #datepicker4></md-datepicker>  -->
+            <!-- <md-input-container *ngIf="employee.medicalclaim[i].claimtype=='Disability'">
+            <input mdInput [mdDatepicker]="datepicker2" [(ngModel)]="employee.medicalclaim[i].disabilityapplydate" placeholder="Disability Applied date" required>
+            <button mdSuffix [mdDatepickerToggle]="datepicker2"></button>
+            </md-input-container>
+            <md-datepicker #datepicker2></md-datepicker> -->
+            <md-input-container *ngIf="!status" class="example-full-width">
+            <input mdInput  [(ngModel)]="employee.medicalclaim[i].medicalinsurer" placeholder="Medical insurer"  pattern="^[a-zA-Z0-9 ]*$" formControlName="medissure" maxlength="50" >
+            <md-error>
+              Enter valid medicalinsurer.
+            </md-error>
+            </md-input-container><br><br>
+            
+            
+          </div>
+          <div class="col-md-4">
+            <md-input-container *ngIf="employee.medicalclaim[i].claimtype=='Disability'" class="example-full-width">
+            <input mdInput [(ngModel)]="employee.medicalclaim[i].disability"  placeholder="Disability"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" formControlName="disability" required maxlength="50">
+            <md-error>
+              Enter only text
+            </md-error>
+            </md-input-container>
+            <md-input-container *ngIf="employee.medicalclaim[i].claimtype=='Injury'" class="example-full-width">
+            <input mdInput [(ngModel)]="employee.medicalclaim[i].injury"  placeholder="Injury" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" formControlName="injury" >
+            <md-error>
+              Enter only text.
+            </md-error>
+            
+            </md-input-container>
+            <md-input-container *ngIf="!status" class="full-width">
+            <textarea mdInput [(ngModel)]="employee.medicalclaim[i].description_reason" #message maxlength="200" mdTextareaAutosize minRows="6" placeholder="Description/Reason" formControlName="desc" id="description" ></textarea>
+            <md-hint align="end">{{message.value.length}} characters entered / 200</md-hint>
+            </md-input-container> <br><br>
+            
+            </div>
+        </div>
+     
+        <div *ngIf="!status" style="display: both" class="row">
+          <div class="col-md-12">
+            <br>
+            <span style="font-weight:  500"><b>Applied Leave Details</b></span>
+            
+            <br> <br>
+          </div>
+          <div class="col-md-4">
+            <md-input-container >
+            <input mdInput [mdDatepicker]="datepicker6" [(ngModel)]="employee.medicalclaim[i].applied_startdate" placeholder="Leave Start date" formControlName="leavsd" >
+        
+            <md-error>
+              Select valid date.
+            </md-error>
+            <button mdSuffix [mdDatepickerToggle]="datepicker6"></button>
+            </md-input-container>
+            <md-datepicker #datepicker6></md-datepicker>
+            <br>
+          </div>
+          <div class="col-md-4">
+            <md-input-container >
+            <input mdInput [mdDatepicker]="datepicker7" [(ngModel)]="employee.medicalclaim[i].applied_enddate" placeholder="Leave End date" formControlName="leaved" id="le" >
+            <md-error>
+              Select valid date.
+            </md-error>
+            <button mdSuffix [mdDatepickerToggle]="datepicker7"></button>
+            </md-input-container>
+            <md-datepicker #datepicker7></md-datepicker>
+          </div>
+          <div class="col-md-4">
+            <md-input-container  class="example-full-width">
+            <input mdInput  [(ngModel)]="employee.medicalclaim[i].appliedleave" placeholder="No of Leaves Applied" pattern="[0-9.]+" formControlName="noleave">
+            </md-input-container>
+          </div>
+          
+        </div>
+
+<div *ngIf="employee.medicalclaim[i].claimtype!='Disability' && !status" style="display: both" class="row">
+          <div class="col-md-12">
+            <br>
+            <span style="font-weight:  500"><b>Approved Leave Details</b></span>
+            
+            <br> <br>
+          </div>
+          <div class="col-md-4">
+            <md-input-container class="example-full-width">
+            <input mdInput [mdDatepicker]="datepicker8" [(ngModel)]="employee.medicalclaim[i].approved_startdate" placeholder="Leave Start date" formControlName="leavsd1"  >
+            <button mdSuffix [mdDatepickerToggle]="datepicker8"></button>
+            </md-input-container>
+            <md-datepicker #datepicker8></md-datepicker>
+            <br>
+          </div>
+          <div class="col-md-4">
+            <md-input-container >
+            <input mdInput [mdDatepicker]="datepicker9" [(ngModel)]="employee.medicalclaim[i].approved_enddate" placeholder="Leave End  date" formControlName="leaved1" id="le1" >
+            <button mdSuffix [mdDatepickerToggle]="datepicker9"></button>
+            </md-input-container>
+            <md-datepicker #datepicker9></md-datepicker>
+          </div>
+          
+          <div class="col-md-4">
+            <md-input-container  class="example-full-width">
+            <input mdInput  [(ngModel)]="employee.medicalclaim[i].approvedleaves" placeholder="No of days Approved" pattern="[0-9.]+" formControlName="noleave1">
+            </md-input-container>
+          </div>
+          
+        </div>
+
+<div  *ngIf="employee.medicalclaim[i].claimtype=='Disability'" style="display: both" class="row">
+          <div class="col-md-12">
+            <br>
+            <span style="font-weight:  500"><b>Medical Claim Details</b></span>
+            
+            <br> <br>
+          </div>
+          <div class="col-md-4">
+            <md-input-container  class="example-full-width">
+            <input mdInput  [(ngModel)]="employee.medicalclaim[i].claimed_amount" placeholder="Amount Claimed" pattern="[0-9.]+" formControlName="amoclam" maxlength="10" >
+            <md-error>
+              Enter only number.
+            </md-error>
+            </md-input-container>
+          </div>
+          
+          <div class="col-md-4">
+            <md-input-container  class="example-full-width">
+            <input mdInput [(ngModel)]="employee.medicalclaim[i].approved_amount"  placeholder="Amount Approved" pattern="[0-9.]+" maxlength="9" formControlName="amoappr" maxlength="10">
+            <md-error>
+              Enter only number
+            </md-error>
+            </md-input-container>
+          </div>
+          
+        </div>
+
+        <div *ngIf="employee.medicalclaim[i].claimtype!='Disability' && !status" style="display: both" class="row">
+          <div class="col-md-12">
+            <br>
+            <span style="font-weight:  500"><b>Hospital & Medical Claim Details</b></span>
+            <br> <br>
+          </div>
+          <div class="col-md-4">
+            <md-input-container  class="example-full-width">
+            <input mdInput  [(ngModel)]="employee.medicalclaim[i].hospitalname" placeholder="Hospital Name" pattern="^[a-zA-Z0-9 ]*$" formControlName="hosname" >
+            <md-error>
+              Enter valid Hospital name.
+            </md-error>
+            </md-input-container><br>
+            <md-input-container  class="example-full-width">
+            <input mdInput  [(ngModel)]="employee.medicalclaim[i].concern_name" placeholder="Name of Concerned GP"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" formControlName="nameofcon" >
+            <md-error>
+              Enter only alphabetic characters.
+            </md-error>
+            </md-input-container><br>
+            <md-input-container  class="example-full-width">
+            <input mdInput [(ngModel)]="employee.medicalclaim[i].hospital_claim"  placeholder="Amount Claimed" formControlName="amocl1" formControlName="amocl1" >
+            </md-input-container>
+          </div>
+          
+          <div class="col-md-4">
+            <md-input-container  class="full-width">
+            <textarea mdInput [(ngModel)]="employee.medicalclaim[i].hospital_address" #message mdTextareaAutosize minRows="8" placeholder="Hospital Address" id="HospitalAddress"  formControlName="hosadd" ></textarea>
+            
+            </md-input-container><br><br>
+            <md-input-container  class="full-width">
+            <textarea [(ngModel)]="employee.medicalclaim[i].treatment_detail" mdInput #message  mdTextareaAutosize minRows="8" placeholder="Treatment Details" id="Treatmentdeatils" formControlName="tretdet" ></textarea>
+            
+            </md-input-container><br>
+            <md-input-container  class="example-full-width">
+            <input mdInput [(ngModel)]="employee.medicalclaim[i].hospital_amount"  placeholder="Amount Approved" pattern="[0-9.]+" formControlName="amoappr1" >
+            </md-input-container>
+          </div>
+          <div class="col-md-4">
+            <md-input-container  class="example-full-width">
+            <input mdInput [(ngModel)]="employee.medicalclaim[i].room_number"  placeholder="Room/Ward Number" pattern="^[a-zA-Z0-9 ]*$" maxlength="5" formControlName="roomno" >
+            <md-error>
+              Enter valid room/ward number.
+            </md-error>
+            </md-input-container><br><br>
+            <md-input-container  class="example-full-width">
+            <input mdInput [(ngModel)]="employee.medicalclaim[i].total_cost"  placeholder="Total Cost" pattern="[0-9.]+" maxlength="9" formControlName="totcost" >
+            <md-error>
+              Enter only number.
+            </md-error>
+            </md-input-container>
+          </div>
+          
+        </div>
+<div class="col-md-12">
+          <div  class="row" style="float: right" >
+            <div >
+              <br><br><br>
+              <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(employee);show=!show;" [disabled]="!form.valid" > Save</button>
+              <button *ngIf="updatebutton"  class="btn btn-outline-success btn-sm" (click)="updateclaim(employee);show=!show;updatebutton=!updatebutton;"> Update</button>
+              <button class="btn btn-outline-warning btn-sm" (click) = "cancel(employee);show=!show;updatebutton=!updatebutton;"> Cancel </button>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+      
+    </div>
+    
+</div>
+
+</form>
+
+<md2-dialog #deptModal>
+      <md2-dialog-title>Medical Claims</md2-dialog-title>
+        <div class="box">
+          <div class="emp-info">
+              Medical Claim Type : {{employee.medicalclaim[i].claimtype}}
+          </div>
+          <div class="emp-info ">
+              Approved Leaves : {{employee.medicalclaim[i].approvedleaves}}
+          </div><br>
+          <div class="emp-info alter-div">
+              Employee Applied Leaves: {{employee.medicalclaim[i].appliedleave}}
+          </div>
+          <div class="emp-info alter-div">
+              Date of Joining : {{employee.medicalclaim[i].joiningdate}}
+          </div><br>
+        </div>
+      <md2-dialog-footer>
+          <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+      </md2-dialog-footer>
+  </md2-dialog>

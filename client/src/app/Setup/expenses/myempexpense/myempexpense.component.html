@@ -1,0 +1,43 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show">
+    <div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Expenses </li>
+        <li class="breadcrumb-item "> My Employee Expenses </li>
+        
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:500">Employee Expenses</span>
+      </div><br><br>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Employee</th>
+                <th>Expense</th>
+                <th>Trip</th>
+                <th>Category</th>
+                <th>Expense Date</th>
+                <th>Currency</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            </table>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            

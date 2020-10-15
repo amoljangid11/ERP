@@ -1,0 +1,113 @@
+small{
+    color:red;
+    font-size:15;
+}
+
+
+.checkboxdemoBasicUsage div.flex-xs {
+    min-height: 40px; }
+  
+  .checkboxdemoBasicUsage .checkboxDemo1 div {
+    clear: both; }
+  
+  .checkboxdemoBasicUsage p {
+    padding-left: 8px; }
+  
+  .checkboxdemoBasicUsage fieldset.standard {
+    border-style: solid;
+    border-width: 1px; }
+  
+  .checkboxdemoBasicUsage legend {
+    color: #3F51B5; }
+  
+  .checkboxdemoBasicUsage legend code {
+    color: #3F51B5;
+    font-weight: normal; }
+  
+  .checkboxdemoBasicUsage .ipsum {
+    color: saddlebrown; }
+
+    .imageClass{
+      width: 150px;
+    }
+    .dropbtn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 16px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .dropbtn:hover, .dropbtn:focus {
+      background-color: #3e8e41;
+    }
+    
+    #myInput {
+      border-box: box-sizing;
+      background-position: 14px 12px;
+      background-repeat: no-repeat;
+      font-size: 16px;
+      padding: 14px 20px 12px 45px;
+      border: none;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    #myInput:focus {outline: 3px solid #ddd;}
+    
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f6f6f6;
+      min-width: 230px;
+      overflow: auto;
+      border: 1px solid #ddd;
+      z-index: 1;
+    }
+    
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    
+    .dropdown a:hover {background-color: #ddd;}
+    
+    .show {display: block;}
+    
+    .display_emp{
+      border-style: double;
+    }
+    div.box{
+  border-style: groove;
+  height: 400px;
+   }
+
+   
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background:#555; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+
+}
+

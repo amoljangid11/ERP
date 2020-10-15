@@ -1,0 +1,64 @@
+<div class="col-md-12 card card-outline-info" style="height:100%;overflow: auto">                       
+
+  <div>
+    <ol class="breadcrumb row bg-primary" >
+    <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+    <li class="breadcrumb-item ">HR </li>
+    <li class="breadcrumb-item active">Employees </li>
+    </ol> 
+  </div>
+  
+  <div   class="row panel-body">
+  <div class="col-md-11">
+      <button *ngIf="btnhd" type="button" style="float: right;margin:2% 0% 0% 2%" class="btn btn-outline-primary btn-sm"  (click)="add();managerfetch();"> Add</button>
+      <md-input-container style="width:20%" >
+        <input mdInput #myinput placeholder="Search" [(ngModel)]="tesyt" (input)="filterItem(tesyt)">
+        <md-error>Please Enter Name</md-error>
+      </md-input-container>  <br><br>
+   </div>    
+  
+  
+  <div class="col-md-12">
+    <div   class="row">
+      <div  style="padding:1% 0% 1% 2%" *ngFor="let data of officiald" >
+          
+        <div class="" id="content"  *ngIf="data._id!=this.getuser.employee_OId">
+          <div class="" style="padding:1% 1% 1% 3% ">
+            <div class="col-md-12" style="padding: 1% 1% 0% 1%">
+                <i class="fa fa-ellipsis-v" style="float:right" data-toggle="dropdown" aria-hidden="true"></i>
+                <div  class="dropdown-menu card-success">
+                    <div class="btn dropdown-item " *ngIf="this.getuser.utype!='Manager' && this.getuser.utype!='Employee'" (click)="edit(data);show=!show" >Edit</div>        
+                     <div class="dropdown-divider" *ngIf="this.getuser.utype!='Manager' && this.getuser.utype!='Employee'" ></div>
+                     <div class="btn dropdown-item "(click)="view(data);show=!show" >View</div>  
+                 </div>
+  
+                 <div >
+                 <div class="" id="main" style="border-style:hidden;height: auto;width: auto;">
+                  <img class="imageClass" style="float:left;" src="./assets/Images/employee.jpg">
+                <!-- src={{data.img}} -->
+                  <h5 class="card-title" style="color: black;">  {{data.official[0].firstname}} {{data.official[0].lastname}}
+                  <h6 style="font-size: 15;color: black">  {{data.official[0].role}}</h6>
+                  <h6 style="font-size: 13;"> {{data.official[0].departments}}</h6>
+            </h5>
+            </div>
+  
+          
+            <div class="" id="child" style="border-style:hidden;height: auto;width: auto;">
+              <span><p> <img class="" style="float:left;height:18px;width: 15px;" src="./assets/Images/user.png"> &nbsp;<a class="card-text" (click)="view(data);show=!show" style="color:cornflowerblue; font-size: 12px;">{{data.official[0].username}}</a></p></span>
+                <span><p> <img class="" style="float:left;height:18px;width: 15px;" src="./assets/Images/email.png"> &nbsp;<a class="card-text" (click)="view(data);show=!show" style="color:cornflowerblue;font-size: 12px;">{{data.official[0].email}}</a></p></span>
+                <span><p> <img class="" style="float:left;height:18px;width: 15px;" src="./assets/Images/call.png"> &nbsp;<a class="card-text" (click)="view(data);show=!show" style="color:cornflowerblue;font-size: 12px;">{{data.official[0].phonenumber}}</a></p></span>
+                <!--  <button type="button" class="btn btn-default btn-sm" (click)="edit(data);show=!show" > Edit </button> -->
+             </div>
+                <p class="card-text"><small class="text-muted"></small></p>
+                
+              </div>
+  <!--           <img class="card-img" style="" src="" alt="Card image cap">
+   -->          </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  </div>

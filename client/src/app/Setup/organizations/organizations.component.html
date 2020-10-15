@@ -1,0 +1,27 @@
+<div class="row " id="second_card" style="height: 100%">
+     
+<div style="width: 100%;" class="nav-side-menu">
+   
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+  
+    <div class="menu-list">
+  
+        <ul id="menu-content" class="menu-content collapse out">
+            <li (click)="orginfo()"><a> Organization Info</a></li>
+            <li (click)="businessunit()"><a>Business Units</a></li>
+            <li (click)="departments()"> <a>Departments </a></li>
+            <li><a> Organization Structure</a></li>
+            <li><a>Organization Hierarchy</a></li>
+            <li (click)="announce()"><a> Announcements</a></li>
+        </ul>
+        <li  data-toggle="collapse" data-target="#loc" class="collapsed "><a>Policy Documents
+            <span class="arrow"></span> </a></li>
+            <ul class="sub-menu collapse" id="loc">
+              <li (click)="manage_category"><a>Manage Categories</a></li>
+              <li> <a>Employee Documents</a></li>
+              <li><a>Process Documents </a></li>
+            </ul>        
+</div>
+</div>
+</div>
+ 

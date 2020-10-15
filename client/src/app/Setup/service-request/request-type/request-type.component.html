@@ -1,0 +1,286 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show">
+    <div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Configurations </li>
+        <li class="breadcrumb-item active">Request Types</li>
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:500">Request Types</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button>
+    </div><br><br>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                  <th>Action</th>
+                  <th>Category</th>
+                  <th>Request Type</th>
+                  <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let reqo of reqtype;let i = index ">
+                <td>
+                    <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(reqo)"></i>&nbsp;&nbsp;
+                  <i (click)="edit(reqo);show=!show;"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;
+                    <i (click)="delete(reqo,i)" title="Delete" class="fa fa-trash-o"></i>
+                </td>
+               <td >{{reqo.requesttype[0].category}}</td>
+               <td >{{reqo.requesttype[0].requesttype}}</td>
+               <td>{{reqo.requesttype[0].description}}</td> 
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form class="form-horizontal" [formGroup]="form">
+  <div *ngIf= "show">
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">Configurations </li>
+          <li class="breadcrumb-item active">Request Types</li>
+          <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+        </ol>
+      </div>
+
+      <div class="row">
+          <div class="col-md-12">
+              <div class="col-md-4">
+                <br>
+                <md-select placeholder="Category" [(ngModel)]="requ.requesttype[0].category" formControlName="categori">
+                   <md-option *ngFor="let b of reqq" (click)="selectbusiness(b,requ,requ.requesttype[0].category)" [value]="b.categories[0].category">
+                    {{b.categories[0].category}}
+                   </md-option>
+              </md-select>
+             
+              <br>
+              <i style="color: #1565c0" onclick="document.getElementById('basicscategory').style.display='block'" >Add Category</i><br>
+              <span  style="color: red"   *ngIf="!requ.requesttype[0].category">
+                please select category
+             </span>
+              </div> 
+         </div>
+      </div><br><br>
+      <div class="row">
+        <div class="col-md-4">
+          <md-input-container class="example-full-width">
+          <input mdInput placeholder="Request Type" [(ngModel)]="requ.requesttype[0].requesttype" pattern="^[a-zA-Z0-9 ]*$" formControlName="reqt" required>
+          <md-error>Please select category.</md-error>
+          </md-input-container><br><br><br>
+        </div>
+        <div class="col-md-4">
+          <md-input-container class="example-full-width">
+          <input mdInput #message maxlength="200" placeholder="Description" [(ngModel)]="requ.requesttype[0].description" formControlName="descc">
+          <md-hint align="end">{{message.value.length}} characters entered(200 maximum)</md-hint>
+          </md-input-container><br><br><br>
+        </div>
+
+        <div  class="col-md-12" style="margin-top: 5%">
+          <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(requ);show=!show" [disabled]="!form.valid"> Save</button>
+          <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(requ);show=!show;updatebutton=!updatebutton;" [disabled]="!form.valid"> Update</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "cancel(requ);show=!show"> Cancel </button>
+        </div>
+      </div>
+    </div>
+</form>
+
+
+        <!-- <i style="color:#1565c0 ;" id="ab1" (click)="showDiv1();hide();" onclick="getElementById['ab1'].style.display = 'block'; this.style.display = 'none'">ADD REQUEST TYPE 1</i>
+    <div id="welcomeDiv1"  style="display:none;"  class=" w3-animate-opacity" >
+        <br>
+        <div class="col-md-12 panel">
+            <header class=" bg-primary">
+                <span onclick="document.getElementById('welcomeDiv1').style.display='none'" class=" w3-display-topright fa fa-times" (click)="a();" ></span>
+              </header>
+        <div class="row">
+          <div class="col-md-3">
+              <md-input-container class="example-full-width">
+                  <input mdInput placeholder="Request type" pattern="^[a-zA-Z0-9 ]*$"> 
+                  <md-error >
+                      Please enter valid request type.
+                  </md-error>
+                  </md-input-container>
+     </div>
+     <div class="col-md-3">
+        <md-input-container class="example-full-width">
+            <input mdInput placeholder="Description" maxlength="200">
+            <md-hint align="end">200 characters remaining (200 maximum)</md-hint>
+          </md-input-container>
+     <br><br><br>
+     </div>
+    </div>
+    </div>
+    <i style="color:#1565c0 ;" id="ab2" (click)="showDiv2();hide1();" onclick="getElementById['ab2'].style.display = 'block'; this.style.display = 'none'">ADD REQUEST TYPE 2</i>
+    </div>
+    <div id="welcomeDiv2" style="display:none;"  class=" w3-animate-opacity" >
+        <br>
+        <div class="col-md-12 panel">
+            <header class=" bg-primary">
+                <span onclick="document.getElementById('welcomeDiv2').style.display='none'" class=" w3-display-topright fa fa-times" (click)="b();" ></span>
+              </header>
+        <div class="row">
+          <div class="col-md-3">
+              <md-input-container class="example-full-width">
+                  <input mdInput placeholder="Request type"  pattern="^[a-zA-Z0-9 ]*$"> 
+                  <md-error >
+                      Please enter valid request type.
+                  </md-error>
+                  </md-input-container>
+     </div>
+     <div class="col-md-3">
+        <md-input-container class="example-full-width">
+            <input mdInput placeholder="Description"  maxlength="200">
+            <md-hint align="end">200 characters remaining (200 maximum)</md-hint>
+          </md-input-container>
+     <br><br><br>
+     </div>
+    </div>
+    </div>
+    
+       
+    <i style="color:#1565c0 ;" id="ab3" (click)="showDiv3();hide2();" onclick="getElementById['ab3'].style.display = 'block'; this.style.display = 'none'">ADD REQUEST TYPE 3</i>
+  </div>
+    <div id="welcomeDiv3"  style="display:none;"  class=" w3-animate-opacity" >
+        <br>
+        <div class="col-md-12 panel">
+            <header class=" bg-primary">
+                <span onclick="document.getElementById('welcomeDiv3').style.display='none'" class=" w3-display-topright fa fa-times" (click)="c();" ></span>
+              </header>
+        <div class="row">
+          <div class="col-md-3">
+              <md-input-container class="example-full-width">
+                  <input mdInput placeholder="Request type"   pattern="^[a-zA-Z0-9 ]*$"> 
+                  <md-error >
+                      Please enter valid request type.
+                  </md-error>
+                  </md-input-container>
+     </div>
+     <div class="col-md-3">
+        <md-input-container class="example-full-width">
+            <input mdInput placeholder="Description"  maxlength="200">
+            <md-hint align="end">200 characters remaining (200 maximum)</md-hint>
+          </md-input-container>
+     <br><br><br>
+     </div>
+    </div>
+    </div>
+   
+
+    <i style="color:#1565c0 ;" id="ab4" (click)="showDiv4();hide3();" onclick="getElementById['ab4'].style.display = 'block'; this.style.display = 'none'">ADD REQUEST TYPE 4</i>
+  </div>
+    <div id="welcomeDiv4"  style="display:none;"  class=" w3-animate-opacity" >
+        <br>
+        <div class="col-md-12 panel">
+            <header class=" bg-primary">
+                <span onclick="document.getElementById('welcomeDiv4').style.display='none'" class=" w3-display-topright fa fa-times" (click)="d();" ></span>
+              </header>
+        <div class="row">
+          <div class="col-md-3">
+              <md-input-container class="example-full-width">
+                  <input mdInput placeholder="Request type"   pattern="^[a-zA-Z0-9 ]*$"> 
+                  <md-error >
+                      Please enter valid request type.
+                  </md-error>
+                  </md-input-container>
+     </div>
+     <div class="col-md-3">
+        <md-input-container class="example-full-width">
+            <input mdInput placeholder="Description" maxlength="200">
+            <md-hint align="end">200 characters remaining (200 maximum)</md-hint>
+          </md-input-container>
+     <br><br><br>
+    </div>
+    </div>
+    </div>
+    
+    <i style="color:#1565c0 ;" id="ab5" (click)="showDiv5();hide4();" onclick="getElementById['ab5'].style.display = 'block'; this.style.display = 'none'">ADD REQUEST TYPE 5</i>
+  </div>
+        <div  class="col-md-12" style="margin-top: 5%">
+          <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(req);show=!show"> Save</button>
+          <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(req);show=!show;updatebutton=!updatebutton;"> Update</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "cancel(req);show=!show"> Cancel </button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+
+
+  <div id="basicscategory" class="w3-modal">
+    <div class="w3-modal-content">
+      <header class="w3-container w3-teal bg-primary">
+        <span onclick="document.getElementById('basicscategory').style.display='none'"
+          style="margin-top: -1%;font-weight: 500"
+        class="w3-button w3-display-topright fa fa-times "></span>
+        <h6>Category</h6>
+      </header>
+      <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+      <div class="w3-container">
+        <div class="col-md-12">
+          <div class="row">
+            
+            <div class="col-md-6">
+              <md-input-container class="example-full-width">
+              <input required name="category" [(ngModel)]="cat.categories[0].category"  mdInput pattern="^[a-zA-Z0-9 ]*$" placeholder=" Category">
+            <md-error>
+              Please enter valid category.
+            </md-error>
+          </md-input-container>
+
+            </div>
+            
+            <div class="col-md-6">
+              <md-input-container class="example-full-width">
+              <input mdInput name="description" [(ngModel)]="cat.categories[0].description"  #message maxlength="200" placeholder="Description">
+              <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+              </md-input-container><br><br><br>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+        <div class="col-sm-12">
+          <button style="float: right;" class="btn btn-primary btn-sm"(click)="savecategory(cat);"> Save</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+
+
+  
+  <md2-dialog #deptModal>
+      <md2-dialog-title>Request Type</md2-dialog-title>
+      <div class=" row box">
+          <div class="emp-info">
+              Category : {{requ.requesttype[0].category}}
+          </div>
+          <div class="emp-info ">
+              Request Type : {{requ.requesttype[0].requesttype}}
+          </div><br>
+          <div class="emp-info alter-div">
+              Description : {{requ.requesttype[0].description}}
+          </div>
+          <div class="emp-info alter-div">
+            </div>
+        </div>
+        <md2-dialog-footer>
+            <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+        </md2-dialog-footer>
+      </md2-dialog>

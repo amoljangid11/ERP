@@ -1,0 +1,117 @@
+<div  class="col-md-12" style="padding: 1% 5% 2% 5%;overflow: auto;">
+  <div class="card row" style="overflow: auto;">
+  
+   <ul class="nav nav-tab nav-pills left_steps" >       
+        <li class="manage inactive" style="width: 20%;padding: 5px" (click)="module()" >
+          <div class="circle">1</div>
+          <div></div>
+          <span><h4><img class="imageClass" src="./assets/Images/modules.png"/>&nbsp; Modules</h4></span>
+          <span>Enable the modules that are essential to your human resource process by selecting or deselecting them.
+          </span>
+          <div>completed</div>
+        </li>
+        
+        <li class="site inactive" style="width: 20%;padding: 5px" (click)="site()">
+          <div class="circle">2</div>
+          <div></div>
+          <span><h4><img class="imageClass" src="./assets/Images/setting1.png"/>&nbsp;Site Config</h4></span>
+          <span>Configure the standards used in your organization by providing the site preferences.
+          </span>
+          <div>completed</div>
+        </li >
+
+        <li class="org inactive" style="width: 20%;padding: 5px" (click)="organization()">
+          <div class="circle">4</div>
+          <div></div>
+          <span><h4><img class="imageClass" src="./assets/Images/org.png"/>&nbsp;Organization</h4></span>
+          <span>Provide your organization information to get your system up and running
+          </span>
+          <div>completed</div>
+        </li>
+
+        <li class="business inactive" style="width: 20%;padding: 5px" (click)="business()">
+          <div class="circle">3</div>
+          <div></div>
+          <span><h4><img class="imageClass" src="./assets/Images/bulding1.png"/>&nbsp;Business</h4></span>
+          <span>Configure business unit and departments in your organization.
+          </span>
+          <div>completed</div>
+        </li>
+     
+        <li class="service inactive" style="width: 20%;padding: 5px" (click)="service()">
+          <div class="circle">5</div>
+          <div></div>
+          <span><h4><img class="imageClass" src="./assets/Images/ser.png"/>&nbsp;Service Request</h4></span>
+         <span>Configure service request settings used in your organization.
+          </span>
+          <div>completed</div>
+        </li>
+  </ul>
+  <div   class=" col-md-12" style="overflow: auto;height:75%">
+          <router-outlet name="frstchild"></router-outlet>      
+  </div>
+   <!--  <div>
+        <ul >       
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        
+
+           <li> <div >
+              <a (click)="site()" ><div class="circle-tile-heading green"><i class="fa fa-venus-mars fa-2x"></i></div></a>
+              <div class="circle-tile-content red">
+                  <div class="circle-tile-description text-purple"><h6>Site-Config</h6></div>
+              </div>
+            </div> </li>    
+          <li>  <div >
+                <a
+                (click)="business()"><i class="fa fa-users fa-fw fa-2x"></i></a>
+               
+                  <div  class="circle-tile-description text-green "  ><h6>Business</h6></div>                  
+              
+            </div></li>
+           <li> <div >
+              <a (click)="service()"><div class="circle-tile-heading green"><i class="fa fa-meanpath fa-fw fa-2x"></i></div></a>
+              <div class="circle-tile-content dark-blue">
+                <div class="circle-tile-description text-purple"><h6> Service </h6></div>
+              </div>
+            </div></li>
+
+          <li>  <div >
+              <a  (click)="module()"><div class="circle-tile-heading purple"><i class="fa fa-meanpath fa-fw fa-2x animated-hover"></i></div></a>
+              <div class="circle-tile-content dark-blue">
+                <div class="circle-tile-description text-green"><h6> Module</h6></div>               
+              </div>
+            </div></li>
+
+          <li>  <div >
+              <a (click)="organization()"><div class="circle-tile-heading green "><i class="fa fa-shopping-basket fa-fw fa-2x"></i></div></a>
+              <div class="circle-tile-content red">
+                <div class="circle-tile-description text-purple"><h6>OrganiZations</h6></div>
+              </div>
+            </div></li>
+            </ul>
+            </div> -->
+     
+</div>
+
+</div> 
+     
+
+
+  <!--   <div class="card-footer text-muted default-color-dark white-text">
+        <p>2 days ago</p>
+    </div> -->
+
+
+
+
+  
+   
+
+
+
+
+

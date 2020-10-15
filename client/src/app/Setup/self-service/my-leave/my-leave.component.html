@@ -1,0 +1,240 @@
+<div class="col-md-12 card card-outline-info" style="height:100%">
+  <div  *ngIf= "!show">
+    <div >
+      <ol class="breadcrumb row ">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Self Service </li>
+        <li class="breadcrumb-item ">Leaves </li>
+        <li class="breadcrumb-item active">My Leave</li>
+      </ol>
+    </div><div >
+      <span style="font-weight:  500">My Leave</span>
+      
+    </div><br>
+    <div >
+    	<div class="row" style="padding: 1% 0% 1% 1%">
+    		<div class="box" (click)="all('All');view='yes'">
+    		 <div style="background-color: #fff4c6 " >
+    		 	<span>All Leaves</span><br><span class="text-info">{{countall}}</span>
+    		 </div>    			
+    		</div>
+    		<div class="box"   (click)="all('Pending for approval');view='yes'">
+    		  <div class="box2">
+    		  	<span>Pending Leaves</span><br><span class="text-success">{{pendingcount}}</span>
+    		  </div>  	
+    		</div>
+    		<div class="box"  (click)="all('Cancelled');view='no'">
+    			<div class="box2" >
+    				<span>Cancel Leaves</span><br><span class="text-warning">{{cancelcount}}</span>
+    			</div>
+    		</div>  
+  		    <div class="box"   (click)="all('Approved');view='no'">
+    			<div class="box2" >
+    				<span>Approved Leaves</span><br><span class="text-primary">{{approvedcount}}</span>
+    			</div>  
+    		</div>
+    		<div class="box"  (click)="all('Rejected');view='no'" >
+    			<div class="box2" >
+    				<span>Rejected Leaves</span><br><span class="text-danger">{{rejectedcount}}</span>
+    			</div>  
+    		</div>
+    		
+    	</div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-12">
+        <div >
+          <table  class="table table-bordered table-striped table-sm ">
+            <thead class="bg-info">
+              <tr>
+                <th>Action</th>
+                <th>Leave Type</th>
+                <th>Reason</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Days</th>
+                <th>Applied On</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let leave of leavemanagement" >
+                <td><i class="fa fa-eye text-success"  (click)="open(deptModal);view1(leave)"  style="margin-left: 5%" ></i>
+                    <i *ngIf="view=='yes' && leave.leaverequest.status=='Pending for approval' " (click)="canceldata=leave" onclick="document.getElementById('identity').style.display='block';" class="fa fa-ban text-warning" style="margin-left: 5%" ></i>
+                </td>
+                <td>{{leave.leaverequest.leavetype}}</td>
+                <td>{{leave.leaverequest.reason}}</td>
+                <td>{{leave.leaverequest.from_date}}</td>
+                <td>{{leave.leaverequest.to_date}}</td>
+                <td>{{leave.leaverequest.no_days}}</td>
+                <td>{{leave.leaverequest.applied_on}}</td>
+              </tr>
+            </tbody>
+          </table> 
+        </div></div>
+      </div>
+    </div>
+    <div *ngIf= "show" >
+      <div >
+        <ol class="breadcrumb row ">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Self Service </li>
+        <li class="breadcrumb-item ">Leaves </li>
+        <li class="breadcrumb-item ">My Leave</li>
+        <li class="breadcrumb-item active"> <i class="fa fa-plus">Add</i></li>
+          
+        </ol>
+      </div>
+   <!--  <div class="row">
+        <div class="col-sm-4">
+        	<md-input-container class="example-full-width"  >
+		      <input mdInput placeholder="Employee Code"   required>
+		     </md-input-container>
+
+		     <md-input-container>
+		      <input mdInput [mdDatepicker]="picker1"   placeholder="Date of Joining" required>
+		      <button mdSuffix [mdDatepickerToggle]="picker1"></button>
+		     </md-input-container>
+		     <md-datepicker #picker1></md-datepicker>
+
+        </div>
+        <div class="col-sm-4">
+            <br>
+        	<md-select placeholder="Role"   class="example-full-width">
+		      <md-option  required >
+		      
+		      </md-option>
+		    </md-select> 
+        </div>
+        <div class="col-sm-4">
+        <md-input-container class="example-full-width"  >
+          <textarea rows="5" placeholder="brgtr"></textarea>
+         </md-input-container>
+        </div>
+        
+        <div  class="col-md-12" style="margin-top: 5%">
+          <button class="btn btn-outline-success btn-sm" (click)="save(account);show=!show"> Save</button>
+          <button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+        </div>
+      </div> -->
+    </div>
+  </div>
+<div id="identity"  class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-teal bg-primary">     
+      <h6>Do you want to cancel the request?</h6>
+    </header>
+    
+    <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+      <div class="col-sm-12">
+       <div style="float:right">       
+        <button  class="btn btn-primary btn-sm" 
+                 onclick="document.getElementById('identity').style.display='none'"  data-dismiss="model" >No</button>
+        <button  type="submit" class="btn btn-primary btn-sm" 
+                 onclick="document.getElementById('identity').style.display='none'"  (click)="reqcancel('Cancelled')" data-dismiss="model" >Yes</button>
+      </div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+
+<md2-dialog #deptModal>
+  <md2-dialog-title>My Leave Details</md2-dialog-title>
+  <div class="row box3">
+      <div class="emp-info">
+          <b>  Available Leaves : </b> {{leave.leaverequest.leavelimit}}
+      </div>
+      <div class="emp-info">
+          <b>  Reason : </b> {{leave.leaverequest.reason}}
+      </div>
+      <div class="emp-info alter-div">
+          <b>  Leave Type : </b> {{leave.leaverequest.leavetype}}
+      </div>
+      <div class="emp-info alter-div">
+      <b> Leave : </b> {{leave.leaverequest.leavefor}}
+      </div>
+      <div class="emp-info">
+      <b> From Date : </b> {{ leave.leaverequest.from_date | date}}
+      </div>
+      <div class="emp-info">
+      <b> To Date : </b> {{leave.leaverequest.to_date | date}}
+      </div>
+      <div class="emp-info alter-div">
+      <b>  Status : </b> {{leave.leaverequest.status}}
+      </div>
+      <div class="emp-info alter-div">
+      <b>  Number of Days  : </b> {{leave.leaverequest.no_days}}
+      </div>
+      <div class="emp-info">
+      <b>  Reporting Manager : </b> {{ leave.leaverequest.reportingmanager}}
+      </div>
+      <div class="emp-info">
+      <b>  Applied On : </b> {{leave.leaverequest.applied_on}}
+      </div>
+      <div class="emp-info alter-div">
+       <b> Comments : </b> {{leave.leaverequest.comments}}
+      </div>
+      <div class="emp-info alter-div">
+          <b>Revoke Days Count : </b> {{leave.leaverequest.revokedayscount}}
+      </div>
+  </div>
+  <br>
+  <span><b>LEAVE REQUEST HISTORY</b></span>
+  <div class="box4" *ngIf="leave.leaverequest.status=='Approved'">
+      <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+      <tr>
+        <td>
+      <img class="imageClass" src="./assets/Images/employee.jpg"/>
+      </td>
+      <td>
+    <span>
+        {{leave.leaverequest.approvestatus}} on {{leave.leaverequest.approved_on | date}}
+    </span>
+    </td>
+    </tr>
+      </table>
+  </div>
+  <div class="box4" *ngIf="leave.leaverequest.status=='Rejected'">
+      <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+          <tr>
+            <td>
+          <img class="imageClass" src="./assets/Images/employee.jpg"/>
+          </td>
+          <td>
+        <span>
+            {{leave.leaverequest.rejectstatus}} on {{leave.leaverequest.rejected_on | date}}
+        </span>
+          </td>
+          </tr>
+          </table>
+      </div>
+      <div class="box4" *ngIf="leave.leaverequest.status=='Cancelled'">
+          <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+          <tr>
+            <td>
+          <img class="imageClass" src="./assets/Images/employee.jpg"/>
+          </td>
+          <td>
+        <span>
+            {{leave.leaverequest.cancelstatus}} on {{leave.leaverequest.cancelled_on | date}}
+        </span>
+        </td>
+        </tr>
+          </table>
+      </div>
+      <div class="box4" >
+          <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+              <tr>
+                <td>
+              <img class="imageClass" src="./assets/Images/employee.jpg"/>
+              </td>
+              <td>
+            <span>
+                {{leave.leaverequest.requested}} on {{leave.leaverequest.applied_on | date}}
+            </span>
+              </td>
+              </tr>
+              </table>
+          </div>
+</md2-dialog>

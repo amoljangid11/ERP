@@ -1,0 +1,143 @@
+<div class="col-md-12 card card-outline-info" style="height:100%;" >
+  
+  <div  style="overflow: auto;"> 
+      <div><br>
+      <div class="box2" style="float: right;margin:0% 1% 0% 0%">
+        <img class="imageClass1" src="./assets/Images/pdf.png"/>&nbsp;<i style="color: #1565c0" (click)="downloadPDF()">Export to PDF</i> &nbsp;
+        <img class="imageClass1" src="./assets/Images/excel.ico"/>&nbsp;<i style="color: #1565c0" (click)="downloadExcel('emptbl', 'employeedata')" >Export to Excel</i>
+      </div>
+      </div><br><br>
+   
+  
+    <div class="display_emp" >
+        <label>Generate Custom Report</label><br><br>
+     <div class="row">
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Reporting Manager" (input)="peremp()"  [(ngModel)]="this.reportingmanager">
+    </md-input-container><br><br><br>
+   
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Business Unit" [(ngModel)]="this.businessunit">
+    </md-input-container><br><br><br>
+  
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Department" [(ngModel)]="this.departments">
+    </md-input-container><br><br><br>
+  
+    
+    <md-input-container class="example-full-width">
+      <input mdInput placeholder="Role" [(ngModel)]="this.role">
+  </md-input-container><br><br><br>
+
+  
+  <md-input-container class="example-full-width">
+      <input mdInput placeholder="Job Title" [(ngModel)]="this.jobtitle">
+  </md-input-container><br><br><br>
+
+  <md-input-container class="example-full-width">
+      <input mdInput placeholder="Position" [(ngModel)]="this.position">
+  </md-input-container><br><br><br>
+
+  
+  <md-input-container class="example-full-width">
+    <input mdInput placeholder="Employment Status" [(ngModel)]="this.status">
+</md-input-container>
+
+<md-input-container class="example-full-width">
+    <input mdInput placeholder="Date Of Joining" [(ngModel)]="this.dateofjoing">
+</md-input-container><br><br><br>
+
+
+<md-input-container class="example-full-width">
+  <input mdInput placeholder="Mode Of Employment" [(ngModel)]="this.modeofemp">
+</md-input-container>
+
+            <div  class="col-md-12" style="margin-top: 5%">
+              <button type="button" class="btn btn-sm btn-primary" (click)="downloadExcel1('report', 'employeedata');show=!show"> GENERATE REPORT</button>
+              <button type="reset"  class="btn btn-sm btn-warning" (click)="reset();">Reset</button>
+            </div>
+    </div>
+</div>
+  
+  <div class= "row">
+         &nbsp;&nbsp;<i class="fa fa-arrow-down" aria-hidden="true"  (click)="displaybox();"></i>&nbsp;<label>Employees</label>     
+      <div id="empp" class="col-md-12 box" style="float: right;">
+  
+          <angular2-multiselect [data]="itemList"  [(ngModel)]="team.Empteam" [settings]="settings" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
+             </angular2-multiselect>
+
+              <div>
+                 <br>
+                 <button type="reset" *ngIf="add"  class="btn btn-sm btn-success" (click)="save(team);">Apply</button>
+                 <button  class="btn btn-sm btn-success" *ngIf="!add" (click)="update1(team);" >Apply</button>   
+                 <i  class="btn btn-sm btn-warning" (click)="cancel1();">Cancel</i>
+              </div>
+                 <br>
+      </div>
+                <br><br>
+
+                <div class="row">
+                    <div class="col-lg-12" id="employees">
+                      <div  >
+                             <table id="emptbl" class="table table-bordered table-striped table-sm">
+                               <thead class="bg-success">
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Employee</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Role</th>
+                            <th>Reporting Manager</th>
+                            <th>Job Title</th>
+                            <th>Business Unit</th>
+                            <th>Department</th>
+                        </tr>
+                         </thead>
+                         <tbody>
+                           <tr *ngFor="let bu of offemp;let i = index " >
+                          <td>{{bu.official[0].username}}</td>
+                          <td>{{bu.official[0].firstname}} {{bu.official[0].lastname}}</td>
+                          <td>{{bu.official[0].email}}</td>
+                          <td>{{bu.official[0].phonenumber}}</td>
+                          <td>{{bu.official[0].role}}</td>
+                          <td>{{bu.official[0].reportingmanager}}</td>
+                          <td>{{bu.official[0].jobtitle}}</td>
+                          <td>{{bu.official[0].businessunit}}</td>
+                          <td>{{bu.official[0].departments}}</td>
+                         </tr>                                 
+                       </tbody>                        
+                       </table>
+            </div>
+          </div>
+      </div>
+  </div>
+
+</div>
+</div>
+  
+<!--   
+<div  style="display: none">
+    <table id="report" class="table table-bordered table-striped table-sm">
+      <thead class="bg-success">
+<tr>
+   <th>Business Unit</th>
+   <th>Code</th>
+   <th>Country</th>
+   <th>Started On</th>
+</tr>
+</thead>
+<tbody>
+  <tr *ngFor="let bu of bureport ;let i = index ">
+ <td>{{bu.businessunits[0].name}}</td>
+ <td>{{bu.businessunits[0].code}}</td>
+ <td>{{bu.businessunits[0].country}}</td>
+ <td>{{bu.businessunits[0].starton | date}}</td>
+</tr>                                 
+</tbody>                        
+</table>
+</div> -->
+  
+  
+  
+  
+  

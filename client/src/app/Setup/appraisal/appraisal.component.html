@@ -1,0 +1,51 @@
+<div class="row " id="second_card" style="height: 100%">
+     
+    <div style="width: 100%;" class="nav-side-menu">
+    
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+    
+          <div class="menu-list">
+            <ul id="menu-content" class="menu-content collapse out">
+             <li data-toggle="collapse" data-target="#holiday" class="collapsed "><a>Configuration
+              <span class="arrow"></span></a></li>
+                  <ul class="sub-menu collapse" id="holiday">
+                      <li (click)="parameter()"><a >Parameters</a></li>
+                      <li  (click)="question()"><a>Questions</a></li>
+                      <li  (click)="skill()"><a>Skills</a></li>
+                      <li  (click)="rating()"><a>Ratings</a></li>
+                  </ul>
+                  <ul id="menu-content" class="menu-content collapse out">
+                        <li><a (click)="initializeappraisal()">Initialize Appraisal</a></li>
+                  </ul>
+                  <ul id="menu-content" class="menu-content collapse out">
+                        <li><a (click)="managerappraisal()">Manager Appraisal</a></li>
+                  </ul>
+                  <ul id="menu-content" class="menu-content collapse out">
+                     <li><a (click)="managerstatus()">Manager Status</a></li>
+                  </ul>
+                  <ul id="menu-content" class="menu-content collapse out">
+                     <li><a (click)="employeestatus()">Employee Status</a></li>
+                   </ul>
+                   <ul id="menu-content" class="menu-content collapse out">
+                    <li><a (click)="selfappraisal()">Self Appraisal</a></li>
+                  </ul>
+                  <ul id="menu-content" class="menu-content collapse out">
+                    <li><a (click)="myteamappraisal()">My Team Appraisal</a></li>
+                  </ul>
+     
+              <li data-toggle="collapse" data-target="#leave" class="collapsed"><a>Appraisal History
+              <span class="arrow"></span></a></li>
+                  <ul class="sub-menu collapse" id="leave">
+                    <li (click)="employee_candidate()"><a >My Appraisal History</a></li>
+                    <li (click)="employee_candidate()"><a >Team Appraisal History</a></li>
+                      
+                  </ul>
+    
+              </ul>
+    
+         </div>
+    
+        </div>
+
+    </div>
+    

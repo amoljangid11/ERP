@@ -1,0 +1,52 @@
+<div class="col-md-12">
+        <div class="row">
+            <div  style="display: both" class="col-lg-12">
+                <button style="float: right;" class="btn btn-outline-primary btn-sm" (click)="open1();updatebutton=false;" ><i class="fa fa-plus"></i> New Document</button><br><br>
+              
+            </div><br><br>
+        </div>
+       
+        <div class="row" id="content" *ngIf="!show">
+            <span style="font-weight:500">Documents</span>
+            <div class="container"><br>
+              <input type="text" placeholder="Document Name" [(ngModel)]="employee.documents[i].docname">
+              <input type="file" [(ngModel)]="employee.documents[i].filename" (change)="fileChangeEvent($event)"  placeholder="Upload file..." />
+              <button type="button" (click)="upload()">Upload</button>
+               
+              
+            <div class="row">
+            <div class="col-md-12">            
+                <div style="float: right;">                               
+                    <button *ngIf="!updatebutton" class="btn btn-outline-primary btn-sm" (click)="save(employee);show=!show" >Save</button>
+                    <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(employee);show=!show;updatebutton=!updatebutton;"> Update</button>
+                    <button class="btn btn-outline-primary btn-sm" (click)="cancel()" >Cancel</button>
+                </div>
+            </div>
+            </div>
+    </div>
+    </div>
+    
+    <div class="row"><br>
+            <div class="col-lg-12"><br>
+              <div>
+                 <table >
+                  <tbody *ngIf="docu">
+                    <tr *ngFor="let dc of official.documents;let i = index "style="border-bottom:2px dotted rgb(167, 165, 165);line-height: 3;" >
+                      <td>{{dc.docname}}</td>&nbsp;&nbsp;&nbsp;
+                      <td><span><a class="card-text" (click)="view(val)" style="color:cornflowerblue;font-size: 14px;">{{dc.path}}</a></span></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <td> <i (click)="edit(dc,official,i);show = !show" title="Edit"  style="color: #1565c0;float: right;margin:0% 1% 0% 0%;font-size: 14px;" class="fa fa-pencil-square-o">&nbsp;&nbsp;Edit</i><td>&nbsp;&nbsp;
+                      <td> <i style="color: #1565c0;float: right;margin:0% 1% 0% 0%;font-size: 14px;" (click)="delete(dc,i)" title="Delete" class="fa fa-trash-o">&nbsp;&nbsp;Delete</i></td>&nbsp;&nbsp;
+                       <a [href]="fileUrl" style="font-size: 14px;" download="file.png" class="fa fa-download">&nbsp;&nbsp;DownloadFile</a>
+                    </tr>
+                  </tbody>
+                </table>
+              </div></div>
+              <div></div>
+              
+              </div>
+    </div>
+    
+    
+    
+    
+    

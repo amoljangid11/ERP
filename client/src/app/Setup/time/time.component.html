@@ -1,0 +1,57 @@
+<div class="row" style="height: 90%" style="padding: 0% 2% 1% 2%">
+  <div class="col-md-12">
+    <div style="padding-top: 0.5%" >
+        <button style="float:right;" class="btn btn-outline-primary btn-sm" (click)="dash()">
+        <i class="fa fa-caret-left" aria-hidden="true"></i>     Back to Dashboard</button>
+        <!-- <ol class="breadcrumb" >
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">Time </li>          
+        </ol>   -->      
+    </div>    
+    <div class="card card-outline-warning col-md-12" style="border-style: 2px solid black;padding:0%;
+                                             margin-top:-0.9%;height: 85%;" >
+        <div style="padding: 0% 0% 0% 0%;" class="card-header bg-warning" >
+          <nav  class="navbar navbar-toggleable-sm " style="height: 5%">
+              <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+              </button>
+                           
+          <ul *ngIf='aflag' id="navbarNav" class="navbar-nav collapse navbar-collapse  navbar-sm" >          
+            <li class="nav-item nav-link " (click)="timesheet()" ><a class="">TimeSheet</a></li>
+            <li class="nav-item nav-link " (click)="emptime()" ><a class="">Employee TimeSheet</a></li>
+            <li class="nav-item nav-link " (click)="clients()" ><a class="">Clients</a></li>
+            <li class="nav-item nav-link " (click)="deftask()" ><a class="" >Default Tasks</a></li>
+            <li class="nav-item nav-link " (click)="proj()" ><a class="">Projects</a></li>
+            <li class="nav-item nav-link " (click)="config()" ><a class="">Configuration</a></li>
+          </ul>
+
+          <ul *ngIf='mflag' id="navbarNav" class="navbar-nav collapse navbar-collapse  navbar-sm" >          
+              <li class="nav-item nav-link " (click)="timesheet()" ><a class="">TimeSheet</a></li>
+              <li class="nav-item nav-link " (click)="emptime()" ><a class="">Employee TimeSheet</a></li>
+              <li class="nav-item nav-link " (click)="clients()" ><a class="">Clients</a></li>
+              <li class="nav-item nav-link " (click)="proj()" ><a class="">Projects</a></li>
+          </ul>
+
+          <ul *ngIf='eflag' id="navbarNav" class="navbar-nav collapse navbar-collapse  navbar-sm" >  
+              <li class="nav-item nav-link " (click)="timesheet()" ><a class="">TimeSheet</a></li> 
+              <li class="nav-item nav-link " (click)="proj()" ><a class="">Projects</a></li>
+          </ul>
+        </nav>
+        </div>
+        <div style="background-position: relative;overflow:  auto;overflow-x: hidden;" class="card-body row" >        
+            <div class="col-md-12" style="">
+              <router-outlet name="timechild"></router-outlet>
+            </div>         
+        </div>
+      </div>
+  </div>
+</div>
+<!-- <script>
+$(function() {
+$("li").click(function(e) {
+e.preventDefault();
+$("li").removeClass("active");
+$(this).addClass("active");
+});
+});
+</script> -->

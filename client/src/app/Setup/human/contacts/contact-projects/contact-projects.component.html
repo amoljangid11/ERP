@@ -1,0 +1,240 @@
+<div  class="row">
+<div *ngIf = "!show"  style="display: both" class="col-lg-12">
+  <div >
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">HR </li>
+      <li class="breadcrumb-item ">Contacts </li>
+      <li class="breadcrumb-item active">Projects </li>
+    </ol>
+ </div>
+
+<div  style="display: both" class="col-lg-12">
+ <span style="font-weight:500">Projects</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button> 
+</div><br><br>
+
+<div class="row">
+ <div class="col-lg-12">
+  <div class="table-responsive"> 
+  <table  class="table table-bordered table-hover ">
+    <thead class="thead-inverse">
+     <tr>
+      <th>Action</th>
+      <th>Project</th>
+      <th>Status</th>
+      <th>Base Project</th>
+      <th>Client</th>
+      <th>Currency</th>
+      <th>Project Type</th>
+      </tr>
+    </thead>
+    <tbody>
+                                  
+    </tbody>                        
+  </table>
+</div></div>
+</div>
+</div>
+</div>
+
+ <div style="width: 100%;" class="row">
+ <div *ngIf= "show" class="col-lg-12">
+   <div >
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">HR </li>
+      <li class="breadcrumb-item ">Contacts</li>
+      <li class="breadcrumb-item ">Projects</li>
+      <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+    </ol>
+ </div>
+ <br>
+
+<div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-3">
+  <md-input-container class="example-full-width">
+    <input mdInput placeholder="Project" [(ngModel)]="project" required>
+    <md-error>Please enter project name.</md-error>
+  </md-input-container><br><br><br>
+  <md-select placeholder="Currency" [(ngModel)]="curselect" name="currency">
+    <md-option *ngFor="let cur of curren" [value]="cur.currency">
+      {{cur.currency}}
+    </md-option> 
+  </md-select><br>
+<i style="color:#1565c0 ; "  data-toggle="modal" data-target="#basic">Add Currency</i>
+    
+    <div class="modal fade" id="basic" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Currency</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+            
+</div>
+          
+<div style="display: inline-flex;">
+ <div class="modal-body">
+<div style="margin-left: 2%;" class="row">
+<md-input-container class="example-full-width">
+    <input mdInput placeholder="Currency" [(ngModel)]="Currencyn" >
+</md-input-container><br><br><br>
+</div>
+
+<div style="margin-left: 2%;"  class="row">
+<md-input-container class="example-full-width">
+  <input  mdInput placeholder="Currency code"  [(ngModel)]="currencyc">
+</md-input-container><br><br><br>
+</div>
+
+<div style="margin-left: 2%;"  class="row">
+<md-input-container class="example-full-width">
+    <input mdInput #message maxlength="200" placeholder="Description" [(ngModel)]="desc">
+    <md-hint align="start">{{message.value.length}} characters entered / 200</md-hint>
+</md-input-container><br><br>
+    </div>
+  </div>
+</div>
+<br>
+
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-sm btn-primary" data-dismiss="modal" (click)="savechanges()">Save changes</button>
+  </div>
+  </div>
+ 
+</div>
+</div>
+<br><br><br>
+  <md-radio-group>
+     <label for="value">Project Type</label><br>
+     <md-radio-button value="0">Billable</md-radio-button>
+     <md-radio-button value="1">Non Billable</md-radio-button>
+     <md-radio-button value="2">Revenue generation</md-radio-button>
+  </md-radio-group><br><br><br>
+ 
+</div>
+
+<div class="col-md-3"><br>
+  <md-select placeholder="Status" [(ngModel)]="status_select" name="status">
+    <md-option *ngFor="let status of st" [value]="status.value">
+      {{status.view}}
+    </md-option> 
+  </md-select><i mdTooltip="Define the project status" class="fa fa-question-circle" ></i><br><br>
+  <p>Estimate</p>
+  <md-input-container>
+    <input mdInput [mdDatepicker]="picker" placeholder="From Date">
+    <button mdSuffix [mdDatepickerToggle]="picker"></button>
+  </md-input-container>
+  <md-datepicker #picker></md-datepicker> <br><br><br>
+  <md-input-container class="example-full-width">
+    <input mdInput #message maxlength="200" placeholder="Description">
+    <md-hint align="end">{{message.value.length}}/200</md-hint>
+  </md-input-container>
+</div>
+
+<div class="col-md-3"><br>
+  <md-select placeholder="Base Project" [(ngModel)]="baseselect" name="base">
+    <md-option *ngFor="let base of bases" [value]="base.value">
+      {{base.view}}
+    </md-option>
+  </md-select><i mdTooltip="Select a parent project" class="fa fa-question-circle" ></i><br><br><br><br>
+  <md-input-container>
+     <input mdInput [mdDatepicker]="pick" placeholder="To Date">
+     <button mdSuffix [mdDatepickerToggle]="pick"></button>
+  </md-input-container>
+  <md-datepicker #pick></md-datepicker> 
+  <br><br>
+</div>
+
+<div class="col-md-3"><br>
+  <md-select placeholder="Client" [(ngModel)]="selected" name="client">
+    <md-option *ngFor="let client of clients" [value]="client.value">
+      {{client.view}}
+    </md-option>
+  </md-select><br><p style="color: #1565c0" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Client</p><br>
+ <md-input-container class="example-full-width">
+    <input mdInput  [(ngModel)]="estimate" placeholder="Estimation Hour">
+  </md-input-container> 
+</div>
+</div>
+
+
+<div style="float: right;margin:0% 2% 0% 0%" class="row">
+  <div  class="col-md-12">
+    <button class="btn btn-outline-primary btn-sm" (click)="save();show=!show"> Save</button>
+    <button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+  </div>
+</div>
+
+</div></div>
+
+
+ <div  style="width: 100%;" class="row" >
+ 
+ <div class="col-lg-12">
+  
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Clients</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-4">
+    <md-input-container class="example-full-width">
+    <input mdInput placeholder="Client" >
+  </md-input-container><br><br><br>
+   <md-select placeholder="State" [(ngModel)]="selected" name="state">
+    <md-option *ngFor="let state of states" >
+     
+    </md-option>
+  </md-select><br><br><br><br>
+    
+    <md-input-container class="example-full-width">
+    <input mdInput  placeholder="Fax">
+  </md-input-container><br><br><br>
+</div>
+<div class="col-md-4">
+     <md-input-container class="example-full-width">
+      <input  name="address"  maxlength="100" [(ngModel)]="address" mdInput placeholder="Address">
+    </md-input-container><br><br>
+    <md-input-container class="example-full-width">
+      <input name="email" [(ngModel)]="email" mdInput placeholder="Email">
+    </md-input-container><br><br><br>
+     
+    <md-input-container class="example-full-width">
+    <input mdInput placeholder="Point Of Contact" >
+  </md-input-container><br><br>
+</div>
+<div class="col-md-4"><br>
+ <md-select placeholder="Country" [(ngModel)]="selected" name="country">
+    <md-option *ngFor="let country of countries" >
+      {{country.view}}
+    </md-option>
+  </md-select><br><br><br>
+ <!--  country: <select style="width:40%;height:3%;" [(ngModel)]="country">
+    <option *ngFor="let co of coun" [value]="co.country">
+    {{co.country}}
+    </option>
+    </select> -->
+ <md-input-container class="example-full-width">
+      <input name="phone_num" [(ngModel)]="phone_num" mdInput placeholder="Phone Number">
+    </md-input-container><br><br><br>    
+ 
+</div>
+</div>
+      <div class="modal-footer">
+      
+        <button  class="btn btn-primary"  (click)="savechange()">Save Changes</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+</div>

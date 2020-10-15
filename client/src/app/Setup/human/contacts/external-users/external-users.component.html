@@ -1,0 +1,100 @@
+<div  class="row">
+<div *ngIf = "!show" class="col-lg-12">
+  <div >
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">HR </li>
+      <li class="breadcrumb-item ">Contacts</li>
+      <li class="breadcrumb-item active">External Users</li>
+    </ol>
+ </div>
+
+<div  style="display: both" class="col-lg-12">
+ <span style="font-weight:500">External Users</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button> 
+</div><br><br>
+
+<div class="row">
+ <div class="col-lg-12">
+  <div class="table-responsive"> 
+  <table  class="table table-bordered table-hover ">
+ <thead class="thead-inverse">
+     <tr>
+      <th>Action</th>
+      <th>User ID</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Status</th>
+     </tr>
+      </thead>
+     <tbody>
+                                	
+     </tbody>
+                                
+    </table>
+   </div></div>
+</div>
+</div>
+
+
+ <div style="width: 100%;" class="row">
+ <div *ngIf= "show" class="col-lg-12">
+   <div >
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">HR </li>
+      <li class="breadcrumb-item ">Contacts</li>
+      <li class="breadcrumb-item ">External Users </li>
+       <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+    </ol>
+ </div>
+ <br>
+ 
+<div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-4"><br>
+   <md-select placeholder="User Type" [(ngModel)]="user" name="user">
+        <md-option *ngFor="let s of users" [value]="s.user_type">
+         {{s.user_type}}
+        </md-option>
+    </md-select><br><i style="color: #1565c0">Configure Identity Codes</i><br><br>
+<br><br>
+ <md-input-container class="example-full-width">
+    <input mdInput placeholder="Email" [(ngModel)]="email" required>
+    <md-error>Please enter email.</md-error>
+  </md-input-container><br><br><br>  
+   
+    </div>
+
+    <div class="col-md-4">
+     <md-input-container class="example-full-width">
+      <input  mdInput placeholder="First Name" [(ngModel)]="fname" required>
+      <md-error>Please enter first name.</md-error>
+    </md-input-container><br><br><br><br>
+    <br>
+      <md-select placeholder="Assign Role" [(ngModel)]="role" name="assign">
+        <md-option *ngFor="let ar of roles" [value]="ar.role">
+         {{ar.role}}
+        </md-option>
+    </md-select><br><br><br> 
+     
+</div>
+
+<div class="col-md-4">
+ <md-input-container class="example-full-width">
+     <input mdInput placeholder="Last name" [(ngModel)]="lname" required>
+     <md-error>Please enter last name.</md-error>
+  </md-input-container><br><br><br><br>
+  <md-input-container class="example-full-width">
+    <input mdInput  maxlength="100" placeholder="Comments">
+  </md-input-container><br><br><br>  
+</div>
+
+</div>
+
+<div style="float: right;margin:0% 2% 0% 0%" class="row">
+<div  class="col-md-12">
+<button class="btn btn-outline-primary btn-sm" (click)="save();show=!show"> Save</button>
+<button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+</div>
+</div>
+</div></div>

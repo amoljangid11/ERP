@@ -1,0 +1,14 @@
+/*    td:nth-last-child(1), th:nth-last-child(1)  {
+       max-width: 150px;
+    }
+       
+
+    th:nth-child(1)
+    {
+
+      border-top-left-radius: 10px;
+    }
+
+    th:nth-last-child(1){
+      border-top-right-radius: 10px;
+    }*/

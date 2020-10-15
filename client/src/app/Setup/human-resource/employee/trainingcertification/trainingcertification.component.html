@@ -1,0 +1,112 @@
+<div *ngIf= "!show"  class="col-lg-12">
+  <div class="row">
+    <div  style="display: both" class="col-lg-12">
+      <span style="font-weight:500">Training & Certification</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton = false;">Add</button>
+    </div><br><br>
+  </div>
+  <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+    {{ message }}
+  </div>
+  <div class="row">
+    <div class="col-lg-12"><br>
+      <div>
+        <table class="table table-bordered table-striped table-sm">
+          <thead class="bg-success">
+            <tr>
+              <th>Action</th>
+              <th>Course Name</th>
+              <th>Course Level</th>
+              <th>Course Offered By</th>
+              <th>Certificate Name</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="havetraining">
+            <tr *ngFor="let tc of official.training;let i = index " >
+              <td><i (click)="edit(tc,official,i);show = !show"  title="Edit" class="fa fa-pencil-square-o"></i>
+              <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(ad,official,i)"></i></td>
+              <td>{{tc.coursename}}</td>
+              <td>{{tc.courselevel}}</td>
+              <td>{{tc.offeredby}}</td>
+              <td>{{tc.certificatename}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+  </div>
+  <form class="form-horizontal" [formGroup]="form">
+  <div *ngIf= "show" class="col-lg-12">
+    <div   class="row">
+      <div class="col-md-4"><br>
+        <md-input-container class="example-full-width">
+        <input mdInput [(ngModel)]="employee.training[i].coursename"  placeholder="Course Name" formControlName="coursename"  pattern="^[a-zA-Z0-9 ]*$" maxlength="50" required>
+        <md-error>Please enter course name.</md-error>
+        </md-input-container><br><br> <br>
+        <md-input-container class="example-full-width">
+        <input mdInput #message maxlength="200" [(ngModel)]="employee.training[i].tcdes" placeholder="Description" formControlName="desc">
+        <md-hint align="end">{{message.value.length}}  / 200</md-hint>
+        </md-input-container><br><br><br>
+        <md-input-container>
+          <input mdInput type="date"  [(ngModel)]="employee.training[i].expirydate" placeholder="Expiry Date" formControlName="expdate">
+          
+          <md-error>Please select date.</md-error>
+          </md-input-container>
+          
+      </div>
+      <div class="col-md-4"><br>
+        <md-input-container class="example-full-width">
+        <input mdInput [(ngModel)]="employee.training[i].courselevel"  placeholder="Course Level" formControlName="courselevel" pattern="^[a-zA-Z0-9 ]*$" maxlength="50" required>
+        <md-error>Please enter course level.</md-error>
+        </md-input-container><br><br> <br>
+        
+        <md-input-container class="example-full-width">
+        <input mdInput [(ngModel)]="employee.training[i].certificatename"  placeholder="Certification Name" formControlName="cname" pattern="^[a-zA-Z0-9 ]*$" maxlength="50">
+        </md-input-container><br><br> <br>
+      </div>
+      <div class="col-md-4"><br>
+        <md-input-container class="example-full-width">
+        <input mdInput [(ngModel)]="employee.training[i].offeredby"  placeholder="Course Offered By" formControlName="offer" pattern="^[a-zA-Z0-9 ]*$" required>
+        <md-error>Please enter course offered by.</md-error>
+        </md-input-container><br><br> <br>
+        <md-input-container>
+        <input mdInput type="date"  [(ngModel)]="employee.training[i].issue" placeholder="Issued Date" formControlName="date" required>
+        
+        <md-error>Please select date.</md-error>
+        </md-input-container>
+       
+      </div>
+    </div>
+    <div style="margin:0% 2% 0% 0%" class="row">
+      <div  class="col-md-12">
+        <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(employee);show=!show;" [disabled]="!form.valid"> Save</button>
+        <button *ngIf="updatebutton"  class="btn btn-outline-success btn-sm" (click)="updatetraining(employee);show=!show;updatebutton=!updatebutton;" [disabled]="!form.valid"> Update</button>
+        <button class="btn btn-outline-warning btn-sm" (click) = "cancel(employee);show=!show;updatebutton=!updatebutton;"> Cancel </button>
+      </div>
+    </div>
+  </div>
+  </form>
+
+  
+<md2-dialog #deptModal>
+    <md2-dialog-title>Training & Certification</md2-dialog-title>
+    <div class="box">
+      <div class="display_emp">
+        <div class="emp-info">
+            Course Name : {{employee.training[i].coursename}}
+        </div>
+        <div class="emp-info ">
+            Course Level : {{employee.training[i].courselevel}}
+        </div><br>
+        <div class="emp-info alter-div">
+            Course Offered By : {{employee.training[i].offeredby}}
+        </div>
+        <div class="emp-info alter-div">
+            Certificate Name : {{employee.training[i].certificatename}}
+        </div><br>
+      </div>
+    </div>
+    <md2-dialog-footer>
+        <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+    </md2-dialog-footer>
+</md2-dialog>

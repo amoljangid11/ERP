@@ -1,0 +1,95 @@
+<div *ngIf= "!show"  class="col-md-12">
+ <div class="row">
+<div  style="display: both" class="col-md-12">
+
+    <span style="font-weight:500">Skills</span>
+    <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button> 
+</div><br><br>
+</div> 
+<div class="row">
+ <div class="col-md-12"><br>
+  <div class="table-responsive"> 
+  <table  class="table table-bordered table-hover ">
+ <thead class="thead-inverse">
+     <tr>
+      <th>Action</th>
+      <th>Skill</th>
+      <th>Years of Experience</th>
+      <th>Competency Level</th>
+      <th>Skill Last Used Year</th>
+     </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let sk of skills;let i = index " >
+            <td><i *ngIf="sk.id !== editRowId" (click)="edit(sk.id)"  title="Edit" class="fa fa-pencil-square-o"></i>/td>
+
+  <td *ngIf="sk.id == editRowId"> 
+       <input type="text" [(ngModel)]="sk.skillname">
+  </td>
+  <td *ngIf="sk.id !== editRowId">{{sk.skillname}}</td>
+
+    <td *ngIf="sk.id == editRowId"> 
+       <input type="text" [(ngModel)]="sk.experience">
+  </td>
+  <td *ngIf="sk.id !== editRowId">{{sk.experience}}</td>
+
+   <td *ngIf="sk.id == editRowId"> 
+       <input type="text" [(ngModel)]="sk.competency">
+  </td>
+  <td *ngIf="sk.id !== editRowId">{{sk.competency}}</td>
+
+
+  <td *ngIf="sk.id == editRowId"> 
+       <input type="text" [(ngModel)]="sk.skilllastdate">
+  </td>
+  <td *ngIf="sk.id !== editRowId">{{sk.skilllastdate}}</td>
+</tr>                                        	
+  </tbody>                             
+  </table>
+  </div></div>
+  </div>
+  </div>
+
+
+
+
+ 
+<div *ngIf= "show" class="col-lg-12">
+   <div   class="row">
+<div class="col-md-6">
+    <md-input-container class="example-full-width">
+      <input mdInput  [(ngModel)]="skill"  placeholder="Skill" required>
+        <md-error>Please enter skill.</md-error> 
+    </md-input-container><br><br><br>
+     <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="jobt"  placeholder="Year of Experience"> 
+    </md-input-container><br><br> 
+     
+    
+</div>
+
+<div class="col-md-6">
+
+  <md-input-container>
+    <input mdInput [mdDatepicker]="pick" [(ngModel)]="dates" placeholder="Date" required  >
+    <md-error>Please select date.</md-error>
+    <button mdSuffix [mdDatepickerToggle]="pick"></button>
+  </md-input-container>
+  <md-datepicker #pick></md-datepicker><br><br><br>
+   <md-select placeholder=" Competency Level " [(ngModel)]="competency" >
+    <md-option *ngFor="let com of comp" [value]="com.competencylevel" >
+       {{com.competencylevel}}
+    </md-option>
+    </md-select><br><br><br>
+</div>
+
+</div>
+    <div style="float: right;margin:0% 2% 0% 0%" class="row">
+<div  class="col-md-12">
+<button class="btn btn-outline-primary btn-sm" (click)="save();show=!show"> Save</button>
+<button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+</div>
+</div>
+</div>
+
+

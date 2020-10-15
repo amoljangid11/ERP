@@ -1,0 +1,100 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">                       
+<div class="row" *ngIf = "!show" >
+<div class="col-md-12">
+  <ol class="breadcrumb row " >
+  <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+  <li class="breadcrumb-item ">HR </li>
+  <li class="breadcrumb-item ">Employees-Configuration </li>
+  <li class="breadcrumb-item active">Employee-Roles</li>
+  </ol> 
+  
+</div>
+
+<div class="col-md-12">
+<span style="font-weight:500">Employee-Roles</span>
+ <button type="button" style="float: right;margin:0% 0% 0% 0%" class="btn btn-primary btn-sm" (click)="show = !show">Add
+ </button>
+ <br><br>
+ <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+    {{ message }}
+  </div>
+  <div>
+   <table class="table table-bordered table-sm">
+    <thead class="bg-success">
+     <tr>
+      <th>Role Name</th>
+      <th>Description</th>
+      <th>Actions</th>
+     </tr>
+      </thead>
+     <tbody>
+        <!-- <tr *ngFor="let hg of datas;let i = index " >
+
+            <td><i *ngIf="hg.id !== editRowId" (click)="edit(hg.id)"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(hg,i)" title="Delete" class="fa fa-trash-o"></i>&nbsp;&nbsp;<i  *ngIf="hg.id == editRowId" (click)="update(hg)" title="save" class="fa fa-floppy-o"></i></td>
+
+            <td *ngIf="hg.id == editRowId"> 
+              <input type="text" [(ngModel)]="hg.groupname">
+            </td>
+            <td *ngIf="hg.id !== editRowId">{{hg.groupname}}</td>
+
+            <td *ngIf="hg.id == editRowId"> 
+              <input type="text" [(ngModel)]="hg.description">
+            </td>
+            <td *ngIf="hg.id !== editRowId">{{hg.description}}</td>    
+        </tr>  -->             	
+     </tbody>
+                                
+    </table>
+   </div>
+   </div>
+</div>
+<div class="row" *ngIf = "show" >
+<div class="col-md-12">
+  <ol class="breadcrumb row " >
+  <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+  <li class="breadcrumb-item ">HR </li>
+  <li class="breadcrumb-item ">Employees-Configuration </li>
+  <li class="breadcrumb-item ">Employee-Roles</li>
+  <li class="breadcrumb-item active">Add</li>
+  </ol> 
+  
+</div>
+
+<div class="col-md-12">
+<div class="row">
+	<div class="col-sm-4">
+		<md-input-container class="example-full-width">
+	    <input mdInput placeholder="Role Name" [(ngModel)]="rolename" required>
+	    <md-error>
+	      Please Enter Role Name.
+	    </md-error>
+	    </md-input-container>
+	</div>
+
+	<div class="col-sm-4">
+		<md-input-container class="example-full-width">
+	    <input mdInput placeholder="Description" [(ngModel)]="description" >	    
+	    </md-input-container>
+	</div>
+
+	<!-- <div class="col-sm-4">
+		<md-input-container class="example-full-width">
+	    <input mdInput placeholder="Group Name" [(ngModel)]="groupname" required>
+	    <md-error>
+	      Please enter group name.
+	    </md-error>
+	    </md-input-container>
+	</div> -->
+	
+</div>
+</div>
+
+<div class="col-md-12" style="margin-top: 5%">
+<button class="btn btn-outline-success btn-sm" (click)="save();show=!show"> Save</button>
+<button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+</div>
+</div>
+</div>
+<!-- <tree-root [nodes]="nodes" [options]="options">
+	
+</tree-root> -->

@@ -1,0 +1,69 @@
+<div class="bd-example" data-example-id="">
+    <nav style="color: white;height: 8%;background-color: #253f51" class="navbar fixed-top navbar-toggleable-sm navbar-light navshadow">
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span></button> <a style="font-weight: 900;" class="navbar-brand biglogo"><img style="width:35px;" src="./assets/Images/image.png"/>ERP</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <!-- <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li> -->
+            </ul>
+            <!-- <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" placeholder="Search" type="text"> <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form> -->
+            <ul class="navbar-nav">
+                <li  *ngIf="loggedIn()" class="nav-item dropdown">
+                    
+                  <!--   <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="Preview" href="#" style="color:ghostwhite" role="button" aria-haspopup="true" aria-expanded="false">
+                       <img class="image1" style="width: 25px;height: 25px;" src="img.jpg"> User
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="Preview">
+                        <a class="dropdown-item" routerLink='/profile'>Profile</a>
+                        <a class="dropdown-item" (click)="logout()">LogOut</a>
+                    </div> -->
+
+                    
+                    <!-- <a  style=" " class="nav-link dropdown-toggle fa fa-user-circle fa-1x"  id="navbarDropdownMenuLink" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                        User
+                    </a>
+                    <div  style="width: 2px" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a  class="dropdown-item fa fa-sign-out" ><span style="margin-left: 10px;">logout</span></a>
+                        <a class="dropdown-item fa fa-info-circle" routerLink='/profile'><span style="margin-left: 10px;">profile</span></a>
+                    </div> -->
+                </li>
+                <li style="margin-top: 5%" *ngIf="loggedIn()" ><a *ngIf="show"> <button class="btn btn-primary btn-sm"  (click)= "wizard();show=!show"><img class="imageClass" src="./assets/Images/setting1.png"/>&nbsp;Configuration Wizrad</button></a><a *ngIf="!show"> <button class="btn btn-success btn-sm"  (click)="setup();abc();show=!show">Go To ERP</button></a></li>
+                
+                <li  *ngIf="loggedIn()" class="nav-item dropdown" id="drp" style="display: none">
+                    
+                      <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="Preview" href="#" style="color:ghostwhite; " role="button" aria-haspopup="true" aria-expanded="false">
+                         <img class="image1" style="width: 25px;height: 25px;" src="./assets/Images/employee.jpg"> {{username}}
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="Preview">
+                          <a class="dropdown-item" routerLink='/profile'>Profile</a>
+                          <a class="dropdown-item" (click)="logout()">LogOut</a>
+                      </div>
+  
+                      
+                      <!-- <a  style=" " class="nav-link dropdown-toggle fa fa-user-circle fa-1x"  id="navbarDropdownMenuLink" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                          User
+                      </a>
+                      <div  style="width: 2px" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a  class="dropdown-item fa fa-sign-out" ><span style="margin-left: 10px;">logout</span></a>
+                          <a class="dropdown-item fa fa-info-circle" routerLink='/profile'><span style="margin-left: 10px;">profile</span></a>
+                      </div> -->
+                  </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <flash-messages style="height:5%;text-align:center"></flash-messages> <!--toaster-->
+    
+        <router-outlet ></router-outlet>
+
+</div>

@@ -1,0 +1,536 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "show">
+      <div>
+          <ol class="breadcrumb row bg-primary">
+            <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+            <li class="breadcrumb-item ">Recruitment </li>
+            <li class="breadcrumb-item ">Candidates </li>
+          </ol>
+      </div>
+      <div>
+          <span style="font-weight:500">Candidates</span>
+          <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "addshow();updatebutton=false;">Add</button>
+      </div><br><br>
+      <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+          {{ message }}
+      </div>
+      <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+          {{ message }}
+      </div>
+      <div class="row">
+          <div class="col-lg-12">
+            <div>
+              <table class="table table-bordered table-striped table-sm">
+                <thead class="bg-success">
+                  <tr>
+                    <th>Action</th>
+                    <th>Requisition Code</th>
+                    <th>Job Title</th>
+                    <th>Candidate Name</th>
+                    <th>Status</th>
+                    <th>Resume</th>
+                    <th>Mobile</th>
+                    <th>Skill Set</th>
+                    <th>Added By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let et of datas;let i = index " >
+                    <td> 
+                      <i class="fa fa-eye"  title="View" (click)="view(et);"></i>
+                      <i (click)="edit(et);"  title="Edit" class="fa fa-pencil-square-o"></i>
+                      <i (click)="delete(et,i)" title="Delete" class="fa fa-trash-o"></i>
+                    </td>
+                    <td>{{et.candidates[0].requisition}}</td>
+                    <td>{{et.candidates[0].jobtitle}}</td>
+                    <td>{{et.candidates[0].fname}} {{et.candidates[0].lname}}</td>
+                    <td>{{et.candidates[0].status}}</td>
+                    <td>{{et.candidates[0].resume}}</td>
+                    <td>{{et.candidates[0].contact}}</td>
+                    <td>{{et.candidates[0].skills}}</td>
+                    <td>{{et.candidates[0].addedby}}</td>
+                   </tr>      
+                </tbody>
+                </table>
+            </div>
+        </div>
+      </div>         
+  </div>
+  <form class="form-horizontal" [formGroup]="form">
+      <div *ngIf= "showadd">
+          <div>
+              <ol class="breadcrumb row bg-primary">
+                      <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+                      <li class="breadcrumb-item ">Recruitment </li>
+                      <li class="breadcrumb-item ">Candidates </li>
+                      <li class="breadcrumb-item active">Add</li>
+              </ol>
+          </div>   
+        <div class="row">
+                <div class="col-md-3">
+                  <br>
+                      <md-select placeholder="Requisition ID" [(ngModel)]="candidate.candidates[0].requisition" formControlName="requisition" required >
+                       <md-option>Select Requisition ID</md-option>
+                       <md-option *ngFor="let opening of reqvalue ; let i=index " [value]= "opening.openings[0].requisitioncode"  >
+                         {{opening.openings[0].requisitioncode}}
+                       </md-option>
+                       </md-select><br>
+                      <span style="color: red" *ngIf="!candidate.candidates[0].requisition">
+                         please select Requisition ID
+                      </span><br><br>
+                </div>
+                <div class="col-md-3">
+                  <br>
+                      <md-select placeholder="Status" [(ngModel)]="candidate.candidates[0].status" formControlName="status" >
+                        <md-option>Select Status</md-option>
+                        <md-option *ngFor="let work of codes; let i=index"  [value]="work.value">
+                                      {{ work.value }}
+                        </md-option>
+                      </md-select>
+                </div>
+                <div class="col-md-3">
+                      <md-input-container class="example-full-width">
+                      <input mdInput placeholder="First Name" [(ngModel)]="candidate.candidates[0].fname" formControlName="fname"  required>
+                      <md-error>Please enter Candidate First Name</md-error>
+                      </md-input-container><br><br>  
+                </div>
+                <div class="col-md-3">
+                    <md-input-container class="example-full-width">
+                    <input mdInput placeholder="Last Name" [(ngModel)]="candidate.candidates[0].lname" formControlName="lname"  required>
+                    <md-error>Please enter Candidate Last Name</md-error>
+                    </md-input-container><br><br>
+                </div>
+        </div>
+        <div class="row">
+                <div class="col-md-3">
+                  <br>
+                      <md-select placeholder="Source" [(ngModel)]="candidate.candidates[0].source" formControlName="source"  required>
+                              <md-option>Select Source</md-option>
+                              <md-option *ngFor="let work1 of codes1; let i=index"  [value]="work1.value">
+                                {{ work1.value }}
+                                </md-option>
+                      </md-select>
+                              <span style="color: red" *ngIf="!candidate.candidates[0].source">
+                                Please select Source.
+                          </span>      
+                </div>
+                <div class="col-md-3">
+                    <md-input-container class="example-full-width">
+                            <input mdInput placeholder="Email" [(ngModel)]="candidate.candidates[0].email" formControlName="email"  required>
+                            <md-error>Please enter email.</md-error>
+                            </md-input-container><br><br>  
+              </div>
+              <div class="col-md-3">
+                    <md-input-container class="example-full-width">
+                            <input mdInput placeholder="Contact Number" [(ngModel)]="candidate.candidates[0].contact" formControlName="contact"  required>
+                            <md-error>Please enter Contact Number.</md-error>
+                            </md-input-container><br><br>
+              </div>
+              <div class="col-md-3">
+                    <md-input-container class="example-full-width">
+                            <input mdInput placeholder="Skill Set" [(ngModel)]="candidate.candidates[0].skills" formControlName="skills"  required>
+                            <md-error>Please enter Skill Set.</md-error>
+                            </md-input-container><br><br>
+              </div>
+              <div class="col-md-3">
+                      <md-select placeholder="Vendor" [(ngModel)]="candidate.candidates[0].vendor" *ngIf="candidate.candidates[0].source=='Vendor'" formControlName="vendor">
+                              <md-option>Select Vendor</md-option>
+                              <md-option *ngFor="let work1 of vend; let i=index"  [value]="work1.vendors[0].name">
+                                {{ work1.vendors[0].name }}
+                                </md-option>
+                      </md-select>
+
+                    <md-input-container class="example-full-width" *ngIf="candidate.candidates[0].source=='Website'">
+                    <input mdInput placeholder="Referral Website" [(ngModel)]="candidate.candidates[0].website" formControlName="website">
+                    <md-error>Please enter referral website</md-error>
+                    </md-input-container>
+
+                    <md-input-container class="example-full-width" *ngIf="candidate.candidates[0].source=='Referral'">
+                    <input mdInput placeholder="Referral Name" [(ngModel)]="candidate.candidates[0].refname" formControlName="refname">
+                    <md-error>Please enter referral name</md-error>
+                    </md-input-container>
+              </div>
+         </div>
+         <br>
+         <span>
+           <!-- <h6>UPDATE RESUME (OR) UPDATE CANDIDATE DETAILS</h6> -->
+          <h6><i style="color: #1565c0;"  (click)="resumeshow();">UPDATE RESUME</i> (OR) <i style="color: #1565c0"  (click)="detailsshow();">CANDIDATE DETAILS</i> </h6> 
+         </span>
+        <div id="canddetails" style="display: none">
+         <div class="row">
+            <div class="col-md-3">
+              <md-input-container class="example-full-width">
+              <input mdInput placeholder="Qualification" [(ngModel)]="candidate.candidates[0].qualification" formControlName="qualification">
+              <md-error>Please enter qualification.</md-error>
+              </md-input-container><br><br>
+            </div>
+            <div class="col-md-3">
+              <md-input-container class="example-full-width">
+              <input mdInput placeholder="Work Experience" [(ngModel)]="candidate.candidates[0].workexp" formControlName="workexp">
+              <md-error>Please enter work experience.</md-error>
+              </md-input-container><br><br>
+            </div>
+            <div class="col-md-3">
+              <md-input-container class="example-full-width">
+              <input mdInput placeholder="Education Summary" [(ngModel)]="candidate.candidates[0].educsummary" formControlName="educationsumm">
+              </md-input-container><br><br>
+             </div>
+             <div class="col-md-3">
+               <md-input-container class="example-full-width">
+               <input mdInput placeholder="Summary" [(ngModel)]="candidate.candidates[0].summary" formControlName="summary">
+               </md-input-container><br><br>
+              </div>
+         </div> 
+         <div class="row">
+          <div class="col-md-3">
+            <md-input-container class="example-full-width">
+              <input mdInput placeholder="Location" [(ngModel)]="candidate.candidates[0].location" formControlName="location" >
+              <md-error>Please enter location.</md-error>
+            </md-input-container><br><br>
+          </div>
+          <div class="col-md-3">
+            <br>
+              <md-select placeholder="Country" [(ngModel)]="candidate.candidates[0].country" formControlName="country">
+                  <md-option *ngFor="let cn of countri ; let i=index " (click)="selectcoun(cn.countryvalue)" [value]="cn.countryvalue">
+                  {{cn.countryvalue}}
+                  </md-option>
+                </md-select>
+                <span style="color: red" *ngIf="!candidate.candidates[0].country">
+                    please select Country
+              </span><br>
+                <i style="color: #1565c0"  onclick="document.getElementById('bModal').style.display='block'">Add Country</i>
+          </div>
+          <div class="col-md-3">
+            <br>
+              <md-select placeholder="State" [(ngModel)]="candidate.candidates[0].state" formControlName="state">
+                  <md-option *ngFor="let stat of sarray | unique: 'state1' ; let i=index " (click)="select1(stat.state1)" [value]="stat.state1">
+                 {{stat.state1}}
+                 </md-option>
+               </md-select>
+               <span style="color: red" *ngIf="!candidate.candidates[0].state">
+                  please select State
+            </span><br>
+               <i style="color: #1565c0" onclick="document.getElementById('sModal').style.display='block'">Add State</i>
+          </div>
+          <div class="col-md-3">
+            <br>
+              <md-select placeholder="City" [(ngModel)]="candidate.candidates[0].city" formControlName="city"> 
+                  <md-option *ngFor="let ci of cityarry"   [value]="ci.city2">
+              {{ci.city2}}
+              </md-option>
+            </md-select>
+            <span style="color: red" *ngIf="!candidate.candidates[0].city">
+                please select City
+          </span><br>
+              <i style="color: #1565c0"   onclick="document.getElementById('ciModal').style.display='block'">Add City</i>
+          </div>
+         </div>
+         <div class="row">
+            <div class="col-md-3">
+                <md-input-container class="example-full-width">
+                  <input mdInput placeholder="Postal Code" [(ngModel)]="candidate.candidates[0].postalcode" formControlName="postalcode">
+                  <md-error>Please enter postalcode.</md-error>
+                </md-input-container><br><br>
+            </div>
+         </div>
+         <span><h6>PREVIOUS COMPANY DETAILS</h6></span>
+         <div class="row">
+            <div class="col-md-3">
+            <md-input-container class="example-full-width">
+            <input mdInput placeholder="Company Name" [(ngModel)]="candidate.candidates[0].companyname" formControlName="compname">
+            </md-input-container><br><br>
+           </div>
+           <div class="col-md-3">
+            <md-input-container class="example-full-width">
+            <input mdInput placeholder="Designation" [(ngModel)]="candidate.candidates[0].designation" formControlName="design">
+            </md-input-container><br><br>
+           </div>
+           <div class="col-md-3">
+              <md-input-container>
+              <input mdInput [mdDatepicker]="picker" [(ngModel)]="candidate.candidates[0].from" placeholder="From" formControlName="from">
+              <button mdSuffix [mdDatepickerToggle]="picker"></button>
+              </md-input-container><br><br>
+              <md-datepicker #picker></md-datepicker>
+           </div>
+           <div class="col-md-3">
+              <md-input-container>
+                <input mdInput [mdDatepicker]="picker1" [(ngModel)]="candidate.candidates[0].to" placeholder="To" formControlName="to">
+                <button mdSuffix [mdDatepickerToggle]="picker1"></button>
+              </md-input-container><br><br>
+              <md-datepicker #picker1></md-datepicker>
+            </div>
+        </div>
+         <div class="row">
+         
+         <div class="col-md-3">
+            <md-input-container class="example-full-width">
+            <input mdInput placeholder="Contact Number" [(ngModel)]="candidate.candidates[0].contactnumber" formControlName="contactnumber">
+            </md-input-container><br><br>
+         </div>
+         <div class="col-md-3">
+            <md-input-container class="example-full-width">
+            <input mdInput placeholder="Web Site" [(ngModel)]="candidate.candidates[0].website" formControlName="website">
+            </md-input-container><br><br>
+         </div>
+         <div class="col-md-3">
+            <md-input-container class="example-full-width">
+            <input mdInput placeholder="Address" [(ngModel)]="candidate.candidates[0].address" formControlName="address">
+            </md-input-container><br><br>
+         </div>
+         </div>
+      </div>
+      <div id="resume" style="display: none">
+          <span style="font-weight:500">Resume</span><br>
+          <input type="file" [(ngModel)]="candidate.candidates[0].resume"  (change)="fileChangeEvent($event)"  formControlName="resume"/>
+          <button type="button" placeholder="Upload Resume" (click)="upload()">Upload Resume</button>
+      </div>
+         <div class="row">
+                <div  class="col-md-12" style="margin-top: 5%">
+                  <!--  -->
+                      <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(candidate);show=!show" [disabled]="!form.valid" > Save</button>
+                      <button  *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(candidate);show=!show;link()" [disabled]="!form.valid"> Save and Schedule</button>
+                      <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(candidate);show=!show;updatebutton=!updatebutton;" [disabled]="!form.valid"> Update</button>
+                      <button class="btn btn-outline-warning btn-sm" (click) = "cancel(candidate);show=!show"> Cancel </button>  
+              </div>
+          </div> 
+
+        </div>   
+  </form>
+  <!-- <div *ngIf="!show1"></div> -->
+  <div *ngIf="show1 && viewbutton">
+      <div>
+          <ol class="breadcrumb row bg-primary">
+                  <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+                  <li class="breadcrumb-item ">Recruitment </li>
+                  <li class="breadcrumb-item" style="color:blue" (click)="closewin();">Candidates </li>
+                  <li class="breadcrumb-item active">View</li>
+          </ol>
+      </div> 
+      <span><b>CANDIDATE DETAILS</b></span>
+      <div class="box33">
+          <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+              <tr>
+                  <td><b>Requisition Id</b></td>
+                  <td>{{candidate.candidates[0].requisition}}<td>
+                  <td><b>Status</b></td> 
+                  <td>{{candidate.candidates[0].status}}<td>
+              </tr>
+              <tr>
+                  <td><b>Candidate First Name</b></td>
+                  <td>{{candidate.candidates[0].fname}}<td>
+                  <td><b>Candidate Last Name</b></td> 
+                  <td>{{candidate.candidates[0].lname}}<td>
+              </tr>
+              <tr>
+                  <td><b>Email</b></td>
+                  <td>{{candidate.candidates[0].email}}<td>
+                  <td><b>Contact Number</b></td> 
+                  <td>{{candidate.candidates[0].contact}}<td>
+              </tr>
+              <tr>
+                  <td><b>Qualification</b></td>
+                  <td>{{candidate.candidates[0].qualification}}<td>
+                  <td><b>Work Experience</b></td> 
+                  <td>{{candidate.candidates[0].workexp}}<td>
+              </tr>
+              <tr>
+                  <td><b>Skill Set</b></td>
+                  <td>{{candidate.candidates[0].skills}}<td>
+                  <td><b>Education Summary</b></td> 
+                  <td>{{candidate.candidates[0].educsummary}}<td>
+              </tr>
+              <tr>
+                  <td><b>Summary</b></td>
+                  <td>{{candidate.candidates[0].summary}}<td>
+                  <td><b>Location</b></td> 
+                  <td>{{candidate.candidates[0].location}}<td>
+              </tr>
+              <tr>
+                  <td><b>Country </b></td>
+                  <td>{{candidate.candidates[0].country}}<td>
+                  <td><b>State</b></td> 
+                  <td>{{candidate.candidates[0].state}}<td>
+              </tr>
+              <tr>
+                  <td><b>City</b></td>
+                  <td>{{candidate.candidates[0].city}}<td>
+                  <td><b>Postal Code</b></td> 
+                  <td>{{candidate.candidates[0].postalcode}}<td>
+              </tr>
+              <tr>
+                  <td><b>Skill Set</b></td>
+                  <td>{{candidate.candidates[0].skills}}<td>
+                  <td><b>Education Summary</b></td> 
+                  <td>{{candidate.candidates[0].educsummary}}<td>
+              </tr>
+              <tr>
+                  <td><b>Source </b></td>
+                  <td>{{candidate.candidates[0].source}}<td>
+                  <td *ngIf="candidate.candidates[0].source=='Vendor'"><b>Vendor</b></td> 
+                  <td *ngIf="candidate.candidates[0].source=='Vendor'">{{candidate.candidates[0].vendor}}<td>
+              </tr>
+              <tr *ngIf="candidate.candidates[0].source=='Referral' || candidate.candidates[0].source=='Website'" >
+                  <td *ngIf="candidate.candidates[0].source=='Referral'"><b>Referral Name</b></td>
+                  <td *ngIf="candidate.candidates[0].source=='Referral'">{{candidate.candidates[0].refname}}<td>
+                  <td *ngIf="candidate.candidates[0].source=='Website'"><b>Referral Website</b></td> 
+                  <td *ngIf="candidate.candidates[0].source=='Website'">{{candidate.candidates[0].website}}<td>
+              </tr>
+              <tr >
+                  <td colspan="5"><b>Attachment</b></td>
+                  <td colspan="5">{{candidate.candidates[0].resume}}<td>
+              </tr>
+          </table>
+    </div>
+
+    <span><h5><b>CANDIDATE HISTORY</b></h5></span>
+    <div class="box4" *ngIf="candidate.candidates[0].addmsg">
+        <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+        <tr>
+          <td>
+        <img class="imageClass" src="./assets/Images/employee.jpg"/>
+        </td>
+        <td>
+      <span>
+         {{candidate.candidates[0].addmsg}} on {{candidate.candidates[0].addcanddate | date}}
+      </span>
+      </td>
+      </tr>
+        </table>
+    </div>
+    <div class="box4" *ngIf="inter.interviews[0].schedulemsg">
+        <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+            <tr>
+              <td>
+            <img class="imageClass" src="./assets/Images/employee.jpg"/>
+            </td>
+            <td>
+          <span>
+             {{inter.interviews[0].schedulemsg}} on {{inter.interviews[0].schedcanddate | date}}
+          </span>
+            </td>
+            </tr>
+            </table>
+        </div>
+  </div>
+</div>
+
+<form class="form-horizontal" [formGroup]="form2">
+
+  <div id="bModal" class="w3-modal">
+      <div class="w3-modal-content">
+        <header class="w3-container w3-teal bg-primary"> 
+          <span onclick="document.getElementById('bModal').style.display='none'" 
+          class=" w3-display-topright fa fa-times fa-lg"></span>
+          <h4>Country</h4>
+        </header>
+        <div class="w3-container">
+              <div style="display: inline-flex;"  class="col-md-12">
+  <div class="col-md-6"><br><br>
+
+    <md-input-container class="example-full-width">
+        <input [(ngModel)]="selectedValue" mdInput placeholder="Country Name " formControlName="coun">
+        <md-error>Please enter country name.</md-error>
+      </md-input-container>
+    
+    <br><br><br>
+  </div>
+  <div class="col-md-6"><br><br>
+     <div class="input-group">
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" type="button">Country code</button>
+        </span>
+        <input type="text" class="form-control" placeholder="code"  [(ngModel)]="codevalue" [value]="codevalue" formControlName="councd">
+      </div><br><br><br>
+  </div>
+  </div>
+        </div>
+        <footer class="w3-container w3-teal">
+          <button style="float: right;" type="submit" class="btn btn-primary" (click)="saves()" [disabled]="!form2.valid"  data-dismiss="bModal" >Save changes</button>
+        </footer>
+      </div>
+    </div>
+  </form>
+
+
+  <form class="form-horizontal" [formGroup]="form3">
+
+      <div id="sModal" class="w3-modal">
+         <div class="w3-modal-content">
+           <header class="w3-container w3-teal bg-primary"> 
+             <span onclick="document.getElementById('sModal').style.display='none'" 
+             class=" w3-display-topright fa fa-times fa-lg"></span>
+             <h4>State</h4>
+           </header>
+           <div class="w3-container">
+             <div style="display: inline-flex;"  class="col-md-12">
+     <div class="col-md-6">
+       <br>
+        <md-select placeholder="Country" [(ngModel)]="country1" formControlName="coun1nm">
+            <md-option *ngFor="let op of countri" [value]="op.countryvalue" (click)="selectstate()">
+            {{op.countryvalue}} </md-option>
+        </md-select><br><br><br>
+     </div>
+     <div class="col-md-6">
+
+        <md-input-container class="example-full-width">
+           <input [(ngModel)]="state1"  mdInput placeholder="State Name " formControlName="statnm">
+           <md-error>Please enter state name.</md-error>
+         </md-input-container>
+       
+        
+        <br><br><br>
+     </div>
+     </div>
+           </div>
+           <footer class="w3-container w3-teal">
+             <button style="float: right;" type="submit" class="btn btn-primary" (click)="savestate()"  [disabled]="!form3.valid"   data-dismiss="sModal" >Save changes</button>
+           </footer>
+         </div>
+       </div>
+     </form>
+
+<form class="form-horizontal" [formGroup]="form4">
+
+  <div id="ciModal" class="w3-modal">
+      <div class="w3-modal-content">
+        <header class="w3-container w3-teal bg-primary"> 
+          <span onclick="document.getElementById('ciModal').style.display='none'" 
+          class="w3-display-topright fa fa-times fa-lg"></span>
+          <h4>City</h4>
+        </header>
+        <div class="w3-container">
+           <div style="display: inline-flex;"  class="col-md-12">
+     <div class="col-md-6">
+     <md-select placeholder="Country" [(ngModel)]="country3" formControlName="coun2nm">
+      <md-option *ngFor="let co of countri | unique: 'countryvalue';" (click)="selectst()" [value]="co.countryvalue">
+      {{co.countryvalue}}
+      </md-option>
+    </md-select><br><br><br>
+    <div class="input-group">
+
+    <md-input-container class="example-full-width">
+        <input [(ngModel)]="city3"  mdInput placeholder="City Name " formControlName="citynm">
+        <md-error>Please enter city name.</md-error>
+      </md-input-container>
+    
+    <br><br><br>
+              </div>
+     </div>
+      <div class="col-md-6">
+        <md-select placeholder="State" [(ngModel)]="state3" formControlName="stat1nm">
+       <md-option *ngFor="let stat of addst | unique: 'state1'" (click)="selectcity()" [value]="stat.state1">
+      {{stat.state1}}
+      </md-option>
+    </md-select><br><br><br>
+      </div>
+     </div>
+        </div>
+      <footer class="w3-container w3-teal">
+        <button style="float: right;" type="submit" class="btn btn-primary" (click)="saveci()"  [disabled]="!form4.valid"  data-dismiss="modal" >Save changes</button>
+      </footer>
+      </div>
+    </div>
+  </form>
+
+
+  

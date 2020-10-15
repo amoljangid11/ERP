@@ -1,0 +1,151 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div  *ngIf= "!show">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Employee Configuration</li>
+        <li class="breadcrumb-item active"> Leave Types</li>
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:500"> Leave Types</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "cancel();show = !show;updates=false;">Add</button>
+    </div><br><br>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <table  class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Leave type</th>
+                <th>Number Of Days</th>
+                <th>Leave Code</th>
+                <th>Is Pre Allocated</th>
+                <th>Is Deductible</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let leave of datas;let i = index " >
+                <td>
+                    <i class="fa fa-eye" title="View" aria-hidden="true" (click)="open(deptModal);view(leave)"></i>&nbsp;&nbsp;
+                  <i (click)="edit(leave);show = !show"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(leave,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                <td>{{leave.leavetype[0].leavetype}}</td>
+                <td>{{leave.leavetype[0].number_of_days}}</td>
+                <td>{{leave.leavetype[0].leave_code}}</td>
+                <td>{{leave.leavetype[0].pre_allocated}}</td>
+                <td>{{leave.leavetype[0].deductible}}</td>
+                <td>{{leave.leavetype[0].description}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <form class="form-horizontal" [formGroup]="form">
+    <div *ngIf= "show">
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employee Configuration</li>
+          <li class="breadcrumb-item ">Level Types</li>
+          <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+        </ol>
+      </div>
+      <br>
+      <div class="row">
+          <div class="col-md-4">
+              <md-input-container class="example-full-width">
+              <input mdInput [(ngModel)]="leaves.leavetype[0].number_of_days"  placeholder="Number Of Days" pattern="[0-9.]+" minlength="1" maxlength="3" class="form-control" formControlName="day" required>
+              <md-error>Please enter number only.</md-error>
+              </md-input-container><br><br><br><br>
+              <md-select [(ngModel)]="leaves.leavetype[0].pre_allocated" placeholder="Is Pre Allocated" formControlName="allow" required>
+              <md-option *ngFor="let pa of preallocated" [value]="pa.viewValue">
+              {{ pa.viewValue }}
+              </md-option>
+              </md-select><br>
+              <span  style="color: red"   *ngIf="!leaves.leavetype[0].pre_allocated">
+                please select any preallocate option
+              </span>
+              <br><br>
+          </div>
+        <div class="col-md-4">
+          <md-input-container class="example-full-width">
+            <!-- pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" -->
+          <input mdInput [(ngModel)]="leaves.leavetype[0].leavetype"  placeholder="Leave Type" class="form-control"  maxlength="50" formControlName="leave" required>
+          <md-error>Please enter leave type.</md-error>
+          </md-input-container><i mdTooltip="Ex: Sick Leave" class="fa fa-question-circle" ></i><br><br><br><br>
+          <md-select [(ngModel)]="leaves.leavetype[0].deductible" placeholder="Is Deductible" formControlName="deduct" required>
+          <md-option *ngFor="let de of deductible" [value]="de.viewValue">
+          {{ de.viewValue }}
+          </md-option>
+          </md-select><br>
+          <span  style="color: red"   *ngIf="!leaves.leavetype[0].deductible">
+            please select any deductible option
+          </span>
+          <br><br>
+        </div>
+        
+        <div class="col-md-4">
+          <md-input-container class="example-full-width">
+            <!-- pattern="^\d*[a-zA-Z][a-zA-Z\d]*$" -->
+          <input mdInput [(ngModel)]="leaves.leavetype[0].leave_code"  placeholder="Leave Short Code"   formControlName="code">
+          </md-input-container><br><br><br>
+          <md-input-container class="example-full-width">
+          <input mdInput #message maxlength="200" [(ngModel)]="leaves.leavetype[0].description" placeholder="Description" formControlName="desc">
+          <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+          </md-input-container><br><br><br>
+        </div>
+        <div class="col-md-12" style="margin-top: 5%">
+          <button  *ngIf="!updates"  class="btn btn-outline-success btn-sm"(click)="save(leaves);show=!show;" [disabled]="!form.valid"> Save</button>
+          <button *ngIf="updates"  class="btn btn-outline-success btn-sm" (click)="update(leaves);show=!show;updates=!updates" [disabled]="!form.valid"> Update</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "cancel(leaves);show=!show;updates=!updates"> Cancel </button>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+
+
+  <md2-dialog #deptModal>
+      <md2-dialog-title>Leave Type</md2-dialog-title>
+      <div class=" row box">
+          <div class="emp-info">
+             Leave Type : {{leaves.leavetype[0].leavetype}}
+          </div>
+          <div class="emp-info ">
+              Number of Days : {{leaves.leavetype[0].number_of_days}}
+          </div><br>
+    
+          <div class="emp-info alter-div">
+              Leave Short Code: {{leaves.leavetype[0].leave_code}}
+        </div>
+    
+    
+          <div class="emp-info alter-div">
+              Is Pre Allocated : {{leaves.leavetype[0].pre_allocated}}
+          </div>
+          <br>
+          <div class="emp-info ">
+              Is Deductible : {{leaves.leavetype[0].deductible}}
+          </div>
+          <div class="emp-info">
+              Description : {{leaves.leavetype[0].description}}
+          </div>
+          </div>
+          
+      <md2-dialog-footer>
+          <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+      </md2-dialog-footer>
+    </md2-dialog>

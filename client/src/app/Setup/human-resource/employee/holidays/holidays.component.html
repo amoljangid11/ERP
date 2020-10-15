@@ -1,0 +1,37 @@
+<div lass="col-lg-12">
+  <div class="row">
+    <div  style="display: both" class="col-lg-12">
+      <span style="font-weight:500">Holidays</span>
+      <!-- <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button> -->
+    </div><br><br>
+  </div>
+  <!-- <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+    {{ message }}
+  </div> -->
+  <div class="row">
+    <div class="col-lg-12"><br>
+           
+    <!-- <div class="col-md-6">
+        <md-input-container class="example-full-width">
+            <input mdInput  [value]="this.officiald[0].official[0].location"  placeholder="Location Name" [readonly]="true"  formControlName="grname">
+            </md-input-container><br><br><br>
+    </div> -->
+        <table class="table table-bordered table-striped table-sm">
+          <thead class="bg-success">
+            <tr>
+              <th>Holiday Name</th>
+              <th>Location</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ed of holid;let i = index " >
+              <td>{{ed.holidayname}}</td>
+              <td>{{ed.location}}</td>
+              <td>{{ed.holidaydate | date}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

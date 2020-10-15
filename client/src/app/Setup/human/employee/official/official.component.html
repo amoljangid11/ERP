@@ -1,0 +1,255 @@
+<div  class="col-md-12" >
+  <div class="row">
+    <div class="col-md-4">
+      <md-input-container class="example-full-width"  >
+      <input mdInput placeholder="Employee Code" [(ngModel)]="this.employeecode"   readonly="true" required>
+      </md-input-container><br>
+      <i style="color: #1565c0" (click)="open(basic)">Configure Identity Codes</i>
+      <br>
+      <!-- <input  placeholder="First Name" ng-bind="employee.official.firstname" required> -->
+      <md-input-container  class="example-full-width">
+      <input mdInput placeholder="First Name"  [(ngModel)]="employee.official[0].firstname" required>
+      <md-error >
+      Please enter First Name.
+      </md-error>
+      </md-input-container>
+      <br><br><br>
+      <md-select placeholder="Role"  [(ngModel)]="employee.official[0].role" class="example-full-width">
+      <md-option *ngFor="let ro of rname" (click)="roletype(ro.role[0].type)"  [value]="ro.role[0].name" required >
+      {{ro.role[0].name}}
+      </md-option>
+      </md-select>
+      <br><br><br><br>
+      <md-select placeholder="Reporting Manager" [(ngModel)]="employee.official[0].reportingmanager">
+      <!-- <md-option *ngFor="let r of employee.official[0]"   [value]="r.firstname" required>
+      {{r.firstname}}
+      </md-option> -->
+      </md-select>
+
+      <br><br><br>
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Date of Leaving" [(ngModel)]="employee.official[0].doleaving"  [readonly]="true" required  >
+      <md-error >
+      Please enter First Name.
+      </md-error>
+      </md-input-container>
+      <br><br>
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Extension" [(ngModel)]="employee.official[0].extension">
+      </md-input-container>
+      <br><br>
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Years of Experience" [(ngModel)]="employee.official[0].yearofexp" >
+      </md-input-container>
+    </div>
+    <div class="col-md-4">
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Employee Id" [(ngModel)]="employee.official[0].id" required>
+      <md-error >
+      Please enter Employee Id.
+      </md-error>
+      </md-input-container><br><br>
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Last Name" [(ngModel)]="employee.official[0].lastname" required>
+      <md-error >
+      Please enter LastName.
+      </md-error>
+      </md-input-container>
+      <br><br>
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Email" [(ngModel)]="employee.official[0].email" required>
+      <md-error >
+      Please enter Email.
+      </md-error>
+      </md-input-container>
+      <br><br><br>
+      <md-select placeholder="Department"  [(ngModel)]="employee.official[0].dept" class="example-full-width">
+      <md-option *ngFor="let dp of dd | unique: 'departmentname'"   [value]="dp.departmentname" >
+      {{dp.departmentname}}
+      </md-option>
+      </md-select>
+
+      <br><br><br><br>   <md-select placeholder="Position" [(ngModel)]="employee.official[0].position">
+      <md-option *ngFor="let po of pos"   [value]="po.positions.position" required>
+      {{po.positions.position}}
+      </md-option>
+      </md-select>
+      <br><i style="color: #1565c0" (click)="open(post)">Add Position</i><br><br><br>
+      <md-select placeholder="Employee Status" [(ngModel)]="employee.official[0].status">
+      <md-option *ngFor="let wc of wcode"   [value]="wc.workcode" required>
+      {{wc.workcode}}
+      </md-option>
+      </md-select>
+      <br><i style="color: #1565c0" (click)="open(empsta)">Add Employee Status</i><br><br>
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Fax" [(ngModel)]="employee.official[0].fax">
+      </md-input-container>
+    </div>
+    <div class="col-md-4">
+      <br>
+      <md-select placeholder="Prefix" [(ngModel)]="employee.official[0].prefix">
+      <md-option *ngFor="let prf of pre"   [value]="prf.prefixes[0].prefixcode" required >
+      {{prf.prefixes[0].prefixcode}}
+      </md-option>
+      </md-select>
+      <br><i style="color: #1565c0" (click)="open(prfix)" >Add Prefix</i><br><br>
+
+      <md-input-container  class="example-full-width">
+      <input mdInput placeholder="User Name"  [(ngModel)]="employee.official[0].username" required>
+      <md-error >
+      Please enter User Name.
+      </md-error>
+      </md-input-container>
+
+      <br><br><br>
+      <md-select placeholder="Mode of Employment" [(ngModel)]="employee.official[0].modeofemp">
+      <md-option *ngFor="let e of mode" [value]="e.viewValue" required>
+      {{ e.viewValue }}
+      </md-option>
+      </md-select>
+      <br><br><br><br>
+      <md-select placeholder="Business Unit" [(ngModel)]="employee.official[0].businessunits" >
+      <md-option *ngFor="let bu of bsunit ; let i=index " [value]= "bu.businessname" (click)="select(i,employee.official[0].businessunits)" >
+      {{bu.businessname}}
+      </md-option>
+      </md-select>
+      <br><br><br><br>
+      <md-select placeholder="Job Title" [(ngModel)]="employee.official[0].jobtitle">
+      <md-option *ngFor="let j of jdatas"   [value]="j.jobobj.jobtitle" required>
+      {{j.jobobj.jobtitle}}
+      </md-option>
+      </md-select>
+      <br><i style="color: #1565c0" (click)="open(alert)" >Add Job Title</i>
+
+      <br><br>
+      <md-input-container>
+      <input mdInput [mdDatepicker]="picker1"  [(ngModel)]="employee.official[0].dateofjoing" placeholder="Date of Joining" required>
+      <button mdSuffix [mdDatepickerToggle]="picker1"></button>
+      </md-input-container>
+      <md-datepicker #picker1></md-datepicker><br><br>
+      <md-input-container class="example-full-width">
+      <input mdInput maxlength="10" [(ngModel)]="employee.official[0].phonenumber" placeholder="Work Telephone Number"  >
+      </md-input-container>
+
+    </div>
+  </div>
+</div>
+<br><br>
+<div style="float: right;margin:0% 2% 0% 0%" class="row">
+  <div  class="col-md-12">
+    <button *ngIf="!updatebutton" class="btn btn-outline-primary btn-sm" (click)="save(employee)"> Save</button>
+    <button *ngIf="updatebutton" class="btn btn-outline-primary btn-sm" (click)="updateEmployee(employee)"> Update</button>
+    <button class="btn btn-outline-primary btn-sm" (click)="cancel()"> Cancel</button>
+  </div>
+</div>
+<md2-dialog #basic>
+<md2-dialog-title>Identity Codes</md2-dialog-title>
+<!-- <div class="row">
+  <table >
+    <tbody class="col-md-12">
+      <tr class="row">
+        <td style="padding: 2% 0% 0% 10%" class="col-md-6" *ngFor="let v of datas; let i=index " >
+          <md-input-container class="example-full-width" >
+          <input  mdInput placeholder={{v.iname}} [(ngModel)]="v.icode"   required >
+          </md-input-container>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</div><br><br> -->
+<div   class="row">
+  <div  class="col-md-6" >
+    <md-input-container class="example-full-width">
+    <input  mdInput placeholder="Employee" [(ngModel)]="general.identitycodes[0].employee"   required>
+    </md-input-container><br><br><br>
+    <md-input-container class="example-full-width">
+    <input mdInput placeholder="Users" [(ngModel)]="general.identitycodes[0].users" required>
+    </md-input-container>
+  </div>
+  <div class="col-md-6">
+    <md-input-container class="example-full-width">
+    <input  mdInput placeholder="Background Agency" [(ngModel)]="general.identitycodes[0].background"  required>
+    </md-input-container><br><br><br>
+    <md-input-container class="example-full-width">
+    <input mdInput placeholder="Requisition" [(ngModel)]="general.identitycodes[0].requisition" required>
+    </md-input-container>
+    <br><br>
+  </div>
+</div>
+<md2-dialog-footer>
+<button type="submit" class="btn btn-primary"  (click)="savechanges(general)">Update</button>
+<button type="submit" class="btn btn-secondary"  (click)="close(basic)">Cancel</button>
+</md2-dialog-footer>
+</md2-dialog>
+<md2-dialog #post>
+<md2-dialog-title>Add Position</md2-dialog-title><br>
+<div   class="row">
+  <div class="col-lg-6"><br>
+    <md-select placeholder=" Job Title"  [(ngModel)]="positions.jobtitle" name="job">
+    <md-option *ngFor="let j of jdatas | unique:'jobobj.jobtitle' " [value]="j.jobobj.jobtitle" >
+    {{j.jobobj.jobtitle}}
+    </md-option>
+    </md-select><br><br><br><br>
+    <md-input-container class="example-full-width">
+    <input mdInput #message maxlength="200" [(ngModel)]="positions.description" placeholder="Description">
+    <md-hint align="end">{{message.value.length}} characters entered / 200</md-hint>
+    </md-input-container><br><br><br>
+  </div>
+  <div class="col-lg-6">
+    <md-input-container class="example-full-width">
+    <input mdInput [(ngModel)]="positions.position"  placeholder="Position" >
+    </md-input-container><br><br><br>
+  </div>
+</div>
+<md2-dialog-footer>
+<button type="submit" class="btn btn-primary" (click)="saveposition(positions)" >Save changes</button>
+<button  type="submit" class="btn btn-secondary" (click)="close(post)">Cancel</button>
+</md2-dialog-footer>
+</md2-dialog>
+<md2-dialog #empsta >
+<md2-dialog-title> Employment Status</md2-dialog-title><br>
+<div   class="row">
+  <div class="col-md-6"><br>
+    <md-select placeholder="Work code" [(ngModel)]="wrkcode">
+    <md-option *ngFor="let work of codes" [value]="work.viewValue">
+    {{ work.viewValue }}
+    </md-option>
+    </md-select><br><br><br>
+    <md-input-container class="example-full-width">
+    <input mdInput #message maxlength="200" [(ngModel)]="workdes" placeholder="Description">
+    <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+    </md-input-container><br><br><br>
+  </div>
+  <div class="col-md-6">
+    <md-input-container class="example-full-width">
+    <input name="shortcode" [(ngModel)]="wshortcode" mdInput placeholder="Work Short Code">
+    </md-input-container><i mdTooltip="Ex: PT,FT" class="fa fa-question-circle" ></i><br><br><br>
+  </div>
+</div>
+<md2-dialog-footer>
+<button type="submit" class="btn btn-primary" (click)="savework()" >Save changes</button>
+<button  type="submit" class="btn btn-secondary" (click)="close(empsta)">Cancel</button>
+</md2-dialog-footer>
+</md2-dialog>
+<md2-dialog #prfix>
+<md2-dialog-title>Prefix</md2-dialog-title><br>
+<div  class="row">
+  <div class="col-md-6">
+    <md-input-container class="example-full-width">
+    <input required name="prefix" [(ngModel)]="prefix.prefixcode" mdInput placeholder=" Prefixes" >
+    </md-input-container><i mdTooltip="Ex:Mr,Mrs,Miss" class="fa fa-question-circle"></i><br><br><br>
+  </div>
+  <div class="col-md-6">
+    <md-input-container class="example-full-width">
+    <input mdInput name="description" [(ngModel)]="prefix.description"  #message maxlength="200" placeholder="Description">
+    <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+    </md-input-container><br><br><br>
+  </div>
+</div><br>
+<md2-dialog-footer>
+<button type="submit" class="btn btn-primary" (click)="saveprefix(prefix)" >Save changes</button>
+<button  type="submit" class="btn btn-secondary" (click)="close(prfix)">Cancel</button>
+</md2-dialog-footer>
+</md2-dialog>

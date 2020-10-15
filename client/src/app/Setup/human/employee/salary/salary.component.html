@@ -1,0 +1,166 @@
+<div class="col-md-12">
+<div class="row">
+<div  style="display: both" class="col-lg-12">
+    <span style="font-weight:500">Salary</span>
+    
+</div><br><br>
+</div>  
+</div>
+<div class="col-md-12">
+<div class="row">
+<div  class="col-md-4"><br>
+ <md-select placeholder="Salary Currency" [(ngModel)]="currency "  class="example-full-width">
+    <md-option *ngFor="let sc of currencyall" [value]="sc.currencyname" >
+    {{ sc.currencyname }}
+  </md-option>
+</md-select><br><i style="color: #0d47a1" (click)="open(basiccurr)">Add Currency</i><br><br>
+  <md2-dialog #basiccurr>
+    <md2-dialog-title>Currency</md2-dialog-title><br>
+  <div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-6">
+     <md-input-container class="example-full-width">
+    <input required name="prefix" [(ngModel)]="currency" mdInput placeholder=" Currency" >
+  </md-input-container><i mdTooltip="Ex:Dollar" class="fa fa-question-circle"></i><br><br><br>
+  <md-input-container class="example-full-width">
+    <input mdInput name="description" [(ngModel)]="cudesc"  #message maxlength="200" placeholder="Description">
+    <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+  </md-input-container><br><br><br> 
+</div>
+<div class="col-md-6">
+	 <md-input-container class="example-full-width">
+    <input required [(ngModel)]="currencycode" mdInput placeholder=" Currency Code" >
+  </md-input-container><i mdTooltip="Ex:USD" class="fa fa-question-circle"></i><br><br><br>
+     
+</div>
+</div><br>
+    <md2-dialog-footer>
+    <button type="submit" class="btn btn-primary" (click)="savecur()" >Save changes</button>
+      <button  type="submit" class="btn btn-secondary" (click)="close(basiccurr)">Cancel</button>
+    </md2-dialog-footer>
+  </md2-dialog>
+
+
+<md-input-container class="example-full-width">
+      <input mdInput  [(ngModel)]="bank"  placeholder="Bank Name" required>
+    </md-input-container><br><br><br><br>
+     <md-select placeholder="Account Class Type" [(ngModel)]="classtype "  >
+    <md-option *ngFor="let at of allAccounts" [value]="at.accountclasstype" >
+    {{ at.accountclasstype }}
+  </md-option>
+</md-select><br><i style="color: #0d47a1" (click)="open(basicclasstype)">Add Account  Class Type</i><br><br><br><br><br><br>
+ <md2-dialog #basicclasstype>
+    <md2-dialog-title>Account Class Type</md2-dialog-title><br>
+  <div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-6">
+   <md-input-container class="example-full-width">
+    <input required name="account"  [(ngModel)]="accountclass" mdInput placeholder="Account Class Types">
+  </md-input-container><i mdTooltip="Ex:Technician" class="fa fa-question-circle"></i><br><br><br>
+</div>
+<div class="col-md-6">
+	 <md-input-container class="example-full-width">
+    <input mdInput #message maxlength="200" [(ngModel)]="accdes"  placeholder="Description">
+    <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+  </md-input-container><br><br><br>  
+     
+</div>
+</div><br>
+    <md2-dialog-footer>
+    <button type="submit" class="btn btn-primary" (click)="saveclass()" >Save changes</button>
+      <button  type="submit" class="btn btn-secondary" (click)="close(basicclasstype)">Cancel</button>
+    </md2-dialog-footer>
+  </md2-dialog>
+</div>
+
+<div  class="col-md-4"><br>
+ <md-select placeholder="Pay Frequency" [(ngModel)]="frequency "  >
+    <md-option *ngFor="let pa of pays" [value]="pa.payfrequency" >
+    {{ pa.payfrequency }}
+  </md-option>
+</md-select><br><i style="color: #0d47a1" (click)="open(basicpay)">Add Pay Frequency</i><br><br>
+
+  <md2-dialog #basicpay>
+    <md2-dialog-title>Currency</md2-dialog-title><br>
+  <div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-6">
+     <md-input-container class="example-full-width">
+      <input name="pay" [(ngModel)]="pay" mdInput placeholder="Pay Frequency" required>
+       <md-error>Please enter pay frequency type.</md-error> 
+    </md-input-container><i mdTooltip="Ex: Hour,Day,Week" class="fa fa-question-circle" ></i><br><br><br>
+  <md-input-container class="example-full-width">
+    <input mdInput name="description" [(ngModel)]="paydesc"  #message maxlength="200" placeholder="Description">
+    <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+  </md-input-container><br><br><br> 
+</div>
+<div class="col-md-6">
+	 <md-input-container class="example-full-width">
+      <input name="shortcode" [(ngModel)]="shortcode" mdInput placeholder="Short Code" required>
+      <md-error>Please enter pay frequency short code.</md-error>  
+    </md-input-container><i mdTooltip="Ex: Hr,Dy,Wk" class="fa fa-question-circle" ></i><br><br><br>
+     
+</div>
+</div><br>
+    <md2-dialog-footer>
+    <button type="submit" class="btn btn-primary" (click)="savepay()" >Save changes</button>
+      <button  type="submit" class="btn btn-secondary" (click)="close(basicpay)">Cancel</button>
+    </md2-dialog-footer>
+  </md2-dialog>
+
+<md-input-container class="example-full-width">
+      <input mdInput  [(ngModel)]="holder"  placeholder="Account Holder Name" >
+    </md-input-container><br><br><br><br>
+
+     <md-select placeholder="Account Type" [(ngModel)]="acctype "  >
+    <md-option *ngFor="let at of account" [value]="at.bankaccounttype" >
+    {{ at.bankaccounttype }}
+  </md-option>
+</md-select><br><i style="color: #0d47a1" (click)="open(basictype)">Add Account Type</i><br><br><br><br><br><br>
+<md2-dialog #basictype>
+    <md2-dialog-title>Account Type</md2-dialog-title><br>
+  <div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-6">
+    <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="bank"  placeholder="Bank Account Types"> 
+    </md-input-container><i mdTooltip="Ex: Saving,Current" class="fa fa-question-circle" ></i><br><br><br>
+</div>
+<div class="col-md-6">
+	  <md-input-container class="example-full-width">
+     <input mdInput #message maxlength="200" [(ngModel)]="bkdes" placeholder="Description"> 
+  <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+</md-input-container><br><br><br>
+     
+</div>
+</div><br>
+    <md2-dialog-footer>
+    <button type="submit" class="btn btn-primary" (click)="savetype()" >Save changes</button>
+      <button  type="submit" class="btn btn-secondary" (click)="close(basictype)">Cancel</button>
+    </md2-dialog-footer>
+  </md2-dialog>
+</div>
+
+<div  class="col-md-4">
+
+<md-input-container class="example-full-width">
+      <input mdInput  [(ngModel)]="salary"  placeholder="Salary" >
+    </md-input-container><br><br>
+    <md-input-container>
+     <input mdInput [mdDatepicker]="picker1"  [(ngModel)]="holdingdate" placeholder="Account Holding Since" >
+ 
+     <button mdSuffix [mdDatepickerToggle]="picker1"></button>
+   </md-input-container>
+   <md-datepicker #picker1></md-datepicker><br><br><br>
+    <md-input-container class="example-full-width">
+      <input mdInput  [(ngModel)]="accountnumber"  placeholder="Account Number" >
+    </md-input-container><br><br><br>
+</div>
+
+
+</div>
+</div>
+
+<div style="float: right;margin:0% 2% 0% 0%" class="row">
+<div  class="col-md-12">
+<button class="btn btn-outline-primary btn-sm" (click)="save()"> Save</button>
+
+
+</div>
+</div>

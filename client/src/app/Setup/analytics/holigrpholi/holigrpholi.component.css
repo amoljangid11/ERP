@@ -1,0 +1,86 @@
+.dropdown-menu {
+   
+    left: 55%;
+    z-index: 1000;
+    top:30%;
+    min-width: 7rem;
+    
+}
+
+/* ::-webkit-scrollbar {
+  width: 2.5px;
+  height: 3.5px;
+}
+   */
+.imageClass{
+    padding-left: 1px;
+    padding-top: 0px;
+    border-style:groove;
+    height: 70px;
+    width: 70px;
+  }
+
+  #content{
+    overflow:visible;
+    background-color:lightgray;
+    overflow:hidden;/*contain child floats*/
+    /* background: rgb(236, 233, 233);  */
+  }
+
+  #main{
+    /* border-style:hidden;
+    background-color:lightgray */
+  }
+
+  #child{
+    background-color:lightgray;
+  }
+  
+  @import "~bootstrap/dist/css/sidenavmenu.css";
+
+
+
+
+.display_emp{
+    border-style: groove;
+    height: 650px;
+    width: 250px;
+    float:left; 
+     text-align:left; 
+     color:black; 
+     font-size: 16px; 
+     font-family: 'Roboto Regular',sans-serif; 
+     padding-left:2%;
+  }
+
+  
+   .row1{
+    padding-left:1.5%;
+    
+  } 
+
+  .imageClass1{
+    width: 13px;
+     
+  }
+
+  .box2{
+    font-size: 13px; 
+  }
+
+
+  .box{
+    height: 100%;
+    width: 100%;
+    border-style: groove;
+  }
+
+
+ 
+  .box1 {
+      
+    border-bottom-color: #424141;
+    font-size: 14px;
+  } 
+
+  

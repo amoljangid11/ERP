@@ -1,0 +1,117 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+    <div *ngIf = "!show">
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employee Configuration</li>
+          <li class="breadcrumb-item active">Work Eligibility Document Types</li>
+          
+        </ol>
+      </div>
+      <div>
+        <span style="font-weight:500">Work Eligibility Document Types</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "cancel();show = !show;updates=false;">Add</button>
+      </div><br><br>
+      <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+      <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div>
+            <table  class="table table-bordered table-striped table-sm">
+              <thead class="bg-success">
+                <tr>
+                  <th>Action</th>
+                  <th>Document Type</th>
+                  <th>Issuing Authority</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let work of datas;let i = index " >
+                  <td> <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(work)"></i>&nbsp;&nbsp;<i (click)="edit(work);show = !show"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(work,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                  <td>{{work.workeligibility[0].document_type}}</td>
+                  <td>{{work.workeligibility[0].issuing_authority}}</td>
+                  <td>{{work.workeligibility[0].description}}</td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <form class="form-horizontal" [formGroup]="form">
+    <div *ngIf= "show">
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employee Configuration</li>
+          <li class="breadcrumb-item ">Work Eligibility Document Types</li>
+          <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+        </ol>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-4">
+          <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="eligibility.workeligibility[0].document_type"  placeholder="Document Type" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" class="form-control" formControlName="doc" required>
+          <md-error >
+            Please enter document type.
+          </md-error>
+        </md-input-container><i mdTooltip="Ex: Passport,Voter ID" class="fa fa-question-circle" ></i><br><br><br>
+        </div>
+        <div class="col-md-4"><br>
+          <md-select  [(ngModel)]="eligibility.workeligibility[0].issuing_authority" placeholder="Issuing Authority" formControlName="auth" required>
+              <md-option>Select Issuing Authority</md-option>
+          <md-option *ngFor="let issue of auth" [value]="issue.viewValue">
+          {{ issue.viewValue }}
+          </md-option>
+          </md-select><br>
+          <span  style="color: red" *ngIf="!eligibility.workeligibility[0].issuing_authority">
+            please select Authority.
+          </span>
+          <br><br>
+        </div>
+        <div class="col-md-4">
+          <md-input-container class="example-full-width">
+          <input mdInput #message maxlength="200" [(ngModel)]="eligibility.workeligibility[0].description" placeholder="Description" class="form-control" formControlName="desc">
+          <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+          </md-input-container><br><br><br>
+        </div>
+        <div  class="col-md-12" style="margin-top: 5%">
+          <button  *ngIf="!updates" class="btn btn-outline-success btn-sm"(click)="save(eligibility);show=!show;" [disabled]="!form.valid"> Save</button>
+          <button *ngIf="updates"  class="btn btn-outline-success btn-sm" (click)="update(eligibility);show=!show;updates=!updates" [disabled]="!form.valid"> Update</button>
+          <button  class="btn btn-outline-warning btn-sm" (click) = "cancel(eligibility);show=!show;updates=!update"> Cancel </button>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+
+ 
+
+<md2-dialog #deptModal>
+      <md2-dialog-title>Work Eligibility Document Types</md2-dialog-title>
+      <div class=" row box">
+        <div class="emp-info">
+            Document Type : {{eligibility.workeligibility[0].document_type}}
+        </div>
+        <div class="emp-info">
+            Issuing Authority : {{eligibility.workeligibility[0].issuing_authority}}
+        </div><br>
+        <div class="emp-info alter-div">
+            Description : {{eligibility.workeligibility[0].description}}
+        </div>
+        <div class="emp-info alter-div"></div>
+      </div>
+    <md2-dialog-footer>
+        <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+    </md2-dialog-footer>
+    </md2-dialog>

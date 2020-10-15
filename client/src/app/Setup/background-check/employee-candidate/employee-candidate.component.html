@@ -1,0 +1,217 @@
+<head>
+  <script>
+  // function showData()
+  // {
+   
+  //   var selectItem = document.getElementById('selbox').value;
+  //   var userInput = selectItem.options[selectItem.selectedIndex].value;
+  //   if(selectItem)
+  //   {
+  //     document.getElementById('empData').style.visibility='visible';
+  //   }
+  //   else{
+  //     return false;
+  //   }
+  // return admOptionValue=document.getElementById('selbox').value;
+  // } 
+  
+// function admSelectCheck(nameSelect)
+// {
+  
+//     console.log(nameSelect);
+//     if(nameSelect){
+//         admOptionValue = nameSelect.value;
+//         if(admOptionValue != 0){
+//             document.getElementById('admDivCheck').style.display = "";
+//         }
+//         else{
+//           document.getElementById('admDivCheck').style.display = "none";
+//         }
+//     }
+//     else{
+//       document.getElementById('admDivCheck').style.display = "none";
+//     }
+// }
+  </script>
+</head>
+
+
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+    <div *ngIf = "!show" >
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">Background </li>
+          <li class="breadcrumb-item active">Employee/Candidate Screening</li>
+        </ol>
+     </div> <br>
+    
+  
+  
+     <div class="col-md-4">
+      <md-select [(ngModel)]="selected" placeholder="Select Employee/Candidate" id="dropdown"  >
+       <md-option *ngFor="let can of empcnd" [value]="can.name" >
+      {{can.name}}
+      </md-option>
+      <!-- <md-option value="Employee">Employee</md-option>
+      <md-option value="Candidate">Candidate</md-option> -->
+      </md-select><br><br><br>
+     </div>
+    
+    <div>
+     <span style="font-weight:500">Employee/Candidate Screening</span>
+            <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button> 
+    </div><br><br>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}   
+    </div>
+  <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    
+     <!-- <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+          {{ message }}
+        </div>
+    <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+          {{ message }}
+    </div> -->
+  
+  
+   
+            <div *ngIf="selected=='Employee'" >
+                   <table  class="table table-bordered table-striped table-sm">
+                       <thead class="bg-success">
+                           <tr>
+                                <th>Action</th>
+                                <th>Name</th>
+                                <th>Background Check Status</th>
+                                <th>Job Title</th>
+                                <th>Email</th>
+                                <th>Employee Status</th>
+                           </tr>
+                            </thead>
+                            <tbody>
+                       <tr *ngFor="let bu of bunit;let i = index"  >
+                          <td><i (click)="edit(empcan);show=!show;"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(bu,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                          <td >{{bu.agenciesunits[0].agencyname}}</td>
+                          <td >{{bunits.agenciesunits[0].status}}</td>
+                          <td>{{bu.agenciesunits[0].jobtitle}}</td>
+                          <td >{{bu.agenciesunits[0].email}}</td>
+                          <td>Active</td>    
+                       </tr>                                                                 
+                          </tbody>                    
+                  </table>
+            </div>
+       
+    
+          <div *ngIf="selected=='Candidate'">
+                 <table  class="table table-bordered table-striped table-sm">
+                     <thead class="bg-success">
+                         <tr>
+                              <th>Action</th>
+                              <th>Name</th>
+                              <th>Background Check Status</th>
+                              <th>Location</th>
+                              <th>City</th>
+                              <th>State</th>
+                              <th>Country</th>
+                              <th>Candidate Status</th>
+                         </tr>
+                          </thead>
+                          <tbody>
+                     <tr *ngFor="let bu of bunit;let i = index">
+                        <td><i (click)="edit(bu);show=!show;"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(bu,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                        <td >{{bu.agenciesunits[0].agencyname}}</td>
+                        <td >{{bunits.agenciesunits[0].status}}</td>
+                        <td>{{bu.agenciesunits[0].location}}</td>
+                        <td >{{bu.agenciesunits[0].city}}</td>
+                        <td>{{bu.agenciesunits[0].statename}}</td>    
+                        <td>{{bu.agenciesunits[0].countryname}}</td>  
+                        <td>Active</td>      
+                     </tr>                                                                 
+                        </tbody>                    
+                </table>
+          </div></div>
+     
+  
+     <div *ngIf= "show">
+       <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">Background </li>
+          <li class="breadcrumb-item ">Employee/Candidate Screening</li>
+          <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+        </ol>
+     </div><br><br>
+    
+     <div>
+      <div class="col-md-4">
+          <input type="hidden" name="_id" value="{{official._id}}">
+        <md-select placeholder="Search Employee/Candidate"  [(ngModel)]="selected" value="official._id" (ngModelChange)="onChangeObj($event)" id="selbox">
+            <input type="search" [(ngModel)]="searchText" placeholder="Search text">
+        <md-option id="admOptionValue" *ngFor="let data of official| filter: searchText ; let i = index " value="{{data.official[0].id}}" >
+            {{data.official[0].firstname}} {{data.official[0].lastname}}
+           
+        </md-option>
+        
+      </md-select>
+      </div>  
+    {{selectedDeviceObj | json}}
+       <br>
+      <div class="display_emp" *ngIf="selectedDeviceObj">  
+         <div style="padding:10px;" class="row"  *ngFor="let emp of official;let i = index">
+           <div class="col">
+             <img class="imageClass" src="./assets/Images/Employee.jpg"/>
+           </div>
+           <div class="col-8">
+            <div>
+            <div style="border-bottom:2px dotted black">     
+                <a> <b>Name</b></a>&nbsp;:&nbsp;<a></a> {{emp.official[0].firstname}} {{emp.official[0].lastname}}
+            </div>
+            
+            <div style="border-bottom:2px dotted black">     
+              <a><b>Email</b></a>&nbsp;:&nbsp;<a></a> <a>{{emp.official[0].email}}</a>
+            </div>
+            
+            <div>     
+              <a><b>Status</b></a>&nbsp;:&nbsp;<a></a> {{emp.official[0].status}}
+            </div>  
+          </div>             
+         </div>
+       </div>
+     </div> 
+    <!-- </div>
+  </div> -->
+   
+    <br><br>
+       <label>SCREENING TYPES</label>&nbsp;<small>*</small>
+        <br>   
+       <md-checkbox *ngFor="let b of screen" name="grp" (click)="selectbusiness(b,screens,screeningtype)" (change)="checkAll($event)"  [value]="b.screeningtype[0].screentype" checked=false>
+            {{b.screeningtype[0].screentype}}
+        </md-checkbox>
+       </div>
+
+       <!-- <div class="display_emp" *ngIf="checked">
+           <div *ngIf="checked" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+            {{ message }}
+         </div>  
+         <div style="padding: 10px;" class="row">
+                 
+        </div>
+       </div> -->
+    
+       
+    <div class="row">
+      <div  class="col-md-12" style="margin-top: 5%">
+        <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(empcans);show=show"> Save</button>   
+        <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(empcans);show=!show;updatebutton=!updatebutton;"> Update</button>
+        <button class="btn btn-outline-warning btn-sm" (click) = "cancel(empcans);show=!show"> Cancel </button>
+        <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+          {{ message }}
+       </div>
+      
+      </div> 
+    </div>
+    </div>
+    </div> 
+    

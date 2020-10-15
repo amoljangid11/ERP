@@ -1,0 +1,49 @@
+<div  class="row">
+<div *ngIf = "!show" class="col-lg-12">
+  <div >
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">HR </li>
+      <li class="breadcrumb-item ">Leave Management</li>
+      <li class="breadcrumb-item active">Employee Leave Summary</li>
+    </ol><br>
+    <div class="col-md-3">
+     <md-select [(ngModel)]="status" placeholder="status">  
+       <md-option *ngFor="let sta of stat" [value]="sta.value">
+         {{sta.name}}
+       </md-option>
+    </md-select><br><br><br>
+  
+  </div>
+ </div>
+
+ <div class="col-lg-12">
+ <span style="font-weight:500">Employee Leave Summary</span><br><br>
+  <div class="table-responsive"> 
+  <table  class="table table-bordered table-hover ">
+ <thead class="thead-inverse">
+     <tr>
+      <th>Action</th>
+      <th>Employee</th>
+      <th>Leave Type</th>
+      <th>From Date</th>
+      <th>To Date</th>
+      <th>Leave Count</th>
+      <th>Applied Ön</th>
+     </tr>
+      </thead>
+     <tbody>
+         <tr>
+         
+         </tr>                       	
+     </tbody>
+                                
+    </table>
+   </div>
+</div>
+</div>
+
+</div>
+
+
+ 

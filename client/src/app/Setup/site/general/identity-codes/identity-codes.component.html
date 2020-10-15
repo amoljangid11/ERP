@@ -1,0 +1,138 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div  *ngIf= "!show">
+    <div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site Configuration</li>
+        <li class="breadcrumb-item ">General</li>
+        <li class="breadcrumb-item active">Employee Codes</li>
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:500">Employee Codes</span>
+      <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button>
+    </div><br><br>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <table  class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Employee Code</th>
+                <th>Background Agency</th>
+                <th>Users</th>
+                <th>Requisition</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let gen of datas;let i = index ">
+              <tr>
+                <td>
+                  <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(gen)"></i>&nbsp;&nbsp;
+                  <i (click)="edit(gen);show = !show" title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;
+                  <i (click)="delete(gen,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                <td>{{gen.identitycodes[0].employeecode}}</td>
+                <td>{{gen.identitycodes[0].background}}</td>
+                <td>{{gen.identitycodes[0].users}}</td>
+                <td>{{gen.identitycodes[0].requisition}}</td>
+                <td >{{gen.identitycodes[0].description}}</td>
+              </tr>
+            </tbody>
+            
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf= "show" >
+    <div>
+      <ol class="breadcrumb  row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site configuration</li>
+        <li class="breadcrumb-item ">General</li>
+        <li class="breadcrumb-item ">Employee Codes</li>
+        <li class="breadcrumb-item active">Add</li>
+      </ol>
+    </div>
+    
+    <form [formGroup]="abc">
+    <div class="col-md-12">
+    <div class="row">
+        <div class="col-md-4">
+            <md-input-container class="example-full-width">
+            <input mdInput [(ngModel)]="general.identitycodes[0].employeecode"  placeholder="Employee Code" formControlName="ecode" required>
+            <md-error>please enter valid employee code</md-error>
+           </md-input-container><br><br><br><br>
+      
+            <md-input-container class="example-full-width">
+            <input mdInput [(ngModel)]="general.identitycodes[0].requisition"  placeholder="Requisition" formControlName="reqc">
+            </md-input-container><br><br><br>
+        </div>
+    
+    <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput [(ngModel)]="general.identitycodes[0].background"  placeholder="Background Agency" formControlName="backg">
+        </md-input-container><br><br><br>
+  
+        <md-input-container class="example-full-width">
+        <textarea [(ngModel)]="general.identitycodes[0].description"  mdInput  #message  maxlength="200"  placeholder="Description" formControlName="desc"></textarea>
+        <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+        </md-input-container><br><br><br>
+  </div>
+   
+        <div class="col-md-4">
+            <md-input-container class="example-full-width">
+            <input mdInput [(ngModel)]="general.identitycodes[0].users"  placeholder="Users" formControlName="usrs" >
+            </md-input-container><br><br><br>
+      </div>
+      </div>
+      
+        </div>
+    
+        
+ 
+      <div  class="col-md-12" style="margin-top: 5%">
+        <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(general);show=!show" [disabled]="!abc.valid"> Save</button>
+        <button *ngIf="updatebutton"  class="btn btn-outline-success btn-sm" (click)="update(general);show=!show;" [disabled]="!abc.valid"> Update</button>
+        <button class="btn btn-outline-warning btn-sm" (click) = "cancel();show=!show;"> Cancel </button>
+      </div>
+   </form>
+  </div>
+  
+</div>
+
+
+
+
+<md2-dialog #deptModal>
+    <md2-dialog-title>Employee Codes</md2-dialog-title>
+    <div class="row box">
+      <div class="emp-info">
+         <b> Employee Code :</b> {{general.identitycodes[0].employeecode}}
+      </div>
+      <div class="emp-info">
+         <b> Background Agency :</b> {{general.identitycodes[0].background}}
+      </div><br>
+      <div class="emp-info alter-div">
+        <b>  Users :</b> {{general.identitycodes[0].users}}
+      </div>
+      <div class="emp-info alter-div">
+         <b> Requisition :</b> {{general.identitycodes[0].requisition}}
+      </div><br>
+      <div class="emp-info">
+         <b> Description :</b> {{general.identitycodes[0].description}}
+      </div>
+      <div class="emp-info">
+      </div><br>
+    </div>
+  <!-- <md2-dialog-footer>
+      <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+  </md2-dialog-footer> -->
+</md2-dialog>
+  

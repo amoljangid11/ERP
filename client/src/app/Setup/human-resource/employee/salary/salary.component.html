@@ -1,0 +1,330 @@
+
+<div class="col-md-12">
+  <div class="row">
+    <div  style="display: both" class="col-lg-12">
+      <span style="font-weight:500">Salary</span>
+      
+    </div><br><br>
+  </div>
+</div>
+
+<div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+  {{ messagess }}
+</div>
+
+<form class="form-horizontal" [formGroup]="form">
+
+<div class="col-md-12"><br>
+  <div class="row" *ngIf="service.visible" >
+      <div class="col-md-4">
+          <md-input-container class="example-full-width">
+           <input mdInput  [(ngModel)]="employee.salary[0].holder"  placeholder="Account Holder Name" formControlName="accHname" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="40">
+          </md-input-container>
+      </div>
+
+         <div class="col-md-4" *ngIf="addbn1"><br>
+            <md-select [(ngModel)]="employee.salary[0].bank" placeholder="Bank Name" formControlName="bankname">
+             <md-option>Select Bank Name</md-option>
+             <md-option *ngFor="let bn of accounts" [value]="bn.bankaccounttype[0].bankname" (click)="selectedBankName(bn);">{{bn.bankaccounttype[0].bankname}}</md-option>
+            </md-select>
+          </div>
+
+          <div class="col-md-4" *ngIf="editbn1">
+               
+               <md-input-container class="example-full-width">
+              <input mdInput placeholder="Bank Name" [(ngModel)]="employee.salary[0].bank" (click)="edittoaddconvert()" formControlName="bankname" readonly>
+              </md-input-container>
+          </div>
+
+          <div class="col-md-4" *ngIf="addbn" ><br>
+              <md-select placeholder="Branch" [(ngModel)]="employee.salary[0].bankbranch"  formControlName="branch">
+               <md-option>Select Branch</md-option>
+               <md-option *ngFor="let br of branches" [value]="br.bankaccounttype[0].branchname" (click)="selectBranch(br);">{{br.bankaccounttype[0].branchname}}</md-option>
+              </md-select>
+          </div>
+
+          <div class="col-md-4" *ngIf="editbn"> 
+              
+             <md-input-container class="example-full-width">
+              <input mdInput placeholder="Branch Name" [(ngModel)]="employee.salary[0].bankbranch" formControlName="branch" readonly>
+              </md-input-container>
+          </div>
+
+          <div class="col-md-4">
+              <md-input-container class="example-full-width">
+                  <!-- [value]="ifsccode" -->
+              <input mdInput placeholder="IFSC Code" [(ngModel)]="employee.salary[0].ifsccode"  formControlName="ifsccode" maxlength="11">
+              </md-input-container>
+          </div>
+
+          <div class="col-md-4">
+              <md-input-container class="example-full-width">
+               <input mdInput [(ngModel)]="employee.salary[0].accountnumber" placeholder="Account Number" formControlName="accNo" pattern="[0-9.]+" maxlength="20" minlength="11">
+                <md-error>Please enter valid account number</md-error>
+              </md-input-container>
+          </div>
+
+          <div class="col-md-4" *ngIf="addbn2"><br>
+
+              <md-select placeholder="Account Type" [(ngModel)]="employee.salary[0].acctype " formControlName="acctype" >
+               <md-option>Select Account Type</md-option>
+               <md-option *ngFor="let at of accounts" [value]="at.bankaccounttype[0].bankaccounttype">{{ at.bankaccounttype[0].bankaccounttype }}</md-option>
+               </md-select><br>
+               <i style="color: #0d47a1" onclick="document.getElementById('basictype').style.display='block'">Add Account Type</i>
+          </div>
+         
+
+          <div class="col-md-4" *ngIf="editbn2">
+    
+              <md-input-container class="example-full-width">
+              <input mdInput placeholder="Account Type" [(ngModel)]="employee.salary[0].acctype" (click)="edittoaddconvert1()" formControlName="acctype" readonly>
+              </md-input-container><br>
+              <i style="color: #0d47a1" onclick="document.getElementById('basictype').style.display='block'">Add Account Type</i>
+          </div>
+
+          <div class="col-md-4">
+              <md-input-container class="example-full-width">
+              <input mdInput  [(ngModel)]="employee.salary[0].salary"  placeholder="Annual CTC" formControlName="salary" minlength="4" maxlength="7" pattern="[0-9.]+" >
+               <md-error>CTC must be minimum 4 digits</md-error>
+              </md-input-container>
+          </div>
+
+    <div class="col-md-4"><br>
+     <md-select placeholder="Salary Currency" [(ngModel)]="employee.salary[0].currencyname " formControlName="currname">
+      <md-option>Select Currency</md-option>
+      <md-option *ngFor="let scurrency of currencyall" [value]="scurrency.currencies[0].type">{{ scurrency.currencies[0].type }}</md-option>
+      </md-select><br>
+      <i style="color: #0d47a1" onclick="document.getElementById('curr').style.display='block'">Add Currency</i><br><br>
+    </div>
+
+    <!-- <div class="col-md-4">
+     <md-select placeholder="Pay Frequency" [(ngModel)]="employee.salary[0].payfrequency" formControlName="payfreq" >
+      <md-option>Select Pay Frequency</md-option>
+      <md-option *ngFor="let pa of pays" [value]="pa.payfrequency[0].payfrequency">{{ pa.payfrequency[0].payfrequency }}</md-option>
+     </md-select>
+    </div>
+    -->
+    
+    <!-- <div class="col-md-4">
+     <md-input-container>
+      <input mdInput [mdDatepicker]="picker1"  [(ngModel)]="employee.salary[0].holdingdate" placeholder="Account Holding Since" formControlName="accH" required>      
+      <button mdSuffix [mdDatepickerToggle]="picker1"></button>
+       <md-error>Please enter date only</md-error>
+     </md-input-container>
+     <md-datepicker #picker1></md-datepicker>
+    </div> -->
+    <!-- <div class="col-md-4">
+     <md-select placeholder="Account Class Type" [(ngModel)]="employee.salary[0].account_classtype " formControlName="accCtype" >
+      <md-option *ngFor="let at of allAccounts" [value]="at.acc_classtype[0].classtype"> {{ at.acc_classtype[0].classtype }}</md-option>
+     </md-select><br>
+     <i style="color: #0d47a1" onclick="document.getElementById('basicclasstype').style.display='block'">Add Account  Class Type</i>
+    </div> -->
+    
+ 
+  </div>
+</div>
+<div style="float: right;margin:0% 2% 0% 0%" class="row" *ngIf="service.visible" >
+  <div  class="col-md-12">
+    <button  class="btn btn-outline-success btn-sm" (click)="save(employee)" [disabled]="!form.valid"> Save</button>
+  </div>
+</div>
+</form>
+<form class="form-horizontal" [formGroup]="form1">
+
+<div id="curr" class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-teal bg-primary">
+      <span onclick="document.getElementById('curr').style.display='none'"  style="margin-top: -1%;font-weight: 500"
+      class=" w3-display-topright fa fa-times " ></span>
+      <h6>Currency</h6>
+    </header>
+    <div class="w3-container">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input required name="type" [(ngModel)]="currency.currencies[0].type" mdInput placeholder=" Currency" formControlName="curre"  pattern="[a-zA-Z]+$" required >
+            <md-error>
+              Please enter valid currency
+            </md-error>
+            </md-input-container><i mdTooltip="Ex:Dollar" class="fa fa-question-circle"></i><br><br><br>
+            <md-input-container class="example-full-width">
+            <input mdInput name="description" [(ngModel)]="currency.currencies[0].description"  #message maxlength="200" placeholder="Description" formControlName="desc">
+            <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+            </md-input-container><br><br><br>
+          </div>
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input required [(ngModel)]="currency.currencies[0].code" mdInput placeholder=" Currency Code" formControlName="curreCode"   required >
+            <md-error>
+              Please enter valid currency code
+            </md-error>
+            </md-input-container><i mdTooltip="Ex:USD" class="fa fa-question-circle"></i><br><br><br>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+      <div class="col-sm-12">
+        <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savecur(currency)" [disabled]="!form1.valid" data-dismiss="model" >Save</button>
+      </div>
+    </footer>
+  </div>
+</div>
+</form>
+
+<form class="form-horizontal" [formGroup]="form2">
+
+<div id="basicclasstype" class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-teal bg-primary">
+      <span onclick="document.getElementById('basicclasstype').style.display='none'"  style="margin-top: -1%;font-weight: 500"
+      class=" w3-display-topright fa fa-times " ></span>
+      <h6>Account Class Type</h6>
+    </header>
+    <div class="w3-container">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input required name="account"  [(ngModel)]="accountclasstype.acc_classtype[0].classtype" mdInput placeholder="Account Class Types" formControlName="accCtype1" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="30">
+            <md-error>
+              Please enter account_classtype 
+            </md-error>
+            </md-input-container><i mdTooltip="Ex:Technician" class="fa fa-question-circle"></i><br><br><br>
+          </div>
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput #message maxlength="200" [(ngModel)]="accountclasstype.acc_classtype[0].description"  placeholder="Description" formControlName="desc1">
+            <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+            </md-input-container><br><br><br>
+            
+          </div></div>
+        </div>
+        <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+          <div class="col-sm-12">
+            <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="saveclass(accountclasstype)" data-dismiss="model" [disabled]="!form2.valid">Save</button>
+          </div>
+          
+        </footer>
+      </div>
+    </div>
+  </div>
+  </form>
+  <form class="form-horizontal" [formGroup]="form3">
+
+  <div id="basicpay" class="w3-modal w3-animate-opacity">
+    <div class="w3-modal-content w3-card-4">
+      <header class="w3-container w3-teal bg-primary">
+        <span onclick="document.getElementById('basicpay').style.display='none'"  style="margin-top: -1%;font-weight: 500"
+        class=" w3-display-topright fa fa-times " ></span>
+        <h6>Pay Frequency</h6>
+      </header>
+      <div class="w3-container">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <md-input-container class="example-full-width">
+              <input name="pay" [(ngModel)]="pay.payfrequency[0].payfrequency" mdInput placeholder="Pay Frequency" formControlName="payFreq"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" required>
+              <md-error>Please enter pay frequency type.</md-error>
+              </md-input-container><i mdTooltip="Ex: Hour,Day,Week" class="fa fa-question-circle" ></i><br><br><br>
+              <md-input-container class="example-full-width">
+              <input mdInput #message maxlength="200" [(ngModel)]="pay.payfrequency[0].description" placeholder="Description" formControlName="descs">
+              <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+              </md-input-container><br><br><br>
+            </div>
+            <div class="col-md-6">
+              <md-input-container class="example-full-width">
+              <input name="shortcode" [(ngModel)]="pay.payfrequency[0].shortcode" mdInput placeholder="Short Code" pattern="^[a-zA-Z0-9 ]*$" formControlName="shoCode" required>
+              <md-error>Please enter valid pay frequency short code.</md-error>
+              </md-input-container><i mdTooltip="Ex: Hr,Dy,Wk" class="fa fa-question-circle" ></i><br><br><br>
+            </div></div>
+          </div>
+          <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+            <div class="col-sm-12">
+              <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savepay(pay)" data-dismiss="model" [disabled]="!form3.valid" >Save</button>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    </form>
+    <form class="form-horizontal" [formGroup]="form4">
+
+    <div id="basictype" class="w3-modal w3-animate-opacity">
+      <div class="w3-modal-content w3-card-4">
+        <header class="w3-container w3-teal bg-primary">
+          <span onclick="document.getElementById('basictype').style.display='none'"  style="margin-top: -1%;font-weight: 500"
+          class=" w3-display-topright fa fa-times " ></span>
+          <h6>Account Type</h6>
+        </header>
+        <div class="w3-container">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <md-input-container class="example-full-width">
+                <input mdInput [(ngModel)]="bank.bankaccounttype[0].bankaccounttype"  placeholder="Bank Account Types" formControlName="accType1" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" required>
+                <md-error>
+                  Please enter bank account_type
+                </md-error>
+                </md-input-container><i mdTooltip="Ex: Saving,Current" class="fa fa-question-circle" ></i><br><br><br>
+              </div>
+              <div class="col-md-6">
+                <md-input-container class="example-full-width">
+                <input mdInput #message maxlength="200" [(ngModel)]="bank.bankaccounttype[0].description" placeholder="Description" formControlName="descs">
+                <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+                </md-input-container><br><br><br>
+              </div></div>
+            </div>
+            <footer class="w3-container w3-teal"  style="border-top: 0.5px solid lightgrey">
+              <div class="col-sm-12">
+                <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savetype(bank)" data-dismiss="model" [disabled]="!form4.valid"  >Save</button>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+      </form>
+
+
+<div class="col-md-12 box" *ngIf="service.invisible" (click)="viewsalary(data)">
+  <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+   <tr>
+      <th>Account Holder Name</th>
+      <td>{{employee.salary[0].holder}}</td> 
+      <th>Bank Name</th>
+      <td>{{employee.salary[0].bank}}</td>   
+   </tr>
+   <tr>
+      <th>Branch Name</th>
+      <td>{{employee.salary[0].bankbranch}}</td>  
+      <th>IFSC Code</th>
+      <td>{{employee.salary[0].ifsccode}}</td>
+   </tr>
+   <tr>
+      <th>Account Number</th>
+      <td>{{employee.salary[0].accountnumber}}</td>
+      <th>Account Type</th>
+      <td>{{employee.salary[0].acctype}}</td>  
+   </tr>
+   <tr>
+      <th>Annual CTC</th>
+      <td>{{employee.salary[0].salary}}</td>
+      <th>Salary Currency</th>
+      <td>{{employee.salary[0].currencyname}}</td>     
+   </tr>
+   <!-- <tr>
+      <th>Pay Frequency</th>
+      <td>{{employee.salary[0].payfrequency}}</td>
+      <th>Account Holding Since</th>
+      <td>{{employee.salary[0].holdingdate | date}}</td>
+   </tr> -->
+   <!-- <tr>
+      <th></th>
+      <td></td>     
+      <th></th>
+      <td></td>
+   </tr> -->
+  </table>
+ </div>

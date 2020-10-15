@@ -1,0 +1,49 @@
+<div class="col-md-12 card card-outline-info" style="height:100%;" >
+  
+  <div  id="rep" style="overflow: auto;"> 
+      <div><br>
+      <div class="box2" style="float: right;margin:0% 1% 0% 0%">
+        <img class="imageClass1" src="./assets/Images/pdf.png"/>&nbsp;<i style="color: #1565c0" (click)="downloadPDF()">Export to PDF</i> &nbsp;
+        <img class="imageClass1" src="./assets/Images/excel.ico"/>&nbsp;<i style="color: #1565c0" (click)="downloadExcel('grprole', 'employeedata')" >Export to Excel</i>
+      </div>
+      </div><br><br>
+   
+  
+  <div class= "row">
+    
+                <!-- <div class="row"> -->
+
+                    <div class="col-lg-12" id="grproles">
+                      <label style="font-size: 18px"><b>Groups & Roles</b></label>
+                      <div>
+                             <table id="grprole" class="table table-bordered table-striped table-sm">
+                               <thead class="bg-success">
+                        <tr>
+                            <th>Group</th>
+                            <th>No Of Roles</th>
+                          
+                        </tr>
+                         </thead>
+                         <tbody>
+                           <tr *ngFor="let bu of roledata;let i = index " >
+                          <td>{{bu.role[0].group}}</td>
+                          <!-- <td>{{bu.manageholiday[0].holiday}}</td>
+                          <td>{{bu.manageholiday[0].description}}</td> -->
+                        
+                          
+                         </tr>                                 
+                       </tbody>                        
+                       </table>
+            </div>
+          </div>
+      <!-- </div> -->
+  </div>
+
+</div>
+</div>
+
+  
+  
+  
+  
+  

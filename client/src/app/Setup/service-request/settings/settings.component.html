@@ -1,0 +1,356 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show" >
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Configurations </li>
+        <li class="breadcrumb-item active">Settings</li>
+      </ol>
+   </div> <br>
+   <div >
+    <span style="font-weight:500">Settings</span>
+           <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show=!show;updatebutton=false;">Add</button> 
+   </div><br><br>
+   
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+         {{ message }}
+       </div>
+   <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+         {{ message }}
+   </div>
+
+   <div class="row">
+    <div class="col-lg-12">
+    <table  class="table table-bordered table-striped table-sm">
+        <thead class="bg-success">
+            <tr>
+                 <th>Action</th>
+                 <th>Business Unit</th>
+                 <th>Department</th>
+                 <th>Applicability</th>
+                 <th>Request For</th>
+                 <th>Category</th>
+                 <th>Attachment</th>
+                 <th>Description</th>
+            </tr>
+             </thead>
+             <tbody>
+        <tr  *ngFor="let set of seti;let i = index ">
+          <td>
+              <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(set)"></i>&nbsp;&nbsp;
+            <i (click)="edit(set);show=!show;"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;
+               <i (click)="delete(set,i)" title="Delete" class="fa fa-trash-o"></i> 
+            </td>
+          <td >{{set.settings[0].businessunit}}</td>
+           <td >{{set.settings[0].departmentname}}</td> 
+           <td>{{set.settings[0].Applicability}}</td>
+           <td>{{set.settings[0].requestfor}}</td>
+           <td>{{set.settings[0].category}}</td>
+           <td >{{set.settings[0].Attachment}}</td>
+           <td>{{set.settings[0].description}}</td>    
+           <!-- <td>{{"aksjahaj"}}</td>  
+           <td>{{"aksjahaj"}}</td>       -->
+        </tr>                                                                 
+           </tbody>                    
+   </table>
+</div>
+</div>
+</div>
+<form class="form-horizontal" [formGroup]="form">
+<div *ngIf= "show">
+<div >
+<ol class="breadcrumb row bg-primary">
+<li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+<li class="breadcrumb-item ">Configurations </li>
+<li class="breadcrumb-item ">Settings</li>
+<li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+</ol>
+</div><br><br>
+
+  <div class="row">
+  <div class="col-md-3">
+      <md-select placeholder="Business Unit"  [(ngModel)]="sett.settings[0].businessunit" formControlName="busunit" required [disabled]="moe">
+        <md-option  *ngFor="let bu of bunita" [value]="bu.businessunits[0].name" (click)="selectreport(bu.businessunits[0].name,bu)" >
+          {{bu.businessunits[0].name}}
+        </md-option>
+      </md-select><br>
+      <span  style="color: red"   *ngIf="!sett.settings[0].businessunit">
+        please select role.
+      </span>
+    </div><br>
+    <div class="col-md-4" > 
+      <div><label>Applicability</label>&nbsp;<small>*</small><br></div>
+       <md-radio-group [(ngModel)]="sett.settings[0].Applicability" formControlName="applic" required>
+            <md-radio-button value="Business" >Business unit wise</md-radio-button>
+            <md-radio-button value="Department" >Department wise</md-radio-button>
+       </md-radio-group>
+       <br>
+       <span  style="color: red"   *ngIf="!sett.settings[0].Applicability">
+        please select applicability.
+      </span>
+    </div><br>
+
+    <div class="col-md-3">
+      <md-select placeholder="Request For" [(ngModel)]="sett.settings[0].requestfor"  formControlName="reqqfor" [disabled]="moe" required>
+           <md-option  *ngFor='let req of request' [value]="req.name" >{{req.name}}</md-option>
+      </md-select>
+      <br>
+      <span  style="color: red"   *ngIf="!sett.settings[0].requestfor">
+        please select requestfor.
+      </span>
+    </div>
+    </div>
+    <br><br>
+
+ <div class="row">
+    <div class="col-md-3">
+      <md-select placeholder="No. of Approvers"  [(ngModel)]="sett.settings[0].NoOfApprovers" formControlName="noofapp" value="" id="approvers" [disabled]="moe" required>
+        <!-- <md-option>Select No. of Approvers</md-option> -->
+        <md-option value="1">1</md-option>
+        <md-option value="2">2</md-option>
+        <md-option value="3">3</md-option>
+      </md-select><br>
+      <span  style="color: red"   *ngIf="!sett.settings[0].NoOfApprovers">
+        please select no of approvers.
+      </span>
+      
+   
+    </div>
+
+
+        <div class="col-md-3" *ngIf="sett.settings[0].Applicability=='Department'" >
+            <md-select placeholder="Department Waise" [(ngModel)]="sett.settings[0].departmentname" formControlName="depts" [disabled]="moe" required>
+                <md-option *ngFor="let dept of dd" [value]="dept.department[0].departmentname" (click)="selectdept(dept.department[0].departmentname,dept)">
+                  {{ dept.department[0].departmentname }}
+                </md-option>
+           </md-select><br>
+           <span  style="color: red"   *ngIf="!sett.settings[0].departmentname">
+            please select department name.
+          </span>
+        </div>
+    
+        <div class="col-md-3" *ngIf="sett.settings[0].NoOfApprovers==1 || sett.settings[0].NoOfApprovers==2 || sett.settings[0].NoOfApprovers==3">
+            <md-select placeholder="Select Approver 1" [(ngModel)]="sett.settings[0].selected1" formControlName="app1" required id="approvers" [disabled]="moe">
+                <md-option *ngFor="let r of repomanager" (click)="selectemp(r);filterempFm(r);filterempFm1(r);filterempFm2(r);select1(r,sett,sett.settings[0].selected1);"  value="{{r.official[0].firstname}} {{r.official[0].lastname}}">{{r.official[0].firstname}} {{r.official[0].lastname}} </md-option>
+                <!-- <md-option></md-option> -->
+              </md-select><br>
+              <span  style="color: red"   *ngIf="!sett.settings[0].selected1">
+                please select approver1.
+              </span>
+         </div>
+
+         <!-- <div class="col-md-3" *ngIf="sett.settings[0].NoOfApprovers==2 || sett.settings[0].NoOfApprovers==3">
+          <md-select placeholder="Select Approver 2" [(ngModel)]="sett.settings[0].selected2"  id="approvers">
+              <md-option *ngFor="let r of repomanager"  (click)="seletreport(employee,r)" value="{{r.official[0].firstname}} {{r.official[0].lastname}}">{{r.official[0].firstname}} {{r.official[0].lastname}}</md-option>
+            </md-select>
+        </div> -->
+    
+        <div class="col-md-3" *ngIf="sett.settings[0].NoOfApprovers==2 || sett.settings[0].NoOfApprovers==3">
+            <md-select placeholder="Select Approver 2" [(ngModel)]="sett.settings[0].selected2" formControlName="app2" required id="approvers" [disabled]="moe">
+                <md-option *ngFor="let r of off1"  value="{{r.official[0].firstname}} {{r.official[0].lastname}}" (click)="filterempFm(r);filterempFm1(r);filterempFm2(r);select2(r,sett,sett.settings[0].selected2);">{{r.official[0].firstname}} {{r.official[0].lastname}}</md-option>
+              </md-select><br>
+              <span  style="color: red"   *ngIf="!sett.settings[0].selected2">
+                please select approver2.
+              </span>
+        </div>
+   
+        <div class="col-md-3" *ngIf=" (sett.settings[0].NoOfApprovers==3 && sett.settings[0].Applicability!='Department')">
+            <md-select placeholder="Select Approver 3" [(ngModel)]="sett.settings[0].selected3" formControlName="app3" required id="approvers" [disabled]="moe">
+                <md-option *ngFor="let r of off2" value="{{r.official[0].firstname}} {{r.official[0].lastname}}" (click)="filterempFm1(r);filterempFm2(r);select3(r,sett,sett.settings[0].selected3);" >{{r.official[0].firstname}} {{r.official[0].lastname}}</md-option>
+              </md-select><br>
+              <span  style="color: red"   *ngIf="!sett.settings[0].selected3">
+                please select approver3.
+              </span>
+         </div>
+
+      
+
+    <div class="col-md-3" *ngIf="sett.settings[0].NoOfApprovers!=3 && (sett.settings[0].NoOfApprovers!=2 && sett.settings[0].Applicability!='Department') || (sett.settings[0].NoOfApprovers==1 && sett.settings[0].Applicability=='Department') || (sett.settings[0].NoOfApprovers==2 && sett.settings[0].Applicability!='Department') || (sett.settings[0].Applicability=='Department' && sett.settings[0].NoOfApprovers!='2') && (sett.settings[0].Applicability=='Department' && sett.settings[0].NoOfApprovers!='3')"> 
+            <div><label>Attachment</label>&nbsp;<small>*</small><br></div>
+             <md-radio-group [(ngModel)]="sett.settings[0].Attachment" formControlName="attac"  >
+                  <md-radio-button value="Yes">Yes</md-radio-button>
+                  <md-radio-button value="No" >No</md-radio-button>
+              </md-radio-group><br>
+              <span  style="color: red"   *ngIf="!sett.settings[0].Attachment">
+                please select attachment.
+              </span>
+            </div><br><br>
+
+            <div class="col-md-3" *ngIf="sett.settings[0].Applicability!='Department' && sett.settings[0].NoOfApprovers!=3 && sett.settings[0].NoOfApprovers!=2">
+              <md-input-container class="full-width" >
+                 <input mdInput  placeholder="Description" id="description"  #message [(ngModel)]="sett.settings[0].description" maxlength="200" formControlName="desc1">
+                 <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+ 
+              </md-input-container>
+           
+            </div> 
+
+          </div>
+
+            
+
+   <br><br>
+   <div class="row">
+
+
+      <div class="col-md-3" *ngIf="sett.settings[0].NoOfApprovers==3 && sett.settings[0].Applicability=='Department'">
+          <md-select placeholder="Select Approver 3" [(ngModel)]="sett.settings[0].selected3" formControlName="app31" required id="approvers" [disabled]="moe">
+              <md-option *ngFor="let r of off2" value="{{r.official[0].firstname}} {{r.official[0].lastname}}" (click)="filterempFm1(r);filterempFm2(r);select3(r,sett,sett.settings[0].selected3);">{{r.official[0].firstname}} {{r.official[0].lastname}}</md-option>
+            </md-select><br>
+            <span  style="color: red"   *ngIf="!sett.settings[0].selected3">
+              please select approver3.
+            </span>
+       </div>
+
+       
+
+      <div class="col-md-3" *ngIf=" sett.settings[0].NoOfApprovers==3 || (sett.settings[0].NoOfApprovers==2 && sett.settings[0].Applicability=='Department') "> 
+          <div><label>Attachment</label>&nbsp;<small>*</small><br></div>
+           <md-radio-group [(ngModel)]="sett.settings[0].Attachment" formControlName="attac1" required>
+                <md-radio-button value="Yes">Yes</md-radio-button>
+                <md-radio-button value="No" >No</md-radio-button>
+            </md-radio-group><br>
+            <span  style="color: red"   *ngIf="!sett.settings[0].Attachment">
+              please select attachment.
+            </span>
+          </div>
+          <br><br>
+            <div class="col-md-3" *ngIf="sett.settings[0].Applicability=='Department' || sett.settings[0].NoOfApprovers==3 || sett.settings[0].NoOfApprovers==2">
+              <md-input-container class="full-width" >
+                 <input mdInput  placeholder="Description" id="description" [(ngModel)]="sett.settings[0].description" #message maxlength="200" formControlName="desc2" >
+             <md-hint align="end">{{message.value.length}} characters entered(200 maximum)</md-hint>
+            </md-input-container>
+            </div> 
+  
+
+   <div class="col-md-3">
+        <md-select placeholder="Category" [(ngModel)]="sett.settings[0].category" formControlName="catte" required [disabled]="moe">
+          <md-option *ngFor="let b of reqq" (click)="selectcategory(b,sett,sett.settings[0].category);selectcategory1(sett);" [value]="b.categories[0].category">
+              {{b.categories[0].category}}
+          </md-option>
+        </md-select><br>
+        <span  style="color: red"   *ngIf="!sett.settings[0].category">
+          please select category.
+        </span>
+        <!-- <span *ngIf="sett.settings[0].category==this.pp && sett.settings[0].category">
+          Already configured.Please select a different category.
+        </span> -->
+   </div>
+
+   <div class="col-md-3" *ngIf="sett.settings[0].NoOfApprovers!=3 || (sett.settings[0].NoOfApprovers==3 && sett.settings[0].Applicability!='Department')" >
+         <md-select placeholder="Executors" [(ngModel)]="sett.settings[0].executors" formControlName="exe" required >
+           <md-option *ngFor="let r of off3" value="{{r.official[0].firstname}} {{r.official[0].lastname}}" (click)="filterempFm2(r);filterempFm3(r);seletreport(sett,r);" >
+            {{r.official[0].firstname}} {{r.official[0].lastname}}
+           </md-option>
+         </md-select><br>
+         <span  style="color: red"   *ngIf="!sett.settings[0].executors">
+          please select executors.
+        </span>
+  </div>
+      
+  <div class="col-md-3" *ngIf="(sett.settings[0].NoOfApprovers==1 && sett.settings[0].Applicability=='Department')||( sett.settings[0].NoOfApprovers==2 || sett.settings[0].NoOfApprovers!=3 )&& sett.settings[0].Applicability!='Department'">
+         <md-select  placeholder="Request Viewers" [(ngModel)]="sett.settings[0].reqview" formControlName="reqqvieww" >
+           <md-option *ngFor="let r of off5" value="{{r.official[0].firstname}} {{r.official[0].lastname}}" >
+            {{r.official[0].firstname}} {{r.official[0].lastname}}
+           </md-option>
+         </md-select><br>
+         <!-- <span  style="color: red"   *ngIf="!sett.settings[0].reqview">
+          please select request viewers.
+        </span> -->
+  </div>
+   </div><br><br>
+
+
+   <div class="row">
+      <div class="col-md-3" *ngIf="(sett.settings[0].NoOfApprovers==2 && sett.settings[0].Applicability=='Department') || sett.settings[0].NoOfApprovers==3">
+          <md-select  placeholder="Request Viewers" [(ngModel)]="sett.settings[0].reqview" formControlName="reqqvieww1" >
+            <md-option *ngFor="let r of off5" value="{{r.official[0].firstname}} {{r.official[0].lastname}}" >
+             {{r.official[0].firstname}} {{r.official[0].lastname}}
+            </md-option>
+          </md-select><br>
+          <!-- <span  style="color: red"   *ngIf="!sett.settings[0].reqview">
+            please select request viewers.
+          </span> -->
+   </div>
+
+      <div class="col-md-3" *ngIf="sett.settings[0].NoOfApprovers==3 && sett.settings[0].Applicability=='Department'" >
+          <md-select  placeholder="Executors" [(ngModel)]="sett.settings[0].executors" formControlName="exe1" required>
+            <md-option *ngFor="let r of off3" value="{{r.official[0].firstname}} {{r.official[0].lastname}}" (click)="filterempFm2(r);filterempFm3(r);seletreport(sett,r);">
+              {{r.official[0].firstname}} {{r.official[0].lastname}}
+
+            </md-option>
+          </md-select><br>
+          <span  style="color: red"   *ngIf="!sett.settings[0].executors">
+            please select executors.
+          </span>
+        </div>
+     
+   </div>
+  <div class="row">
+      <div  class="col-md-12" style="margin-top: 5%">
+        <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(sett);show=!show" [disabled]="!form.valid"> Save</button>   
+        <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(sett);show=!show;updatebutton=!updatebutton;" [disabled]="!form.valid"> Update</button>
+        <button class="btn btn-outline-warning btn-sm" (click) = "cancel(set);show=!show"> Cancel </button>
+    
+      
+      </div> 
+    </div>
+
+  </div>
+  </form>
+  </div>
+  
+
+
+  <md2-dialog #deptModal>
+  <md2-dialog-title>Settings</md2-dialog-title>
+  <div class=" row box">
+      <div class="emp-info">
+          Business Unit : {{sett.settings[0].businessunit}}
+      </div>
+      <div class="emp-info ">
+          Applicability : {{sett.settings[0].Applicability}}
+      </div><br>
+      <div class="emp-info alter-div">
+          Department : {{sett.settings[0].departmentname}}
+      </div>
+      <div class="emp-info alter-div">
+          Request For : {{sett.settings[0].requestfor}}
+      </div><br>
+
+      <div class="emp-info">
+          Category : {{sett.settings[0].category}}
+      </div>
+      <div class="emp-info ">
+          No. of Approvers : {{sett.settings[0].NoOfApprovers}}
+      </div><br>
+      <div class="emp-info alter-div">
+          Approver 1 : {{sett.settings[0].selected1}}
+      </div>
+      <div class="emp-info alter-div">
+      </div><br>
+
+      <div class="emp-info">
+          Approver 2 : {{sett.settings[0].selected2}}
+      </div>
+      <div class="emp-info ">
+          Approver 3 : {{sett.settings[0].selected3}}
+      </div><br>
+      <div class="emp-info alter-div">
+          Attachment : {{sett.settings[0].Attachment}}
+      </div>
+      <div class="emp-info alter-div">
+          Description : {{sett.settings[0].description}}
+      </div><br>
+
+      <div class="emp-info">
+          Executors : {{sett.settings[0].executors}}
+      </div>
+      <div class="emp-info ">
+          Request Viewers : {{sett.settings[0].reqview}}
+      </div><br>
+  </div>
+    <md2-dialog-footer>
+        <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+    </md2-dialog-footer>
+  </md2-dialog>

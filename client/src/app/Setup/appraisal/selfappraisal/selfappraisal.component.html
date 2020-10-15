@@ -1,0 +1,42 @@
+<div class="col-md-12 card card-outline-primary" style="height: 100%;">
+    <div *ngIf = "!show"  >
+        <div>
+            <ol class="breadcrumb row bg-primary">
+                <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+                <li class="breadcrumb-item ">Appraisals</li>
+                <li class="breadcrumb-item">Self Appraisal</li>
+                
+            </ol>
+        </div>
+        <div>
+            <span style="font-weight: 500;">Self Appraisal</span>
+            
+        </div><br><br>
+        <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+            {{ message }}
+          </div>
+          <div class="row">
+              <div class="col-lg-12">
+                  <div>
+                      <table class="table table-bordered table-striped table-sm">
+                          <thead class="bg-sucess">
+                              <tr>
+                                  <th>Action</th>
+                                  <th>Parameters</th>
+                                  <th>Question</th>
+                                  <th>Description</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let qt of dataset;let i = index " >
+                                <td><i (click)="edit(qt);show = !show;hide=!hide" title="Edit" class="fa fa-pencil-square-o"></i></td>
+                            </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+          
+    </div>
+
+</div>

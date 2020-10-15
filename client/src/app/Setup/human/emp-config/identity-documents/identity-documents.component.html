@@ -1,0 +1,83 @@
+<div class="row">
+<div *ngIf = "!show" style="display: both" class="col-lg-12">
+  <div >
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">HR </li>
+      <li class="breadcrumb-item ">Employee Configuration</li>
+      <li class="breadcrumb-item active">Identity Documents</li>
+    </ol>
+ </div>
+
+<div  style="display: both" class="col-lg-12">
+ <span style="font-weight:500">Identity Documents</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button> 
+</div><br><br>
+
+<div class="row">
+ <div class="col-lg-12">
+  <div class="table-responsive"> 
+  <table  class="table table-bordered table-hover ">
+ <thead class="thead-inverse">
+     <tr>
+      <th>Action</th>
+      <th>Document Name</th>
+      <th>Mandatory</th>
+      <th>Expiry</th>
+      <th>Description</th>
+     </tr>
+      </thead>
+     <tbody>
+                                	
+     </tbody>                             
+    </table>
+   </div></div>
+</div>
+</div></div>
+
+ <div style="width: 100%;" class="row">
+ <div *ngIf= "show" class="col-lg-12">
+   <div >
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">HR </li>
+      <li class="breadcrumb-item ">Employee Configuration</li>
+      <li class="breadcrumb-item ">Identity Documents</li>
+      <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+    </ol>
+ </div>
+<br>
+<div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-4">
+    <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="document"  placeholder="Document Name"> 
+    </md-input-container><br><br><br>
+
+   <md-input-container class="example-full-width">
+     <input mdInput #message maxlength="200" [(ngModel)]="des" placeholder="Description"> 
+     <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+</md-input-container><br><br><br>  
+</div>
+<div class="col-md-4">    <br> 
+  <md-radio-group>
+      <p>Mandatory</p>
+      <md-radio-button value="yes" class="md-primary">Yes</md-radio-button>
+      <md-radio-button value="no">No</md-radio-button>     
+  </md-radio-group> 
+</div>
+<div class="col-md-4"> <br>     
+  <md-radio-group>
+     <p>Expiry</p>
+     <md-radio-button value="1">Yes</md-radio-button>
+     <md-radio-button value="2">No</md-radio-button>
+  </md-radio-group> 
+</div>
+</div>
+
+<div style="float: right;margin:0% 2% 0% 0%" class="row">
+<div  class="col-md-12">
+<button class="btn btn-outline-primary btn-sm" (click)="save();show=!show"> Save</button>
+<button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+</div>
+</div>
+</div></div>

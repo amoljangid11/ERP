@@ -1,0 +1,669 @@
+<div  class="col-md-12" *ngIf="service.visible">
+  <form [formGroup]="abc2">
+
+  <div class="row" style="padding:2% 2% 2% 2%">
+    <div class="col-md-4">
+      <!-- <md-input-container class="example-full-width"  >
+      <input mdInput placeholder="Employee Code" [(ngModel)]="this.employeecode" [value]="site.siteconfig[0].employeecode" [readonly]="true" formControlName="empcd">
+      </md-input-container><br>
+     
+      <i style="color: #1565c0" onclick="document.getElementById('identity').style.display='block'">Configure Identity Codes</i> -->
+      
+      <br>
+      <md-select placeholder="Employee Codes"  [(ngModel)]="this.employeecode" class="example-full-width" formControlName="empcd">
+          <md-option *ngFor="let ro of idecode" [value]="ro.identitycodes[0].employeecode" >
+          {{ro.identitycodes[0].employeecode}}
+          </md-option>
+      </md-select> 
+      <i style="color: #1565c0" onclick="document.getElementById('identity').style.display='block'">Configure Employee Codes</i>
+      <br><br>
+
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="First Name"  [(ngModel)]="employee.official[0].firstname" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" formControlName="fname">
+      <md-error >
+      Please enter First Name.
+      </md-error>
+      </md-input-container><br><br><br>
+     
+
+      <md-select placeholder="Role" *ngIf="this.getuser.utype!='Manager'"  [(ngModel)]="employee.official[0].role" class="example-full-width" formControlName="rolee">
+      <md-option *ngFor="let ro of roledata " (click)="roletype(ro.role[0].name)"  [value]="ro.role[0].name" >
+      {{ro.role[0].name}}
+      </md-option>
+      </md-select> 
+      
+      <md-select placeholder="Role" *ngIf="this.getuser.utype=='Manager'"  [(ngModel)]="employee.official[0].role" class="example-full-width" formControlName="rolee">
+        <md-option *ngFor="let ro of role "  [value]="ro.name" >
+        {{ro.name}}
+        </md-option>
+        </md-select>
+      <br>
+      <span  style="color: red"   *ngIf="!employee.official[0].role">
+          please select role
+    </span>
+      
+      <br><br>
+      <md-select *ngIf="this.getuser.utype!='Manager'" placeholder="Business Unit" [(ngModel)]="employee.official[0].businessunit" formControlName="bunit">
+        <md-option *ngFor="let bu of bunit ; let i=index " (click)="select(bu.businessunits[0].name,bu,employee);selectreport(bu.businessunits[0].name,bu,employee)" [value]= "bu.businessunits[0].name" >
+        {{bu.businessunits[0].name}}
+        </md-option>
+        </md-select>
+        
+        <md-select *ngIf="this.getuser.utype=='Manager'" placeholder="Business Unit" [(ngModel)]="employee.official[0].businessunit" formControlName="bunit">
+          <md-option  [value]= "this.businessunit" >
+          {{this.businessunit}}
+          </md-option>
+          </md-select>    
+      <br><br><br><br>   
+      <md-select placeholder="Job Title" [(ngModel)]="employee.official[0].jobtitle" formControlName="jtitl">
+      <md-option *ngFor="let j of jdatas; let i=index " (click)="selectjob(j.jobtitle[0].jobtitle)"  [value]="j.jobtitle[0].jobtitle">
+      {{j.jobtitle[0].jobtitle}}
+      </md-option>
+      </md-select><br><i style="color: #1565c0" onclick="document.getElementById('jobalert').style.display='block'" >Add Job Title</i>
+      <br><br><br>
+      
+      <md-select placeholder="Work Location" [(ngModel)]="employee.official[0].location" formControlName="loc" required >
+        <md-option *ngFor="let loc of workloc;let i=index" [value]="loc.worklocation[0].locationname">
+          {{loc.worklocation[0].locationname}}
+        </md-option>
+        </md-select><br>
+      <span  style="color: red"   *ngIf="!employee.official[0].location">
+          Please select work location.
+      </span>
+
+      <br><br>
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Years of Experience" [(ngModel)]="employee.official[0].yearofexp"  formControlName="yexp" >
+      <md-error>
+        Enter experience only in number.
+      </md-error>
+      </md-input-container>
+
+      <md-input-container  *ngIf="employee.official[0].status=='Suspended'" class="example-full-width">
+        <input mdInput type="date" [(ngModel)]="employee.official[0].Suspendedfromdates" formControlName="fromdate1" placeholder="{{employee.official[0].status}} From Date" required>
+        <!-- <button mdSuffix [mdDatepickerToggle]="picker2"></button> -->
+        </md-input-container>
+        <md-input-container  *ngIf="employee.official[0].status=='Probationary'" class="example-full-width">
+          <input mdInput type="date" [(ngModel)]="employee.official[0].Probationarydates" formControlName="prodate" placeholder="Probation End Date" required>
+          </md-input-container>
+
+          <md-input-container  *ngIf="employee.official[0].status=='Permanent'" class="example-full-width">
+            <input mdInput type="date" [(ngModel)]="employee.official[0].permanentdate" formControlName="permdate" placeholder="Confirmation Date" required>
+          </md-input-container>
+
+          <md-input-container  *ngIf="employee.official[0].status=='Contract'" class="example-full-width">
+            <input mdInput type="date" [(ngModel)]="employee.official[0].Contractfromdate" formControlName="contrfromdate" placeholder="{{employee.official[0].status}} Start Date" required>
+          </md-input-container>
+
+          <md-input-container  *ngIf="employee.official[0].status=='Resigned'" class="example-full-width">
+            <input mdInput type="date" [(ngModel)]="employee.official[0].Resigneddate" formControlName="cresgindate" placeholder="Resignation Date" required>
+          </md-input-container>
+
+          <md-input-container  *ngIf="employee.official[0].status=='Relieved'" class="example-full-width">
+            <input mdInput type="date" [(ngModel)]="employee.official[0].Relieveddate" formControlName="relivedate" placeholder="Relive Date" required>
+          </md-input-container>
+
+          <md-input-container  *ngIf="employee.official[0].status=='Retired'" class="example-full-width">
+            <input mdInput type="date" [(ngModel)]="employee.official[0].Retireddate" formControlName="Retiredate" placeholder="Retirement Date" required>
+          </md-input-container>
+
+          <md-input-container  *ngIf="employee.official[0].status=='Terminated'" class="example-full-width">
+            <input mdInput type="date" [(ngModel)]="employee.official[0].Terminateddate" formControlName="termidate" placeholder="Termination Date" required>
+          </md-input-container>
+        <!-- <md-datepicker #picker2></md-datepicker>  -->
+
+      <!-- <md-input-container  *ngIf="abs" class="example-full-width">
+        <input mdInput [mdDatepicker]="picker3"  [(ngModel)]="employee.official[0].absdate" formControlName="absdate1" placeholder="{{type}} Date">
+        <button mdSuffix [mdDatepickerToggle]="picker3"></button>
+        </md-input-container>
+        <md-datepicker #picker3></md-datepicker>  -->
+        <md-input-container  *ngIf="employee.official[0].status=='Absconded'"  class="example-full-width">
+          <input mdInput type="date"  [(ngModel)]="employee.official[0].Absconddate" formControlName="absdate1" placeholder="{{employee.official[0].status}} Date" required>
+          <!-- <button mdSuffix [mdDatepickerToggle]="picker3"></button> -->
+          </md-input-container>
+
+    </div>
+    <div class="col-md-4">
+      <md-input-container *ngIf="service.showdiv" class="example-full-width">
+      <input mdInput placeholder="Employee Id" [(ngModel)]="employeeid" pattern="[0-9.]+" maxlength="5" formControlName="empid1" [readonly]='true'>
+      </md-input-container>
+      
+      <md-input-container *ngIf="service.fetchid" class="example-full-width">
+        <input mdInput placeholder="Employee Id" [(ngModel)]="employee.official[0].id" pattern="[0-9.]+" maxlength="5" formControlName="empid" [readonly]='true'>
+        </md-input-container>
+      <br><br>
+      
+
+      <md-input-container class="example-full-width">
+        <input mdInput placeholder="Middle Name" [(ngModel)]="employee.official[0].middlename" formControlName="mname" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50">
+        <md-error >
+        Please enter Middle Name.
+        </md-error>
+        </md-input-container>
+      <!-- <md-input-container class="example-full-width">
+      <input mdInput placeholder="Last Name" [(ngModel)]="employee.official[0].lastname" formControlName="lname" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" required>
+      <md-error >
+      Please enter LastName.
+      </md-error>
+      </md-input-container> -->
+      
+      <br><br>
+      <md-input-container class="example-full-width">
+      <input mdInput placeholder="Email" [(ngModel)]="employee.official[0].email" name="email" formControlName="maill" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+      <md-error >
+      Please enter Email address.
+      </md-error>
+      </md-input-container>
+      
+      <br><br>
+      <md-select *ngIf="this.getuser.utype!='Manager'" placeholder="Department" [(ngModel)]="employee.official[0].departments" formControlName="dept" required >
+        <md-option *ngFor="let dept of dd" [value]="dept.department[0].departmentname" (click)="selectdept(dept.department[0].departmentname,dept,employee)">
+        {{ dept.department[0].departmentname }}
+        </md-option>
+        </md-select><br>
+      <span  style="color: red"   *ngIf="!department">
+    </span>
+
+    <md-select placeholder="Department" *ngIf="this.getuser.utype=='Manager'" [(ngModel)]="employee.official[0].departments" formControlName="dept" required >
+      <md-option [value]="this.departments" >
+        {{this.departments}}
+      </md-option>
+      </md-select><br>
+    <span  style="color: red" *ngIf="!department">
+  </span>
+      
+      <br><br>
+      <md-select placeholder="Position" [(ngModel)]="employee.official[0].position" formControlName="posi">
+      <md-option *ngFor="let po of posit"   [value]="po.position[0].position" required>
+      {{po.position[0].position}}
+      </md-option>
+      </md-select>
+      <br><i style="color: #1565c0" onclick="document.getElementById('post').style.display='block'">Add Position</i><br><br><br>
+      
+      <md-select placeholder="Employement Status" [(ngModel)]="employee.official[0].status"   formControlName="estatus" required>
+        <md-option *ngFor="let wc of wcode" (click)="stat(wc.employmentstatus[0].workcode)"  [value]="wc.employmentstatus[0].workcode">
+        {{wc.employmentstatus[0].workcode}}
+        </md-option>
+        </md-select>
+        <br><i style="color: #1565c0" onclick="document.getElementById('empsta').style.display='block'">Add Employee Status</i><br><br>
+      
+        <md-input-container class="example-full-width">
+        <input mdInput placeholder="Fax" [(ngModel)]="employee.official[0].fax" pattern="[0-9.]+" minlength="1" maxlength="15" formControlName="faxx">
+        <md-error>
+          enter valid fax number.
+        </md-error>
+        </md-input-container><br>
+  
+           
+        <md-input-container *ngIf="employee.official[0].status=='Suspended'" class="example-full-width" >
+          <input mdInput type="date" [(ngModel)]="employee.official[0].Suspendedtodates" formControlName="todate" placeholder=" {{employee.official[0].status}} To Date" required>
+          <!-- <button mdSuffix [mdDatepickerToggle]="pick2"></button> -->
+          </md-input-container>
+          <!-- <md-datepicker #pick2></md-datepicker> -->
+          <md-input-container  *ngIf="employee.official[0].status=='Contract'" class="example-full-width">
+            <input mdInput type="date" [(ngModel)]="employee.official[0].Contracttodate" formControlName="contrtodate" placeholder="{{employee.official[0].status}} End Date" required>
+          </md-input-container>
+  
+    </div>
+    <div class="col-md-4">
+      <br>
+      <md-select placeholder="Prefix" [(ngModel)]="employee.official[0].prefix" formControlName="prefixx">
+      <md-option *ngFor="let prf of pre" [value]="prf.prefixes[0].prefixcode" required >
+      {{prf.prefixes[0].prefixcode}}
+      </md-option>
+      </md-select>
+      <br><i style="color: #1565c0" onclick="document.getElementById('prfix').style.display='block'" >Add Prefix</i><br><br>
+            
+      
+      <!-- <md-input-container  class="example-full-width">
+      <input mdInput placeholder="User Name"  [(ngModel)]="employee.official[0].username"  name="username" [value]="this.employeecode + employee.official[0].id" formControlName="uname" readonly >
+      <md-error >
+      Please enter User Name.
+      </md-error>
+      </md-input-container> -->
+
+      <md-input-container class="example-full-width">
+        <input mdInput placeholder="Last Name" [(ngModel)]="employee.official[0].lastname" formControlName="lname" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" maxlength="50" required>
+        <md-error >
+        Please enter LastName.
+        </md-error>
+        </md-input-container>  
+        
+        <br><br>
+        <md-input-container class="example-full-width">
+          <input mdInput placeholder="Alternate Email" [(ngModel)]="employee.official[0].alternateemail" formControlName="amaill" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+          <md-error >
+          Please enter Alternate Email address.
+          </md-error>
+          </md-input-container>
+      <br><br>
+     
+      <md-select style="margin-top: 3%" placeholder="Mode of Employment" formControlName="moemp" (change)="hideother(employee.official[0].modeofemp)" [(ngModel)]="employee.official[0].modeofemp" [disabled]="moe" >
+      <md-option  value="Direct"><i>Direct</i></md-option>
+      <md-option  value="Reference"><i>Reference</i></md-option>
+      <md-option  value="Interview"><i>Interview</i></md-option>
+      <md-option  value="Other"><i>Other</i></md-option>
+      </md-select>
+      
+      
+ 
+        
+        <md-input-container style="margin-top: 8%"  *ngIf="employee.official[0].modeofemp=='Reference'" class="example-full-width" >
+        <input mdInput  [(ngModel)]="employee.official[0].refererid"  placeholder="Referer ID" formControlName="refid">
+        </md-input-container>
+     
+     
+        <md-input-container style="margin-top: 8%"  class="example-full-width" *ngIf="employee.official[0].modeofemp=='Interview'" >
+        <input mdInput  [(ngModel)]="employee.official[0].requisitioncode"  placeholder="Requisition code" formControlName="reqcd">
+        </md-input-container><br>
+   
+        <md-input-container style="margin-top: 8%"  class="example-full-width"  *ngIf="employee.official[0].modeofemp=='Other'" >
+        <input mdInput  [(ngModel)]="employee.official[0].other"  placeholder="Other" formControlName="oth" >
+        </md-input-container> <br>
+     
+        <md-select *ngIf="this.getuser.utype!='Manager'" placeholder="Reporting Manager" style="margin-top: 15%"  [(ngModel)]="employee.official[0].reportingmanager" formControlName="repman">
+          <md-option *ngFor="let r of reportmang"  (click)="seletreport(employee,r)" value="{{r.official[0].firstname}} {{r.official[0].lastname}}">
+            {{r.official[0].firstname}} {{r.official[0].lastname}},{{r.official[0].jobtitle}}
+          </md-option>
+          </md-select>
+          
+          <md-select *ngIf="this.getuser.utype=='Manager'" placeholder="Reporting Manager" style="margin-top: 15%"  [(ngModel)]="employee.official[0].reportingmanager" formControlName="repman">
+            <md-option  (click)="seletreport(employee,this.obje)" value="{{this.reportingmanager}}" >
+                {{this.reportingmanager}}
+            </md-option>
+            </md-select><br>
+      <span  style="color: red"   *ngIf="!employee.official[0].reportingmanager">
+          please select reporting manager
+    </span>
+      <br><br>
+     
+      
+      
+      <md-input-container>
+      <input mdInput type="date"  [(ngModel)]="employee.official[0].dateofjoing" formControlName="doj" placeholder="Date of Joining" required>
+      
+      <md-error>
+          please select date
+      </md-error>
+      </md-input-container>
+      
+     
+      <br><br>
+      <!-- <md-input-container class="example-full-width" style="margin-top: 1%">
+      <input mdInput placeholder="Date of Leaving" [(ngModel)]="employee.official[0].doleaving"  [readonly]="true" disabled="true" formControlName="dol"  >
+      </md-input-container>
+      <br><br><br> -->
+      <md-input-container class="example-full-width">
+      <input mdInput maxlength="10" [(ngModel)]="employee.official[0].phonenumber" pattern="[0-9.]+" maxlength="10" minlength="10" placeholder="Work Telephone Number" formControlName="wtelno">
+      <md-error>
+        Enter valid phone number.
+      </md-error>
+      </md-input-container>
+
+      
+    </div>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ messagess }}
+    </div>
+    <div  class="col-md-12" style="margin-top: 5%">
+      <button *ngIf="!updatebutton"  class="btn btn-outline-success btn-sm"
+      (click)="save(employee);saveemp(employee);" [disabled]="!abc2.valid"> Save</button>
+      <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm"
+      (click)="updateEmployee(employee);updateemp(employee);"> Update</button>
+      <button class="btn btn-outline-warning btn-sm" *ngIf="this.getuser.utype=='HR' || this.getuser.utype=='admin'" (click)="resetpassword(employee);">Reset Email</button>
+      <button  class="btn btn-outline-warning btn-sm" (click)="cancel()"> Cancel</button>
+    </div>
+  </div>
+</form>
+</div>
+<br><br>
+<div id="prfix" class="w3-modal">
+  <div class="w3-modal-content">
+    <header class="w3-container w3-teal bg-primary">
+      <span onclick="document.getElementById('prfix').style.display='none'"
+        style="margin-top: -1%;font-weight: 500"
+      class="w3-button w3-display-topright fa fa-times "></span>
+      <h6>Prefix</h6>
+    </header>
+    <div class="w3-container">
+      <div class="col-md-12">
+        <div class="row">
+          
+          <div class="col-md-6">
+              <form [formGroup]="prefixxss">
+            <md-input-container class="example-full-width">
+            <input required name="prefix" [(ngModel)]="obj.prefixes[0].prefixcode" mdInput placeholder=" Prefixes" pattern="^[a-zA-Z0-9 ]*$" formControlName="prefis">
+            </md-input-container><i mdTooltip="Ex:Mr,Mrs,Miss" class="fa fa-question-circle"></i><br><br><br>
+            </form>
+          </div>
+          
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput name="description" [(ngModel)]="obj.prefixes[0].description"  #message maxlength="200" placeholder="Description">
+            <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+            </md-input-container><br><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+      <div class="col-sm-12">
+        <button style="float: right;" class="btn btn-primary btn-sm"(click)="saveprefix(obj);show=!show;" [disabled]="prefixxss.invalid"> Save</button>
+      </div>
+    </footer>
+  </div>
+</div>
+<div id="jobalert" class="w3-modal">
+  <div class="w3-modal-content">
+    <header class="w3-container w3-teal bg-primary">
+      <span onclick="document.getElementById('jobalert').style.display='none'"
+        style="margin-top: -1%;font-weight: 500"
+      class="w3-button w3-display-topright fa fa-times "></span>
+      <h6>Job Title</h6>
+    </header>
+    <div class="w3-container">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-3">
+              <form [formGroup]="jobtitl">
+            <md-input-container class="example-full-width">
+            <input mdInput  [(ngModel)]="job.jobtitle[0].jobtitle_code"  placeholder="Job Title Code" formControlName="jcode"  required>
+            <md-error>Please enter job title code.</md-error>
+            </md-input-container><i mdTooltip="Ex:SA" class="fa fa-question-circle" ></i><br><br><br>
+            <md-input-container class="example-full-width">
+            <input mdInput [(ngModel)]="job.jobtitle[0].gradecode"  placeholder="Job Pay Grade Code" formControlName="jpgrrole" required>
+            <md-error>Please enter job pay grade code.</md-error>
+            </md-input-container><i mdTooltip="Ex: A,B,C" class="fa fa-question-circle" ></i><br><br><br>
+              </form>
+          </div>
+          <div class="col-md-3">
+              <form [formGroup]="jobtitl">
+            <md-input-container class="example-full-width">
+            <input mdInput [(ngModel)]="job.jobtitle[0].jobtitle"  placeholder="Job Title" formControlName="jtitle" required>
+            <md-error>Please enter job title.</md-error>
+            </md-input-container><i mdTooltip="Ex:System Analyst" class="fa fa-question-circle" ></i><br><br><br><br>
+            <md-select placeholder="Pay Frequency" [(ngModel)]="job.jobtitle[0].payfrequency"  name="p" formControlName="jpfreq" >
+            <md-option *ngFor="let p of pays" [value]="p.payfrequency[0].payfrequency">
+            {{p.payfrequency[0].payfrequency}}
+            </md-option>
+            </md-select><br><br><br><br>
+            </form> 
+          </div>
+         
+          <div class="col-md-3">
+            <md-input-container class="example-full-width">
+            <input mdInput #message maxlength="200" [(ngModel)]="job.jobtitle[0].description" placeholder="Description">
+            <md-hint align="end">{{message.value.length}} charactered entered / 200</md-hint>
+            </md-input-container><br><br><br>
+            <md-input-container class="example-full-width">
+            <input mdInput #message maxlength="50" [(ngModel)]="job.jobtitle[0].comments" placeholder="Comments">
+            <md-hint align="end">{{message.value.length}} / 50</md-hint>
+            </md-input-container><br><br><br>
+          </div>
+          <div class="col-md-3">
+            <md-input-container class="example-full-width">
+            <input mdInput [(ngModel)]="job.jobtitle[0].min_experience" placeholder="Min Experience Required">
+            </md-input-container><i mdTooltip="In years Ex:1,3.5" class="fa fa-question-circle" ></i><br><br><br>
+          </div> 
+        </div>
+      </div>
+    </div>
+    <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+      <div class="col-sm-12">
+        <button style="float: right;" class="btn btn-primary btn-sm"(click)="savejob(job);show=!show;" [disabled]="jobtitl.invalid"> Save</button>
+      </div>
+    </footer>
+  </div>
+</div>
+<div id="post" class="w3-modal">
+  <div class="w3-modal-content">
+    <header class="w3-container w3-teal bg-primary">
+      <span onclick="document.getElementById('post').style.display='none'" style="margin-top: -1%;font-weight: 500"
+      class="w3-button w3-display-topright fa fa-times "></span>
+      <h6>Position</h6>
+    </header>
+    <div class="w3-container">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-lg-4"><br>
+            <form [formGroup]="posi">
+            <md-select placeholder="Job Title" [(ngModel)]="positions.position[0].jobtitle" formControlName="jt" name="job">
+            <md-option *ngFor="let j of jdatas"   [value]="j.jobtitle[0].jobtitle" required>
+            {{j.jobtitle[0].jobtitle}}
+            </md-option>
+            </md-select><br><br><br><br>
+            </form>
+          </div>
+          <div class="col-lg-4">
+              <form [formGroup]="posi">
+            <md-input-container class="example-full-width">
+            <input mdInput [(ngModel)]="positions.position[0].position"  placeholder="Position" pattern="^[a-zA-Z0-9 ]*$" formControlName="posti" required>
+            <md-error>Please enter position.</md-error>
+            </md-input-container><br><br><br>
+            </form>
+          </div>
+          <div class="col-lg-4">
+            <md-input-container class="example-full-width">
+            <input mdInput #message maxlength="200" [(ngModel)]="positions.position[0].description" placeholder="Description">
+            <md-hint align="end">{{message.value.length}} characters entered / 200</md-hint>
+            </md-input-container><br><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+      <div class="col-sm-12">
+        <button style="float: right;" class="btn btn-primary btn-sm"(click)="saveposition(positions)" [disabled]="posi.invalid"> Save</button>
+      </div>
+    </footer>
+  </div>
+</div>
+<div id="empsta" class="w3-modal">
+  <div class="w3-modal-content">
+    <header class="w3-container w3-teal bg-primary" >
+      <div >
+        <span onclick="document.getElementById('empsta').style.display='none'"
+          style="margin-top: -1%;font-weight: 500"
+        class=" w3-display-topright fa fa-times " ></span>
+        <span><h6 style="">Employment Status</h6></span>
+      </div>
+    </header>
+    <div class="w3-container">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6"><br>
+            <form [formGroup]="works">
+            <md-select placeholder="Work code"  [(ngModel)]="status.employmentstatus[0].workcode" formControlName="wc" >
+            <md-option *ngFor="let work of codes; let i=index "  [value]="work.value">
+            {{ work.value }}
+            </md-option>
+            </md-select><br><br><br>
+            <md-input-container class="example-full-width">
+            <input mdInput #message maxlength="200" [(ngModel)]="status.employmentstatus[0].description" placeholder="Description" formControlName="desc">
+            <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+            </md-input-container><br><br><br>
+          </form>
+          </div>
+          <form [formGroup]="works">
+          <div class="col-md-6">
+              
+            <md-input-container class="example-full-width">
+              
+                <input name="shortcode" [(ngModel)]="status.employmentstatus[0].workshortcode" mdInput placeholder="Work Short Code" formControlName="wsc">
+              </md-input-container><i mdTooltip="Ex: PT,FT" class="fa fa-question-circle" ></i><br><br><br>
+              
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+        <div class="col-sm-12">
+          <button style="float: right;" class="btn btn-primary btn-sm" (click)="savework(status)" [disabled]="works.invalid" >Save</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <form [formGroup]="abc3">
+    <div id="identity" class="w3-modal w3-animate-opacity">
+      <div class="w3-modal-content w3-card-4">
+        <header class="w3-container w3-teal bg-primary">
+          <span onclick="document.getElementById('identity').style.display='none'" style="margin-top: -1%;font-weight: 500"
+          class=" w3-display-topright fa fa-times " ></span>
+          <span><b>Add Employee Codes</b></span>
+        </header>
+        <div class="w3-container">
+          <div class="col-md-12">
+            <div class="row">
+              <div  class="col-md-6" >
+                <md-input-container class="example-full-width">
+                <input  mdInput placeholder="Employee Code" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" [(ngModel)]="general.identitycodes[0].employeecode" formControlName="empl"  required>
+                <md-error>Please Enter Valid Employee Code.</md-error> 
+              </md-input-container>
+              <!-- <p style="margin-top: -7%"> Example:TGT </p> -->
+                <!-- <md-select placeholder="Employee" [(ngModel)]="general.identitycodes[0].employee" formControlName="empl"  required>
+                  <md-option *ngFor="let con of conf; let i=index;" [value]="con.employeecode">
+                    {{con.employeecode}}
+                  </md-option>
+                </md-select> -->
+                <br><br><br>
+                <md-input-container class="example-full-width">
+                <input mdInput placeholder="Users" [(ngModel)]="general.identitycodes[0].users" formControlName="use">
+                </md-input-container>
+              </div>
+              <div class="col-md-6">
+                <md-input-container class="example-full-width">
+                <input  mdInput placeholder="Background Agency" [(ngModel)]="general.identitycodes[0].background" formControlName="backage">
+                </md-input-container><br><br><br>
+                <md-input-container class="example-full-width">
+                <input mdInput placeholder="Requisition" [(ngModel)]="general.identitycodes[0].requisition" formControlName="req">
+                </md-input-container><br><br>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+          <div class="col-sm-12">
+            <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="saveidentity(general);" [disabled]="abc3.invalid" data-dismiss="model" >Save</button>
+          </div>
+        </footer>
+      </div>
+    </div>
+    </form>
+  <!-- View  -->
+  <div class="row box" *ngIf="service.invisible" (click)="viewofficial(data)" >
+    <div class="display_emp">
+        <div class="emp-info ">
+          Employee Code : {{this.employeecode}}
+        </div>
+        <div class="emp-info ">
+            Employee ID : {{employee.official[0].id}}
+          </div>
+          <div class="emp-info alter-div">
+              Prefix : {{employee.official[0].prefix}}
+            </div>
+            <div class="emp-info alter-div">
+                First Name : {{employee.official[0].firstname}}
+              </div>
+              <div class="emp-info ">
+                Middle Name : {{employee.official[0].middlename}}
+              </div>
+              <div class="emp-info ">
+                  Last Name : {{employee.official[0].lastname}}
+                </div>
+                <div class="emp-info alter-div">
+                    Mode of Employment : {{employee.official[0].modeofemp}}
+                  </div>
+                  <div class="emp-info alter-div">
+                      Role : {{employee.official[0].role}}
+                    </div>
+                    <div class="emp-info">
+                        Email : {{employee.official[0].email}}
+                    </div>
+                    <div class="emp-info">
+                        Business Unit : {{employee.official[0].businessunit}}
+                      </div>
+                      <div class="emp-info alter-div">
+                          Department : {{employee.official[0].departments}}
+                        </div>
+                        <div class="emp-info alter-div">
+                            Reporting Manager : {{employee.official[0].reportingmanager}}
+                          </div>
+                          <div class="emp-info">
+                              Job Title : {{employee.official[0].jobtitle}}
+                          </div>
+                          <div class="emp-info">
+                              Position : {{employee.official[0].position}}
+                            </div>
+                            <div class="emp-info alter-div">
+                                Employment Status : {{employee.official[0].status}}
+                            </div>
+                            <div class="emp-info alter-div">
+                                Date of Joining : {{employee.official[0].dateofjoing | date}}
+                              </div>
+                              <div class="emp-info">
+                                  Date of Leaving : {{employee.official[0].doleaving}}
+                              </div>
+                              <div class="emp-info">
+                                  Years of Experience : {{employee.official[0].yearofexp}}
+                                </div>
+                                <div class="emp-info alter-div">
+                                    Work Telephone Number : {{employee.official[0].phonenumber}}
+                                </div>
+                                <div class="emp-info alter-div">
+                                   Extension : {{employee.official[0].extension}}
+                                  </div>
+                                  <div class="emp-info">
+                                      Fax : {{employee.official[0].fax}}
+                                  </div>
+                                  <div class="alter-div">
+                                    <!-- Fax : {{employee.official[0].fax}} -->
+                                    <div class="emp-info" *ngIf="employee.official[0].status=='Probationary'">
+                                      Probation End Date : {{employee.official[0].Probationarydates}}
+                                  </div>
+                                  <div class="emp-info" *ngIf="employee.official[0].status=='Permanent'">
+                                      Confirmation Date : {{employee.official[0].permanentdate}}
+                                  </div>
+                                  <div class="emp-info" *ngIf="employee.official[0].status=='Terminated'">
+                                      Termination Date : {{employee.official[0].Terminateddate}}
+                                  </div>
+                                  <div class="emp-info" *ngIf="employee.official[0].status=='Absconded'">
+                                      Abscond Date : {{employee.official[0].Absconddate}}
+                                  </div>
+                                  <div class="emp-info" *ngIf="employee.official[0].status=='Resigned'">
+                                      Resignation Date : {{employee.official[0].Resigneddate}}
+                                  </div>
+                                  <div class="emp-info" *ngIf="employee.official[0].status=='Relieved'">
+                                      Date of leaving : {{employee.official[0].Relieveddate}}
+                                  </div>
+                                  <div class="emp-info" *ngIf="employee.official[0].status=='Retired'">
+                                      Date of leaving : {{employee.official[0].Retireddate}}
+                                  </div>
+                                  <div class="emp-info" *ngIf="employee.official[0].status=='Contract'">
+                                      Contract Start Date  : {{employee.official[0].Contractfromdate}}
+                                  </div><br>
+                                  <div class="emp-info" *ngIf="employee.official[0].status=='Suspended'">
+                                      Suspended From Date  : {{employee.official[0].Suspendedfromdates}}
+                                  </div><br>
+                                  <div class="emp-info alter-div" *ngIf="employee.official[0].status=='Contract'">
+                                      Contract End Date : {{employee.official[0].Contracttodate}}
+                                  </div>
+                                  <div class="emp-info alter-div" *ngIf="employee.official[0].status=='Contract'"></div>
+                                  <div class="emp-info alter-div" *ngIf="employee.official[0].status=='Suspended'">
+                                      Suspended To Date : {{employee.official[0].Suspendedtodates}}
+                                  </div>
+                                  <div class="emp-info alter-div" *ngIf="employee.official[0].status=='Suspended'"></div>
+        <!-- <table class="">
+            <tbody>
+              <tr class="emp-info span">
+                <td class=''> Employee Code
+                </td>
+                <td>{{this.employeecode}}</td>
+              </tr>
+            </tbody>
+          </table> -->
+      </div>
+      </div>
+      
+      
+      

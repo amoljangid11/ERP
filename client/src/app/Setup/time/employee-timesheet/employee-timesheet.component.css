@@ -1,0 +1,23 @@
+
+      th{ 
+        
+        /* text-transform: uppercase; */
+        cursor: pointer;
+        background-color: rgb(212, 209, 209);
+        border: none;
+        font-size: 14px;
+      }
+
+      /* td{
+        background-color: whitesmoke;
+      } */
+      
+      .box{
+        width:auto;
+        height: 25px;
+        background-color: rgb(231, 227, 227);
+      }
+
+      .class-name{
+        color:red;
+    }

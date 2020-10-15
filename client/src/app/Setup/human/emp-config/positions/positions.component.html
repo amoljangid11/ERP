@@ -1,0 +1,151 @@
+<div  class="row">
+<div *ngIf = "!show" style="display: both" class="col-lg-12">
+  <div >
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">HR </li>
+      <li class="breadcrumb-item ">Employee Configuration</li>
+      <li class="breadcrumb-item active">Positions</li>
+    </ol>
+ </div>
+
+ <div  style="display: both" class="col-lg-12">
+ <span style="font-weight:500">Positions</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button> 
+</div><br><br>
+
+<div class="row">
+ <div class="col-lg-12">
+  <div class="table-responsive"> 
+    <table  class="table table-bordered table-hover ">
+ <thead class="thead-inverse">
+     <tr>
+      <th>Action</th>
+      <th>Position</th>
+      <th>Job Title</th>
+      <th>Description</th>
+     </tr>
+      </thead>
+     <tbody *ngFor="let data of positionsdata;let i = index ">
+           <tr>
+              <td><i *ngIf="data.id !== editRowId" (click)="edit(data.id)"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(data,i)" title="Delete" class="fa fa-trash-o"></i>&nbsp;&nbsp;<i style="float: right" *ngIf="data.id == editRowId" (click)="update(data)" title="save" class="fa fa-floppy-o"></i>
+              </td>
+
+             <td *ngIf="data.id == editRowId"> 
+              <input type="text" [(ngModel)]="data.positions.position">
+            </td> <td *ngIf="data.id !== editRowId">{{data.positions.position}}</td>
+
+
+             <td *ngIf="data.id == editRowId"> 
+                <input type="text" [(ngModel)]="data.positions.jobtitle">
+             </td> <td *ngIf="data.id !== editRowId">{{data.positions.jobtitle}}</td>
+
+             <td *ngIf="data.id == editRowId"> 
+                <input type="text" [(ngModel)]="data.positions.description">
+             </td> <td *ngIf="data.id !== editRowId">{{data.positions.description}}</td>
+           </tr >
+      </tbody>                          
+    </table>
+   </div></div>
+</div>
+</div></div>
+
+ <div style="width: 100%;" class="row">
+ <div *ngIf= "show" class="col-lg-12">
+   <div >
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">HR </li>
+      <li class="breadcrumb-item ">Employee Configuration</li>
+      <li class="breadcrumb-item">Positions</li>
+      <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+    </ol>
+ </div>
+<br>
+<div style="display: inline-flex;"  class="col-md-12">
+<div class="col-lg-4"><br>
+   <md-select placeholder="Job Title" [(ngModel)]="positions.jobtitle" name="job">
+     <md-option *ngFor="let j of jdatas"   [value]="j.jobobj.jobtitle" required>
+    {{j.jobobj.jobtitle}}
+    </md-option>
+    </md-select><br>
+    <i style="color: #1565c0" (click)="open(alert)" >Add Job Title</i><br><br><br>
+</div>
+<div class="col-lg-4">
+    <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="positions.position"  placeholder="Position" required>
+      <md-error>Please enter position.</md-error> 
+    </md-input-container><br><br><br>
+</div>
+<div class="col-lg-4">     
+     <md-input-container class="example-full-width">
+     <input mdInput #message maxlength="200" [(ngModel)]="positions.description" placeholder="Description"> 
+    <md-hint align="end">{{message.value.length}} characters entered / 200</md-hint>
+  </md-input-container><br><br><br> 
+</div>
+</div>
+
+<div style="float: right;margin:0% 2% 0% 0%" class="row">
+<div  class="col-md-12">
+<button class="btn btn-outline-primary btn-sm" (click)="saveposition(positions);show=!show"> Save</button>
+<button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+</div>
+</div>
+
+<div class="modal fade" id="position" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Job Title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+<md2-dialog #alert>
+ <md2-dialog-title>Add Job Title</md2-dialog-title>
+   <div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-6">
+    <md-input-container class="example-full-width">
+      <input mdInput  [(ngModel)]="jobobj.title_code"  placeholder="Job Title Code" required>
+        <md-error>Please enter job title code.</md-error> 
+    </md-input-container><br><br><br>
+    <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="jobobj.exeperience" placeholder="Min Experience Required"> 
+    </md-input-container><br><br><br><br>
+  <md-select placeholder=" Pay Frequency " [(ngModel)]="jobobj.payfrequency" name="p">
+    <md-option *ngFor="let p of paydata" [value]="p.payfrequency" >
+       {{p.payfrequency}}
+    </md-option>
+    </md-select><br><br><br>
+
+     <md-input-container class="example-full-width">
+       <input mdInput #message maxlength="50" [(ngModel)]="jobobj.comment" placeholder="Comments"> 
+        <md-hint align="end">{{message.value.length}} / 50</md-hint>
+    </md-input-container><br><br><br>  
+   
+</div>
+
+<div class="col-md-6">
+    <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="jobobj.jobtitle"  placeholder="Job Title"> 
+    </md-input-container><br><br><br>
+     <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="jobobj.grade_code"  placeholder="Job Pay Grade Code" required>
+        <md-error>Please enter job pay grade code.</md-error>
+    </md-input-container><br><br><br>
+     
+    <md-input-container class="example-full-width">
+        <input mdInput #message maxlength="200" [(ngModel)]="jobobj.description" placeholder="Job Description"> 
+    <md-hint align="end">{{message.value.length}} charactered entered / 200</md-hint>
+    </md-input-container><br><br><br>
+     
+</div>
+</div>
+    <md2-dialog-footer>
+    <button type="submit" class="btn btn-primary" (click)="savejobtitle(jobobj)" >Save changes</button>
+      <button type="submit" class="btn btn-primary" (click)="close(alert)">close</button>
+    </md2-dialog-footer>
+  </md2-dialog>
+</div>
+</div></div>

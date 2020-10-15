@@ -1,0 +1,121 @@
+<div *ngIf = "!show" class="col-lg-12">
+  <!--   <div >
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Contacts</li>
+        <li class="breadcrumb-item active">Clients</li>
+      </ol>
+   </div> -->
+
+
+   
+  <div  class="row">
+    <div  style="display: both" class="col-lg-12"><br>
+   <span style="font-weight:500">Clients</span>
+          <button type="button" style="float: right;margin:0% 0% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button> 
+  </div><br><br>
+    </div>
+  <div class="row">
+   <div class="col-lg-12">
+    <div class="table-responsive"> 
+    <table  class="table table-bordered table-hover ">
+    <thead class="thead-inverse">
+       <tr>
+        <th>Action</th>
+        <th>Client</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Point Of Contact</th>
+       </tr>
+        </thead>
+        <tbody>
+           <tr *ngFor="let cl of cli;let i = index " >
+              <td><i *ngIf="cl.id !== editRowId" (click)="edit(cl.id)"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(cl,i)" title="Delete" class="fa fa-trash-o"></i>&nbsp;&nbsp;<i  *ngIf="cl.id == editRowId" (click)="update(cl)" title="save" style="float: right" class="fa fa-floppy-o"></i></td>
+  
+    <!-- <td *ngIf="cl.id == editRowId"> 
+         <input type="text" [(ngModel)]="cl.clientname">
+    </td>
+    <td *ngIf="cl.id !== editRowId">{{cl.clientname}}</td>
+   
+    <td *ngIf="cl.id == editRowId"> 
+         <input type="text" [(ngModel)]="cl.cemail">
+    </td>
+    <td *ngIf="cl.id !== editRowId">{{cl.cemail}}</td>
+  
+    <td *ngIf="cl.id == editRowId"> 
+         <input type="text" [(ngModel)]="cl.Phone_number">
+    </td>
+    <td *ngIf="cl.id !== editRowId">{{cl.Phone_number}}</td>
+  
+    <td *ngIf="cl.id == editRowId"> 
+         <input type="text" [(ngModel)]="cl.Point_of_contact">
+    </td>
+    <td *ngIf="cl.id !== editRowId">{{cl.Point_of_contact}}</td> -->
+
+    <td >{{cl.clients[0].client}}</td>
+    <td>{{cl.clients[0].email}}</td>
+    <td >{{cl.clients[0].phone_number}}</td>
+    <td >{{cl.clients[0].point_of_contact}}</td>
+  </tr>                                 
+        </tbody>                        
+      </table>
+     </div></div>
+  </div></div>
+  
+  
+  
+   <div *ngIf= "show" style="width: 100%;" class="row"><br><br>
+  
+  <div  style="display: inline-flex;"  class="col-md-12">
+  
+  <div class="col-md-3">
+      <md-input-container  class="example-full-width">
+  
+         <input mdInput placeholder="Client"  [(ngModel)]="client.clients[0].client" required>
+           <md-error>Please enter client name.</md-error>
+      </md-input-container><br><br><br>
+     <md-input-container class="example-full-width">
+         <input [(ngModel)]="client.clients[0].email" mdInput placeholder="Email">
+      </md-input-container><br><br><br>
+  </div>
+  <div class="col-md-3">
+       <md-input-container class="example-full-width">
+        <input maxlength="100" [(ngModel)]="client.clients[0].address" mdInput placeholder="Address">
+      </md-input-container><br><br><br>
+       <md-input-container class="example-full-width">
+        <input maxlength="10" [(ngModel)]="client.clients[0].phone_number"  mdInput placeholder="Phone Number">
+      </md-input-container><br><br><br>   
+  </div>
+  <div class="col-md-3"><br>
+   <md-select placeholder="Country" [(ngModel)]="client.clients[0].country" name="country">
+      <md-option *ngFor="let opt of datas " [value]="opt.countryal" (click)="select(i,datas)">
+      {{opt.countryal}}</md-option>
+    </md-select><br><br><br><br>
+   <md-input-container class="example-full-width">
+      <input mdInput  placeholder="Fax" [(ngModel)]="client.clients[0].fax">
+    </md-input-container><br><br><br>
+  </div>
+  <div class="col-md-3"><br>
+   <md-select placeholder="State" [(ngModel)]="client.clients[0].state" name="state">
+       <md-option *ngFor="let stats of statearry"  [value]="stats.statename" >
+        {{stats.statename}}
+      </md-option>
+    </md-select><br><br><br><br>
+   <md-input-container class="example-full-width">
+      <input mdInput placeholder="Point Of Contact"  [(ngModel)]="client.clients[0].point_of_contact" required>
+       <md-error>Please enter point of contact.</md-error>
+    </md-input-container><br><br>
+  </div>
+   
+  </div>
+
+    <div  class="col-md-12">
+     <div style="float: right;" >
+      <button class="btn btn-outline-primary btn-sm"  (click)="save(client);show=!show"> Save</button>
+      <button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+    </div>
+  </div>
+  
+  </div>
+  

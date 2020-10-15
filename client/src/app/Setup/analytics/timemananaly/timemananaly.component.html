@@ -1,0 +1,108 @@
+<div class="col-md-12 card card-outline-info" style="height:100%;" >
+  
+  <div  style="overflow: auto;"> 
+      <div><br>
+      <!-- <div class="box2" id="empys" style="float: right;margin:0% 1% 0% 0%">
+        <img class="imageClass1" src="./assets/Images/pdf.png"/>&nbsp;<i style="color: #1565c0" (click)="downloadPDF()">Export to PDF</i> &nbsp;
+        <img class="imageClass1" src="./assets/Images/excel.ico"/>&nbsp;<i style="color: #1565c0" (click)="downloadExcel('time', 'employeedata')" >Export to Excel</i>
+      </div> -->
+
+      <div class="box2" id="project" style="float: right;margin:0% 1% 0% 0%">
+          <img class="imageClass1" src="./assets/Images/pdf.png"/>&nbsp;<i style="color: #1565c0" (click)="downloadPDF()">Export to PDF</i> &nbsp;
+          <img class="imageClass1" src="./assets/Images/excel.ico"/>&nbsp;<i style="color: #1565c0" (click)="downloadExcel('time1', 'employeedata')" >Export to Excel</i>
+      </div>
+      </div><br><br>
+   
+  
+    <div class="display_emp" >
+        <label>Generate Custom Report</label><br><br>
+     <div class="row">
+        <div class="btn-group" style="float:left; padding: 9px">
+            <button class="btn btn-primary btn-sm" (click)="changeView('active')" [class.active]="view === 'active'">Employees</button>
+            <button class="btn btn-primary btn-sm" (click)="changeView('inactive')" [class.active]="view === 'inactive'">Projects</button> 
+        </div>   
+        <button  class="btn btn-sm btn-warning">Period</button><br><br><br>
+
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Start Date" [(ngModel)]="this.fromdate">
+    </md-input-container><br><br><br>
+   
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="End Date" [(ngModel)]="this.todate">
+    </md-input-container><br><br><br>
+  
+    <md-input-container id="emp" class="example-full-width">
+        <input mdInput placeholder="Select Project"  [(ngModel)]="this.projectname">
+    </md-input-container>
+
+    <md-input-container id="project" class="example-full-width">
+        <input mdInput placeholder="Select Employee"  [(ngModel)]="this.employeename">
+    </md-input-container>
+  
+           
+    </div>
+</div>
+  
+  <div class= "row">
+         <!-- &nbsp;&nbsp;<i  aria-hidden="true"></i>&nbsp;<label id="empys"><b>Employee Reports</b></label><br><br> -->
+         &nbsp;&nbsp;<i  aria-hidden="true"></i>&nbsp;<label id="project"><b>Project Reports</b></label><br><br>
+                <br><br>
+<!--   
+                <div  id="empys" class="row">
+                    <div class="col-lg-12" id="timemanageanalytics">
+                      <div  >
+                             <table id="time" class="table table-bordered table-striped table-sm">
+                               <thead class="bg-success">
+                        <tr>
+                          <th>Employee</th>
+                          <th>Hours</th>
+                        </tr>
+                         </thead>
+                         <tbody>
+                           <tr *ngFor="let bu of pro.resource_time;let i = index " >
+                         
+                          <td>{{bu.official[0].firstname}} {{bu.official[0].lastname}}</td>
+                          <td></td>
+
+                         </tr>                                 
+                       </tbody>                        
+                       </table>
+            </div>
+          </div>
+      </div> -->
+
+
+      <div id="project" class="row">
+          <div class="col-lg-12" id="timemanageanalytics1">
+            <div  >
+                   <table id="time1" class="table table-bordered table-striped table-sm">
+                     <thead class="bg-success">
+              <tr>
+                <th>Project</th>
+                <th>Project Type</th>
+                <th>Hours</th>
+              </tr>
+               </thead>
+               <tbody>
+                 <tr *ngFor="let bu of pro;let i = index " >
+               
+                <td>{{bu.project[0].projectname}}</td>
+                <td>{{bu.project[0].type}}</td>
+               <td>{{bu.project[0].estimate}}</td>
+               </tr>                                 
+             </tbody>                        
+             </table>
+  </div>
+</div>
+</div>
+  </div>
+
+</div>
+</div>
+  
+
+  
+  
+  
+  
+  

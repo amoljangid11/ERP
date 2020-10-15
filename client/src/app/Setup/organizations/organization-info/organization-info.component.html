@@ -1,0 +1,348 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show;" style="overflow:auto" >
+
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;">Edit</button>
+
+
+      <br>
+      <br>
+
+    <div style="background-color:beige;width:100%;height: 100px;">
+        <table>
+           <tbody>
+                <tr *ngFor="let org of orgn;let i = index " >
+                   <td >{{org.organization.form}}</td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <br>
+    <div >
+        <div style="background-color:gainsboro;width: 50%;height:330px; float: right;">
+            Address: {{orgs.organiz[0].address1}}
+          </div>
+    <div class="col-md-12 " style="width: 50%;float: left;height:330px;">
+        <div class="emp-info">
+            Organization : {{orgs.organiz[0].organization1}}
+        </div>
+        <br>
+        
+        
+        <div >
+            Website : {{orgs.organiz[0].website}}
+        </div>
+        <br>
+        <div style=" background-color: #e2e2e1;">
+            Total Employees: {{orgs.organiz[0].totalemp}}
+        </div>
+        <br>
+        <div class="emp-info">
+            Country: {{orgs.organiz[0].country}}
+        </div>
+        <br>
+        <div style=" background-color: #e2e2e1;">
+            State : {{orgs.organiz[0].state}}
+        </div>
+        <br>
+        <div class="emp-info">
+            City : {{orgs.organiz[0].city}}
+        </div>
+        
+    </div>
+  </div>
+
+  </div>
+
+
+
+  <div *ngIf= "show" style="overflow:auto">
+    
+    <form class="form-horizontal" [formGroup]="form">
+
+
+      <div class="col-md-12 panel" >
+     
+       <div class="row" style="padding-top:2%">
+        
+     
+         <div class="col-md-3">
+             <md-input-container class="example-full-width">
+             <input  mdInput placeholder="Organization" [(ngModel)]="orgs.organiz[0].organization1" pattern="^[a-zA-Z0-9 ]*$" formControlName="orgp">
+             <md-error>
+               Please enter organization name.
+             </md-error>
+             </md-input-container><br><br>
+     
+             <md-input-container class="example-full-width">
+             <input  mdInput placeholder="Primary phone number" [(ngModel)]="orgs.organiz[0].primaryphn" maxlength="15" pattern="[0-9.]+" minlength="10" formControlName="priphone">
+             <md-error>
+               Enter only number
+             </md-error>
+             </md-input-container><br><br><br><br>
+     
+             <md-select placeholder="State" [(ngModel)]="orgs.organiz[0].state" name="state" formControlName="state" >
+        
+               <md-option *ngFor="let st of statearry ; let i=index " (click)="select1(st.statename)" [value]="st.statename" >
+               {{st.statename}}
+               </md-option>
+               </md-select><br>
+        
+               
+               <i style="color:#1565c0 ; " onclick="document.getElementById('stat').style.display='block'">Add State</i><br>
+               <span  style="color: red" *ngIf="!orgs.organiz[0].state">
+                   please select state.
+                 </span><br>
+             <md-input-container class="example-full-width">
+             <textarea mdInput placeholder="Address 2" [(ngModel)]="orgs.organiz[0].address2" formControlName="add2"></textarea>
+           
+             </md-input-container>
+             <br><br>
+             <h6>Upload Organization Logo</h6>
+               <input   type="file" [(ngModel)]="orgs.organiz[0].form" formControlName="frm">
+             
+     <br><br><br>
+         </div><br><br>
+         <div class="col-md-3">
+               <md-input-container class="example-full-width">
+               <input mdInput placeholder="website" [(ngModel)]="orgs.organiz[0].website" pattern="w{3}\.[a-z]+\.[a-z]{2,3}(|\.[a-z]{2,3})" formControlName="website">
+               <md-error>
+                 Enter valid website.
+               </md-error>
+               </md-input-container><br><br>
+               
+               <md-input-container class="example-full-width">
+               <input  mdInput placeholder="Secondary phone number" [(ngModel)]="orgs.organiz[0].secondaryphn" formControlName="secphno" maxlength="15" minlength="10" pattern="[0-9.]+">
+               <md-error>
+                   Enter only number.
+               </md-error>
+               </md-input-container><br><br><br><br>
+     
+               <md-select placeholder="City" [(ngModel)]="orgs.organiz[0].city" name="city" formControlName="cityy" >
+                 
+                 <md-option *ngFor="let ci of cityarry  " [value]="ci.cityname" >
+                 {{ci.cityname}}
+                 </md-option>
+                 </md-select>
+                 <br>
+                 <i style="color:#1565c0 ; " onclick="document.getElementById('cit').style.display='block'">Add City</i><br>
+                 <span  style="color: red" *ngIf="!orgs.organiz[0].city">
+                     please select city.
+                   </span><br>
+               <md-input-container class="example-full-width">
+               <textarea mdInput placeholder="Organization description" [(ngModel)]="orgs.organiz[0].orgdescription" formControlName="orgdesc"></textarea>
+               </md-input-container>
+           
+         </div>
+         <div class="col-md-3">
+               <md-input-container class="example-full-width">
+               <input mdInput [mdDatepicker]="picker" placeholder="Organization started on" [(ngModel)]="orgs.organiz[0].orgdate" formControlName="orgstart">
+     
+               <button mdSuffix [mdDatepickerToggle]="picker"></button>
+               <md-error>
+                 Select date.
+               </md-error>
+               </md-input-container><br>
+               <md-datepicker #picker></md-datepicker><br>
+     
+               <md-input-container class="example-full-width">
+               <input  mdInput placeholder="Fax Number" [(ngModel)]="orgs.organiz[0].fax" formControlName="faxno" pattern="[0-9.]+" minlength="10" maxlength="15" >
+               <md-error>
+                 Enter valid fax number.
+               </md-error>
+               </md-input-container><br><br>
+     
+               <md-input-container class="example-full-width">
+               <textarea mdInput placeholder="Main branch address" [(ngModel)]="orgs.organiz[0].mainbrnch" formControlName="mainbadd"></textarea>
+               </md-input-container><br><br><br>
+               <!-- </div> -->
+               <!-- <md-input-container class="example-full-width">
+               <input mdInput placeholder="Business domain"  [(ngModel)]="orgs.organiz[0].businessdomn" formControlName="busdomain">
+               </md-input-container> -->
+               <!-- <div class="col-md-3"> -->
+              
+                 <angular2-multiselect [data]="itemList" [(ngModel)]="orgs.organiz[0].businessdomn" [settings]="settings" formControlName="busdomain" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
+                 </angular2-multiselect>
+     
+         </div>
+     
+         <div class="col-md-3">
+           <br>
+           <md-select placeholder="Total employee" [(ngModel)]="orgs.organiz[0].totalemp"  formControlName="totemp">
+             <md-option *ngFor="let co of totempp " [value]="co.value">
+               {{co.value}}
+             </md-option>
+     
+             </md-select><br>
+             <span  style="color: red"   *ngIf="!orgs.organiz[0].totalemp">
+               please select total employee.
+         </span>
+           <br><br><br>
+           <md-select placeholder="Country" [(ngModel)]="orgs.organiz[0].country" name="country" formControlName="count" >
+             
+             <md-option *ngFor="let co of datas1 "  (click)="select(co.countryal)" [value]="co.countryal" >
+             {{co.countryal}}
+             </md-option>
+             </md-select><br>
+            
+             <i style="color:#1565c0 ; " onclick="document.getElementById('count').style.display='block'">Add Country</i><br>
+           
+           <span  style="color: red" *ngIf="!orgs.organiz[0].country">
+               please select country.
+             </span><br>
+               <md-input-container class="example-full-width">
+               <textarea mdInput placeholder="Address 1" [(ngModel)]="orgs.organiz[0].address1" formControlName="add1"></textarea>
+               </md-input-container>
+     
+         </div><br>
+         <br>
+         <div class="col-md-12">
+         <!-- <button class="btn btn-success btn-sm" (click)="click(orgs)" [disabled]="!form.valid" >save</button>    -->
+         <button class="btn btn-success btn-sm" *ngIf="add" (click)="save(orgs);" [disabled]="!form.valid" >save</button>
+         <button class="btn btn-success btn-sm" *ngIf="!add" (click)="update(orgs);" [disabled]="!form.valid" >save</button>    
+         <br><br>
+         </div>
+     
+         </div></div></form>
+       
+         
+     
+     
+     
+     
+     
+     <form class="form-horizontal" [formGroup]="form1"  >
+       <div id="count" class="w3-modal w3-animate-opacity">
+         <div class="w3-modal-content w3-card-4">
+           <header class="w3-container w3-teal bg-primary">
+             <span onclick="document.getElementById('count').style.display='none'" style="margin-top: -1%;font-weight: 500"
+             class=" w3-display-topright fa fa-times" ></span>
+             <h6>Country</h6>
+           </header>
+           <div class="w3-container">
+             <div class="col-md-12">
+               <div class="row">
+                 
+                 <div class="col-md-6">
+                   <md-input-container >
+                   <input mdInput  [(ngModel)]="country" placeholder="Country"  class="form-control"  formControlName="coun" >
+                   </md-input-container>
+                   <br><br><br><br>
+                 </div>
+                 <div class="col-md-6">
+                   <md-input-container >
+                   <input mdInput  [(ngModel)]="countrycode" placeholder="Country Code"  class="form-control"  formControlName="councode" >
+                   </md-input-container>
+                   <br><br><br><br>
+                 </div>
+               </div>
+             </div>
+           </div>
+           
+           <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+             <div class="col-sm-12">
+               <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savecountry(alert,document)" [disabled]="!form1.valid"  >Save</button>
+             </div>
+           </footer>
+         </div>
+       </div>
+     </form>
+     
+     
+     <form class="form-horizontal" [formGroup]="form2">
+       <div id="stat" class="w3-modal w3-animate-opacity">
+         <div class="w3-modal-content w3-card-4">
+           <header class="w3-container w3-teal bg-primary">
+             <span onclick="document.getElementById('stat').style.display='none'"  style="margin-top: -1%;font-weight: 500"
+             class=" w3-display-topright fa fa-times" ></span>
+             <h6>State</h6>
+           </header>
+           <div class="w3-container">
+             <div class="col-md-12">
+               <div class="row">
+                 
+                 <div class="col-md-6"><br>
+                   <md-select placeholder="Country" [(ngModel)]="countryvalue" formControlName="count">
+                   <md-option *ngFor="let country of datas1" [value]="country.countryal">
+                   {{country.countryal}}
+                   </md-option>
+                   </md-select><br>
+                   <br><br><br><br>
+                 </div>
+                 <div class="col-md-6">
+                   <md-input-container >
+                   <input mdInput  [(ngModel)]="statename" placeholder="State" class="form-control" formControlName="state" required>
+                   </md-input-container>
+                   <br><br><br><br>
+                 </div>
+                 
+               </div>
+             </div>
+           </div>
+           <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+             <div class="col-sm-12">
+               <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savestate(alert,document)" [disabled]="!form2.valid"  data-dismiss="model" >Save</button>
+             </div>
+           </footer>
+         </div>
+       </div>
+       </form>
+     
+     
+       <form class="form-horizontal" [formGroup]="form3">
+       <div id="cit" class="w3-modal w3-animate-opacity">
+         <div class="w3-modal-content w3-card-4">
+           <header class="w3-container w3-teal bg-primary">
+             <span onclick="document.getElementById('cit').style.display='none'" style="margin-top: -1%;font-weight: 500"
+             class=" w3-display-topright fa fa-times" ></span>
+             <h6>State</h6>
+           </header>
+           <div class="w3-container">
+             <div class="col-md-12">
+               <div class="row">
+                 <div class="col-md-6"><br>
+                   <md-select placeholder="Country" [(ngModel)]="countries" formControlName="countr" >
+                   <!-- <md-option *ngFor="let country of datas1" [value]="country.countryal" >
+                   {{country.countryal}}
+                   </md-option>  -->
+                   <md-option *ngFor="let count of datas1 "  (click)="selectcountry(count.countryal)" [value]="count.countryal" >
+                   {{count.countryal}}
+                   </md-option>
+                   </md-select><br>
+                   <br><br>
+                   <md-input-container >
+                   <input mdInput  [(ngModel)]="cityname" placeholder="City" class="form-control" formControlName="cit" required>
+                   </md-input-container>
+                   <br><br><br><br>
+                 </div>
+                 <div class="col-md-6"><br>
+                   <md-select placeholder="State" [(ngModel)]="statevalue" formControlName="stat">
+                   <!-- <md-option *ngFor="let st of datas2" [value]="st.statename" >
+                   {{st.statename}}
+                   </md-option>  -->
+                   <md-option *ngFor="let state of statearry ; let i=index " (click)="selectstate(state.statename)" [value]="state.statename" >
+                   {{state.statename}}
+                   </md-option>
+                   </md-select><br>
+                   <br><br><br><br>
+                 </div>
+               </div>
+             </div>
+           </div>
+           <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+             <div class="col-sm-12">
+               <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savecity()" [disabled]="!form3.valid"  data-dismiss="model" >Save</button>
+             </div>
+           </footer>
+         </div>
+       </div>
+     </form>
+     
+     
+     
+     
+     
+
+    
+ </div>
+</div>

@@ -1,0 +1,85 @@
+
+<div class="col-md-12">
+  <div class="row">
+    <div  style="display: both" class="col-lg-12">
+      <span style="font-weight:500">Corporatecard</span>
+    </div><br><br>
+  </div>
+</div>
+<div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+  {{ message }}
+</div>
+<form class="form-horizontal" [formGroup]="form" *ngIf="service.visible" (click)="add(data)">
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-4">
+      <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="employee.corporatecard[0].cardtype"  placeholder="Card Type"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" formControlName="cardtype" maxlength="50">
+      <md-error>Please enter valid card type.</md-error>
+    </md-input-container><br><br>
+      <md-input-container>
+      <input mdInput [mdDatepicker]="datepicker" [(ngModel)]="employee.corporatecard[0].expiry_date" placeholder="Expiry Date" formControlName="expirydate">
+      <button mdSuffix [mdDatepickerToggle]="datepicker"></button>
+      <md-error>Please select expiry date.</md-error>
+      </md-input-container>
+      <md-datepicker #datepicker></md-datepicker>
+    </div>
+    <div class="col-md-4">
+      <md-input-container class="example-full-width">
+      <input mdInput  maxlength="16" [(ngModel)]="employee.corporatecard[0].card_number" placeholder="Card Number" minlength="16" maxlength="16" formControlName="cardno" >
+      
+      </md-input-container><br><br>
+      <md-input-container class="example-full-width">
+      <input mdInput  [(ngModel)]="employee.corporatecard[0].card_issuedby" placeholder="Card Issued By"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" formControlName="cardissue" maxlength="50" >
+      <md-error>
+          Enter only alphabets.
+        </md-error>
+      </md-input-container>
+      <br><br><br>
+    </div>
+    <div class="col-md-4">
+      <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="employee.corporatecard[0].name_on_card" placeholder="Name on Card"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" formControlName="name" maxlength="50">
+      <md-error>
+          Enter only valid name.
+        </md-error>
+      </md-input-container><br><br>
+      <md-input-container class="example-full-width">
+      <input mdInput maxlength="4" [(ngModel)]="employee.corporatecard[0].cardcode" placeholder="Card Code" pattern="[0-9.]+" minlength="3" maxlength="4" formControlName="cardcode" >
+      <md-error>
+        Enter only number.
+      </md-error>
+      </md-input-container>
+    </div>
+  </div>
+  <div style="float: right;margin:0% 2% 0% 0%" class="row">
+    <div  class="col-md-12">
+      <button  class="btn btn-outline-success btn-sm" (click)="save(employee)" [disabled]="!form.valid"> Save</button>
+    </div>
+  </div>
+</div>
+</form>
+
+<!-- <button type="button" *ngIf="service.invisible" class="btn btn-outline-primary btn-sm" (click) = "viewcorpcard(data)">Edit</button> -->
+  
+  <div class="col-md-12 box" *ngIf="service.invisible" (click)="view(data)" >
+     
+        <div class="emp-info alter-div">
+            Card Type : {{employee.corporatecard[0].cardtype}}
+        </div>
+        <div class="emp-info alter-div ">
+            Card Number : {{employee.corporatecard[0].card_number}}
+        </div><br>
+        <div class="emp-info ">
+            Name On Card  : {{employee.corporatecard[0].name_on_card}}
+        </div>
+        <div class="emp-info ">
+            Expiry Date: {{employee.corporatecard[0].expiry_date}}
+        </div><br>
+        <div class="emp-info alter-div">
+            Card Issued By : {{employee.corporatecard[0].card_issuedby}}
+        </div>
+        <div class="emp-info alter-div">
+            Card Code : {{employee.corporatecard[0].cardcode}}
+        </div>
+</div>

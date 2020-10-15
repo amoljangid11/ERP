@@ -1,0 +1,28 @@
+{
+  "name": "meanapp",
+  "version": "1.0.0",
+  "description": "mean authentication app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
+  },
+  "dependencies": {
+    "angular2-flash-messages": "^1.0.8",
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "cors": "*",
+    "express": "*",
+    "getmac": "^1.2.1",
+    "jsonwebtoken": "*",
+    "mongoose": "*",
+    "multer": "^1.3.0",
+    "node-restful": "^0.2.6",
+    "nodemailer": "^4.4.2",
+    "passport": "*",
+    "passport-jwt": "*",
+    "restful-api": "^0.1.8"
+  },
+  "author": "\"erp\"",
+  "license": "ISC"
+}

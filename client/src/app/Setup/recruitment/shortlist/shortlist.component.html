@@ -1,0 +1,343 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show ">
+    <div>
+        <ol class="breadcrumb row bg-primary">
+            <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+            <li class="breadcrumb-item ">Recruitments </li>
+            <li class="breadcrumb-item ">Shortlisted & Selected Candidates </li>
+            
+          </ol>
+    </div>
+    <div>
+        <span style="font-weight:500">Shortlisted & Selected Candidates</span>
+       
+      </div><br>
+    <div>
+        <div>
+            <div class="row" style="padding: 1% 0% 1% 1%">
+              <div class="box" (click)="clickall('All');view='yes'">
+               <div style="background-color: #fff4c6 " >
+                 <span>All Candidates</span><br><span class="text-info">{{allcand}}</span>
+               </div>    			
+              </div>
+              <div class="box"   (click)="clickall('Shortlisted');view='yes'">
+                <div class="box2">
+                  <span>Shortlisted Candidates</span><br><span class="text-primary">{{shortlistcand}}</span>
+                </div>  	
+              </div>
+              <div class="box"  (click)="clickall('Selected');view='no'">
+                <div class="box2" >
+                  <span>Selected Candidates</span><br><span class="text-success">{{selectcand}}</span>
+                </div>
+              </div>  
+              <div class="box"  (click)="clickall('Rejected');view='no'">
+                <div class="box2" >
+                  <span>Rejected Candidates</span><br><span class="text-warning">{{rejectcand}}</span>
+                </div>
+              </div>  
+            </div>
+          </div><br>
+<!-- <div *ngIf= "show && !updatebutton"> -->
+
+    <div class="row">
+        <div class="col-lg-12">
+          <div>
+              <table class="table table-bordered table-striped table-sm">
+                  <thead class="bg-success">
+                    <tr>
+                      <th>Action</th>
+                      <th>Requisition Code</th>
+                      <th>Job Title</th>
+                      <th>Candidate Name</th>
+                      <th>Email</th>
+                      <th>Contact Number</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let et of recruitmentmanagement;let i = index " >
+                        <td>
+                          <i class="fa fa-eye"  title="View" (click)="view(et,i);show=!show;"></i>&nbsp;&nbsp;
+                          <!-- <i *ngIf="et.candidates[0].status!='Rejected'" (click)="edit(et);show=!show;"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp; -->
+                          <i (click)="edit(et);show=!show;" *ngIf="et.candidates[0].status=='Shortlisted'"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;
+                          <img *ngIf="et.candidates[0].status=='Selected'" class="" style="height:18px;width: 15px;" src="./assets/Images/addemp.png" title="Add candidate" (click)="link();">
+                          <!-- <i (click)="delete(et,i)" title="Delete" class="fa fa-trash-o"></i> -->
+                        </td>                          
+                        <td>{{et.candidates[0].requisition}}</td>
+                        <td>{{et.candidates[0].jobtitle}}</td>
+                        <td>{{et.candidates[0].fname}}{{et.candidates[0].lname}}</td>
+                        <td>{{et.candidates[0].email}}</td>
+                        <td>{{et.candidates[0].contact}}</td>
+                        <td>{{et.candidates[0].finalstatus || et.candidates[0].status}}</td>
+                </tbody>
+              </table>
+          </div>
+
+  </div>
+</div>
+</div>
+</div>
+<div *ngIf= "show && updatebutton">
+  <div>
+      <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">Recruitments </li>
+          <li class="breadcrumb-item ">Shortlisted & Selected Candidates </li>
+          <li class="breadcrumb-item ">Edit </li>
+        </ol>
+  </div>
+  <form class="form-control" [formGroup]="form">
+  <div class="row">
+      <div class="col-md-4">
+          <br>
+          <md-select placeholder="Candidate Status" [(ngModel)]="candidate.candidates[0].status" formControlName="status" required >
+           <md-option>Select Candidate Status</md-option>
+           <md-option *ngFor="let candidate of status ; let i=index " [value]="candidate.value"   >
+             {{candidate.value}}
+           </md-option>
+           </md-select>
+      </div>
+  </div>
+  
+  <br><br>
+  <div class="row">
+      <div class="col-md-4">
+      <button class="btn btn-outline-primary btn-sm" (click) = "update(candidate);show=!show" [disabled]="!form.valid"> Update </button>
+      <button class="btn btn-outline-warning btn-sm" (click) = "show=!show"> Cancel </button> 
+
+      </div>
+  </div>
+</form>
+
+<div class="box33">
+  <div class="emp-info alter-div">
+      Requisition Id : {{candidate.candidates[0].requisition}}
+  </div>
+  <div class="emp-info alter-div">
+      Job Title : {{candidate.candidates[0].jobtitle}}
+  </div>
+  <br><br>
+  <h5>CANDIDATE DETAILS</h5>
+  <div class="emp-info alter-div">
+      Candidate Name : {{candidate.candidates[0].fname}}{{candidate.candidates[0].lname}}
+  </div>
+  <div class="emp-info alter-div">
+      Email : {{candidate.candidates[0].email}}
+  </div>
+  <br>
+  <div class="emp-info">
+      Qualification : {{candidate.candidates[0].qualification}}
+  </div>
+  <div class="emp-info">
+      Work Experience : {{candidate.candidates[0].workexp}}
+  </div>
+  <br><br>
+  <h5>SKILL SETS</h5>
+  <div  class="emp-info alter-div">
+      Skill Set : {{candidate.candidates[0].skills}}
+  </div>
+  <div class="emp-info alter-div" >
+      Summary : {{candidate.candidates[0].summary}}
+  </div>
+  <!-- <div class="emp-info"></div> -->
+  <br>
+  <div class="emp-info ">
+      Education Summary : {{candidate.candidates[0].educsummary}}
+  </div>
+  <div class="emp-info "></div>
+  <br>
+  </div>
+
+  <h5>INTERVIEW DETAILS</h5>
+ 
+  <div class="box8">
+    <ul class="nav nav-tabs" role="tablist">
+        <br>
+        <li class="nav-item" *ngFor="let et of arr;let i = index "><br>
+          <a class="nav-link active" href="#round1" role="tab" data-toggle="tab" (click)="findno(et)" >{{"Round"}} {{et}}</a><br>
+        </li>
+        <br>
+    </ul>
+
+    <!-- Tab panels -->
+    <div class="tab-content" >
+      <!-- Tab contact1 -->
+      <div role="tabpanel" class="tab-pane fade show active" id="round1">
+          <div class="box7" >
+              <div class="emp-info">
+                <b> Round Name </b>: {{roundno.interviewname}}
+              </div>
+              <div class="emp-info ">
+                 <b> Interviewer </b>: {{roundno.interviewer}}
+              </div><br>
+              <div class="emp-info alter-div">
+                 <b> Time </b> : {{roundno.interviewtime}}
+              </div> 
+               <div class="emp-info alter-div">
+                  <b> Date </b> : {{roundno.interviewdate | date}}
+              </div><br>
+              <div class="emp-info">
+                <b> Mode </b>: {{roundno.interviewtype}}
+              </div>
+              <div class="emp-info ">
+                 <b> Feedback </b>: {{roundno.interviewfeedback}}
+              </div><br>
+              <div class="emp-info alter-div">
+                <b> Comments </b> : {{roundno.interviewcomment}}
+             </div> 
+              <div class="emp-info alter-div">
+                 <b> Status </b> : {{roundno.roundstatus }}
+             </div><br>
+             <div class="emp-info">
+              <b> Location </b>: {{roundno.location}}
+            </div>
+            <div class="emp-info "></div><br>
+          </div>
+      </div>
+    </div>
+</div><br>
+
+</div>
+
+<div *ngIf= "show && viewbutton">
+  <!-- <h4>View</h4> -->
+  <div>
+      <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">Recruitments </li>
+          <li class="breadcrumb-item ">Shortlisted & Selected Candidates </li>
+          <li class="breadcrumb-item ">View </li>
+      </ol>
+  </div>
+  <div class="row">
+      <div class="col-md-4">
+          <md-input-container class="example-full-width">
+            <input mdInput placeholder="Candidate Status" [(ngModel)]="candidate.candidates[0].status" [readonly]="moe">
+        </md-input-container><br>
+      </div>
+  </div>
+
+  <div class="box4">
+      <div class="emp-info alter-div">
+         <b> Requisition Id </b> : {{candidate.candidates[0].requisition}}
+      </div>
+      <div class="emp-info alter-div">
+         <b> Job Title </b> : {{candidate.candidates[0].jobtitle}}
+      </div>
+  </div><br>
+
+
+    <span><b>CANDIDATE DETAILS</b></span><br>
+ 
+  <div class="box3">
+      <div class="emp-info">
+        <b> Candidate Name </b>: {{candidate.candidates[0].fname}} {{candidate.candidates[0].lname}}
+      </div>
+      <div class="emp-info ">
+         <b> Email </b>: {{candidate.candidates[0].email}}
+      </div><br>
+      <div class="emp-info alter-div">
+         <b> Qualification </b> : {{candidate.candidates[0].qualification}}
+      </div>
+      <div class="emp-info alter-div">
+         <b> Work Experience </b> : {{candidate.candidates[0].workexp}}
+      </div>
+  </div><br>
+
+  <span><b>SKILL SETS</b></span><br>
+
+  <div class="box3">
+      <div class="emp-info">
+        <b> Skill Set </b>: {{candidate.candidates[0].skills}}
+      </div>
+      <div class="emp-info ">
+         <b> Summary </b>: {{candidate.candidates[0].summary}}
+      </div><br>
+      <div class="emp-info alter-div">
+         <b> Education Summary </b> : {{candidate.candidates[0].educsummary}}
+      </div>
+      <div class="emp-info alter-div" colspan = "2" >
+      </div>
+  </div>
+  <br>
+
+  <span><b>INTERVIEW DETAILS</b></span><br>
+  <div class="box8">
+    <ul class="nav nav-tabs" role="tablist">
+        <br>
+        <li class="nav-item" *ngFor="let et of arr;let i = index "><br>
+          <a class="nav-link active" href="#round1" role="tab" data-toggle="tab" (click)="findno(et)" >{{"Round"}} {{et}}</a><br>
+        </li>
+        <br>
+    </ul>
+
+    <!-- Tab panels -->
+    <div class="tab-content" >
+      <!-- Tab contact1 -->
+      <div role="tabpanel" class="tab-pane fade show active" id="round1">
+          <div class="box7" >
+              <div class="emp-info">
+                <b> Round Name </b>: {{roundno.interviewname}}
+              </div>
+              <div class="emp-info ">
+                 <b> Interviewer </b>: {{roundno.interviewer}}
+              </div><br>
+              <div class="emp-info alter-div">
+                 <b> Time </b> : {{roundno.interviewtime}}
+              </div> 
+               <div class="emp-info alter-div">
+                  <b> Date </b> : {{roundno.interviewdate | date}}
+              </div><br>
+              <div class="emp-info">
+                <b> Mode </b>: {{roundno.interviewtype}}
+              </div>
+              <div class="emp-info ">
+                 <b> Feedback </b>: {{roundno.interviewfeedback}}
+              </div><br>
+              <div class="emp-info alter-div">
+                <b> Comments </b> : {{roundno.interviewcomment}}
+             </div> 
+              <div class="emp-info alter-div">
+                 <b> Status </b> : {{roundno.roundstatus }}
+             </div><br>
+             <div class="emp-info">
+              <b> Location </b>: {{roundno.location}}
+            </div>
+            <div class="emp-info "></div><br>
+          </div>
+      </div>
+    </div>
+</div><br>
+
+  <span><h5><b>CANDIDATE INTERVIEW HISTORY</b></h5></span><br>
+        <div class="box9" *ngIf="candidate.candidates[0].addmsg">
+            <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+            <tr>
+              <td>
+            <img class="imageClass" src="./assets/Images/employee.jpg"/>
+            </td>
+            <td>
+          <span>
+             {{candidate.candidates[0].addmsg}} on {{candidate.candidates[0].addcanddate | date}}
+          </span>
+          </td>
+          </tr>
+            </table>
+        </div>
+        <div class="box9" *ngIf="inter.interviews[0].schedulemsg">
+            <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+                <tr>
+                  <td>
+                <img class="imageClass" src="./assets/Images/employee.jpg"/>
+                </td>
+                <td>
+              <span>
+                 {{inter.interviews[0].schedulemsg}} on {{inter.interviews[0].schedcanddate | date}}
+              </span>
+                </td>
+                </tr>
+                </table>
+            </div>
+</div>
+
+</div>

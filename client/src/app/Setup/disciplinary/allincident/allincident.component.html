@@ -1,0 +1,84 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+    <div *ngIf = "!show">
+      <div>
+          <ol class="breadcrumb row bg-primary">
+              <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+              <li class="breadcrumb-item ">Disciplinary </li>
+              <li class="breadcrumb-item ">All Incidents </li>
+              
+            </ol>
+      </div>
+      <div>
+          <span style="font-weight:500">All Incidents</span>
+       
+        </div><br>
+        <div class="row">
+            <div class="col-lg-12">
+              <div>
+                  <table class="table table-bordered table-striped table-sm">
+                      <thead class="bg-success">
+                        <tr>
+                          <th>Action</th>
+                          <th>Employee Name</th>
+                          <th>Business Unit</th>
+                          <th>Department</th>
+                          <th>Violation Name</th>
+                          <th>Date of Occurence</th>
+                          <th>Appealed</th>
+                          <th>Verdict</th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let et of datas;let i = index " >
+                              <td><i class="fa fa-eye"  title="View" (click)="open(typeModal);view(et)"></i></td>
+                 
+                             <th>{{et.raiseincident[0].reportingmanager}}</th>
+                              <th>{{et.raiseincident[0].name}}</th>
+                              <th>{{et.raiseincident[0].departmentname}}</th>
+                              <th>{{et.raiseincident[0].violationtype}}</th>
+                              <th>{{et.raiseincident[0].createdate}}</th>
+                              <th>{{et.raiseincident[0].employeeappeal}}</th>
+                              <th>{{et.raiseincident[0].verdict}}</th>
+                              </tr>
+                              
+                      </tbody>
+                  </table>
+              </div>
+        </div>
+
+        </div></div></div>
+        <md2-dialog #typeModal>
+          <md2-dialog-title>All Incidents</md2-dialog-title>
+          <div class="row">
+            <div style="" class="emp-info">
+              <div class="emp-info alter-div">
+                Employee : {{raise.raiseincident[0].reportingmanager}}
+              </div> 
+                  <div class="emp-info alter-div">
+                    Business Unit : {{raise.raiseincident[0].name}}
+                  </div>  
+                  <div class="emp-info alter-div">
+                    Department : {{raise.raiseincident[0].departmentname}}
+                </div> 
+                <div class="emp-info alter-div">
+                  Violation Type : {{raise.raiseincident[0].violationtype}}
+              </div> 
+              <div class="emp-info alter-div">
+                Date of Occurence : {{raise.raiseincident[0].createdate}}
+            </div> 
+            <div class="emp-info alter-div">
+              Employee Appeal : {{raise.raiseincident[0].employeeappeal}}
+          </div> 
+          <div class="emp-info alter-div">
+            Verdict : {{raise.raiseincident[0].verdict}}
+        </div>   
+        
+             </div>
+             </div>
+             
+          <md2-dialog-footer>
+              <button type="submit" class="btn btn-secondary" (click)="close(typeModal)">Cancel</button>
+          </md2-dialog-footer>
+        </md2-dialog>
+

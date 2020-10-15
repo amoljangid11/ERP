@@ -1,0 +1,213 @@
+
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show" >
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Contacts</li>
+        <li class="breadcrumb-item active">Clients</li>
+      </ol>
+    </div>
+    <span style="font-weight:500">Clients</span>
+    <div style="float: right;">
+      <button type="button"  class="btn btn-outline-primary btn-sm"  (click) = "cancel();show = !show;updatebutton=false;">Add</button>&nbsp;
+      <img class="imageClass1" src="./assets/Images/excel.ico"/>&nbsp;<i style="color: #1565c0" (click)="downloadExcel('clienttbl')" >Export to Excel</i>&nbsp;&nbsp;
+    </div><br><br>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div class="row">
+      <div class="col-md-3" style="padding-bottom: 5px">
+       <md-select placeholder="Select Search Option">
+         <md-option *ngFor="let ser of searchrelt" (click)="searchSelect(ser)" [value]="ser.value">{{ser.value}}</md-option>
+       </md-select>
+      </div>
+         
+      <div class="col-md-3" style="padding-bottom: 5px" *ngIf="clt">      
+        <input placeholder="Search Client" [(ngModel)]="tesyt" (input)="filterItem(tesyt)">       
+      </div>
+      <div class="col-md-3" style="padding-bottom: 5px" *ngIf="pocc">
+        <input placeholder="Search by Point of Contact" [(ngModel)]="tesyt" (input)="filterItem(tesyt)">
+      </div>
+    </div><br>
+    <div class="row">
+      <div class="col-lg-12">
+          <div>
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">                
+              <tr>
+                <th>Action</th>
+                <th>Client</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Point Of Contact</th>
+                <th>Designation for POC</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cli of datas;let i = index " >
+                <td> <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(cli)"></i>&nbsp;&nbsp;
+                  <i (click)="edit(cli);show = !show"   title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(cli,i)" title="Delete" class="fa fa-trash-o"></i>&nbsp;&nbsp;
+                 </td>
+                <td >{{cli.clients[0].client}}</td>
+                <td>{{cli.clients[0].email}}</td>
+                <td >{{cli.clients[0].phone_number}}</td>
+                <td >{{cli.clients[0].point_of_contact}}</td>
+                <td>{{cli.clients[0].designation}}</td>
+                <td>{{cli.clients[0].status}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="display: none;">
+            <table class="table table-bordered table-striped table-sm" id="clienttbl">
+              <thead class="bg-success">                
+                <tr>
+                  <th>Client</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  <th>Point Of Contact</th>
+                  <th>Designation for POC</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cli of datas;let i = index " >
+                  <!-- <td> <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(cli)"></i>&nbsp;&nbsp;
+                    <i (click)="edit(cli);show = !show"   title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(cli,i)" title="Delete" class="fa fa-trash-o"></i>&nbsp;&nbsp;
+                   </td> -->
+                  <td >{{cli.clients[0].client}}</td>
+                  <td>{{cli.clients[0].email}}</td>
+                  <td >{{cli.clients[0].phone_number}}</td>
+                  <td >{{cli.clients[0].point_of_contact}}</td>
+                  <td>{{cli.clients[0].designation}}</td>
+                  <td>{{cli.clients[0].status}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+  </div>
+<form class="form-horizontal" [formGroup]="form">
+<div *ngIf= "show">
+<div>
+<ol class="breadcrumb row bg-primary">
+<li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+<li class="breadcrumb-item ">HR </li>
+<li class="breadcrumb-item ">Contacts</li>
+<li class="breadcrumb-item ">Clients</li>
+<li class="breadcrumb-item active">Add</li>
+</ol>
+</div><br>      
+<div  class="row">
+<div class="col-md-4">
+ <md-input-container class="example-full-width">
+  <input mdInput placeholder="Client" [(ngModel)]="client.clients[0].client" formControlName="client" pattern="^[a-zA-Z0-9 ]*$" maxlength="50" required>
+  <md-error>Please enter client name.</md-error>
+ </md-input-container>
+</div><br><br>
+<div class="col-md-4">
+ <md-input-container class="example-full-width">
+  <input  mdInput [(ngModel)]="client.clients[0].address" maxlength="100"  placeholder="Address" formControlName="address">
+ </md-input-container>
+</div><br><br>
+<div class="col-md-4">
+ <md-input-container class="example-full-width">
+  <input  mdInput placeholder="Email"  [(ngModel)]="client.clients[0].email" formControlName="email"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" >
+  <!-- <md-error>Please enter email id</md-error> -->
+</md-input-container>
+</div>
+</div><br><br>
+<div  class="row">
+<div class="col-md-4">
+ <md-input-container class="example-full-width">
+  <input mdInput  [(ngModel)]="client.clients[0].phone_number"  maxlength="10" placeholder="Phone Number" formControlName="pno" pattern="[0-9.]+" minlength="10" maxlength="10" required>
+   <md-error>Phone number must contain at least 10 characters</md-error>
+  </md-input-container>
+</div><br><br>
+<div class="col-md-4">
+ <md-input-container class="example-full-width">
+  <input mdInput  [(ngModel)]="client.clients[0].secphone_number"  maxlength="10" placeholder="Secondary Phone Number" formControlName="spno" pattern="[0-9.]+" minlength="10" maxlength="10">
+   <md-error>Phone number must contain at least 10 characters</md-error>
+</md-input-container>
+</div><br><br>
+<div class="col-md-4">
+ <md-input-container class="example-full-width">
+  <input mdInput [(ngModel)]="client.clients[0].fax" placeholder="Fax" formControlName="fax" pattern="[0-9.]+" minlength="10" maxlength="10">
+  <md-error>Fax must contain at least 10 Numbers</md-error>
+ </md-input-container>
+</div>
+</div><br><br>
+<div  class="row">
+<div class="col-md-4">
+ <md-input-container class="example-full-width">
+  <input mdInput [(ngModel)]="client.clients[0].point_of_contact" placeholder="Point Of Contact" formControlName="point" pattern="^[a-zA-Z0-9 ]*$" required >
+  <md-error>Please enter point of contact</md-error>
+ </md-input-container>
+</div><br><br>
+<div class="col-md-4">
+ <md-input-container class="example-full-width">
+  <input mdInput [(ngModel)]="client.clients[0].designation" placeholder="Designation for Point Of Contact" formControlName="despoint" pattern="^[a-zA-Z0-9 ]*$" >
+  <!-- <md-error>Please enter Designation for point of contact.</md-error> -->
+</md-input-container>
+</div><br><br>
+<div class="col-md-4"><br>
+  <md-select placeholder="Select Status" [(ngModel)]="client.clients[0].status" formControlName="sts">
+    <md-option>Select Status</md-option>
+    <md-option *ngFor="let st of statusss" [value]="st.value">{{st.value}}</md-option>
+  </md-select>
+</div>
+</div><br>
+      
+<div  class="col-md-12" style="margin-top: 5%">
+<button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm"  (click)="save(client);show=!show" [disabled]="!form.valid"> Save</button>
+<button  *ngIf="updatebutton" class="btn btn-outline-success btn-sm"  (click)="update(client);show=!show;updatebutton=!updatebutton;"> Update</button>
+<button class="btn btn-outline-warning btn-sm" (click) = "cancel();show=!show;updatebutton=!updatebutton;"> Cancel </button>
+</div>
+</div>
+</form>
+</div>
+
+
+<md2-dialog #deptModal>
+  <md2-dialog-title>Client</md2-dialog-title>
+  <div class=" row box">
+    <div class="emp-info">
+      Client : {{client.clients[0].client}}
+    </div>
+    <div class="emp-info ">
+      Address : {{client.clients[0].address}}
+    </div><br>
+    <div class="emp-info alter-div">
+        Email : {{client.clients[0].email}}
+    </div>
+    <div class="emp-info alter-div">
+        Phone Number : {{client.clients[0].phone_number}}
+    </div><br>
+    <div class="emp-info">
+        Secondary Phone Number : {{client.clients[0].secphone_number}}
+    </div>
+    <div class="emp-info ">
+        Fax : {{client.clients[0].fax}}
+    </div><br>
+    <div class="emp-info alter-div">
+        Point of Contact : {{client.clients[0].point_of_contact}}
+    </div>
+    <div class="emp-info alter-div">
+        Designation for Point of Contact : {{client.clients[0].designation}}
+    </div><br>
+    <div class="emp-info">
+       Status : {{client.clients[0].status}}
+    </div><br>
+  </div>
+<md2-dialog-footer>
+    <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+</md2-dialog-footer>
+</md2-dialog>

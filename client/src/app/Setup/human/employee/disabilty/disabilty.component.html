@@ -1,0 +1,64 @@
+
+ <div style="display: both" class="col-md-12">
+ 
+    <span style="font-weight:  800">Disability</span>  	<br><br>
+</div>
+<div  class="col-md-12">
+<div class="row">
+		
+<div class="col-md-4">
+	<br>
+    <md-select placeholder="Job Title" [(ngModel)]="disability" name="job">
+     <md-option *ngFor="let j of datas"   [value]="j.disabilities" required>
+    {{j.disabilities}}
+    </md-option>
+    <md-option (click)="open(alert)"><i style="color:Blue;">Other</i></md-option>
+    </md-select>
+    
+</div>
+
+<div class="col-md-4">
+    <md-input-container class="example-full-width">
+      <input mdInput  placeholder="Disability" >
+      <md-error>Please enter number of days.</md-error> 
+    </md-input-container><br><br>
+     
+    <br><br><br>  
+</div>
+
+<div class="col-md-4">   
+<md-input-container class="full-width">
+    <textarea mdInput #message maxlength="200" mdTextareaAutosize minRows="6" placeholder="Description/Reason" id="description" ></textarea>
+    <md-hint align="end">{{message.value.length}} characters entered / 200</md-hint>
+
+</md-input-container>  
+      <br><br>
+ 
+</div>
+
+
+  	</div>
+  	<div class="col-md-12">
+<div  class="row" style="float: right" >
+<div >
+	<br><br><br>
+<button class="btn btn-outline-primary btn-sm" (click)="save()"> Save</button>
+</div>
+</div>
+</div>
+
+</div>
+<md2-dialog #alert>
+ <md2-dialog-title>Add Job Title</md2-dialog-title>
+   <div style="display: inline-flex;"  class="col-md-12">
+
+  <md-input-container class="example-full-width">
+        <input mdInput  [(ngModel)]="other" placeholder="Other Disability type"> 
+    </md-input-container><br><br>
+</div>
+    <md2-dialog-footer>
+    <button type="submit" class="btn btn-primary" (click)="savedisablity(alert)" >Save</button>
+    </md2-dialog-footer>
+  </md2-dialog>
+
+

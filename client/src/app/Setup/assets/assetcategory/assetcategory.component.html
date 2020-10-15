@@ -1,0 +1,104 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show">
+    <div>
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Assets </li>
+        <li class="breadcrumb-item ">Asset Categories </li>
+        
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:500">Asset Categories</span><br><br>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button>
+ 
+    </div>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Category</th>
+                <th>Sub Category</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let et of datas;let i = index " >
+                <td> <i class="fa fa-eye"  title="View" (click)="open(typeModal);view(et)"></i>&nbsp;&nbsp;<i (click)="edit(et);show=!show;"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(et,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                
+                <td >{{et.assetcategories[0].category}}</td>
+                <td>{{et.assetcategories[0].subcategory}}</td>
+                
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <form class="form-horizontal" [formGroup]="form">
+    <div *ngIf= "show">
+      <div>
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">Asset </li>
+          <li class="breadcrumb-item ">Asset Categories </li>
+          
+          <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+        </ol>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <md-input-container class="example-full-width">
+            <input mdInput placeholder="Category" [(ngModel)]="assetcat.assetcategories[0].category" ng-pattern="/^[A-Za-z0-9_@.#$=!%^)(\]:\*;\?\/\,}{'\|<>\[&\+-]*$/" maxlength="30" class="form-control" formControlName="cate" required>
+            <md-error>Please enter expense category name.</md-error>
+            </md-input-container><br><br><br>
+        </div>
+        <div class="col-md-3">
+          <md-input-container class="example-full-width">
+            <input mdInput placeholder="Sub Category" [(ngModel)]="assetcat.assetcategories[0].subcategory" ng-pattern="/^[A-Za-z0-9_@.#$=!%^)(\]:\*;\?\/\,}{'\|<>\[&\+-]*$/" maxlength="30" class="form-control" formControlName="subcate">
+            <md-error>Please enter expense category name.</md-error>
+            </md-input-container><br><br><br>
+        </div>
+        <div  class="col-md-12" style="margin-top: 5%">
+          <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(assetcat);show=!show" [disabled]="!form.valid"> Save</button>
+        <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(assetcat);show=!show;updatebutton=!updatebutton;"> Update</button>
+        <button class="btn btn-outline-warning btn-sm" (click) = "cancel(type);show=!show"> Cancel </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<md2-dialog #typeModal>
+  <md2-dialog-title>Asset Categories</md2-dialog-title>
+  <div class="row">
+    <div style="" class="emp-info"><br>
+          <div class="emp-info alter-div">
+              Category : {{assetcat.assetcategories[0].category}}
+          </div>  
+          <div class="emp-info alter-div">
+            Sub Category : {{assetcat.assetcategories[0].subcategory}}
+        </div> 
+        
+         
+     </div>
+     </div>
+     
+  <md2-dialog-footer>
+      <button type="submit" class="btn btn-secondary" (click)="close(typeModal)">Cancel</button>
+  </md2-dialog-footer>
+</md2-dialog>
+   
+ 

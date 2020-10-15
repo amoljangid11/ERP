@@ -1,0 +1,144 @@
+<div *ngIf= "!show"  class="col-md-12">
+<div class="row">
+<div  style="display: both" class="col-md-12">
+    <span style="font-weight:500">Additional Details</span>
+    <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button> 
+</div><br><br>
+</div>
+ <div class="col-md-12"><br>
+  <div class="table-responsive"> 
+  <table  class="table table-bordered table-hover ">
+ <thead class="thead-inverse">
+     <tr>
+      <th>Action</th>
+      <th>Served in Military</th>
+      <th>Branch of Service</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Veteran Status</th>
+      <th>Service Type</th>
+
+     </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let ad of detail;let i = index " >
+            <td><i *ngIf="ad.id !== editRowId" (click)="edit(ad.id)"  title="Edit" class="fa fa-pencil-square-o"></i></td>
+
+  <td *ngIf="ad.id == editRowId"> 
+       <input type="text" [(ngModel)]="ad.military">
+  </td>
+  <td *ngIf="ad.id !== editRowId">{{ad.military}}</td>
+
+  <td *ngIf="ad.id == editRowId"> 
+       <input type="text" [(ngModel)]="ad.Branch">
+  </td>
+  <td *ngIf="ad.id !== editRowId">{{ad.Branch}}</td>
+
+  <td *ngIf="ad.id == editRowId"> 
+       <input type="text" [(ngModel)]="ad.militaryfrom">
+  </td>
+  <td *ngIf="ad.id !== editRowId">{{ad.militaryfrom}}</td>
+
+   <td *ngIf="ad.id == editRowId"> 
+       <input type="text" [(ngModel)]="ad.militaryto">
+  </td>
+  <td *ngIf="ad.id !== editRowId">{{ad.militaryto}}</td>
+
+  <td *ngIf="ad.id == editRowId"> 
+       <input type="text" [(ngModel)]="ad.veteranstatus">
+  </td>
+  <td *ngIf="ad.id !== editRowId">{{ad.veteranstatus}}</td>
+
+  <td *ngIf="ad.id == editRowId"> 
+       <input type="text" [(ngModel)]="ad.servicetype">
+  </td>
+  <td *ngIf="ad.id !== editRowId">{{ad.servicetype}}</td>
+ 
+</tr>                                         
+  </tbody>                             
+  </table>
+  </div></div>
+  </div>
+
+
+  <div *ngIf= "show" class="col-lg-12">
+   <div style="display: inline-flex;"  class="col-md-12">
+<div class="col-md-4">	<br><br>
+ 
+  <md-select placeholder="Served in Military?"  [(ngModel)]="servedmilitary" >
+  <md-option *ngFor="let sm of serve  " [value]="sm.viewValue" >
+      {{sm.viewValue}}
+    </md-option>
+    </md-select><br><br><br><br>
+  <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="rank"  placeholder="Rank Achieved"> 
+    </md-input-container><br><br><br>
+     <md-input-container class="example-full-width">
+     <input mdInput #message maxlength="400" [(ngModel)]="train" placeholder="Special Trainings"> 
+    <md-hint align="end">{{message.value.length}} characters entered / 400</md-hint>
+  </md-input-container><br><br><br> 
+  <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="rank"  placeholder="Military Service Number"> 
+    </md-input-container><br><br><br><br>
+    <md-select placeholder=" Military Service Type"  [(ngModel)]="stype" >
+  <md-option *ngFor="let st of mil  " [value]="st.military_service" >
+      {{st.military_service}}
+    </md-option>
+    </md-select><br><br><br><br>
+  </div>
+
+<div class="col-md-4"><br><br>
+	<md-select placeholder="Countries Served"  [(ngModel)]="countryserve" >
+  <md-option *ngFor="let cc of country  " [value]="cc.countryal" >
+      {{cc.countryal}}
+    </md-option>
+    </md-select><br><br><br><br>
+	  <md-input-container>
+     <input mdInput [mdDatepicker]="pick1"  [(ngModel)]="dep_dob" placeholder="From">
+     <button mdSuffix [mdDatepickerToggle]="pick1"></button>
+    </md-input-container>
+    <md-datepicker #pick1></md-datepicker> <br><br><br>
+ <md-input-container class="example-full-width">
+     <input mdInput #message maxlength="400" [(ngModel)]="award" placeholder="Awards/Honors Received"> 
+    <md-hint align="end">{{message.value.length}} characters entered / 400</md-hint>
+  </md-input-container><br><br><br> 
+   <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="rank"  placeholder="Current/Ending Rank"> 
+    </md-input-container><br><br><br><br>
+	<md-select placeholder="Veteran Status"  [(ngModel)]="veterans" >
+  <md-option *ngFor="let vs of veteran  " [value]="vs.veteran_status" >
+      {{vs.veteran_status}}
+    </md-option>
+    </md-select><br><br><br><br><br>
+
+  
+</div>
+<div class="col-md-4"><br>
+
+	 <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="branch"  placeholder="Branch of Service"> 
+    </md-input-container><br><br><br>
+    <md-input-container>
+     <input mdInput [mdDatepicker]="pick"  [(ngModel)]="militaryto" placeholder="To">
+     <button mdSuffix [mdDatepickerToggle]="pick"></button>
+    </md-input-container>
+    <md-datepicker #pick></md-datepicker> <br><br><br><br>
+    <md-select placeholder="Status of Discharge"  [(ngModel)]="discharge" >
+  <md-option *ngFor="let vs of status  " [value]="vs.viewValue" >
+      {{vs.viewValue}}
+    </md-option>
+    </md-select><br><br><br><br>
+     <md-input-container class="example-full-width">
+      <input mdInput [(ngModel)]="report"  placeholder="Military Verification Report"> 
+    </md-input-container><br><br><br>
+
+  </div>
+
+</div>
+ <div style="float: right;margin:0% 2% 0% 0%" class="row">
+<div  class="col-md-12">
+<button class="btn btn-outline-primary btn-sm" (click)="save();show=!show"> Save</button>
+<button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+</div>
+</div>
+</div>

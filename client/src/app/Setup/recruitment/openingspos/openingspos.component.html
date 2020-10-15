@@ -1,0 +1,691 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "show">
+    <div>
+        <ol class="breadcrumb row bg-primary">
+            <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+            <li class="breadcrumb-item ">Recruitments </li>
+            <li class="breadcrumb-item ">Openings/Positions </li>
+            
+          </ol>
+    </div>
+    <div>
+        <span style="font-weight:500">Openings/Positions</span>
+       <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm" id="btn" (click) = "addshow();updatebutton=false;">Add</button>
+     
+      </div><br>
+
+      <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+  <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+  </div>
+  <div >
+    <div class="row" style="padding: 1% 0% 1% 1%">
+      <div class="box" (click)="clickall('All');view='yes'">
+       <div style="background-color: #fff4c6 " >
+         <span>Openings/Positions</span><br><span class="text-info">{{openingpos}}</span>
+       </div>    			
+      </div>
+      <div class="box"   (click)="clickall('Approved');view='yes'">
+        <div class="box2">
+          <span>Approved Requisition</span><br><span class="text-success">{{approvereq}}</span>
+        </div>  	
+      </div>
+      <div class="box"  (click)="clickall('Rejected');view='no'">
+        <div class="box2" >
+          <span>Rejected Requisition</span><br><span class="text-warning">{{rejectreq}}</span>
+        </div>
+      </div>  
+    </div>
+  </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col-lg-12">
+          <div>
+              <table class="table table-bordered table-striped table-sm">
+                  <thead class="bg-success">
+                    <tr>
+                      <th>Action</th>
+                      <th>Requisition Code</th>
+                      <th>Job Title</th>
+                      <th>Requisition Status</th>
+                      <th>Raised By</th>
+                      <th>No. of Positions</th>
+                      <th>Filled Positions</th>
+                    </tr>
+                  </thead>
+            
+                  <tbody>
+                    <tr *ngFor="let ip of openarr;let i = index " >
+                      <td>
+                        <i  (click)="edit1(ip);"  title="Edit" class="fa fa-pencil-square-o"></i>
+                        <i (click)="delete(ip,i)" title="Delete" class="fa fa-trash-o"></i>
+                        <i class="fa fa-eye" title="View" (click)="view(ip)"></i>
+
+                      </td>
+                      <td>{{ip.openings[0].requisitioncode}}</td>
+                      <td>{{ip.openings[0].jobtitle}}</td>
+                      <td>{{ip.openings[0].reqstatus}}</td>
+                      <td>{{ip.openings[0].raisedby}}</td>
+                      <td>{{ip.openings[0].reqnoofposition}}</td>
+                      <td>{{ip.openings[0].filledposition}}</td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr *ngFor="let ip of openapp1;let i = index " >
+                      <td><i  (click)="edit(ip);"  title="Edit" class="fa fa-pencil-square-o"></i>
+                        <i (click)="delete(ip,i)" title="Delete" class="fa fa-trash-o"></i>
+                        <i class="fa fa-eye" title="View" (click)="view(ip)"></i>
+                        <i style="margin-left: 5%" *ngIf="!ip.openings[0].approver1status" (click)="view1(ip,i);"  title="Approve or Reject" class="fa fa-ellipsis-v text-primary"></i>
+                      </td>
+                      <td>{{ip.openings[0].requisitioncode}}</td>
+                      <td>{{ip.openings[0].jobtitle}}</td>
+                      <td>{{ip.openings[0].reqstatus}}</td>
+                      <td>{{ip.openings[0].raisedby}}</td>
+                      <td>{{ip.openings[0].reqnoofposition}}</td>
+                      <td>{{ip.openings[0].filledposition}}</td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr *ngFor="let ip of openapp2;let i = index " >
+                      <td><i  (click)="edit(ip);"  title="Edit" class="fa fa-pencil-square-o"></i>
+                        <i (click)="delete(ip,i)" title="Delete" class="fa fa-trash-o"></i>
+                        <i class="fa fa-eye" title="View" (click)="view(ip)"></i>
+                        <i style="margin-left: 5%" *ngIf="ip.openings[0].approver1status=='Approved' && !ip.openings[0].approver2status"  (click)="view1(ip,i);"  title="Approve or Reject" class="fa fa-ellipsis-v text-primary"></i>
+                      </td>
+                      
+                      <td>{{ip.openings[0].requisitioncode}}</td>
+                      <td>{{ip.openings[0].jobtitle}}</td>
+                      <td>{{ip.openings[0].reqstatus}}</td>
+                      <td>{{ip.openings[0].raisedby}}</td>
+                      <td>{{ip.openings[0].reqnoofposition}}</td>
+                      <td>{{ip.openings[0].filledposition}}</td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr *ngFor="let ip of openapp3;let i = index " >
+                      <td><i  (click)="edit(ip);"  title="Edit" class="fa fa-pencil-square-o"></i>
+                        <i (click)="delete(ip,i)" title="Delete" class="fa fa-trash-o"></i>
+                        <i class="fa fa-eye" title="View" (click)="view(ip)"></i>
+                        <i style="margin-left: 5%" *ngIf="ip.openings[0].approver2status=='Approved' && !ip.openings[0].approver3status"  (click)="view1(ip,i);"  title="Approve or Reject" class="fa fa-ellipsis-v text-primary"></i>
+                      </td>
+                      <td>{{ip.openings[0].requisitioncode}}</td>
+                      <td>{{ip.openings[0].jobtitle}}</td>
+                      <td>{{ip.openings[0].reqstatus}}</td>
+                      <td>{{ip.openings[0].raisedby}}</td>
+                      <td>{{ip.openings[0].reqnoofposition}}</td>
+                      <td>{{ip.openings[0].filledposition}}</td>
+
+                    </tr>
+                  </tbody>
+              </table>
+          </div>
+
+  </div>
+</div>
+</div>
+<!-- <form class="form-horizontal" [formGroup]="form"> -->
+    <div *ngIf= "showadd">
+      <div>
+          <ol class="breadcrumb row bg-primary">
+              <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+              <li class="breadcrumb-item ">Recruitments </li>
+              <li class="breadcrumb-item ">Openings/Positions</li>
+              <li class="breadcrumb-item active">Add</li>
+            </ol>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-3">
+          <br>
+          <md-select placeholder="Business Unit" [(ngModel)]="emp.openings[0].businessunit">
+              <md-option>Select Business Unit</md-option>
+            <md-option *ngFor="let bu of bunit ; let i=index " (click)="selectdept(bu.businessunits[0].name,bu);" [value]= "bu.businessunits[0].name"  >
+          {{bu.businessunits[0].name}}
+          </md-option>
+          </md-select><br>
+        </div>
+        <div class="col-md-3">
+          <br>
+          <form [formGroup]="form">
+          <md-select placeholder="Department" [(ngModel)]="emp.openings[0].department" formControlName="dept" required>
+              <md-option>Select Department</md-option>
+            <md-option *ngFor="let dp of dptoptions" (click)="selectname(dp.department[0].departmentname,dp)" [value]="dp.department[0].departmentname" >
+          {{dp.department[0].departmentname}}
+          </md-option>
+          </md-select><br>
+          <span style="color: red" *ngIf="!emp.openings[0].department">
+              Please Select Department.
+        </span> 
+          </form>
+        </div>
+        <div class="col-md-3">
+            <form [formGroup]="form">
+          <md-select placeholder="Reporting Manager" style="margin-top: 15%"  [(ngModel)]="emp.openings[0].reportingmanager" formControlName="repo" required >
+              <md-option>Select Reporting Manager</md-option>
+            <md-option *ngFor="let r of reportingmanager"  (click)="selectrepo(r);filterapp1(r);filterapp2(r);filterapp3(r);seletreport(employee,r)" value="{{r.official[0].firstname}} {{r.official[0].lastname}}">
+              {{r.official[0].firstname}} {{r.official[0].lastname}},{{r.official[0].jobtitle}}
+            </md-option>
+            </md-select><br>
+            <span style="color: red" *ngIf="!emp.openings[0].reportingmanager">
+                Please Select RManager.
+          </span> 
+            </form>
+        </div>
+        <div class="col-md-3">
+          <br>
+          <form [formGroup]="form">
+          <md-select placeholder="Approver-1" [(ngModel)]="emp.openings[0].approver1"  formControlName="appro1" required>
+              <md-option>Select Approver-1</md-option>
+              <md-option *ngFor="let a1 of app1"  (click)="filterapp1(a1);filterapp2(a1);select1(a1,emp)" value="{{a1.official[0].firstname}} {{a1.official[0].lastname}}">
+                  {{a1.official[0].firstname}} {{a1.official[0].lastname}},{{a1.official[0].jobtitle}}
+                </md-option>
+          </md-select><br>
+          <span style="color: red" *ngIf="!emp.openings[0].approver1">
+              Please Select Approver 1.
+        </span> 
+          </form>
+        </div>
+        <div class="col-md-3">
+          <br>
+          <md-select placeholder="Approver-2" [(ngModel)]="emp.openings[0].approver2">
+              <md-option>Select Approver-2</md-option>
+              <md-option *ngFor="let a2 of app2"  (click)="filterapp2(a2);filterapp3(a2);select2(a2,emp)" value="{{a2.official[0].firstname}} {{a2.official[0].lastname}}">
+                  {{a2.official[0].firstname}} {{a2.official[0].lastname}},{{a2.official[0].jobtitle}}
+                </md-option>
+                <!-- <md-option  (click)="seletreport(employee,this.obje)" value="{{this.reportingmanager}}" >
+                    {{this.reportingmanager}}
+                </md-option> -->
+              </md-select><br>
+        </div>
+        <div class="col-md-3">
+          <br>
+          <md-select placeholder="Approver-3" [(ngModel)]="emp.openings[0].approver3">
+              <md-option>Select Approver-3</md-option>
+              <md-option *ngFor="let a3 of app3" (click)="select3(a3,emp)" value="{{a3.official[0].firstname}} {{a3.official[0].lastname}}">
+                  {{a3.official[0].firstname}} {{a3.official[0].lastname}},{{a3.official[0].jobtitle}}
+                </md-option>
+         </md-select><br>
+        </div>
+        <div class="col-md-3">
+            <form [formGroup]="form">
+          <md-input-container>
+              <input mdInput [mdDatepicker]="picker" [(ngModel)]="emp.openings[0].date" placeholder="Due Date" formControlName="duedate" required>
+              <button mdSuffix [mdDatepickerToggle]="picker" (click)="checkdate(employee)"></button>
+              <md-error>Please Enter Valid Date.</md-error>
+            </md-input-container>
+              <md-datepicker #picker ></md-datepicker><br>
+
+         
+              </form>
+        </div>
+        <div class="col-md-3">
+          <br>
+          <form [formGroup]="form">
+          <md-select placeholder="Job Title" [(ngModel)]="emp.openings[0].jobtitle" formControlName="jobt" required>
+              <md-option>Select Job Title</md-option>
+              <md-option *ngFor="let j of jdatas; let i=index " (click)="selectjob(j.jobtitle[0].jobtitle)"  [value]="j.jobtitle[0].jobtitle">
+                  {{j.jobtitle[0].jobtitle}}
+                  </md-option>
+                  </md-select><br><i style="color: #1565c0" onclick="document.getElementById('jobalert').style.display='block'" >Add Job Title</i><br>
+                  <span style="color: red" *ngIf="!emp.openings[0].jobtitle">
+                      Please Select Job Title.
+                </span> 
+                </form>
+              
+               </div>
+        <div class="col-md-3">
+          <br>
+          <form [formGroup]="form">
+          <md-select placeholder="Position" [(ngModel)]="emp.openings[0].position" formControlName="pos" required>
+              <md-option>Select Position</md-option>
+              <md-option *ngFor="let po of posit"   [value]="po.position[0].position" required>
+                  {{po.position[0].position}}
+                  </md-option>
+              </md-select>
+              <br><i style="color: #1565c0" onclick="document.getElementById('post').style.display='block'">Add Position</i><br>
+              <span style="color: red" *ngIf="!emp.openings[0].position">
+                  Please Select Position.
+            </span> 
+            </form>
+                   </div>
+        <div class="col-md-3">
+            <form [formGroup]="form">
+          <md-input-container class="example-full-width">
+              <input  mdInput placeholder="Required no. of Positions" [(ngModel)]="emp.openings[0].reqnoofposition" pattern="^[a-zA-Z0-9 ]*$" maxlength="50" formControlName="reqpos" required>
+              <md-error>Please Enter Req Positions.</md-error>
+            </md-input-container>
+    
+    <!-- <br><span style="color: red">
+        please enter required no. of positions
+      </span> -->
+      </form>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <label for="form7">Job Description</label>
+            <textarea mdInput type="text" id="form7" [(ngModel)]="emp.openings[0].jobdesc" class="md-textarea md-textarea-auto form-control" mdbInput maxlength="400"></textarea>
+             </md-input-container>
+        </div>
+        <div class="col-md-6">
+            <form [formGroup]="form">
+            <md-input-container class="example-full-width">
+            <label for="form7" required>Required Skills</label>
+            <textarea type="text" mdInput id="form7" [(ngModel)]="emp.openings[0].reqskill" class="md-textarea md-textarea-auto form-control" mdbInput formControlName="skill" required></textarea>
+            <md-error>Please Enter Req Skills.</md-error>
+            </md-input-container>
+            </form>
+        </div>
+        <br>
+        <div class="col-md-3">
+            <md-input-container class="example-full-width">
+                <input   mdInput name="descripe" #message  maxlength="400"  placeholder="Additional Information" [(ngModel)]="emp.openings[0].additionalinfo">
+                <md-hint align="start">{{message.value.length}} characters entered(400 maximum)</md-hint>
+                </md-input-container>
+        </div><br>
+        <div class="col-md-3">
+            <form [formGroup]="form">
+            <md-input-container class="example-full-width">
+                <input  mdInput placeholder="Required Qualification" pattern="^[a-zA-Z0-9 ]*$" [(ngModel)]="emp.openings[0].reqqualification" formControlName="qualf"  required>
+                <md-error>Please Enter Qualification.</md-error>
+              </md-input-container><br>
+     
+        </form>
+        </div>
+        <div class="col-md-3">
+            <form [formGroup]="form">
+            <md-input-container class="example-full-width">
+                <input  mdInput placeholder="Required Experience Range" [(ngModel)]="emp.openings[0].reqexprange" pattern="^[a-zA-Z0-9 ]*$" formControlName="reqexp" required>
+                <md-error>Please Enter Experience.</md-error>
+              </md-input-container><br>
+     
+        </form>
+        </div>
+        <div class="col-md-3">
+          <br>
+          <form [formGroup]="form">
+          <md-select placeholder="Employment Status" [(ngModel)]="emp.openings[0].empstatus" formControlName="empstatus" required>
+              <md-option>Select Employment Status</md-option>
+              <md-option *ngFor="let wc of wcode"   [value]="wc.employmentstatus[0].workcode">
+                  {{wc.employmentstatus[0].workcode}}
+                  </md-option>
+              </md-select>
+              <br><i style="color: #1565c0" onclick="document.getElementById('empsta').style.display='block'">Add Employee Status</i><br>
+              <span  style="color: red"   *ngIf="!emp.openings[0].empstatus">
+                  Please Select Employee Status
+            </span>
+            </form>
+                 </div>
+        <div class="col-md-3">
+            <form [formGroup]="form">
+            <md-select placeholder="Priority" [(ngModel)]="emp.openings[0].priority" formControlName="priority"  required>
+                <md-option>Select Priority</md-option>
+                <md-option *ngFor="let s of status1" [value]="s.value">
+                    {{s.value}}
+                    </md-option>
+                </md-select>
+                <br>
+                <span style="color: red" *ngIf="!emp.openings[0].priority">
+                    Please Select Priority
+                  </span>
+             </form>
+        </div>
+        <div class="col-md-3" *ngIf="!updatebutton">
+          
+            <md-select placeholder="Requisition Status" [(ngModel)]="emp.openings[0].reqstatus">
+                <md-option>Select Requisition Status</md-option>
+                <md-option *ngFor="let s of status2" [value]="s.value">
+                    {{s.value}}
+                </md-option>
+            </md-select>
+       
+        </div>
+        <div class="col-md-3" *ngIf="updatebutton && updatebutton1">
+           
+            <md-select placeholder="Requisition Status" [(ngModel)]="emp.openings[0].reqstatus">
+                <md-option>Select Requisition Status</md-option>
+                <md-option *ngFor="let s of status2" [value]="s.value">
+                    {{s.value}}
+                </md-option>
+            </md-select>
+           
+        </div>
+        <div class="col-md-3" *ngIf="updatebutton && updatebutton2">
+
+          <md-select placeholder="Requisition Status" [(ngModel)]="emp.openings[0].approver1status">
+              <md-option>Select Requisition Status</md-option>
+              <md-option *ngFor="let s of appstatus2" [value]="s.value">
+                  {{s.value}}
+              </md-option>
+          </md-select>
+      </div>
+        <div class="col-md-3">
+            <md-select placeholder="Client" [(ngModel)]="emp.openings[0].client" name="client">
+                <md-option>Select Client</md-option>
+                <md-option *ngFor="let client of cli" [value]="client.clients[0].client">
+                    {{client.clients[0].client}}
+                    </md-option>
+                </md-select>
+        </div>
+        <div class="col-md-3">
+            <md-select placeholder="Recruiters" [(ngModel)]="emp.openings[0].reqruitors">
+                <md-option>Select Recruiters</md-option>
+                <md-option *ngFor="let r of offemp"  (click)="seletreport(employee,r)" value="{{r.official[0].firstname}} {{r.official[0].lastname}}">
+                    {{r.official[0].firstname}} {{r.official[0].lastname}},{{r.official[0].jobtitle}}
+                  </md-option>
+                  <md-option  (click)="seletreport(employee,this.obje)" value="{{this.reportingmanager}}" >
+                      {{this.reportingmanager}}
+                  </md-option>
+                </md-select>
+        </div>
+        <!-- <div class="col-md-5">
+        <div [froalaEditor] [(froalaModel)]="editorContent"></div>
+        <div  [froalaView]="editorContent"></div> --> 
+        <!-- <div [froalaEditor]>Hello, Froala!</div>
+      </div>  -->
+
+      <br><br>
+        <div class="col-md-12" style="margin-top: 5%"> 
+            <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(emp);" [disabled]="!form.valid"> Save</button>
+            <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(emp);" [disabled]="!form.valid"> Update</button>
+            <button class="btn btn-outline-warning btn-sm" (click)="cancel()"> Cancel </button>
+          
+        </div>
+        </div>
+        </div>
+<!-- </form> -->
+
+       <div *ngIf="show1 && viewbutton">
+          <div>
+              <ol class="breadcrumb row bg-primary">
+                  <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+                  <li class="breadcrumb-item ">Recruitments </li>
+                  <li class="breadcrumb-item " (click)="closewin()">Openings/Positions </li>
+                  <li class="breadcrumb-item ">View</li>
+                </ol>
+          </div>
+
+         <span><b>REQUISITION DETAILS</b></span>
+
+
+         <div *ngIf="updatebutton">
+            <button  class="btn btn-secondary" name="Approved" *ngIf="emp.approver1_id==this.getuser.employee_OId " value="Approved" id="a1" (click)="app1status(emp);">Approve</button>
+            <button  class="btn btn-secondary" name="Rejected" *ngIf="emp.approver1_id==this.getuser.employee_OId" value="Rejected" id="r1" (click)="rej1status(emp);">Reject</button>
+
+            <button  class="btn btn-secondary" name="Approved" *ngIf="emp.approver2_id==this.getuser.employee_OId " value="Approved" id="a1" (click)="app1status(emp);">Approve</button>
+            <button  class="btn btn-secondary" name="Rejected" *ngIf="emp.approver2_id==this.getuser.employee_OId" value="Rejected" id="r1" (click)="rej1status(emp);">Reject</button>
+
+            <button  class="btn btn-secondary" name="Approved" *ngIf="emp.approver3_id==this.getuser.employee_OId " value="Approved" id="a1" (click)="app1status(emp);">Approve</button>
+            <button  class="btn btn-secondary" name="Rejected" *ngIf="emp.approver3_id==this.getuser.employee_OId" value="Rejected" id="r1" (click)="rej1status(emp);">Reject</button>
+             </div>
+
+            <div class="box33">
+              <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+                <tr>
+                    <td><b>Requisition Id </b></td>
+                    <td>{{emp.openings[0].requisitioncode}}</td>
+                    <td><b>Job Title</b></td> 
+                    <td>{{emp.openings[0].requisitioncode}}</td>
+                </tr>
+                <tr>
+                    <td><b>Job Title</b></td>
+                    <td>{{emp.openings[0].jobtitle}}</td>
+                    <td><b> Due Date </b></td> 
+                    <td>{{emp.openings[0].date | date}}</td>
+                </tr>
+                <tr>
+                    <td><b>Business Unit</b></td>
+                    <td>{{emp.openings[0].businessunit}}</td>
+                    <td><b>Department</b></td> 
+                    <td>{{emp.openings[0].department}}</td>
+                </tr>
+                <tr>
+                    <td><b>Position</b></td>
+                    <td>{{emp.openings[0].position}}<td>
+                    <td><b>Reporting Manager </b></td> 
+                    <td>{{emp.openings[0].reportingmanager}}</td>
+                </tr>
+                <tr>
+                    <td><b>Priority</b></td>
+                    <td>{{emp.openings[0].priority}}</td>
+                    <td><b>Employment Status</b></td> 
+                    <td>{{emp.openings[0].empstatus}}<td>
+                </tr>
+                <tr>
+                    <td><b>Req. Qualification</b></td>
+                    <td>{{emp.openings[0].reqqualification}}</td>
+                    <td><b>Req. Experience Range</b></td> 
+                    <td>{{emp.openings[0].reqexprange}}</td>
+                </tr>
+                <tr>
+                    <td><b>Req. no. of Positions</b></td>
+                    <td>{{emp.openings[0].reqnoofposition}}</td>
+                    <td><b>Filled. no. of Positions</b></td> 
+                    <td>{{emp.openings[0].filledposition}}</td>
+                </tr>
+                <tr>
+                    <td><b>Raised By</b></td>
+                    <td>{{emp.openings[0].raisedby}}</td>
+                    <td><b>Approver-1</b></td> 
+                    <td>{{emp.openings[0].approver1}}</td>
+                </tr>
+                <tr>
+                    <td><b> Approver -2 </b></td>
+                    <td>{{emp.openings[0].approver2}}</td>
+                    <td><b>Approver-3</b></td> 
+                    <td>{{emp.openings[0].approver3}}</td>
+                </tr>
+                <tr>
+                    <td><b>Client</b></td>
+                    <td>{{emp.openings[0].client}}</td>
+                    <td><b>Recruiters</b></td> 
+                    <td>{{emp.openings[0].reqruitors}}</td>
+                </tr>
+                <tr>
+                    <td><b>Raised By</b></td>
+                    <td>{{emp.openings[0].raisedby}}</td>
+                    <td><b>Approver-1</b></td> 
+                    <td>{{emp.openings[0].approver1}}</td>
+                </tr>
+              </table>
+              </div>
+                 <br>
+                <span><h5><b>JOB DETAILS</b></h5></span>
+                <div class="box3">
+                  <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+                   <tr>
+                    <td><b>Job Title </b></td>
+                    <td>{{emp.openings[0].jobtitle}}</td>
+                    <td><b>Job Description</b></td> 
+                    <td>{{emp.openings[0].jobdec}}</td>
+                  </tr>
+                  <tr>
+                      <td><b>Required Skills </b></td>
+                      <td>{{emp.openings[0].reqskill}}</td>
+                      <td><b>Additional Information</b></td> 
+                      <td>{{emp.openings[0].additionalinfo}}</td>
+                    </tr>
+                  </table>
+                </div>
+                <br>
+                <span><h5><b>REQUISITION HISTORY</b></h5></span>
+                <div class="box4">
+                <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+                <tr>
+                  <td>
+                    <img class="imageClass" src="./assets/Images/employee.jpg"/>
+                  </td>
+                  <td>
+                  <span>
+                     {{emp.openings[0].request}} on {{emp.openings[0].requestdate | date}}
+                  </span>
+                  </td>
+                </tr>
+                </table>
+                </div>
+      </div>
+
+
+
+
+      <div id="jobalert" class="w3-modal">
+          <div class="w3-modal-content">
+            <header class="w3-container w3-teal bg-primary">
+              <span onclick="document.getElementById('jobalert').style.display='none'"
+                style="margin-top: -1%;font-weight: 500"
+              class="w3-button w3-display-topright fa fa-times "></span>
+              <h6>Job Title</h6>
+            </header>
+            <div class="w3-container">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-3">
+                      <form [formGroup]="jobtitl">
+                    <md-input-container class="example-full-width">
+                    <input mdInput  [(ngModel)]="job.jobtitle[0].jobtitle_code"  placeholder="Job Title Code" formControlName="jcode"  required>
+                    <md-error>Please enter job title code.</md-error>
+                    </md-input-container><i mdTooltip="Ex:SA" class="fa fa-question-circle" ></i><br><br><br>
+                    <md-input-container class="example-full-width">
+                    <input mdInput [(ngModel)]="job.jobtitle[0].gradecode"  placeholder="Job Pay Grade Code" formControlName="jpgrrole" required>
+                    <md-error>Please enter job pay grade code.</md-error>
+                    </md-input-container><i mdTooltip="Ex: A,B,C" class="fa fa-question-circle" ></i><br><br><br>
+                      </form>
+                  </div>
+                  <div class="col-md-3">
+                      <form [formGroup]="jobtitl">
+                    <md-input-container class="example-full-width">
+                    <input mdInput [(ngModel)]="job.jobtitle[0].jobtitle"  placeholder="Job Title" formControlName="jtitle" required>
+                    <md-error>Please enter job title.</md-error>
+                    </md-input-container><i mdTooltip="Ex:System Analyst" class="fa fa-question-circle" ></i><br><br><br><br>
+                    <md-select placeholder="Pay Frequency" [(ngModel)]="job.jobtitle[0].payfrequency"  name="p" formControlName="jpfreq" >
+                    <md-option *ngFor="let p of pays" [value]="p.payfrequency[0].payfrequency">
+                    {{p.payfrequency[0].payfrequency}}
+                    </md-option>
+                    </md-select><br><br><br><br>
+                    </form> 
+                  </div>
+                 
+                  <div class="col-md-3">
+                    <md-input-container class="example-full-width">
+                    <input mdInput #message maxlength="200" [(ngModel)]="job.jobtitle[0].description" placeholder="Description">
+                    <md-hint align="end">{{message.value.length}} charactered entered / 200</md-hint>
+                    </md-input-container><br><br><br>
+                    <md-input-container class="example-full-width">
+                    <input mdInput #message maxlength="50" [(ngModel)]="job.jobtitle[0].comments" placeholder="Comments">
+                    <md-hint align="end">{{message.value.length}} / 50</md-hint>
+                    </md-input-container><br><br><br>
+                  </div>
+                  <div class="col-md-3">
+                    <md-input-container class="example-full-width">
+                    <input mdInput [(ngModel)]="job.jobtitle[0].min_experience" placeholder="Min Experience Required">
+                    </md-input-container><i mdTooltip="In years Ex:1,3.5" class="fa fa-question-circle" ></i><br><br><br>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+              <div class="col-sm-12">
+                <button style="float: right;" class="btn btn-primary btn-sm"(click)="savejob(job);" [disabled]="jobtitl.invalid"> Save</button>
+              </div>
+            </footer>
+          </div>
+        </div>
+
+      <div id="post" class="w3-modal">
+          <div class="w3-modal-content">
+            <header class="w3-container w3-teal bg-primary">
+              <span onclick="document.getElementById('post').style.display='none'" style="margin-top: -1%;font-weight: 500"
+              class="w3-button w3-display-topright fa fa-times "></span>
+              <h6>Position</h6>
+            </header>
+            <div class="w3-container">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-lg-4"><br>
+                    <form [formGroup]="posi">
+                      <md-select placeholder="Job Title" [(ngModel)]="positions.position[0].jobtitle" formControlName="jt" name="job">
+                      <md-option *ngFor="let j of jdatas"   [value]="j.jobtitle[0].jobtitle" required>
+                      {{j.jobtitle[0].jobtitle}}
+                      </md-option>
+                      </md-select><br><br><br><br>
+                      </form>
+                    </div>
+                    <div class="col-lg-4">
+                        <form [formGroup]="posi">
+                      <md-input-container class="example-full-width">
+                      <input mdInput [(ngModel)]="positions.position[0].position"  placeholder="Position" pattern="^[a-zA-Z0-9 ]*$" formControlName="posti" required>
+                      <md-error>Please enter position.</md-error>
+                      </md-input-container><br><br><br>
+                      </form>
+                    </div>
+                    <div class="col-lg-4">
+                      <md-input-container class="example-full-width">
+                      <input mdInput #message maxlength="200" [(ngModel)]="positions.position[0].description" placeholder="Description">
+                      <md-hint align="end">{{message.value.length}} characters entered / 200</md-hint>
+                      </md-input-container><br><br><br>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+                <div class="col-sm-12">
+                  <button style="float: right;" class="btn btn-primary btn-sm"(click)="saveposition(positions)" [disabled]="posi.invalid"> Save</button>
+                </div>
+              </footer>
+            </div>
+          </div>
+
+
+
+          <div id="empsta" class="w3-modal">
+              <div class="w3-modal-content">
+                <header class="w3-container w3-teal bg-primary">
+                  <span onclick="document.getElementById('empsta').style.display='none'"
+                    style="margin-top: -1%;font-weight: 500"
+                  class="w3-button w3-display-topright fa fa-times "></span>
+                  <h6>Employment Status</h6>
+                </header>
+                <div class="w3-container">
+                  <div class="col-md-12">
+                    <div class="row">
+                      
+                      <div class="col-md-4">
+                          <br>
+                          <form [formGroup]="empstatus">
+                        <md-select placeholder="Employment Status"  [(ngModel)]="status.employmentstatus[0].workcode" formControlName="workcode" required>
+                              <md-option *ngFor="let work of codes;let i=index"   [value]="work.value">
+                                  {{work.value}}
+                              </md-option>
+                        </md-select>
+                        </form>
+                      </div>
+                      <div class="col-md-4">
+                          <form [formGroup]="empstatus">
+                        <md-input-container class="example-full-width">
+                        <input mdInput [(ngModel)]="status.employmentstatus[0].workshortcode" placeholder="Work Short Code" formControlName="workshortcode" required>
+                        <md-error>Please enter work short code.</md-error>
+                        </md-input-container>
+                        </form>
+                      </div>
+                      <div class="col-md-4">
+                        <md-input-container class="example-full-width">
+                        <input mdInput [(ngModel)]="status.employmentstatus[0].description"  placeholder="Description" >
+                        </md-input-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+                  <div class="col-sm-12">
+                    <button style="float: right;" class="btn btn-primary btn-sm"(click)="saveempstatus(status);" [disabled]="!empstatus.valid"> Save</button>
+                  </div>
+                </footer>
+              </div>
+            </div>
+
+          
+ 

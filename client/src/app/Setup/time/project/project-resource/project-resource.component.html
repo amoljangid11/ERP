@@ -1,0 +1,94 @@
+<div  class="col-md-12"><br>
+  <div style="font-weight:500;">
+   <div class="card-block">  
+   <div style="display: both" class="col-md-12">  
+       <p class="card-text"><b>Client: </b>&nbsp;&nbsp; <b> Project Name:  </b>
+       <button type="button" style="float: right" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;project_time()">
+       <i class="fa fa-caret-left" aria-hidden="true"></i> Back</button></p>
+     </div> 
+    </div> 
+   </div>  
+</div>   
+<div class="col-md-12">   
+  <div class="col-md-6">     
+    <md-input-container class="example-full-width"> 
+       <input mdInput [(ngModel)]="search"  placeholder="Search by Task">  
+    </md-input-container><br>  
+   </div>  
+  </div>    
+
+  <div class="col-sm-4">   
+      <label>Role </label><small>*</small>  
+          <md-select  [(ngModel)]="service.leaverequest.rol">  
+              <input type="search" [(ngModel)]="searchText1" placeholder="Search">  
+              <md-option *ngFor="let con of rol | filter: searchText1" [value]= "con.role">
+                  {{con.role}}  
+                  </md-option>   
+          </md-select>   
+  </div>   
+
+  <input type="search" [(ngModel)]="searchTextcat" placeholder="Search by Employee">
+  
+  <div  class="col-md-12"> 
+  <span style="font-weight:500">Resources</span>   
+  <button  style="float: right;margin: 0% 2% 0% 0%" class="btn btn-outline-secondary btn-sm" (click)="open(basictask)" >Add Task</button><br><br>
+</div>  
+<div class="row">  
+<div class="col-lg-12">  
+<div class="table-responsive">  
+  <table  class="table table-bordered table-hover">  
+<thead class="thead-inverse">    
+    <tr>    
+     <th>Employee</th>  
+     <th>Billable Rate/hr (INR)</th>  
+     <th>Cost rate/hr (INR)</th> 
+     <th>Actions</th>  
+    </tr>  
+    </thead>  
+    <tbody *ngFor="let pt of tadatas;let i = index">  
+          <tr>  
+            <td *ngIf="pt.id !== editRowId">{{pt.employee}}</td>
+            <td *ngIf="pt.id == editRowId"> 
+            <input type="text" [(ngModel)]="pt.estimatedhour">
+            </td>
+            <td *ngIf="pt.id !== editRowId">{{pt.billablerate}}</td>
+
+            <td *ngIf="pt.id == editRowId"> 
+      <input type="text" [(ngModel)]="pt.tbillablerate">
+ </td>
+            <td *ngIf="pt.id !== editRowId">{{pt.costrate}}</td>
+
+              <td><i *ngIf="pt.id !== editRowId" (click)="assign(id)"  title="Assign Resource" class="fa fa-user"></i>&nbsp;&nbsp;<i (click)="delete(pt,i)" title="Delete" class="fa fa-trash-o"></i></td>
+          </tr>                         
+     </tbody>  
+    </table>  
+   </div>  
+  </div>  
+ </div>  
+<md2-dialog #basictask>  
+  <md2-dialog-title>Add Resources</md2-dialog-title>  
+  
+  <div class="row">
+  <div class="col-md-12"> 
+  <md-radio-group [(ngModel)]="type"> 
+    <md-radio-button  value="1">Manager</md-radio-button>
+    <md-radio-button value="2">Employee</md-radio-button>
+  </md-radio-group><br><br> 
+
+   <div class="col-md-12"> 
+   <div class="col-md-4">
+   <md-input-container class="example-full-width">
+   <input mdInput placeholder="Manager" [(ngModel)]="mng">
+   </md-input-container><br><br>
+   </div>
+   </div>
+   </div>
+   </div><br><br>
+   <md2-dialog-footer>
+     <button type="submit" class="btn btn-sm btn-primary" data-dismiss="modal" (click)="savetask()">ADD TO PROJECT</button>
+     <button type="submit" class="btn btn-secondary btn-sm" (click)="close(basictask)">Cancel</button>
+   </md2-dialog-footer>
+   </md2-dialog> 
+
+
+

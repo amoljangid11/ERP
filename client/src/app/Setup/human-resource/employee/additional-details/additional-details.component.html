@@ -1,0 +1,182 @@
+<div *ngIf= "!show"  class="col-md-12">
+    <div class="row">
+      <div  style="display: both" class="col-md-12">
+        <span style="font-weight:500">Additional Details</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false;">Add</button>
+      </div><br><br>
+    </div>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div class="col-md-12"><br>
+      <div>
+        <table class="table table-bordered table-striped table-sm">
+          <thead class="bg-success">
+            <tr>
+              <th>Action</th>
+              <th>Served in Military</th>
+              <th>Branch of Service</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Veteran Status</th>
+              <th>Service Type</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="haveskill">
+            <tr *ngFor="let ad of additional.additionaldetail;let i = index " >
+              <td><i  (click)="edit(ad,additional,i);show = !show"  title="Edit" class="fa fa-pencil-square-o"></i>
+              <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(ad,additional,i)"></i></td>
+              <td>{{ad.servedmilitary}}</td>
+              
+              <td>{{ad.branchofservice}}</td>
+              
+              <td>{{ad.fromdate | date}}</td>
+              
+              <td>{{ad.todate | date}}</td>
+              <td>{{ad.veteranstatus}}</td>
+              <td>{{ad.servicetype}}</td>
+              
+            </tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+    <div *ngIf= "show" class="col-lg-12">
+        <form [formGroup]="frm">
+      <div style="display: inline-flex;"  class="col-md-12">
+        <div class="col-md-4">  <br><br>
+         
+          <md-select placeholder="Served in Military?"  [(ngModel)]="employee.additionaldetail[i].servedmilitary" formControlName="miltservice">
+            <md-option>Select</md-option>
+            <md-option *ngFor="let sm of serve  " [value]="sm.viewValue" >
+          {{sm.viewValue}}
+          </md-option>
+          </md-select>
+          <br>
+          <span  style="color: red"   *ngIf="!employee.additionaldetail[i].servedmilitary">
+              please select miltary status.
+        </span>
+          <br><br>
+          <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="employee.additionaldetail[i].rankachieved" pattern="^[a-zA-Z0-9 ]*$"  placeholder="Rank Achieved" formControlName="rankach" maxlength="30" >
+          <md-error>Please enter valid rank achieved.</md-error>
+          </md-input-container><br><br><br>
+          <md-input-container class="example-full-width">
+          <input mdInput #message maxlength="400" [(ngModel)]="employee.additionaldetail[i].specialtraining" placeholder="Special Trainings" formControlName="sptrain" >
+          <md-hint align="end">{{message.value.length}} characters entered / 400</md-hint>
+          </md-input-container><br><br><br>
+          <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="employee.additionaldetail[i].servicenumber"  placeholder="Military Service Number" pattern="^[a-zA-Z0-9 ]*$" maxlength="30" formControlName="milsno">
+          <md-error>Please enter valid service number.</md-error>
+          </md-input-container><br><br><br><br>
+          <md-select placeholder=" Military Service Type"  [(ngModel)]="employee.additionaldetail[i].servicetype" formControlName="milstype" >
+            <md-option>Select Military Service Type</md-option>
+            <md-option *ngFor="let st of mil  " [value]="st.militaryservice[0].militaryservicetype" >
+          {{st.militaryservice[0].militaryservicetype}}
+          </md-option>
+          </md-select><br><br><br><br>
+        </div>
+        <div class="col-md-4"><br><br>
+          <md-select placeholder="Countries Served"  [(ngModel)]="employee.additionaldetail[i].countryserve" formControlName="counser" >
+            <md-option>Select Countries Served</md-option>
+            <md-option *ngFor="let cc of country  " [value]="cc.countryal" >
+          {{cc.countryal}}
+          </md-option>
+          </md-select><br><br><br>
+          <div *ngIf="employee.additionaldetail[i].servedmilitary=='Yes' ">
+          
+          <md-input-container>
+  
+          <input  mdInput [mdDatepicker]="pick1"  [(ngModel)]="employee.additionaldetail[i].fromdate"   placeholder="From" formControlName="from" id="FromDate">
+          <button mdSuffix [mdDatepickerToggle]="pick1"  >  ></button>
+          </md-input-container>
+          <md-datepicker #pick1></md-datepicker> <br><br><br>
+          
+          </div>
+          <md-input-container class="example-full-width">
+          <input mdInput #message maxlength="400" [(ngModel)]="employee.additionaldetail[i].awardreceived" placeholder="Awards/Honors Received" formControlName="award">
+          <md-hint align="end">{{message.value.length}} characters entered / 400</md-hint>
+          </md-input-container><br><br><br>
+          <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="employee.additionaldetail[i].rank"  placeholder="Current/Ending Rank" pattern="^(?:[A-Za-z]+)(?:[A-Za-z0-9 _]*)$"  minlength="1" maxlength="30" formControlName="currrank">
+          <md-error>Please enter valid current/ending rank.</md-error>
+          </md-input-container><br><br><br><br>
+          <md-select placeholder="Veteran Status"  [(ngModel)]="employee.additionaldetail[i].veteranstatus" formControlName="vetstat" >
+            <md-option>Select Veteran Status</md-option>
+            <md-option *ngFor="let vs of veteran  " [value]="vs.veteranstatus[0].veteranstatus" >
+          {{vs.veteranstatus[0].veteranstatus}}
+          </md-option>
+          </md-select><br><br><br><br><br>
+          
+        </div>
+        <div class="col-md-4"><br>
+          <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="employee.additionaldetail[i].branchofservice"  placeholder="Branch of Service" pattern="^[a-zA-Z0-9 ]*$" maxlength="30" formControlName="branchser">
+          <md-error>Please enter valid branch of service.</md-error>
+          </md-input-container><br><br>
+          <div *ngIf="employee.additionaldetail[i].servedmilitary=='Yes' ">
+         
+          <md-input-container>
+          <input mdInput [mdDatepicker]="pick"  [(ngModel)]="employee.additionaldetail[i].todate" placeholder="To" formControlName="to" id="ToDate">
+          <button mdSuffix [mdDatepickerToggle]="pick"></button>
+          </md-input-container>
+          
+          <md-datepicker #pick></md-datepicker><br><br><br><br>
+         
+          </div><br>
+           
+          
+          <md-select placeholder="Status of Discharge"  [(ngModel)]="employee.additionaldetail[i].discharge_status" formControlName="statdis" >
+            <md-option>Select Status of Discharge</md-option>
+            <md-option *ngFor="let vs of status  " [value]="vs.viewValue" >
+          {{vs.viewValue}}
+          </md-option>
+          </md-select><br><br><br><br>
+          <md-input-container class="example-full-width">
+          <input mdInput [(ngModel)]="employee.additionaldetail[i].verification_report" pattern="^[a-zA-Z0-9 ]*$"  placeholder="Military Verification Report" maxlength="30" formControlName="milvrep">
+          <md-error>Please enter valid verification report.</md-error>
+          </md-input-container><br><br><br>
+        </div>
+      
+      </div>
+      
+      <div style="float: left;margin:0% 2% 0% 0%" class="row">
+        <div  class="col-md-12">
+          <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(employee);show=!show" [disabled]="frm.invalid"> Save</button>
+          <button *ngIf="updatebutton"  class="btn btn-outline-success btn-sm" (click)="updateadditional(employee);show=!show" [disabled]="frm.invalid"> Update</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "cancel(employee);show=!show;updatebutton=!updatebutton"> Cancel </button>
+        </div>
+        
+      </div>
+      </form>
+      
+      
+    </div>
+  
+  
+    <md2-dialog #deptModal>
+        <md2-dialog-title>Additional Details</md2-dialog-title>
+          <div class="box">
+            <div class="emp-info">
+                Served in Military : {{employee.additionaldetail[i].servedmilitary}}
+            </div>
+            <div class="emp-info ">
+                Branch of Service : {{employee.additionaldetail[i].branchofservice}}
+            </div><br>
+            <div class="emp-info alter-div">
+                From : {{employee.additionaldetail[i].fromdate}}
+            </div>
+            <div class="emp-info alter-div">
+                To : {{employee.additionaldetail[i].todate}}
+            </div><br>
+            <div class="emp-info">
+                Veteran Status : {{employee.additionaldetail[i].veteranstatus}}
+            </div>
+            <div class="emp-info">
+                Service Type : {{employee.additionaldetail[i].servicetype}}
+            </div><br>
+          </div>
+        <md2-dialog-footer>
+            <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+        </md2-dialog-footer>
+    </md2-dialog>

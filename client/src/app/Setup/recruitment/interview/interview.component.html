@@ -1,0 +1,708 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show">
+        <div>
+            <ol class="breadcrumb row bg-primary">
+                <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+                <li class="breadcrumb-item ">Recruitments </li>
+                <li class="breadcrumb-item ">Interviews </li>
+            </ol>
+        </div>
+        <div>
+            <span style="font-weight:500">Interviews</span>
+           <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm" id="btn"  (click) = "show = !show;updatebutton=false;">Add</button>
+        </div><br>
+        <div class="row">
+            <div class="col-lg-12">
+              <div>
+                  <table class="table table-bordered table-striped table-sm">
+                      <thead class="bg-success">
+                        <tr>
+                          <th>Action</th>
+                          <th>Requisition Code</th>
+                          <th>Job Title</th>
+                          <th>Candidate Name</th>
+                          <th>Email</th>
+                          <th>Mobile</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let et of outputArray1;let i = index " >
+                              <td>
+                                <i class="fa fa-eye"  title="View" (click)="open(typeModal);view(et)"></i>&nbsp;&nbsp;
+                                <i (click)="edit(et);show=!show; checkcandidate(inter.interviews[0].requisition,inter.interviews[0].candidatename);"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;
+                                <i (click)="delete(et,i)" title="Delete" class="fa fa-trash-o"></i>
+                              </td>                          
+                              <td>{{et.interviews[0].requisition}}</td>
+                              <td>{{et.interviews[0].jobtitle}}</td>
+                              <td>{{et.interviews[0].candidatename}}</td>
+                              <td>{{et.interviews[0].email}}</td>
+                              <td>{{et.interviews[0].contact}}</td>
+                              <td>{{et.candidates[0].status}}</td>
+                      </tbody>
+                  </table>
+              </div>
+        </div>
+    </div>
+  </div>
+  <form class="form-horizontal" [formGroup]="form">
+      <div *ngIf= "show && !updatebutton">
+          <div>
+              <ol class="breadcrumb row bg-primary">
+                  <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+                  <li class="breadcrumb-item ">Recruitments </li>
+                  <li class="breadcrumb-item ">Interviews</li>
+                  <li class="breadcrumb-item active">Add</li>
+              </ol>
+          </div>
+          <div class="row">
+              <div class="col-md-3">
+                  <br>
+                  <md-select placeholder="Requisition ID" [(ngModel)]="candidate.candidates[0].requisition" formControlName="requisition" required >
+                   <md-option>Select Requisition ID</md-option>
+                   <md-option *ngFor="let candidate of assu11 ; let i=index " [value]="assu11[i]" (click)="checkcandidate(assu11[i])"  >
+                     {{assu11[i]}}
+                   </md-option>
+                   </md-select><br>
+                  <span style="color: red" *ngIf="!candidate.candidates[0].requisition">
+                     please select Requisition ID
+                  </span><br><br>
+              </div>
+              <div class="col-md-3">
+                  <br>
+                  <md-select placeholder="Candidate Name" [(ngModel)]="candidate.candidates[0].candidatename" formControlName="candidatename" required >
+                   <md-option>Select Candidate Name</md-option>
+                   <md-option *ngFor="let cand of candidat ; let i=index " value="{{cand.candidates[0].fname}} {{cand.candidates[0].lname}}"  >
+                      {{cand.candidates[0].fname}} {{cand.candidates[0].lname}}
+                   </md-option>
+                   </md-select><br>
+                  <span style="color: red" *ngIf="!candidate.candidates[0].candidatename">
+                     Please select Candidate Name
+                  </span><br><br>
+              </div>
+              <div class="col-md-3">
+                  <br>
+                      <md-select placeholder="Interview Status" [(ngModel)]="candidate.candidates[0].interviewstatus" formControlName="interviewstatus" >
+                        <md-option>Select Status</md-option>
+                        <md-option *ngFor="let work of codes; let i=index"  [value]="work.value">
+                                      {{ work.value }}
+                        </md-option>
+                      </md-select><br><br>
+              </div>
+              <div class="col-md-3">
+                  <br>
+                  <md-select placeholder="Interviewer" [(ngModel)]="candidate.candidates[0].interviewer" formControlName="interviewername"   required >
+                   <md-option>Select Interviewer Name</md-option>
+                   <md-option *ngFor="let opening of department ; let i=index " value=" {{opening.official[0].firstname}} {{opening.official[0].lastname}}" (click)="select(opening)" >
+                      {{opening.official[0].firstname}} {{opening.official[0].lastname}}
+                   </md-option>
+                   </md-select><br>
+                  <span style="color: red" *ngIf="!candidate.candidates[0].interviewer">
+                     Please select Interviewer Name
+                  </span><br><br>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+                <md-input-container class="example-full-width">
+                    <input mdInput placeholder="Location" [(ngModel)]="candidate.candidates[0].location" formControlName="location" required>
+                    <md-error>Please enter Location.</md-error>
+                </md-input-container><br><br>
+            </div>
+            <div class="col-md-3">
+                <br>
+                  <md-select placeholder="Country" [(ngModel)]="candidate.candidates[0].country" formControlName="country">
+                      <md-option *ngFor="let cn of countri ; let i=index " (click)="selectcoun(cn.countryvalue)" [value]="cn.countryvalue">
+                      {{cn.countryvalue}}
+                      </md-option>
+                    </md-select>
+                    <span style="color: red" *ngIf="!candidate.candidates[0].country">
+                        Please select Country.
+                  </span><br>
+                    <i style="color: #1565c0"  onclick="document.getElementById('bModal').style.display='block'">Add Country</i>
+              </div>
+              <div class="col-md-3">
+                <br>
+                  <md-select placeholder="State" [(ngModel)]="candidate.candidates[0].state" formControlName="state">
+                      <md-option *ngFor="let stat of sarray | unique: 'state1' ; let i=index " (click)="select1(stat.state1)" [value]="stat.state1">
+                     {{stat.state1}}
+                     </md-option>
+                   </md-select>
+                   <span style="color: red" *ngIf="!candidate.candidates[0].state">
+                      Please select State.
+                </span><br>
+                   <i style="color: #1565c0" onclick="document.getElementById('sModal').style.display='block'">Add State</i>
+              </div>
+              <div class="col-md-3">
+                <br>
+                  <md-select placeholder="City" [(ngModel)]="candidate.candidates[0].city" formControlName="city"> 
+                      <md-option *ngFor="let ci of cityarry"   [value]="ci.city2">
+                  {{ci.city2}}
+                  </md-option>
+                </md-select>
+                <span style="color: red" *ngIf="!candidate.candidates[0].city">
+                    Please select City.
+              </span><br>
+                  <i style="color: #1565c0"   onclick="document.getElementById('ciModal').style.display='block'">Add City</i>
+              </div>
+          </div>
+          <div class="row">
+             <div class="col-md-3">
+               <br>
+              <md-select placeholder="Interview Type" [(ngModel)]="candidate.candidates[0].interviewtype" formControlName="interviewtype" required>
+              <md-option>Select Interview Type</md-option>
+              <md-option *ngFor="let a of codes1" [value]="a.value">
+                {{a.value}}
+              </md-option> 
+              </md-select><br><br>
+            </div>
+            <div class="col-md-3">
+              <md-input-container>
+                <input mdInput placeholder="Interview Date" [mdDatepicker]="picker" [(ngModel)]="candidate.candidates[0].interviewdate"  formControlName="interviewdate"  required>
+                <button mdSuffix [mdDatepickerToggle]="picker"></button>
+              </md-input-container><br><br>
+              <md-datepicker #picker></md-datepicker>
+            </div>
+            <div class="col-md-3">
+                <md-input-container>
+<!-- <input placeholder="Selected time" type="text" id="input_starttime" (onclick)="" class="form-control timepicker">
+  <label for="input_starttime">Twelve hour clock</label> -->
+  <!-- <input id="timepicker" width="276" /> -->
+  <!-- <input type="text" id="manual-operations-input" class="form-control" placeholder="Now">
+  <label for="form1" class="">Check the minutes</label> -->
+                  <input mdInput type="time" placeholder="Interview Time"  [(ngModel)]="candidate.candidates[0].interviewtime" formControlName="interviewtime" pattern="^(0[1-9]|1[0-2]):[0-5][0-9]$"  required>
+                  <!-- <button onclick="myFunction()">  -->
+                      <!-- Change 
+                  </button>  -->
+                  <!-- <button mdSuffix [mdDatepickerToggle]="picker1"></button> -->
+                </md-input-container>
+                <br><br>
+                <!-- <md-datepicker #picker1></md-datepicker> -->
+            </div>
+            <div class="col-md-3">
+                <md-input-container class="example-full-width">
+                    <input mdInput placeholder="Interview name" [(ngModel)]="candidate.candidates[0].interviewname" formControlName="interviewname" required>
+                    <md-error>Please enter Interview Name.</md-error>
+                </md-input-container><br><br>
+            </div>
+          </div>
+
+          <div class="row">
+              <div  class="col-md-12" style="margin-top: 5%">
+                    <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(candidate);show=!show" [disabled]="!form.valid"> Save</button>
+                    <!-- <button *ngIf="updatebutton" class="btn btn-outline-success btn-sm" (click)="update(inter);show=!show;updatebutton=!updatebutton;" [disabled]="!form.valid"> Update</button> -->
+                    <button class="btn btn-outline-warning btn-sm" (click) = "show=!show"> Cancel </button>  
+            </div>
+        </div> 
+      </div>
+  </form>
+
+<!-- Edit buttton coading -->
+  <div *ngIf= "show && updatebutton">
+
+    <span><b>INTERVIEW DETAILS</b></span><br>
+    <form class="form-horizontal" [formGroup]="formstatus">
+    <div class="row" *ngIf = "!show1 && (this.getuser.utype=='Management' || this.getuser.utype=='admin')">
+        <div class="col-md-3">
+          <br>
+              <md-select placeholder="Interview Status" [(ngModel)]="inter.interviews[0].interviewstatus" formControlName="interviewstatus" >
+               <md-option>Select interview status</md-option>
+               <md-option *ngFor="let int of interviewstatus ; let i=index " [value]= "int.value" (click)="interviewerstatus(int.value);" >
+                 {{int.value}}
+               </md-option>
+               </md-select>
+               <br><span style="color: red">
+                please select interviewstatus
+              </span><br>
+        </div>
+        <div class="col-md-3">
+            <br>
+                <md-select placeholder="Candidate Status" [(ngModel)]="inter.interviews[0].candidatestatus" formControlName="candidatestatus" >
+                 <md-option>Select candidate status</md-option>
+                 <md-option *ngFor="let can of candidatestatus ; let i=index " [value]= "can.value" >
+                   {{can.value}}
+                 </md-option>
+                 </md-select>
+                 <br><span style="color: red">
+                  please select candidatestatus
+                </span><br>
+          </div>
+          <div  class="col-md-12" style="margin-top: 5%">
+          <button  class="btn btn-outline-success btn-sm" [disabled]="!formstatus.valid" (click)="update1(inter)"> Update</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "show=!show"> Cancel </button>  
+          </div>
+    </div>
+  </form>
+    <div class="box" *ngIf = "!show1">
+    <div class="emp-info">
+        Requisition Id : {{inter.interviews[0].requisition}}
+    </div>
+    <div class="emp-info ">
+        Job Title : {{inter.interviews[0].jobtitle}}
+    </div><br>
+    <div class="emp-info alter-div">
+        Candidate name : {{inter.interviews[0].candidatename}}
+    </div>
+    <div class="emp-info alter-div">
+        Candidate details : {{inter.interviews[0].candidatedetails}}
+    </div>
+  </div>
+  <br>
+  <button type="button" *ngIf = "!show1 &&(this.getuser.utype=='admin' || this.getuser.utype=='Management' || this.getuser.utype=='Hr Manager') " style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm" id="btn1"  (click) = "show1 = !show1;checkcandidate(inter.interviews[0].requisition,inter.interviews[0].candidatename);updatebutton1=false" >Add</button>
+
+            <div *ngIf = "!show1"> 
+                <table  class="table table-bordered table-striped table-sm">
+                    <thead class="bg-success">
+                      <tr>
+                        <th>Action</th>
+                        <th>Interview Round</th>
+                        <th>Interview Name</th>
+                        <th>Interviewer</th>
+                        <th>Interview Date</th>
+                        <th>Round Status</th>
+                      </tr>
+                    </thead> 
+                     <tbody>
+                       <tr *ngFor="let ip of inter.interviews;let i = index " >
+                        <td>
+                          <i *ngIf="ip.interviewerid==this.getuser.employee_OId || (this.getuser.utype=='admin' || this.getuser.utype=='HR' || this.getuser.utype=='Management' )" (click)="edit1(ip,inter,i);show1=!show1"  title="Edit" class="fa fa-pencil-square-o"></i>
+                          <i class="fa fa-eye" title="View" (click)="open(statusModal);view1(inter,i)"></i>
+                        </td>
+                        <td>{{ip.interviewround}}</td>
+                        <td>{{ip.interviewtype}}</td>
+                        <td>{{ip.interviewer}}</td>
+                        <td>{{ip.interviewdate | date}}</td>
+                        <td>{{ip.roundstatus}}</td>
+                      </tr> 
+                    </tbody> 
+                      </table>
+                     </div>
+                     <form class="form-horizontal" [formGroup]="formadd">
+                     <div *ngIf = "show1 && !updatebutton1">
+                        <div class="row">
+                            <div class="col-md-4">
+
+                                <md-select placeholder="Interviewer" [(ngModel)]="candidate.candidates[0].interviewer" formControlName="interviewername"  required >
+                                 <md-option>Select Interviewer Name</md-option>
+                                 <md-option *ngFor="let opening of department ; let i=index " value=" {{opening.official[0].firstname}} {{opening.official[0].lastname}}" (click)="select(opening)" >
+                                    {{opening.official[0].firstname}} {{opening.official[0].lastname}}
+                                 </md-option>
+                                 </md-select><br>
+                                <span style="color: red" *ngIf="!candidate.candidates[0].interviewer">
+                                   Please select Interviewer Name
+                                </span><br><br>
+                            </div>
+                            <div class="col-md-4">
+                                <md-input-container class="example-full-width">
+                                    <input mdInput placeholder="Location"  [(ngModel)]="candidate.candidates[0].location" formControlName="location" required>
+                                    <md-error>Please enter Location.</md-error>
+                                </md-input-container><br><br>
+                            </div>
+
+                            <div class="col-md-4">
+
+                                  <md-select placeholder="Country" [(ngModel)]="candidate.candidates[0].country" formControlName="country" required>
+                                      <md-option *ngFor="let cn of countri ; let i=index " (click)="selectcoun(cn.countryvalue)" [value]="cn.countryvalue">
+                                      {{cn.countryvalue}}
+                                      </md-option>
+                                    </md-select>
+                            </div>
+                        </div>
+
+
+                  <div class="row">
+                      <div class="col-md-4">
+                          <br>
+                            <md-select placeholder="State" [(ngModel)]="candidate.candidates[0].state" formControlName="state" required>
+                                <md-option *ngFor="let stat of sarray | unique: 'state1' ; let i=index " (click)="select1(stat.state1)" [value]="stat.state1">
+                               {{stat.state1}}
+                               </md-option>
+                             </md-select>
+                      </div>
+                      <div class="col-md-4">
+                          <br>
+                            <md-select placeholder="City" [(ngModel)]="candidate.candidates[0].city" formControlName="city" required> 
+                                <md-option *ngFor="let ci of cityarry"   [value]="ci.city2">
+                            {{ci.city2}}
+                            </md-option>
+                          </md-select>
+                      </div>
+                      <div class="col-md-4">
+                          <br>
+                         <md-select placeholder="Interview Type" [(ngModel)]="candidate.candidates[0].interviewtype" formControlName="interviewtype" required>
+                         <md-option>Select Interview Type</md-option>
+                         <md-option *ngFor="let a of codes1" [value]="a.value">
+                           {{a.value}}
+                         </md-option> 
+                         </md-select><br><br>
+                       </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="col-md-4">
+                          <md-input-container>
+                            <input mdInput placeholder="Interview Date" [mdDatepicker]="picker" [(ngModel)]="candidate.candidates[0].interviewdate" formControlName="interviewdate"  required>
+                            <button mdSuffix [mdDatepickerToggle]="picker"></button>
+                          </md-input-container><br><br>
+                          <md-datepicker #picker></md-datepicker>
+                      </div>
+                      <div class="col-md-4">
+                          <md-input-container>
+                            <input mdInput type="time" placeholder="Interview Time"  [(ngModel)]="candidate.candidates[0].interviewtime" formControlName="interviewtime" pattern="^(0[1-9]|1[0-2]):[0-5][0-9]$" required>
+                          </md-input-container>
+                          <br><br>
+                      </div>
+                       
+                    
+                    </div>
+                  
+                  
+                  <button  *ngIf="!updatebutton1" type="submit" class="btn btn-outline-success btn-sm" (click)="save1(candidate)" [disabled]="!formadd.valid" data-dismiss="bModal" >Save Interview</button>
+                  <!-- <button style="float: right;" *ngIf="updatebutton1" type="submit" class="btn btn-outline-success btn-sm" (click)="save1(candidate)"  data-dismiss="bModal" >Update</button> -->
+                  <button class="btn btn-outline-warning btn-sm"(click) = "show1=!show"> Cancel </button>  
+
+                    </div>  
+                  </form>  
+                    
+                  <form class="form-horizontal" [formGroup]="formedit">
+                    <div *ngIf = "show1 && updatebutton1">
+                      <div class="row">
+                          <div class="col-md-4">
+                            <md-input-container class="example-full-width">
+                              <input mdInput placeholder="Interviewer" [(ngModel)]="inter.interviews[i].interviewer" [readonly]="moe" formControlName="interviewername">
+                            </md-input-container><br><br>
+                          </div>
+                          
+                          <div class="col-md-4">
+                              <md-input-container class="example-full-width">
+                                  <input mdInput placeholder="Location"  [(ngModel)]="inter.interviews[i].location" [readonly]="moe" formControlName="location">
+                              </md-input-container><br><br>
+                          </div>
+
+                          <div class="col-md-4">
+                              <br>
+                              <md-input-container class="example-full-width">
+                                  <input mdInput placeholder="Country" [(ngModel)]="inter.interviews[i].country" [readonly]="moe" formControlName="country">
+                              </md-input-container><br><br>
+                            </div>
+                        </div>
+  
+  
+                  <div class="row">
+                      <div class="col-md-4">
+                          <br>
+                          <md-input-container class="example-full-width">
+                            <input mdInput placeholder="State" [(ngModel)]="inter.interviews[i].state" [readonly]="moe" formControlName="state">
+                          </md-input-container><br><br>
+                        </div>
+                        <div class="col-md-4">
+                            <br>
+                            <md-input-container class="example-full-width">
+                              <input mdInput placeholder="City" [(ngModel)]="inter.interviews[i].city" [readonly]="moe" formControlName="city">
+                          </md-input-container><br><br>
+                        </div>
+                        <div class="col-md-4">
+                            <br>
+                            <md-input-container class="example-full-width">
+                              <input mdInput placeholder="Interview Type" [(ngModel)]="inter.interviews[i].interviewtype" [readonly]="moe" formControlName="interviewtype" >
+                          </md-input-container><br><br>
+                         </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <md-input-container>
+                              <input mdInput placeholder="Interview Date" [(ngModel)]="inter.interviews[i].interviewdate" [readonly]="moe" formControlName="interviewdate" >
+                              <!-- <button mdSuffix [mdDatepickerToggle]="picker"></button> -->
+                            </md-input-container><br><br>
+                            <!-- <md-datepicker #picker></md-datepicker> -->
+                        </div>
+                        <div class="col-md-4">
+                            <md-input-container>
+                              <input mdInput type="time" placeholder="Interview Time"  [(ngModel)]="inter.interviews[i].interviewtime" [readonly]="moe" formControlName="interviewtime" pattern="^(0[1-9]|1[0-2]):[0-5][0-9]$">
+                            </md-input-container>
+                            <br><br>
+                        </div>
+    
+                        <div class="col-md-4">
+                          <md-input-container>
+                            <input mdInput  placeholder="Interview Name"  [(ngModel)]="inter.interviews[i].interviewname" [readonly]="moe" formControlName="interviewname">
+                          </md-input-container>
+                          <br><br>
+                        </div>
+                      </div>
+                      <div class="row">
+                      <div class="col-md-4">
+                        <md-input-container>
+                          <input mdInput  placeholder="Interview Feedback"  [(ngModel)]="inter.interviews[i].interviewfeedback" [readonly]="moe" formControlName="interviewfeedback" >
+                        </md-input-container>
+                        <br><br>
+                    </div>
+                    <div class="col-md-4">
+                      <md-input-container>
+                        <input mdInput  placeholder="Interviewer Comment"  [(ngModel)]="inter.interviews[i].interviewcomment" [readonly]="moe" formControlName="interviewcomment">
+                      </md-input-container>
+                      <br><br>
+                  </div>
+                  <div class="col-md-4">
+                    <!-- <md-input-container>
+                      <input mdInput  placeholder="Round Status"  [(ngModel)]="inter.interviews[i].roundstatus" [readonly]="moe">
+                    </md-input-container> -->
+                    <md-select placeholder="Round Status" [(ngModel)]="inter.interviews[i].roundstatus" formControlName="roundstatus" >
+                      <md-option>Select Round Status</md-option>
+                      <md-option *ngFor="let round of roundstatus1; let i=index"  [value]="round.value">
+                                    {{ round.value }}
+                      </md-option>
+                    </md-select>
+                   <br><br>
+                </div>
+                  </div>
+                        
+                    <button  *ngIf="updatebutton1" type="submit" class="btn btn-outline-success btn-sm" [disabled]="!formedit.valid" (click)="update(inter)"  data-dismiss="bModal" >Update</button>
+                    <button class="btn btn-outline-warning btn-sm"  (click) = "show1=!show"> Cancel </button>  
+
+                      
+                </div>
+              </form>    
+          
+      </div>
+    
+      
+    
+    
+    <form class="form-horizontal" [formGroup]="form2">
+    
+        <div id="bModal" class="w3-modal">
+            <div class="w3-modal-content">
+              <header class="w3-container w3-teal bg-primary"> 
+                <span onclick="document.getElementById('bModal').style.display='none'" 
+                class=" w3-display-topright fa fa-times fa-lg"></span>
+                <h4>Country</h4>
+              </header>
+              <div class="w3-container">
+                    <div style="display: inline-flex;"  class="col-md-12">
+        <div class="col-md-6"><br><br>
+    
+          <md-input-container class="example-full-width">
+              <input [(ngModel)]="selectedValue" mdInput placeholder="Country Name " formControlName="coun">
+              <md-error>Please enter country name.</md-error>
+            </md-input-container>
+          
+          <br><br><br>
+        </div>
+        <div class="col-md-6"><br><br>
+           <div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button">Country code</button>
+              </span>
+              <input type="text" class="form-control" placeholder="code"  [(ngModel)]="codevalue" [value]="codevalue" formControlName="councd">
+            </div><br><br><br>
+        </div>
+        </div>
+              </div>
+              <footer class="w3-container w3-teal">
+                <button style="float: right;" type="submit" class="btn btn-primary" (click)="saves()" [disabled]="!form2.valid"  data-dismiss="bModal" >Save changes</button>
+              </footer>
+            </div>
+          </div>
+        </form>
+    
+    
+        <form class="form-horizontal" [formGroup]="form3">
+    
+            <div id="sModal" class="w3-modal">
+               <div class="w3-modal-content">
+                 <header class="w3-container w3-teal bg-primary"> 
+                   <span onclick="document.getElementById('sModal').style.display='none'" 
+                   class=" w3-display-topright fa fa-times fa-lg"></span>
+                   <h4>State</h4>
+                 </header>
+                 <div class="w3-container">
+                   <div style="display: inline-flex;"  class="col-md-12">
+           <div class="col-md-6">
+             <br>
+              <md-select placeholder="Country" [(ngModel)]="country1" formControlName="coun1nm">
+                  <md-option *ngFor="let op of countri" [value]="op.countryvalue" (click)="selectstate()">
+                  {{op.countryvalue}} </md-option>
+              </md-select><br><br><br>
+           </div>
+           <div class="col-md-6">
+    
+              <md-input-container class="example-full-width">
+                 <input [(ngModel)]="state1"  mdInput placeholder="State Name " formControlName="statnm">
+                 <md-error>Please enter state name.</md-error>
+               </md-input-container>
+             
+              
+              <br><br><br>
+           </div>
+           </div>
+                 </div>
+                 <footer class="w3-container w3-teal">
+                   <button style="float: right;" type="submit" class="btn btn-primary" (click)="savestate()"  [disabled]="!form3.valid"   data-dismiss="sModal" >Save changes</button>
+                 </footer>
+               </div>
+             </div>
+           </form>
+    
+           <form class="form-horizontal" [formGroup]="form4">
+    
+            <div id="ciModal" class="w3-modal">
+                <div class="w3-modal-content">
+                  <header class="w3-container w3-teal bg-primary"> 
+                    <span onclick="document.getElementById('ciModal').style.display='none'" 
+                    class="w3-display-topright fa fa-times fa-lg"></span>
+                    <h4>City</h4>
+                  </header>
+                  <div class="w3-container">
+                     <div style="display: inline-flex;"  class="col-md-12">
+               <div class="col-md-6">
+               <md-select placeholder="Country" [(ngModel)]="country3" formControlName="coun2nm">
+                <md-option *ngFor="let co of countri | unique: 'countryvalue';" (click)="selectst()" [value]="co.countryvalue">
+                {{co.countryvalue}}
+                </md-option>
+              </md-select><br><br><br>
+              <div class="input-group">
+        
+              <md-input-container class="example-full-width">
+                  <input [(ngModel)]="city3"  mdInput placeholder="City Name " formControlName="citynm">
+                  <md-error>Please enter city name.</md-error>
+                </md-input-container>
+              
+              <br><br><br>
+                        </div>
+               </div>
+                <div class="col-md-6">
+                  <md-select placeholder="State" [(ngModel)]="state3" formControlName="stat1nm">
+                 <md-option *ngFor="let stat of addst | unique: 'state1'" (click)="selectcity()" [value]="stat.state1">
+                {{stat.state1}}
+                </md-option>
+              </md-select><br><br><br>
+                </div>
+               </div>
+                  </div>
+                <footer class="w3-container w3-teal">
+                  <button style="float: right;" type="submit" class="btn btn-primary" (click)="saveci()"  [disabled]="!form4.valid"  data-dismiss="modal" >Save changes</button>
+                </footer>
+                </div>
+              </div>
+            </form>
+
+
+            <md2-dialog #typeModal>
+                <md2-dialog-title>INTERVIEW DETAILS</md2-dialog-title>
+             
+                <div class="row" *ngIf = "!show1">
+                  <div class="col-md-4">
+                    <br>
+                      <md-input-container>
+                        <input mdInput  placeholder="Interview Status"  [(ngModel)]="inter.interviews[0].interviewstatus" [readonly]="moe">
+                      </md-input-container>
+                   <br>
+                  </div>
+                  <div class="col-md-4">
+                      <br>
+                      <md-input-container>
+                        <input mdInput  placeholder="Candidate Status"  [(ngModel)]="inter.interviews[0].candidatestatus" [readonly]="moe">
+                      </md-input-container>
+                        <br>
+                    </div>
+                  
+              </div>
+              <div class="box" *ngIf = "!show1">
+              <div class="emp-info">
+                <b>  Requisition Id </b>: {{inter.interviews[0].requisition}}
+              </div>
+              <div class="emp-info ">
+                 <b> Job Title </b>: {{inter.interviews[0].jobtitle}}
+              </div><br>
+              <div class="emp-info alter-div">
+                 <b> Candidate Name </b> : {{inter.interviews[0].candidatename}}
+              </div>
+              <div class="emp-info alter-div">
+                 <b> Candidate Details </b> : {{inter.interviews[0].candidatedetails}}
+              </div>
+            </div>
+            <br>
+                
+              <span><b>SCHEDULE INTERVIEW HISTORY</b></span>
+              <div class="box4" *ngIf="candidate.candidates[0].addmsg">
+                  <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+                  <tr>
+                    <td>
+                  <img class="imageClass" src="./assets/Images/employee.jpg"/>
+                  </td>
+                  <td>
+                <span>
+                   {{candidate.candidates[0].addmsg}} on {{candidate.candidates[0].addcanddate | date}}
+                </span>
+                </td>
+                </tr>
+                  </table>
+              </div>
+              <div class="box4" *ngIf="inter.interviews[0].schedulemsg">
+                  <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+                      <tr>
+                        <td>
+                      <img class="imageClass" src="./assets/Images/employee.jpg"/>
+                      </td>
+                      <td>
+                    <span>
+                       {{inter.interviews[0].schedulemsg}} on {{inter.interviews[0].schedcanddate | date}}
+                    </span>
+                      </td>
+                      </tr>
+                      </table>
+                  </div>
+            </md2-dialog>
+      
+      
+      
+      
+            <md2-dialog #statusModal>
+              <md2-dialog-title>INTERVIEW ROUNDS</md2-dialog-title>
+      
+              <div class="box33">
+                  <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+                      <tr>
+                          <td><b>Interviewer</b></td>
+                          <td>{{inter.interviews[i].interviewer}}<td>
+                          <td><b>Location</b></td> 
+                          <td>{{inter.interviews[i].location}}<td>
+                      </tr>
+                 
+                      <tr>
+                          <td><b>Country</b></td>
+                          <td>{{inter.interviews[i].country}}<td>
+                          <td><b>State</b></td> 
+                          <td>{{inter.interviews[i].state}}<td>
+                      </tr>
+                      <tr>
+                          <td><b>City</b></td>
+                          <td>{{inter.interviews[i].city}}<td>
+                          <td><b>Interview Type</b></td> 
+                          <td>{{inter.interviews[i].interviewtype}}<td>
+                      </tr>
+                      <tr>
+                          <td><b>Interview Date</b></td>
+                          <td>{{inter.interviews[i].interviewdate | date}}<td>
+                          <td><b>Interview Time</b></td> 
+                          <td>{{inter.interviews[i].interviewtime}}<td>
+                      </tr>
+                      <tr>
+                          <td><b>Interview Name</b></td>
+                          <td>{{inter.interviews[i].interviewname}}<td>
+                          <td><b>Interviewer Feedback</b></td> 
+                          <td>{{inter.interviews[i].interviewfeedback}}<td>
+                      </tr>
+                      <tr>
+                          <td><b>Interviewer Comments</b></td>
+                          <td>{{inter.interviews[i].interviewcomment}}<td>
+                          <td><b>Round Status</b></td> 
+                          <td>{{inter.interviews[i].roundstatus}}<td>
+                      </tr>
+      
+                  </table>
+            </div>
+        
+          </md2-dialog>

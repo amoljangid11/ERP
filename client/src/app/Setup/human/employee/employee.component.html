@@ -1,0 +1,56 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">                       
+
+<div>
+  <ol class="breadcrumb row bg-primary" >
+  <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+  <li class="breadcrumb-item ">HR </li>
+  <li class="breadcrumb-item active">Employees </li>
+  </ol> 
+  
+</div>
+
+<div   class="row panel-body">
+<div class="col-md-12">
+    <button type="button" style="float: right;margin:2% 0% 0% 0%" class="btn btn-outline-primary btn-sm"  (click)="add();">
+    <i class="fa fa-plus"></i>  Add
+    </button>
+    <md-input-container style="width:20%" >
+      <input mdInput #myinput placeholder="Search" [(ngModel)]="tesyt" (input)="filterItem(tesyt)">
+      <md-error>Please Enter Name</md-error>
+    </md-input-container>  <br><br>
+ </div>    
+
+
+<div   class="col-md-10">
+  <div   class="row">
+    <div  style="padding:1% 0% 1% 2% " class="col-md-3" *ngFor="let data of officiald" >
+      <div class="card  card-success">
+        <div class="card-block" style="padding:1% 1% 1% 3% ">
+          <div >
+            <div style="padding: 1% 0% 0% 1%">
+              <img class="card-img" style="width: 22%;height: 7%;float:right" src={{data.img}} >
+              
+              <div class="dropdown-menu">
+                  <div class="btn dropdown-item" (click)="edit(data);show=!show" >Edit</div>        
+                   <div class="dropdown-divider"></div>
+                   <a class="dropdown-item" > View</a>
+               </div>
+              
+              <h5 class="card-title ">{{data.official[0].firstname}} {{data.official[0].lastname}}</h5>
+              <!-- <a class="card-text">{{data.employee.email}}</a> -->
+              <!--  <button type="button" class="btn btn-default btn-sm" (click)="edit(data);show=!show" > Edit </button> -->
+
+              <p class="card-text"><small class="text-muted"></small></p>
+              <i class="fa fa-ellipsis-v" data-toggle="dropdown" aria-hidden="true"></i>
+            </div>
+<!--           <img class="card-img" style="" src="" alt="Card image cap">
+ -->          
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>

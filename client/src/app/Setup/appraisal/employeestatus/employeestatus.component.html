@@ -1,0 +1,42 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%;" >
+    <div *ngIf = "!show"  >
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item "> Performance Appraisal</li>
+          <li class="breadcrumb-item ">Employee Status</li>
+        </ol>
+      </div>
+ <div style="display: both" class="col-lg-12">
+      </div><br><br>
+        <div class="row">
+            <div class="col-md-3">
+            
+                <md-select placeholder="Business Unit">
+                    <input type="search" [(ngModel)]="searchText" placeholder="Search text">
+                  <md-option *ngFor="let bu of bunit | filter: searchText" value=[data.name]>
+                      {{bu.businessunits[0].name}}
+                  </md-option>
+                </md-select>
+                </div>
+                <div class="col-md-3">
+                    <md-select placeholder="Department">
+                        <input type="search" [(ngModel)]="searchText" placeholder="Search text">
+                      <md-option *ngFor="let dp of dunitcoll  | filter: searchText" value=[data.name]>
+                          {{dp.department[0].departmentname}}
+                      </md-option>
+                    </md-select>
+                    </div>
+                <div class="col-md-3">
+                        <md-select placeholder="Appraisal Status">
+                            <input type="search" [(ngModel)]="searchText" placeholder="Search text">
+                          <md-option *ngFor="let pr of datas | filter: searchText" value=[data.name]>
+                              {{pr.parameter[0].parameter}}
+                          </md-option>
+                        </md-select>
+                    </div>
+                   </div>
+                   
+      </div>
+    </div>
+  

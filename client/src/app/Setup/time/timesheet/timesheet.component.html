@@ -1,0 +1,204 @@
+<div class="col-md-12">
+  <div  [ngSwitch]="view" class="row" style="padding:2% 0%">
+   <div class="col-sm-2"></div>
+   <!-- //////////////Top View////////// Month, Week view/////// -->
+     <div class="col-sm-8">
+         <div class="btn-group"  *ngIf="this.userid.utype!='admin'">
+           <button class="btn btn-primary btn-sm" (click)="decrement()" >
+           Previous
+           </button>
+           <button class="btn btn-outline-default btn-sm" (click)="today()">
+           Today
+           </button>
+           <button class="btn btn-primary btn-sm" (click)="increment()" >
+           Next
+           </button>
+         </div> 
+         <label  *ngIf="this.userid.utype!='admin'" style="padding-left: 25%;font-family: 'Times New Roman', Times, serif;font-size: 20px;"><b><i> {{viewMonth}} {{yr}} </i></b></label>
+         <label  *ngIf="this.userid.utype=='admin'" style="padding-left: 50%;font-family: 'Times New Roman', Times, serif;font-size: 20px;"><b><i> {{viewMonth}} {{yr}} </i></b></label>
+         <!-- <div  style="text-align:center"><b>{{sweek.month}}</b></div> -->
+         <div class="btn-group" style="float:right"  *ngIf="this.userid.utype!='admin'">
+         <button class="btn btn-primary btn-sm" (click)="changeView('month')" [class.active]="view === 'month'">Month</button>
+         <button class="btn btn-outline-success btn-sm" *ngIf="view=='week'" (click)="entertime=!entertime;" [disabled]="timebtn">Enter-Time</button>
+         <button class="btn btn-primary btn-sm" (click)="changeView('week')" [class.active]="view === 'week'">Week</button>
+         
+         <!-- <div class="btn btn-primary" (click)="changeView('day')" [class.active]="view === 'day'">Day</div>     -->
+         </div>               
+     </div>
+   <div class="col-sm-2"></div>
+ 
+  <div class="col-md-1"></div>
+  <!-- ///////////Calender present in Month view -->
+   <div class="col-md-10" style="padding-top:2%" *ngIf="this.userid.utype!='admin'">
+     <mwl-calendar-month-view class="cal-month-view" *ngSwitchCase="'month'" [viewDate]="viewDate"
+     [events]="events" (beforeViewRender)="beforeMonthViewRender($event,events)" (dayClicked)="openWeek($event);" [cellTemplate]="customCellTemplate">        
+     </mwl-calendar-month-view>
+
+     <mwl-calendar-week-view  *ngSwitchCase="'week'" [viewDate]="viewDate" [headerTemplate]="headertemplate" [locale]="locale" (beforeViewRender)="beforeWeekViewRender($event)" >
+     </mwl-calendar-week-view> 
+
+   </div>
+
+   <div class="col-md-10" style="padding-top:2%"  *ngIf="this.userid.utype=='admin'">
+    <mwl-calendar-month-view class="cal-month-view" [viewDate]="viewDate"
+    [events]="events" [cellTemplate]="customCellTemplate">        
+    </mwl-calendar-month-view>
+  </div>
+  
+ </div>
+</div>
+
+<!-- ///////////Middle part of month View////////////// -->
+<ng-template #headertemplate let-days="days" let-locale="locale">
+<div class="table-responsive-sm">
+ <table class="table table-bordered table-sm">
+   <thead class="" style="background-color:#009999">
+     <tr>
+       <th style="text-align:center;padding: 0.25rem "><p>Project</p><br></th>
+       <th *ngFor="let sw of sweek" style="text-align:center" >
+         <p><span>{{sw.day}}</span><br>
+         <span style="padding-left: 10%"> 
+           {{sw.month}}   {{sw.date | calendarDate:'monthViewDayNumber':locale }}
+         </span>
+       </p>
+     </th>
+     <th style="text-align:center"><p>Total-Hours</p><br></th>
+   </tr>
+ </thead>
+<!-- Body Part-Before click on Enter Time -->
+ <tbody  class="tbody-default" style="background-color:#ECF1F2" >
+   <tr  *ngIf="timebtn">
+     <td colspan="9" class="text-danger" style="text-align:center ;padding: 1rem"> <span class="">No project was assigned</span></td>
+     
+   </tr>
+   <tr *ngIf="!entertime"  >
+     <td >
+      {{weekdayobj1[0].projectname}}
+      {{weekdayobj1[0].taskname}}
+      </td>
+     <td *ngFor="let wdobj of weekdayobj1[0].weekrequest;let j=index ">
+       <span  style="margin-left: 25%" *ngIf="(!entertime || wdobj.readonly)">{{wdobj.activity[0]}} </span>
+       <input  *ngIf="(entertime && !wdobj.readonly)"  style="margin-left: 12%" type="time"
+       (change)="createtimeobj(wdobj,$event,i,j,wdobj)" [(ngModel)]="wdobj.activity[0]"
+       [readonly]="wdobj.readonly" [disabled]="wdobj.disabled" >
+     </td>
+      <td style="text-align: center"> <span  > {{weekdayobj1[0].total}}</span> </td>
+   </tr>
+   
+ </tbody>
+ <!-- After click on Enter Time -->
+ <tbody *ngIf="entertime" >
+   <!-- *ngFor="let data of projectcollection[0].task_time;let i=index " -->
+   
+   <tr *ngIf="show" style="background-color:#ECF1F2 ;">
+     <td>
+       <br><br>
+     <div>
+      <md-select  style="width: 100%" placeholder="{{projname.project}}" [(ngModel)]="selectedtask">
+      <md-option *ngFor="let work of task_options; let i=index "   [value]="work">
+         {{ work }}
+      </md-option> 
+    </md-select>
+    </div>
+     </td>
+     <td *ngFor="let wdobj of weekdayobj1[0].weekrequest;let j=index ">
+       <br><br>
+       <span  style="margin-left: 25%" *ngIf="(!entertime || wdobj.readonly)">{{wdobj.activity[0]}} </span>
+       <input  *ngIf="(entertime && !wdobj.readonly)"  style="margin-left: 12%" type="time"
+       (change)="createtimeobj(wdobj,$event,i,j,wdobj)" [(ngModel)]="wdobj.activity[0]"
+       [readonly]="wdobj.readonly"  >
+     </td>
+     <td style="text-align: center"> 
+       <br><br>
+       <span>{{weekdayobj1[0].total}} </span> 
+     </td>
+     <!-- {{totalweekhours[i] }} -->
+   </tr>
+ </tbody>
+ 
+  <tfoot  *ngIf="!entertime" class="tfoot-default" style="background-color:#f2f2f2 ">
+     <tr>
+       <td></td>
+     <td style="text-align: center" *ngFor="let wdobj of weekdayobj1[0].weekrequest">
+       <tr style="border-bottom-color: white">
+         <span [style.color]="wdobj.color">{{wdobj.status}}</span>
+       </tr>
+       <tr><span style="text-align: center " *ngIf="wdobj.hours!='NaN:NaN'" >{{wdobj.hours}}</span>
+       </tr>
+     </td>
+   <td class="bg-success" style="padding-top: 1%">
+     <span style="text-align: center;"><h4>{{sumhours}}</h4></span>
+   </td>
+ </tr> 
+ </tfoot>
+
+
+ <tfoot  *ngIf="entertime" class="tfoot-default" style="background-color:#f2f2f2 ">
+ <tr>
+   <td></td>
+ <td style="text-align: center" *ngFor="let wdobj of weekdayobj1[0].weekrequest">
+   <tr style="border-bottom-color: white"><span [style.color]="wdobj.color">{{wdobj.status}}</span>
+ </tr>
+ <tr><span style="text-align: center " *ngIf="wdobj.hours!='NaN:NaN'" >{{wdobj.hours}}
+   <i class="fa fa-eraser" *ngIf="(entertime && wdobj.status=='Yet to Submit')" title="Erase Hours" style="font-size:16px;color:red" (click)="eraserHide(wdobj)"></i></span>
+ </tr>
+</td>
+<td class="bg-success" style="padding-top: 1%">
+ <span style="text-align: center;"><h4>{{weekdayobj1[0].total}}</h4></span>
+</td>
+</tr> 
+</tfoot>
+
+</table>
+<div class="col-md-4"  *ngIf="!entertime">
+ Weekly Note: {{weekdayobj1[0].weeklynote}}
+</div>
+<div class="row" *ngIf="entertime">  
+   <div class="col-md-12">
+     <!-- <md-input-container>   -->
+       <!--  value=weekdayobj1[0].weeklynote -->
+       <textarea style="width: 50%" [(ngModel)]="weeknote" placeholder="Weekly Note">
+       </textarea>
+     <!-- </md-input-container> -->
+   </div> 
+</div>
+<div class="row">
+<div class="col-md-12">
+<div style="float:right">
+ <i class="fa fa-eraser" *ngIf="(weekdayobj1[0].status=='Yet to Submit')" title="Erase Week" style="font-size:16px;color:red" (click)="eraserWeek(weekdayobj1[0])">Erase Week</i>
+ <button class="btn btn-outline-primary btn-sm" title="Yet to Submit" (click)="savetimesheet('Yet to Submit',weekdayobj1[0])" >Save</button>
+ <button class="btn btn-outline-success btn-sm" *ngIf="(weekdayobj1[0].status=='Yet to Submit')"  title="Final Submit" (click)="updatetimesheet('For Approval',weekdayobj1[0])">Save & Submit</button>
+</div>
+</div>
+</div>
+</div>
+</ng-template>
+
+<!-- This template is used for to show No entry or show current status on each cell of calender -->
+<ng-template #customCellTemplate  let-day="day" let-locale="locale">
+<div class="cal-cell-top">
+ <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+ <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+</div> 
+
+<!--    <div style="margin-left: 5px;" >00:00</small> -->
+<div *ngFor="let event of day.events;let i= index; "  [style.backgroundColor]="event.color" [mwlCalendarTooltip]="'Status'">
+<div style="text-align: center;margin-top: -50%;color:#9e9e9e;font-weight: 800">{{event.hours}}</div><br>
+<div style="text-align:center;font-weight: 600 ; color:  #FF4500" *ngIf="event.title.includes('No-Entry')">
+<small>{{ event.title}} </small> 
+</div>
+<div  style="text-align:center; ">
+ <small style="margin: 5px;font-weight: 600 ;color: #ffc107" *ngIf="event.title.includes('Yet to Submit')"> {{ event.title}} </small>
+</div>
+<div  style="text-align:center; ">
+ <small style="margin: 5px;font-weight: 600 ; color: #673ab7" *ngIf="event.title.includes('For Approval')"> {{ event.title}} </small>
+</div>
+<div  style="text-align:center;">
+ <small style="margin: 5px;font-weight: 600 ; color: #4CAF50" *ngIf="event.title.includes('Approved')"> {{ event.title}} </small>
+</div>
+<div  style="text-align:center; ">
+ <small style="margin: 5px;font-weight: 600 ; color: #C62D3D" *ngIf="event.title.includes('Rejected')"> {{ event.title}} </small>
+</div> 
+</div>
+
+</ng-template>

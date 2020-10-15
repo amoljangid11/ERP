@@ -1,0 +1,92 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%;" >
+    <div *ngIf = "!show"  >
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">Appraisal</li>
+          <li class="breadcrumb-item ">Configuration</li>
+          <li class="breadcrumb-item active">Ratings</li>
+        </ol>
+      </div>
+      <div>
+        <span style="font-weight:500">Ratings</span>
+        <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false">Add</button>
+        
+      </div><br><br>
+      <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+      <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+        {{ message }}
+      </div>
+      <div class="row">
+        <div class="col-lg-12" >
+          <div >
+            <table class="table table-bordered table-striped table-sm">
+              <thead class="bg-success">
+                <tr>
+                  <th>Action</th>
+                  <th>Appraisal Period</th>
+                  <th>Business Unit</th>
+                  <th>Department</th>
+                  <th>Rating Type</th>
+                  <th>Appraisal Status</th>
+                  <th>Process Status</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let rt of data1;let i = index " >
+                  <td><i  (click)="edit(rt);show = !show;hide=!hide"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(rt,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                
+                  <td >{{rt.rating[0].appraisalperiod}}</td>
+                  <td >{{rt.rating[0].businessunit}}</td>
+                  <td >{{rt.rating[0].department}}</td>
+                  <td >{{rt.rating[0].ratingtype}}</td>
+                  <td >{{rt.rating[0].appraisalstatus}}</td>
+                  <td >{{rt.rating[0].processstatus}}</td>
+                  <td >{{rt.rating[0].description}}</td>
+                </tr>
+              </tbody>
+              
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf= "show" >
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">Appraisal</li>
+          <li class="breadcrumb-item ">Configuration</li>
+          <li class="breadcrumb-item ">Ratings</li>
+          <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+        </ol>
+      </div><br>
+      <div class="row">
+        <div class="col-md-4">
+            <md-select placeholder="Business Unit" [(ngModel)]="ratings.rating[0].businessunit">
+                <input type="search" [(ngModel)]="searchText" placeholder="Search text">
+              <md-option *ngFor="let bu of bunit | filter: searchText" value="{{bu.businessunits[0].name}}">
+                  {{bu.businessunits[0].name}}
+              </md-option>
+            </md-select>
+          </div>
+          <div class="col-md-4">
+              <md-select placeholder="Department" [(ngModel)]="ratings.rating[0].department">
+                  <input type="search" [(ngModel)]="searchText" placeholder="Search text">
+                <md-option *ngFor="let dp of dunitcoll  | filter: searchText" value="{{dp.department[0].departmentname}}">
+                    {{dp.department[0].departmentname}}
+                </md-option>
+              </md-select>
+            </div>
+        <div  class="col-md-12" style="margin-top: 5%">
+          <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(ratings);show=!show"> Save</button>
+          <button *ngIf="!updatebutton" class="btn btn-outline-danger btn-sm" (click) = "cancel(ratings);show = !show;"> Cancel </button>
+          <button *ngIf="updatebutton"  class="btn btn-outline-success btn-sm" (click)="update(ratings,ratings,ratings.rating[0].ratings);show = !show;hide=!hide"> Update</button>
+          <button *ngIf="updatebutton" class="btn btn-outline-danger btn-sm" (click) = "cancel(ratings);show = !show;hide=!hide"> Cancel </button>
+        </div>
+      </div>
+    </div>
+    </div>
+  

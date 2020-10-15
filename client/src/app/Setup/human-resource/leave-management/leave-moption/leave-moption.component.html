@@ -1,0 +1,217 @@
+<div class="col-md-12 card card-outline-info" style="height:100%">
+  <div *ngIf = "!show" >
+    <div >
+      <ol class="breadcrumb row ">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Leave Management </li>
+        <li class="breadcrumb-item active">Leave Management Options</li>
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:500">Leave Management Options</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false">Add</button>
+    </div><br><br>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Start Month</th>
+                <th>Week-end 1</th>
+                <th>Week-end 2</th>
+                <th>Department</th>
+                <th>Hours</th>
+                <th>Halfday</th>
+                <th>Leave transferable</th>
+                <th>Skip Holidays</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody  >
+              <tr *ngFor="let lopts of datas;let i=index " >
+                
+                <td>
+                  <i class="fa fa-eye" aria-hidden="true" title="View" (click)="open(deptModal);view(lopts)"></i>
+                  <i (click)="edit(lopts);show=!show"  title="Edit" class="fa fa-pencil-square-o"></i>
+                  <i (click)="delete(lopts,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                
+                <td>{{lopts.leavemanagementoption[0].startmonth}}</td>
+                
+                <td  >{{lopts.leavemanagementoption[0].week1}}</td>
+                
+                <td  >{{lopts.leavemanagementoption[0].week2}}</td>
+                
+                <td  >{{lopts.leavemanagementoption[0].department}}</td>
+                
+                <td  >{{lopts.leavemanagementoption[0].working_hours}}</td>
+                
+                <td  >{{lopts.leavemanagementoption[0].halfday_request}}</td>
+                
+                <td  >{{lopts.leavemanagementoption[0].allow_leavetransfer}}</td>
+                
+                <td  >{{lopts.leavemanagementoption[0].skipholiday}}</td>
+                <td  >{{lopts.leavemanagementoption[0].description}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<form class="form-horizontal" [formGroup]="form">
+  <div *ngIf= "show" >
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Leave Management</li>
+        <li class="breadcrumb-item ">Leave Management Options </li>
+        <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+      </ol>
+    </div>
+    <div class="row">
+      <div class="col-md-3"><br>
+        <md-select placeholder="Business Unit" [(ngModel)]="leaveoptions.leavemanagementoption[0].businessname" formControlName="businessunit">
+        <md-option *ngFor="let bu of bunit ; let i=index " (click)="select(bu.businessunits[0].name,bu);selecthr(bu.businessunits[0].name,bu)" [value]= "bu.businessunits[0].name" >
+        {{bu.businessunits[0].name}}
+        </md-option>
+        </md-select><br>
+        <br><br><br>
+        <md-select required placeholder="Weekend-Day 2" [(ngModel)]="leaveoptions.leavemanagementoption[0].week2Id" formControlName="weeday2" required  >
+        <md-option *ngFor="let wk2 of wds2" [value]="wk2.id">
+        {{ wk2.viewValue }}
+        </md-option>
+        </md-select><br>
+        <span  style="color: red"   *ngIf="!leaveoptions.leavemanagementoption[0].week2Id">
+            Please select weekend day 2.
+        </span>
+        <br><br><br>
+        <md-select placeholder="Skip Holidays" [(ngModel)]="leaveoptions.leavemanagementoption[0].skipholiday" formControlName="skipholiday" required>
+        <md-option *ngFor="let skip of holiday" [value]="skip.viewValue">
+        {{ skip.viewValue }}
+        </md-option>
+        </md-select><br><br><br>
+      </div>
+      <div class="col-md-3"><br>
+        <md-select placeholder="Department" [(ngModel)]="leaveoptions.leavemanagementoption[0].department" formControlName="department" required >
+        <md-option *ngFor="let dept of dptoptions" [value]="dept.department[0].departmentname">
+        {{ dept.department[0].departmentname }}
+        </md-option>
+        </md-select><br>
+        <span  style="color: red"   *ngIf="!leaveoptions.leavemanagementoption[0].department">
+            Please select department.
+        </span>
+        <br><br>
+        <md-input-container class="example-full-width" >
+        <input mdInput placeholder="Working Hours" [(ngModel)]="leaveoptions.leavemanagementoption[0].working_hours" formControlName="workhours" pattern="^(2[0-4]|1[0-9]|[1-9])$" minlength="1" maxlength="2" required>
+        <md-error >
+        Please enter number of working hours between 1 to 24hrs.
+        </md-error>
+        </md-input-container><br><br><br>
+        <md-select placeholder="Hr Manager" [(ngModel)]="leaveoptions.leavemanagementoption[0].hr_manager"  formControlName="hrmanager" >
+        <md-option *ngFor="let hr of offdata" [value]="hr.official[0].firstname + hr.official[0].lastname">
+        {{ hr.official[0].firstname}} {{ hr.official[0].lastname}}
+        </md-option>
+        </md-select><br>
+        <span  style="color: red"   *ngIf="!leaveoptions.leavemanagementoption[0].hr_manager">
+            Please select hr manager.
+        </span><br><br>
+      </div>
+      <div class="col-md-3"><br>
+        <md-select placeholder="Calendar Start Month" [(ngModel)]="leaveoptions.leavemanagementoption[0].startmonth" formControlName="calenstartmonth" required>
+        <md-option *ngFor="let month of months" [value]="month.viewValue">
+        {{ month.viewValue }}
+        </md-option>
+        </md-select><br>
+        <span  style="color: red"   *ngIf="!leaveoptions.leavemanagementoption[0].startmonth">
+            Please select start month.
+        </span>
+        <br><br><br>
+        <md-select placeholder="Half Day Request" [(ngModel)]="leaveoptions.leavemanagementoption[0].halfday_request" formControlName="halfdayreq" required>
+        <md-option *ngFor="let half of day" [value]="half.viewValue">
+        {{ half.viewValue }}
+        </md-option>
+        </md-select><br><br><br>
+        <md-input-container class="example-full-width">
+        <input mdInput #message maxlength="200"  placeholder="Description" [(ngModel)]="leaveoptions.leavemanagementoption[0].description" formControlName="description" >
+        <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+        </md-input-container><br><br><br>
+      </div>
+      <div class="col-md-3"><br>
+        <md-select placeholder="Weekend day 1" [(ngModel)]="leaveoptions.leavemanagementoption[0].week1Id" formControlName="weeday1" required>
+        <md-option *ngFor="let wd1 of wds1" [value]="wd1.id">
+        {{ wd1.viewValue }}
+        </md-option>
+        </md-select><br>
+        <span  style="color: red"   *ngIf="!leaveoptions.leavemanagementoption[0].week1Id">
+            Please select weekend day 1.
+        </span>
+        <br><br><br>
+        <md-select placeholder="Allow Leave Transfers" [(ngModel)]="leaveoptions.leavemanagementoption[0].allow_leavetransfer" formControlName="allowLeaveTrans" required>
+        <md-option *ngFor="let leave of transfer" [value]="leave.name">
+        {{ leave.name }}
+        </md-option>
+        </md-select>
+      </div>
+      <div  class="col-md-12" style="margin-top: 5%">
+        <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(leaveoptions);show=!show" [disabled]="!form.valid"> Save</button>
+        <button *ngIf="updatebutton"  class="btn btn-outline-success btn-sm" (click)="updatehgroup(leaveoptions);updatebutton=!updatebutton;show=!show"[disabled]="!form.valid"> Update</button>
+        <button class="btn btn-outline-warning btn-sm" (click) = "cancel(leaveoptions);show = !show;updatebutton=!updatebutton;"> Cancel </button>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+
+<md2-dialog #deptModal>
+    <md2-dialog-title>Leave Management Options</md2-dialog-title>
+     <div class=" row box">
+    <div class="emp-info">
+        Business Unit : {{leaveoptions.leavemanagementoption[0].businessname}}
+    </div>
+    <div class="emp-info ">
+        Department : {{leaveoptions.leavemanagementoption[0].department}}
+    </div><br>
+    <div class="emp-info alter-div">
+        Calendar Start Month : {{leaveoptions.leavemanagementoption[0].startmonth}}
+    </div>
+    <div class="emp-info alter-div">
+        Weekend 1 : {{leaveoptions.leavemanagementoption[0].week1}}
+    </div><br>
+    <div class="emp-info">
+        Weekend 2 : {{leaveoptions.leavemanagementoption[0].week2}}
+    </div>
+    <div class="emp-info ">
+        Working Hours : {{leaveoptions.leavemanagementoption[0].working_hours}}
+    </div><br>
+    <div class="emp-info alter-div">
+        Half Day Requests : {{leaveoptions.leavemanagementoption[0].halfday_request}}
+    </div>
+    <div class="emp-info alter-div">
+        Allow Leave Transfers? : {{leaveoptions.leavemanagementoption[0].allow_leavetransfer}}
+    </div><br>
+    <div class="emp-info ">
+        Skip Holidays? : {{leaveoptions.leavemanagementoption[0].skipholiday}}
+    </div>
+    <div class="emp-info ">
+        Hr Manager : {{leaveoptions.leavemanagementoption[0].hr_manager}}
+    </div><br>
+    <div class="emp-info alter-div">
+        Description : {{leaveoptions.leavemanagementoption[0].description}}
+    </div>
+    <div class="emp-info alter-div"></div>
+  </div>
+    <md2-dialog-footer>
+        <button type="submit" class="btn btn-secondary" (click)="close(deptModal)">Cancel</button>
+    </md2-dialog-footer>
+  </md2-dialog>
+  

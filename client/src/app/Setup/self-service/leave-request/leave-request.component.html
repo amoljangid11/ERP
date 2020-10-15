@@ -1,0 +1,247 @@
+<div class="col-md-12 card card-outline-info" style="height:100%">
+  <div *ngIf= "!show">
+      <ol class="breadcrumb row ">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Self Service </li>
+        <li class="breadcrumb-item ">Leaves </li>
+        <li class="breadcrumb-item active">Leave Request</li>
+      </ol>
+    </div>
+    
+  <div  *ngIf= "!show" style="overflow: auto">
+    <!-- <div *ngIf="msg1" class="alert alert-info"  style="margin-left:20%;padding: 0.5% 0.5% 0.5% 0.5%;width:60%;float:center">
+      <i class="fa fa-info-circle" aria-hidden="true" style="padding:0px  10px"></i>
+      <span  style="text-align:center;"> You have not been allotted leaves for this financial year. Please contact your HR</span>
+    </div> -->
+    <!-- <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div> -->
+    <div>
+    <div >
+      <span style="font-weight:  500">Leave Request</span>
+      <span type="button" style="float: right;margin-right: 2%" class="btn btn-primary btn-sm "  (click) = "show=!show;addrequest(service)">Apply Leave
+      </span>
+    </div>
+    <br>
+  
+    <div *ngIf="calendarOptions" style="padding: 2%">
+    <ng-fullcalendar #fullcalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail);open(deptModal);abc2($event.detail);canceldata=service" (eventDrop)="updateEvent($event.detail)"
+        (viewRender)="viewRender($event.detail);" (initialized)="initialized()" (eventRender)="eventRender($event.detail)" (select)="select($event.detail,service);checkdate($event.detail);checkhalfday();"
+        (unselect)="unselect($event.detail)" (eventResize)="updateEvent($event.detail)" (clickButton)="clickButton($event.detail)">
+    </ng-fullcalendar>
+    </div>
+    </div>
+    </div>
+    <form class="form-horizontal" [formGroup]="form">
+    <div *ngIf= "show">
+      <div >
+        <ol class="breadcrumb row ">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Self Service </li>
+        <li class="breadcrumb-item ">Leaves </li>
+        <li class="breadcrumb-item ">Leave Request</li>
+        <li class="breadcrumb-item active">Add</li>
+          
+        </ol>
+      </div>
+    <div class="row" style="padding:2% 0% 2% 2%">
+      <div *ngIf="msg2" class="alert alert-info"  style="margin-left:20%;padding: 0.5% 0.5% 0.5% 0.5%;width:60%;float:center">
+        <i class="fa fa-info-circle" aria-hidden="true" style="padding:0px  10px"></i>
+        <span  style="text-align:center;"> Please contact HR, Leave Management Option is not configure for your Department.</span>
+      </div>
+        <div class="col-sm-4">
+<br><br>
+            <md-select placeholder="Leave Type"  [(ngModel)]="service.leaverequest.leavetype"   class="example-full-width" formControlName="leavetypee" required>
+                <md-option *ngFor="let emp of leavereq2;let i=index;"  [value]="emp.leavetype" (click)="fetch(emp);">
+                {{emp.leavetype}}          
+                </md-option>
+              </md-select>
+         
+         <br><br><br>
+         <md-input-container>
+            <input mdInput [mdDatepicker]="picker1"  [(ngModel)]="service.leaverequest.from_date"   placeholder="From" formControlName="fromdatee" readonly required >
+          <!-- <button mdSuffix [mdDatepickerToggle]="picker1" ></button> -->
+         </md-input-container>
+
+         <!-- <md-datepicker #picker1  ></md-datepicker> -->
+         
+         <md-input-container class="example-full-width"  >
+          <input mdInput placeholder="Days"   [(ngModel)]="service.leaverequest.no_days" id="dayyss" value={{this.no_days1}}  formControlName="nodays" readonly required >
+           <md-error > Please contact your HR.</md-error> 
+           
+         </md-input-container>
+         <!-- <md-input-container class="example-full-width" *ngIf="service.leaverequest.leavetype"  >
+          <input mdInput placeholder="Days"   [(ngModel)]="service.leaverequest.no_days" id="dayyss" value={{this.no_days}}  formControlName="nodays1" readonly required >
+           <md-error > Please contact your HR.</md-error> 
+           
+         </md-input-container> -->
+        
+
+        </div>
+        <div class="col-sm-4">
+           <br>
+           <md-input-container class="example-full-width">
+              <input mdInput placeholder="Available Leaves" id="avail" [(ngModel)]="service.leaverequest.leavelimit" value={{this.llimit}} formControlName="availleave" required readonly >
+              <md-error  *ngIf="this.gethalfday == 'undefined'"> You have not been allotted leavesfor this financial year.Please contact your HR.</md-error>
+             </md-input-container>
+        <br><br>
+
+        <md-input-container id="todt">
+         <input mdInput [mdDatepicker]="picker2" placeholder="To"  value={{this.too}} [(ngModel)]="service.leaverequest.to_date" formControlName="toodate" readonly required >
+         
+         <button mdSuffix [mdDatepickerToggle]="picker2" *ngIf="service.leaverequest.leavetype=='Maternity Leave'" (click)="hideleave();"></button>
+        </md-input-container>
+       
+  
+        <md-datepicker #picker2 (onDateSelect)="daySet(service.leaverequest.to_date,service.leaverequest.from_date);" (click)="diff(service.leaverequest.from_date,service.leaverequest.to_date);" ></md-datepicker>
+         
+        <md-input-container class="example-full-width" >
+          <input mdInput placeholder="Reporting Manager" [(ngModel)]="service.leaverequest.reportingmanager" formControlName="repmang" readonly >
+          <md-error > You have not been assigned reporting .Please contact your HR.</md-error>
+        </md-input-container>
+        </div>
+        
+        <div class="col-sm-4">
+          <br>
+        <md-input-container class="example-full-width"  >
+          <textarea mdInput placeholder="Reason" [(ngModel)]="service.leaverequest.reason"  matTextareaAutosize matAutosizeMinRows="2"  matAutosizeMaxRows="5" formControlName="reasonn" required></textarea>
+          </md-input-container><br><br><br>
+
+          <!-- <md-select *ngIf="service.leaverequest.leavetype!='Maternity Leave' || !service.leaverequest.leavetype" placeholder="Leave For1" class="example-full-width" formControlName="leaveforr1" [(ngModel)]="this.leavefor" (change)="abc();pqr();checkhalfday();" value="HalfDay" required>
+            <md-option *ngFor="let sm of leaveday"  [value]="sm.viewValue" >
+              {{sm.viewValue}}
+            </md-option>
+          </md-select> -->
+
+          <!-- (click)="diff(service.leaverequest.from_date,service.leaverequest.to_date);diff1(service.leaverequest.leavetype);" -->
+        <md-select  placeholder="Leave For" class="example-full-width" formControlName="leaveforr" [(ngModel)]="this.leavefor" (change)="abc();pqr();checkhalfday();" value="HalfDay" required>
+          <md-option *ngFor="let sm of leaveday"  [value]="sm.viewValue" (click)="diff1(service.leaverequest.leavetype);diff(service.leaverequest.from_date,service.leaverequest.to_date);diff1(service.leaverequest.leavetype);" >
+            {{sm.viewValue}}
+            </md-option>
+        </md-select>
+        <br>
+
+        <!-- <md-input-container class="example-full-width"  >
+            <textarea mdInput placeholder="Comments"  [(ngModel)]="service.leaverequest.comments" formControlName="comments" required></textarea>
+        </md-input-container> -->
+        </div>
+
+       
+        
+        
+        <div  class="col-md-12" style="margin-top: 5%">
+            <!-- <button class="btn btn-outline-success btn-sm" (click)="calc1(service.leaverequest.to_date,service.leaverequest.from_date)">Apply</button> -->
+          <button class="btn btn-outline-success btn-sm" (click)="save(service);leaveapply(this.email,this.email1,this.firstname,this.lastname,service.leaverequest.no_days,service.leaverequest.leavetype,service.leaverequest.from_date,service.leaverequest.to_date,service.leaverequest.reason,service.leaverequest.leavelimit,service.leaverequest.comments);show=!show" [disabled]="!form.valid" > Save</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "show=!show;cancel(service)"> Cancel </button>
+        </div>
+  </div>
+  </div>
+  </form>
+  </div>
+       
+              
+              <md2-dialog #deptModal>
+                  <!-- <div  *ngIf="hide" id="question"> -->
+                <div  >
+                  
+                    <div>
+                      <span style="font-weight:500">Leaverequest</span>
+                    </div><br>
+                    <div id="hidd" *ngIf="this.status=='Pending for approval' && this.employee_id==this.getuser.employee_OId">
+                    <div  class="row" >
+                     
+                        <div class="col-md-4"><br>
+                          <md-select placeholder="Status" [(ngModel)]="service.leaverequest.status"  class="example-full-width">
+                          <md-option  *ngFor="let st of request1" (click)="select(st.viewValue)"  [value]="st.viewValue" >
+                          {{st.viewValue}}
+                          </md-option>
+                          </md-select><br><br>
+                          
+                        </div>
+                        <div class="col-md-4">
+                          <md-input-container class="example-full-width">
+                          <input mdInput #message maxlength="50" [(ngModel)]="service.leaverequest.comments"  placeholder="Comments">
+                          <md-hint align="end">{{message.value.length}} Characters entered / 50</md-hint>
+                          </md-input-container><br><br>
+                        </div>
+                        <div  class="col-md-12" style="margin-top: 5%">
+                          <button id="btn" class="btn btn-outline-success btn-sm" (click)="newsave(service);"> Save</button>
+                        </div><br><br>
+                      
+                      </div><br>  
+                    </div>
+                    <div id="hidd" *ngIf="this.status=='Approved' && this.employee_id==this.getuser.employee_OId">
+                        <div  class="row" >
+                         
+                            <div class="col-md-4"><br>
+                              <md-select placeholder="Status" [(ngModel)]="service.leaverequest.status"  class="example-full-width">
+                              <md-option  *ngFor="let st of request" (click)="select(st.viewValue)"  [value]="st.viewValue" >
+                              {{st.viewValue}}
+                              </md-option>
+                              </md-select><br><br>
+                              
+                            </div>
+                            <div class="col-md-4">
+                              <md-input-container class="example-full-width">
+                              <input mdInput #message maxlength="50" [(ngModel)]="service.leaverequest.comments"  placeholder="Comments">
+                              <md-hint align="end">{{message.value.length}} Characters entered / 50</md-hint>
+                              </md-input-container><br><br>
+                            </div>
+                            <div  class="col-md-12" style="margin-top: 5%">
+                              <button id="btn" class="btn btn-outline-success btn-sm" (click)="newsave1(service);"> Save</button>
+                            </div><br><br>
+                          
+                          </div><br>  
+                        </div>
+                      <div class="col-md-12">
+                          <div  class="table-responsive" >
+                               <table class="table table-bordered table-hover "  >
+                                 <tbody >
+                                   
+                                  <tr >
+                                     <th>Employee</th>
+                                     <td>{{this.uname}}</td>
+                                     <th>Leave Type</th>
+                                     <td>{{this.levtype}}</td>
+                                   </tr>
+                     
+                                   <tr >
+                                     <th>From</th>
+                                     <td>{{this.frmdt}}</td>
+                                     <th>To</th>
+                                     <td>{{this.todt}}</td>
+                                   </tr>
+                     
+                                   <tr  >
+                                     <th>Leave For</th>
+                                     <td>{{this.levfor}}</td>
+                                     <th>Days</th>
+                                     <td>{{this.noday}}</td>
+                                   </tr>
+                     
+                                   <tr  >
+                                     <th>Applied On</th>
+                                     <td>{{this.applyon}}</td>
+                                   </tr>
+                     
+                                 </tbody> 
+                               </table>
+                             </div> 
+                           </div>
+                    </div>
+            </md2-dialog>        
+              
+
+
+            
+             
+      
+  
+
+
+
+
+
+
+
+             

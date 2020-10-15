@@ -1,0 +1,53 @@
+
+ <div style="display: both" class="col-md-12">
+ 
+    <span style="font-weight:  800">Coporate card</span>
+        	<br><br>
+</div>
+<div  class="col-md-12">
+<div class="row">
+		
+<div class="col-md-4">
+    <md-input-container class="example-full-width">
+      <input mdInput   placeholder="Card Type" >
+    </md-input-container><br><br>
+     <md-input-container>
+      <input mdInput [mdDatepicker]="datepicker"  placeholder="Expiry Date" required>
+      <button mdSuffix [mdDatepickerToggle]="datepicker"></button>
+    </md-input-container>
+    <md-datepicker #datepicker></md-datepicker>
+</div>
+
+<div class="col-md-4">
+    <md-input-container class="example-full-width">
+      <input mdInput  placeholder="Card Number" >
+      <md-error>Please enter number of days.</md-error> 
+    </md-input-container><br><br>
+     <md-input-container class="example-full-width">
+      <input mdInput   placeholder="Card Issued By" >
+    </md-input-container>
+    <br><br><br>  
+</div>
+
+<div class="col-md-4">     
+     <md-input-container class="example-full-width">
+      <input mdInput   placeholder="Name on Card"> 
+    </md-input-container><br><br>
+     <md-input-container class="example-full-width">
+      <input mdInput   placeholder="Card Code" >
+    </md-input-container>
+</div>
+
+
+  	</div>
+  	<div class="col-md-12">
+<div  class="row" style="float: right" >
+<div >
+	<br><br><br>
+<button class="btn btn-outline-primary btn-sm" (click)="save();show=!show"> Save</button>
+<button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+</div>
+</div>
+</div>
+
+</div>

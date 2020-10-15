@@ -1,0 +1,690 @@
+<div class="col-md-12 card card-outline-primary" >
+  <div *ngIf = "!show"  id="mn">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Exit Procedure </li>
+        <li class="breadcrumb-item active">All Exit Procedures</li>
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:500">All Exit Procedures</span>
+    </div>
+
+    <div *ngIf="this.getuser.utype=='HR'">
+        <div class="row" style="padding: 1% 0% 1% 1%;">
+          <div class="box" (click)="clickall('All');view='yes'">
+           <div style="background-color: #fff4c6">
+             <span>All Request</span><br><span class="text-info">{{countall}}</span>
+           </div>    			
+          </div>
+          <div class="box"   (click)="clickall('Pending');view='yes'">
+            <div class="box2">
+              <span>Pending Request</span><br><span class="text-success">{{pendingcount}}</span>
+            </div>  	
+          </div>
+          <div class="box"  (click)="clickall('Approved');view='no'">
+            <div class="box2" >
+              <span>Approved Request</span><br><span class="text-primary">{{approvedcount}}</span>
+            </div>
+          </div>  
+          <div class="box"   (click)="clickall('Rejected');view='no'">
+            <div class="box2" >
+              <span>Rejected Request</span><br><span class="text-danger">{{rejectedcount}}</span>
+            </div>  
+          </div>
+          <div class="box"  (click)="clickall('Cancelled');view='no'">
+              <div class="box2" >
+                <span>Cancelled Request</span><br><span class="text-warning">{{cancelcount}}</span>
+              </div>
+          </div>   		
+        </div>
+      </div><br>
+  
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div  *ngIf="'divhd'" style="overflow:auto">
+            <table class="table table-bordered table-striped table-sm" >
+              <thead class="bg-success">
+                <tr> 
+                  <th>Action</th>
+                  <th>Employee</th>
+                  <th>Employee ID</th>
+                  <th>Business Unit</th>
+                  <th>Department</th>
+                  <th>Exit Type</th>
+                  <th *ngIf="hideeee">Overall Status</th>
+                  <!-- <th *ngIf="initialstatus1.hrmanagerid==this.getuser.employee_OId && initialstatus1.l2managerid!=this.getuser.employee_OId">Individual Status</th>
+                  <th *ngIf="initialstatus1.l2managerid==this.getuser.employee_OId && initialstatus1.hrmanagerid!=this.getuser.employee_OId">Individual Status</th>
+                  <th *ngIf="initialstatus1.l2managerid!=this.getuser.employee_OId && initialstatus1.hrmanagerid!=this.getuser.employee_OId">Individual Status</th> -->
+                  <!-- <th *ngIf="hideeee1">Individual Status</th> -->
+                  <th *ngIf="showl1">L1 Manager Status</th>
+                  <th *ngIf="showl2">L2 Manager Status</th>
+                  <th *ngIf="showsa">System Admin Status</th>
+                  <th *ngIf="showga">General Admin Status</th>
+                  <th *ngIf="showfm">Finance Manager Status</th>
+                  <th>Initiated Date</th>
+                </tr>
+              </thead>
+              <tbody  *ngFor="let dt of initialstatus1">
+                <tr *ngIf="cancelbata && dt.repoid==this.getuser.employee_OId || dt.hrmanagerid==this.getuser.employee_OId || dt.l2managerid==this.getuser.employee_OId || dt.fmanagerid==this.getuser.employee_OId || dt.smanagerid==this.getuser.employee_OId || dt.gmanagerid==this.getuser.employee_OId">
+                <td *ngIf="dt.empid!=this.getuser.employee_OId">
+                 <i  class="fa fa-eye text-primary"  title="View" (click)="open(deptModal1);edit(dt);pqr(dt);"></i>&nbsp;
+                 <i *ngIf="allstatus"  (click)="edit(dt);pqr(dt);findData(dt);select(dt);show=!show;"  title="Edit" class="fa fa-pencil-square-o text-primary"></i>&nbsp;
+                 <i *ngIf="hideee && dt.initiatecheckstatus[0].status=='Approved'" class="fa fa-exclamation-circle text-primary" title="Answer & View Questions/Comments " (click)="edit(dt);open(queModal);pqr(dt);select(dt);edvwqueans(dt);hide=!show"></i>&nbsp;
+                 <i *ngIf="stats && (this.getuser.utype=='HR' || this.getuser.utype=='Hr') && dt.initiatecheckstatus[0].status!='Approved'" style="margin-left: 5%" (click)="open(extupdModal);edit(dt);pqr(dt);findData(dt);"  title="Update Overall Status" class="fa fa-ellipsis-v text-primary"></i>    
+                </td>
+                <td *ngIf="dt.empid!=this.getuser.employee_OId">{{dt.initiatecheckstatus[0].employee}}</td>
+                <td *ngIf="dt.empid!=this.getuser.employee_OId">{{dt.initiatecheckstatus[0].username}}</td>
+                <td *ngIf="dt.empid!=this.getuser.employee_OId">{{dt.initiatecheckstatus[0].businessunit}}</td>
+                <td *ngIf="dt.empid!=this.getuser.employee_OId">{{dt.initiatecheckstatus[0].department}}</td>
+                <td *ngIf="dt.empid!=this.getuser.employee_OId">{{dt.initiatecheckstatus[0].exittype}}</td>
+                <td *ngIf="dt.hrmanagerid==this.getuser.employee_OId && dt.empid!=this.getuser.employee_OId">{{dt.initiatecheckstatus[0].status}}</td>
+                <!-- <td *ngIf="dt.hrmanagerid==this.getuser.employee_OId && dt.smanagerid!=this.getuser.employee_OId && dt.fmanagerid!=this.getuser.employee_OId && dt.l2managerid!=this.getuser.employee_OId && dt.empid!=this.getuser.employee_OId">{{dt.initiatecheckstatus[0].Hrstatus}}</td> -->
+  
+                <td *ngIf="showl1">{{dt.initiatecheckstatus[0].L1status}}</td>
+                <td *ngIf="showl2">{{dt.initiatecheckstatus[0].L2status}}</td>
+                <td *ngIf="showsa">{{dt.initiatecheckstatus[0].SAstatus}}</td>
+                <td *ngIf="showga">{{dt.initiatecheckstatus[0].GAstatus}}</td>
+                <td *ngIf="showfm">{{dt.initiatecheckstatus[0].FMstatus}}</td>
+                
+
+                <!-- <td *ngIf="dt.empid!=this.getuser.employee_OId && dt.fmanagerid==this.getuser.employee_OId || dt.hrmanagerid==this.getuser.employee_OId || dt.gmanagerid==this.getuser.employee_OId || dt.l2managerid==this.getuser.employee_OId || dt.smanagerid==this.getuser.employee_OId || dt.repoid==this.getuser.employee_OId">{{dt.initiatecheckstatus[0].L1status}}</td>
+                <td *ngIf="dt.empid!=this.getuser.employee_OId && dt.fmanagerid==this.getuser.employee_OId || dt.hrmanagerid==this.getuser.employee_OId || dt.gmanagerid==this.getuser.employee_OId || dt.l2managerid==this.getuser.employee_OId || dt.smanagerid==this.getuser.employee_OId">{{dt.initiatecheckstatus[0].L2status}}</td>
+                <td *ngIf="dt.empid!=this.getuser.employee_OId && dt.fmanagerid==this.getuser.employee_OId || dt.hrmanagerid==this.getuser.employee_OId || dt.gmanagerid==this.getuser.employee_OId  || dt.smanagerid==this.getuser.employee_OId">{{dt.initiatecheckstatus[0].SAstatus}}</td>
+                <td *ngIf="dt.empid!=this.getuser.employee_OId && dt.fmanagerid==this.getuser.employee_OId || dt.hrmanagerid==this.getuser.employee_OId || dt.gmanagerid==this.getuser.employee_OId">{{dt.initiatecheckstatus[0].GAstatus}}</td>
+                <td *ngIf="dt.empid!=this.getuser.employee_OId && dt.fmanagerid==this.getuser.employee_OId || dt.hrmanagerid==this.getuser.employee_OId">{{dt.initiatecheckstatus[0].FMstatus}}</td> -->
+
+                <!-- <td *ngIf="dt.hrmanagerid==this.getuser.employee_OId && dt.smanagerid!=this.getuser.employee_OId && dt.fmanagerid!=this.getuser.employee_OId && dt.l2managerid!=this.getuser.employee_OId && dt.empid!=this.getuser.employee_OId && dt.gmanagerid!=this.getuser.employee_OId">{{dt.initiatecheckstatus[0].L1status}}</td>
+                <td *ngIf="dt.hrmanagerid==this.getuser.employee_OId && dt.smanagerid!=this.getuser.employee_OId && dt.fmanagerid!=this.getuser.employee_OId && dt.l2managerid!=this.getuser.employee_OId && dt.empid!=this.getuser.employee_OId && dt.gmanagerid!=this.getuser.employee_OId">{{dt.initiatecheckstatus[0].L2status}}</td>
+                <td *ngIf="dt.hrmanagerid==this.getuser.employee_OId && dt.smanagerid!=this.getuser.employee_OId && dt.fmanagerid!=this.getuser.employee_OId && dt.l2managerid!=this.getuser.employee_OId && dt.empid!=this.getuser.employee_OId && dt.gmanagerid!=this.getuser.employee_OId">{{dt.initiatecheckstatus[0].FMstatus}}</td>
+                <td *ngIf="dt.hrmanagerid==this.getuser.employee_OId && dt.smanagerid!=this.getuser.employee_OId && dt.fmanagerid!=this.getuser.employee_OId && dt.l2managerid!=this.getuser.employee_OId && dt.empid!=this.getuser.employee_OId && dt.gmanagerid!=this.getuser.employee_OId">{{dt.initiatecheckstatus[0].SAstatus}}</td>
+                <td *ngIf="dt.hrmanagerid==this.getuser.employee_OId && dt.smanagerid!=this.getuser.employee_OId && dt.fmanagerid!=this.getuser.employee_OId && dt.l2managerid!=this.getuser.employee_OId && dt.empid!=this.getuser.employee_OId && dt.gmanagerid!=this.getuser.employee_OId">{{dt.initiatecheckstatus[0].GAstatus}}</td> -->
+
+                <td *ngIf="dt.empid!=this.getuser.employee_OId">{{dt.initiatecheckstatus[0].requestdate}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="divhd" class="alert alert-info"  style="margin-left:20%;padding: 0.5% 0.5% 0.5% 0.5%;width:60%;float:center">
+        <i class="fa fa-info-circle" aria-hidden="true" style="padding:0px  10px"></i>
+        <span  style="text-align:center;">No Data Found</span>
+      </div>
+  </div>
+
+ 
+  
+  <md2-dialog #queModal>
+  <!-- <div  *ngIf="hide" id="question"> -->
+    <div *ngIf="service.visible">
+    <div>
+      <span style="font-weight:500">Configure Questions for Employee</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm" (click)="open(extModal);"><i class="fa fa-plus" aria-hidden="true">&nbsp;&nbsp;Add New Questions</i></button>
+    </div><br>
+          <div class="row">
+            <div class="col-lg-12">
+              <div >
+                <table class="table table-bordered ">
+                  <thead class="bg-primary">
+                    <tr > 
+                       <td  style=""><input type="checkbox" (change)="selectAll();" [(ngModel)]="selectedAll"> Check All </td>
+                       <td>Questions</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr *ngFor="let bu of exitproc" >
+                      <td><input type="checkbox" (change)="checkIfAllSelected();" [(ngModel)]="bu.selected" [value]="bu.question"></td>
+                      <td >{{ bu.exitinterviewquestion[0].question }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                  <button  class="btn btn-outline-success btn-sm"(click)="saveq(initialstatus);" >Configure</button>
+                  <!-- <button type="submit" class="btn btn-secondary" (click)="saveque(initialstatus);" >Configure</button> -->
+                 <button class="btn btn-outline-warning btn-sm" (click) = "close(queModal);hide=!show"> Cancel </button>       
+              </div>
+             </div>
+          </div>       
+    </div>
+
+    <div *ngIf="service.invisible">
+        <span style="font-weight:500"><b>QUESTIONS & ANSWERS</b></span>
+    <div class="row box6"  >        
+        
+        <table class="table table-bordered table-striped table-sm">
+         <thead class="bg-success">
+           <tr>
+             <th>Question</th>
+             <th>Answer</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr *ngFor="let bu of objj6;let i=index;">
+           <td>
+            
+             <md-input-container class="example-full-width">
+               <input mdInput   value="{{bu.question}}" readonly>
+             </md-input-container> 
+           </td> 
+           <td>
+             <!-- <input type="text" id="ans" > -->
+             <md-input-container class="example-full-width">
+                 <input mdInput value="{{bu.answer}}" readonly>
+               </md-input-container>
+           </td>       
+         </tr>
+         </tbody>
+       </table>
+    </div>
+    </div>
+  <!-- </div> -->
+</md2-dialog>
+
+
+ 
+<div class="col-md-12" id="statusedit" *ngIf="show" style="height:100%;overflow:auto">
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa fa-home">Home</i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Exit Procedure</li>
+        <li class="breadcrumb-item active">All Exit Procedures</li>
+      </ol>
+    </div>
+  <div>
+    <div class="row">
+        <div class="col-md-4"><br>
+          <md-select placeholder="Status" [(ngModel)]="this.status1"  class="example-full-width">
+          <md-option  *ngFor="let st of status"  [value]="st.value" >
+          {{st.viewValue}}
+          </md-option>
+          </md-select><br>        
+        </div>
+        <div class="col-md-4">
+          <md-input-container class="example-full-width">
+          <input mdInput #message maxlength="200" [(ngModel)]="this.comments1"  placeholder="Comments">
+          <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+          </md-input-container><br>
+        </div>
+        <div class="col-md-4">
+            <md-input-container>
+              <input mdInput [mdDatepicker]="picker1" placeholder="Relieving Date" [(ngModel)]="this.today" required >
+            <button mdSuffix [mdDatepickerToggle]="picker1" ></button>
+           </md-input-container>
+           <md-datepicker #picker1  ></md-datepicker>
+          </div><br>
+        <div *ngIf="reasonn"  class="col-md-12" style="margin-top: 5%" >
+            <md-input-container class="example-full-width">
+            <textarea mdInput placeholder="Reason" [(ngModel)]="this.reason" required ></textarea>
+          </md-input-container>
+        </div><br>
+        <div  class="col-md-12" style="margin-top: 5%" >
+          <button class="btn btn-outline-success btn-sm" (click)="save(initialstatus);initiateexitstatus(HR,L2,mailFormat);"> Save</button>
+          <button class="btn btn-outline-warning btn-sm" (click)="cancel();show=!show"> Cancel</button>
+        </div><br>
+      </div><br>
+      <span><h5 style="margin: 3;"><b>EMPLOYEE DETAILS</b></h5></span>
+      <div class="row box5">
+          <div class="col-md-12">
+           <div class="emp-info">
+            Business Unit : {{initialstatus.initiatecheckstatus[0].businessunit}}
+           </div>
+           <div class="emp-info">
+             Department : {{initialstatus.initiatecheckstatus[0].department}}
+           </div>
+           <div class="emp-info alter-div">
+             Employee : {{initialstatus.initiatecheckstatus[0].employee}}
+           </div>
+           <div class="emp-info alter-div">
+             Employee Id : {{initialstatus.initiatecheckstatus[0].username}}
+           </div>
+           <div class="emp-info">
+            Job Title : {{initialstatus.initiatecheckstatus[0].jobtitle}}
+           </div>
+           <div class="emp-info">
+              Joining Date : {{initialstatus.initiatecheckstatus[0].doj | date}}
+          </div>
+          </div>
+         </div><br>
+      <span><h5 style="margin: 3;"><b>EXIT PROCEDURE DETAILS</b></h5></span>
+      <div class="row box5">
+          <div class="col-md-12">
+           <div class="emp-info">
+             Exit Type : {{initialstatus.initiatecheckstatus[0].exittype}}
+           </div>
+           <div class="emp-info">
+             Raised On : {{initialstatus.initiatecheckstatus[0].requestdate}}
+           </div>
+           <div class="emp-info alter-div">
+             Comments : {{initialstatus.initiatecheckstatus[0].comments}}
+           </div>
+           <div class="emp-info alter-div">
+             Process Status : {{initialstatus.initiatecheckstatus[0].status}}
+           </div>
+           <div class="emp-info">
+            Relieving Date : {{initialstatus.initiatecheckstatus[0].relievingdate}}
+           </div>
+           </div>
+         </div><br>
+          <div class="row box5">
+           <div class="col-md-12"><br>
+             <div class="emp-info  alter-div">
+               L1 Manager : {{initialstatus.initiatecheckstatus[0].reportingmanager}}
+             </div>
+             <div class="emp-info  alter-div">
+               Status : {{initialstatus.initiatecheckstatus[0].L1status}}
+             </div>
+             <div class="emp-info">
+               Comments : {{initialstatus.initiatecheckstatus[0].L1comments}}
+             </div></div><br>
+             <div class="col-md-12">
+             <div class="emp-info  alter-div">
+               L2 Manager : {{this.l2m}}
+             </div>
+             <div class="emp-info  alter-div">
+               Status : {{initialstatus.initiatecheckstatus[0].L2status}}
+             </div>
+             <div class="emp-info">
+               Comments : {{initialstatus.initiatecheckstatus[0].L2comments}}
+             </div></div><br>
+             <div class="col-md-12">
+             <div class="emp-info  alter-div">
+                 HR Manager : {{this.hrm}}
+             </div>
+             <div class="emp-info  alter-div">
+                 Status : {{initialstatus.initiatecheckstatus[0].Hrstatus}}
+             </div>
+             <div class="emp-info">
+                 Comments : {{initialstatus.initiatecheckstatus[0].Hrcomments}}
+             </div>
+             </div>
+             <div class="col-md-12">
+              <div class="emp-info  alter-div">
+                Finance Manager :  {{ this.fmm}}
+              </div>
+              <div class="emp-info  alter-div">
+                Status : {{initialstatus.initiatecheckstatus[0].FMstatus}}
+               </div>
+              <div class="emp-info">
+                Comments : {{initialstatus.initiatecheckstatus[0].FMcomments}}
+              </div>
+              </div>
+              <div class="col-md-12">
+              <div class="emp-info  alter-div">
+                System Admin :  {{ this.saa}}
+              </div>
+              <div class="emp-info  alter-div">
+                Status : {{initialstatus.initiatecheckstatus[0].SAstatus}}
+               </div>
+              <div class="emp-info">
+                Comments : {{initialstatus.initiatecheckstatus[0].SAcomments}}
+              </div>
+              </div>
+         </div>
+    </div>
+  </div>
+</div>
+  <!-- </div> -->
+<!-- </div>
+</div> -->
+
+
+<md2-dialog #extupdModal>
+  <md2-dialog-title>Update Overall Status</md2-dialog-title>
+  <div class="row">
+    <div class="row">
+      <div class="col-md-4"><br>
+        <md-select placeholder="Status" [(ngModel)]="this.status"  class="example-full-width">
+        <md-option  *ngFor="let st of upstatus"  [value]="st.value" >
+        {{st.viewValue}}
+        </md-option>
+        </md-select><br>        
+      </div>
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput #message maxlength="200" [(ngModel)]="this.comments"  placeholder="Comments">
+        <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+        </md-input-container><br>
+      </div>
+      <div class="col-md-4">
+          <md-input-container>
+            <input mdInput [mdDatepicker]="picker1" placeholder="Relieving Date"   [(ngModel)]="this.reldate" required >
+          <button mdSuffix [mdDatepickerToggle]="picker1" ></button>
+         </md-input-container>
+         <md-datepicker #picker1  ></md-datepicker>
+        </div><br>
+      <div  class="col-md-12" style="margin-top: 5%" >
+        <button class="btn btn-outline-success btn-sm" (click)="update(initialstatus);initiateexitstatus(HR,L2,mailFormat);"> Update</button>
+        <button class="btn btn-outline-warning btn-sm" (click) = "close(extupdModal)"> Cancel </button>
+      </div><br>
+    </div><br>
+       
+    <span><h5 style="margin: 3;"><b>EMPLOYEE DETAILS</b></h5></span>
+    <div class="row box5">
+        <div class="col-md-12">
+         <div class="emp-info">
+          Business Unit : {{initialstatus.initiatecheckstatus[0].businessunit}}
+         </div>
+         <div class="emp-info">
+           Department : {{initialstatus.initiatecheckstatus[0].department}}
+         </div>
+         <div class="emp-info alter-div">
+           Employee : {{initialstatus.initiatecheckstatus[0].employee}}
+         </div>
+         <div class="emp-info alter-div">
+           Employee Id : {{initialstatus.initiatecheckstatus[0].username}}
+         </div>
+         <div class="emp-info">
+          Job Title : {{initialstatus.initiatecheckstatus[0].jobtitle}}
+         </div>
+         <div class="emp-info">
+            Joining Date : {{initialstatus.initiatecheckstatus[0].doj | date}}
+        </div>
+        </div>
+       </div><br>
+
+       <span><h5 style="margin: 3;"><b>EXIT PROCEDURE DETAILS</b></h5></span>
+       <div class="row box5">
+           <div class="col-md-12">
+            <div class="emp-info alter-div">
+              Exit Type : {{initialstatus.initiatecheckstatus[0].exittype}}
+            </div>
+            <div class="emp-info alter-div">
+              Raised On : {{initialstatus.initiatecheckstatus[0].requestdate}}
+            </div>
+            <div class="emp-info ">
+              Comments : {{initialstatus.initiatecheckstatus[0].comments}}
+            </div>
+          </div>
+          </div><br>
+  </div>
+</md2-dialog>
+
+
+
+<md2-dialog #extModal>
+    <md2-dialog-title>Exit Interview Questions</md2-dialog-title>
+    <div class="row">
+        <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput placeholder="Questions" [(ngModel)]="exit.exitinterviewquestion[0].question" maxlength="100" required>
+            <md-error>Please enter question.</md-error>
+            </md-input-container><br><br><br>
+          </div>
+          <div class="col-md-6">
+            <md-input-container class="example-full-width">
+            <input mdInput #message maxlength="200" [(ngModel)]="exit.exitinterviewquestion[0].description" placeholder="Description">
+            <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+            </md-input-container><br><br><br>
+          </div>
+          <br>
+    </div>         
+    <md2-dialog-footer>
+        <button  class="btn btn-outline-success btn-sm" (click)="saveque(exit);close(extModal);show=show"> Save</button>
+        <!-- <button class="btn btn-outline-warning btn-sm" (click) = "close(extModal)"> Cancel </button> -->
+    </md2-dialog-footer>
+  </md2-dialog>
+
+
+  <md2-dialog #deptModal1>
+      <md2-dialog-title>Exit Procedure Details</md2-dialog-title>
+      <!-- <div *ngIf="service.invisible" (click)="viewinit(data)">
+      <span><h4>Exit Procedure Details</h4></span> -->
+      <div class="row box5">
+       <div class="col-md-12">
+        <div class="emp-info">
+          Exit Type : {{initialstatus.initiatecheckstatus[0].exittype}}
+        </div>
+        <div class="emp-info">
+          Raised On: {{initialstatus.initiatecheckstatus[0].requestdate}}
+        </div>
+        <div class="emp-info alter-div">
+          Comments : {{initialstatus.initiatecheckstatus[0].comments}}
+        </div>
+        <div class="emp-info alter-div">
+          Process Status: {{initialstatus.initiatecheckstatus[0].status}}
+        </div>
+        <div class="emp-info">
+         Relieving Date : {{initialstatus.initiatecheckstatus[0].relievingdate}}
+        </div>
+        </div>
+      </div><br>
+      <div *ngIf="stats" class="row box5">
+        <div class="col-md-12">
+          {{Empsts}}
+        </div>
+      </div>
+       <div class="row box5">
+        <div class="col-md-12"><br>
+          <div class="emp-info  alter-div">
+            L1 Manager : {{initialstatus.initiatecheckstatus[0].reportingmanager}}
+            <!-- {{extsetdata.exitsetting[0].l1_manager}} -->
+          </div>
+          <div class="emp-info  alter-div">
+            Status : {{initialstatus.initiatecheckstatus[0].L1status}}
+          </div>
+          <div class="emp-info">
+            Comments : {{initialstatus.initiatecheckstatus[0].L1comments}}
+          </div></div><br>
+          <div class="col-md-12">
+          <div class="emp-info  alter-div">
+            L2 Manager :  {{ this.l2m}}
+           </div>
+          <div class="emp-info  alter-div">
+            Status : {{initialstatus.initiatecheckstatus[0].L2status}}
+          </div>
+          <div class="emp-info">
+            Comments : {{initialstatus.initiatecheckstatus[0].L2comments}}
+          </div></div><br>
+          <div class="col-md-12">
+          <div class="emp-info  alter-div">
+              HR Manager :  {{ this.hrm}}
+          </div>
+          <div class="emp-info  alter-div">
+              Status : {{initialstatus.initiatecheckstatus[0].Hrstatus}}
+          </div>
+          <div class="emp-info">
+              Comments : {{initialstatus.initiatecheckstatus[0].Hrcomments}}
+          </div>
+          </div>
+          <div class="col-md-12">
+          <div class="emp-info  alter-div">
+            Finance Manager :  {{ this.fmm}}
+          </div>
+          <div class="emp-info  alter-div">
+            Status : {{initialstatus.initiatecheckstatus[0].FMstatus}}
+           </div>
+          <div class="emp-info">
+            Comments : {{initialstatus.initiatecheckstatus[0].FMcomments}}
+          </div>
+          </div>
+          <div class="col-md-12">
+          <div class="emp-info  alter-div">
+            System Admin :  {{ this.saa}}
+          </div>
+          <div class="emp-info  alter-div">
+            Status : {{initialstatus.initiatecheckstatus[0].SAstatus}}
+           </div>
+          <div class="emp-info">
+            Comments : {{initialstatus.initiatecheckstatus[0].SAcomments}}
+          </div>
+          </div>
+      </div>
+          <br>
+  
+      <span><h5>PROCESS HISTORY</h5></span>
+      <div class="row">
+        <div class="box5">
+         <b style="font-size: 18px;">Reason</b> 
+        <table class="table table-bordered table-striped table-sm">  
+         <tbody> 
+           <tr *ngIf="initialstatus.initiatecheckstatus[0].SAstatus!='Pending'">
+             <td>System Admin</td>
+             <td>{{initialstatus.initiatecheckstatus[0].SAreason}}</td>
+           </tr>
+           <tr *ngIf="initialstatus.initiatecheckstatus[0].GAstatus!='Pending'">
+              <td>General Admin</td>
+              <td>{{initialstatus.initiatecheckstatus[0].GAreason}}</td>
+           </tr>
+           <tr *ngIf="initialstatus.initiatecheckstatus[0].FMstatus!='Pending'">
+              <td>Finance Manager</td>
+              <td>{{initialstatus.initiatecheckstatus[0].FMreason}}</td>
+           </tr>
+         </tbody>
+        </table>
+        </div>
+        <br>
+        <div class="box5">
+        <table class="table  table-sm">  
+          <tbody> 
+          <tr *ngIf="initialstatus.initiatecheckstatus[0].Hrstatus=='Approved'">
+              <td>
+                <img class="imageClass" src="./assets/Images/employee.jpg"/>
+              </td>
+               <td>{{initialstatus.initiatecheckstatus[0].indexitreqstatushr}} on {{initialstatus.initiatecheckstatus[0].Hrdate}} at {{initialstatus.initiatecheckstatus[0].Hrupdatetime}}</td>
+          </tr>
+          <tr *ngIf="initialstatus.initiatecheckstatus[0].Hrstatus=='Rejected'">
+              <td>
+                <img class="imageClass" src="./assets/Images/employee.jpg"/>
+              </td>
+               <td>{{initialstatus.initiatecheckstatus[0].indexitreqstatushr}} on {{initialstatus.initiatecheckstatus[0].Hrdate}} at {{initialstatus.initiatecheckstatus[0].Hrupdatetime}}</td>
+          </tr>
+          <tr *ngIf="initialstatus.initiatecheckstatus[0].L1status=='Approved'">
+              <td>
+                <img class="imageClass" src="./assets/Images/employee.jpg"/>
+              </td>
+               <td>{{initialstatus.initiatecheckstatus[0].indexitreqstatusl1}} on {{initialstatus.initiatecheckstatus[0].L1date }} at {{initialstatus.initiatecheckstatus[0].L1updatetime}}</td>
+          </tr>
+          <tr *ngIf="initialstatus.initiatecheckstatus[0].L1status=='Rejected'">
+              <td>
+                <img class="imageClass" src="./assets/Images/employee.jpg"/>
+              </td>
+               <td *ngIf="initialstatus.initiatecheckstatus[0].L1status=='Rejected'">{{initialstatus.initiatecheckstatus[0].indexitreqstatusl1}} on {{initialstatus.initiatecheckstatus[0].L1date}} at {{initialstatus.initiatecheckstatus[0].L1updatetime}}</td>
+          </tr>
+          <tr *ngIf="initialstatus.initiatecheckstatus[0].L2status=='Approved'">
+              <td>
+                <img class="imageClass" src="./assets/Images/employee.jpg"/>
+              </td>
+               <td>{{initialstatus.initiatecheckstatus[0].indexitreqstatusl2}} on {{initialstatus.initiatecheckstatus[0].L2date}} at {{initialstatus.initiatecheckstatus[0].L2updatetime}}</td>
+          </tr>
+          <tr *ngIf="initialstatus.initiatecheckstatus[0].L2status=='Rejected'">
+              <td>
+                <img class="imageClass" src="./assets/Images/employee.jpg"/>
+              </td>
+               <td>{{initialstatus.initiatecheckstatus[0].indexitreqstatusl2}} on {{initialstatus.initiatecheckstatus[0].L2date}} at {{initialstatus.initiatecheckstatus[0].L2updatetime}}</td>
+          </tr>
+          <tr *ngIf="initialstatus.initiatecheckstatus[0].SAstatus=='Approved'">
+            <td>
+              <img class="imageClass" src="./assets/Images/employee.jpg"/>
+            </td>
+             <td>{{initialstatus.initiatecheckstatus[0].indexitreqstatusSA}} on {{initialstatus.initiatecheckstatus[0].SAdate}} at {{initialstatus.initiatecheckstatus[0].SAupdatetime}}</td>
+        </tr>
+        <tr *ngIf="initialstatus.initiatecheckstatus[0].SAstatus=='Hold'">
+            <td>
+              <img class="imageClass" src="./assets/Images/employee.jpg"/>
+            </td>
+             <td>{{initialstatus.initiatecheckstatus[0].indexitreqstatusSA}} on {{initialstatus.initiatecheckstatus[0].SAdate}} at {{initialstatus.initiatecheckstatus[0].SAupdatetime}}</td>
+        </tr>
+        <tr *ngIf="initialstatus.initiatecheckstatus[0].GAstatus=='Approved'">
+            <td>
+              <img class="imageClass" src="./assets/Images/employee.jpg"/>
+            </td>
+             <td>{{initialstatus.initiatecheckstatus[0].indexitreqstatusGA}} on {{initialstatus.initiatecheckstatus[0].GAdate}} at {{initialstatus.initiatecheckstatus[0].GAupdatetime}}</td>
+        </tr>
+        <tr *ngIf="initialstatus.initiatecheckstatus[0].GAstatus=='Hold'">
+            <td>
+              <img class="imageClass" src="./assets/Images/employee.jpg"/>
+            </td>
+             <td>{{initialstatus.initiatecheckstatus[0].indexitreqstatusGA}} on {{initialstatus.initiatecheckstatus[0].GAdate}} at {{initialstatus.initiatecheckstatus[0].GAupdatetime}}</td>
+        </tr>
+        <tr *ngIf="initialstatus.initiatecheckstatus[0].FMstatus=='Approved'">
+            <td>
+              <img class="imageClass" src="./assets/Images/employee.jpg"/>
+            </td>
+             <td>{{initialstatus.initiatecheckstatus[0].indexitreqstatusFM}} on {{initialstatus.initiatecheckstatus[0].FMdate}} at {{initialstatus.initiatecheckstatus[0].FMupdatetime}}</td>
+        </tr>
+        <tr *ngIf="initialstatus.initiatecheckstatus[0].Fmstatus=='Hold'">
+            <td>
+              <img class="imageClass" src="./assets/Images/employee.jpg"/>
+            </td>
+             <td>{{initialstatus.initiatecheckstatus[0].indexitreqstatusFM}} on {{initialstatus.initiatecheckstatus[0].FMdate}} at {{initialstatus.initiatecheckstatus[0].FMupdatetime}}</td>
+        </tr>
+          <tr *ngIf="initialstatus.initiatecheckstatus[0].L1status=='Approved' && initialstatus.initiatecheckstatus[0].Hrstatus=='Approved'">
+              <td>
+                <img class="imageClass" src="./assets/Images/employee.jpg"/>
+              </td>
+               <td>{{initialstatus.initiatecheckstatus[0].indexitreqstatusl1hr}} on {{initialstatus.initiatecheckstatus[0].Hrdate}} at {{initialstatus.initiatecheckstatus[0].Hrupdatetime}}</td>
+          </tr>
+          <tr *ngIf="initialstatus.initiatecheckstatus[0].L1status=='Rejected' && initialstatus.initiatecheckstatus[0].Hrstatus=='Rejected'">
+              <td>
+                <img class="imageClass" src="./assets/Images/employee.jpg"/>
+              </td>
+               <td>{{initialstatus.initiatecheckstatus[0].indexitreqstatusl1hr}} on {{initialstatus.initiatecheckstatus[0].Hrdate}} at {{initialstatus.initiatecheckstatus[0].Hrupdatetime}}</td>
+          </tr>
+          <tr *ngIf="initialstatus.initiatecheckstatus[0].L1status=='Approved' && initialstatus.initiatecheckstatus[0].L2status=='Approved'">
+            <td>
+              <img class="imageClass" src="./assets/Images/employee.jpg"/>
+            </td>
+             <td>{{initialstatus.initiatecheckstatus[0].indexitreqstatusl1l2}} on {{initialstatus.initiatecheckstatus[0].L2date}} at {{initialstatus.initiatecheckstatus[0].L2updatetime}}</td>
+          </tr>
+        <tr *ngIf="initialstatus.initiatecheckstatus[0].L1status=='Rejected' && initialstatus.initiatecheckstatus[0].L2status=='Rejected'">
+            <td>
+              <img class="imageClass" src="./assets/Images/employee.jpg"/>
+            </td>
+             <td>{{initialstatus.initiatecheckstatus[0].indexitreqstatusl1l2}} on {{initialstatus.initiatecheckstatus[0].L2date}} at {{initialstatus.initiatecheckstatus[0].L2updatetime}}</td>
+        </tr>
+        <tr>
+            <td>
+                <img class="imageClass" src="./assets/Images/employee.jpg"/>
+            </td>
+               <td>{{initialstatus.initiatecheckstatus[0].requested}} on {{initialstatus.initiatecheckstatus[0].requestdate}}</td>
+        </tr>
+      </tbody>
+      </table>
+    </div>
+     </div>
+    <md2-dialog-footer>
+              <button type="submit" class="btn btn-secondary" (click)="close(deptModal1)">Cancel</button>
+          </md2-dialog-footer>
+    </md2-dialog>
+  
+
+
+
+
+<!-- 
+    <md2-dialog #deptModal2>      
+        <div>
+        <div>
+          <span style="font-weight:500">Terminate/Retired Employee</span>
+        </div><br>
+        <div class="col-md-12">
+              <div class="row">               
+                  <div class="col-md-5">
+                    <md-select placeholder="Select Exit Type">
+                      <md-option></md-option>
+                    </md-select>
+                  </div>
+                  <div class="col-md-5">
+                    <md-select placeholder="Select Employee">
+                      <md-option></md-option>
+                    </md-select>
+                  </div>
+                </div>
+                <br><br>
+        <div class="col-md-12">
+          <button  class="btn btn-outline-success btn-sm"(click)="saveq(initialstatus);" >Terminate/Retired</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "close(deptModal2);"> Cancel </button>       
+        </div>
+                 
+        </div>       
+        </div>
+    </md2-dialog>
+     -->

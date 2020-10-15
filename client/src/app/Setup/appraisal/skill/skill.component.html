@@ -1,0 +1,80 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%;" >
+  <div *ngIf = "!show"  >
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Appraisal</li>
+        <li class="breadcrumb-item ">Configuration</li>
+        <li class="breadcrumb-item active">Skills</li>
+      </ol>
+    </div>
+    <div>
+      <span style="font-weight:500">Skills</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "show = !show;updatebutton=false">Add</button>
+      
+    </div><br><br>
+    <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+      {{ message }}
+    </div>
+    <div class="row">
+      <div class="col-lg-12" >
+        <div >
+          <table class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Skill</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr *ngFor="let sk of datas;let i = index " >
+                <td><i  (click)="edit(sk);show = !show;hide=!hide"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;<i (click)="delete(sk,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                
+                <td >{{sk.skill[0].skill}}</td>
+                <td >{{sk.skill[0].description}}</td>
+              </tr>
+            </tbody>
+            
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf= "show" >
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Appraisal</li>
+        <li class="breadcrumb-item ">Configuration</li>
+        <li class="breadcrumb-item ">Skills</li>
+        <li class="breadcrumb-item active"><i class="fa fa-plus">Add</i></li>
+      </ol>
+    </div><br>
+    <div class="row">
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput placeholder="Skill" [(ngModel)]="skills.skill[0].skill" required>
+        <md-error>
+        Please enter Skill.
+        </md-error>
+        </md-input-container><br><br><br>
+      </div>
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput #message maxlength="200" [(ngModel)]="skills.skill[0].description" placeholder="Description">
+        <md-hint align="end">{{message.value.length}} characters entered(200 maximum)</md-hint>
+        </md-input-container><br><br><br>
+      </div>
+      <div  class="col-md-12" style="margin-top: 5%">
+        <button *ngIf="!updatebutton" class="btn btn-outline-success btn-sm" (click)="save(skills);show=!show"> Save</button>
+        <button *ngIf="!updatebutton" class="btn btn-outline-danger btn-sm" (click) = "cancel(skills);show = !show;"> Cancel </button>
+        <button *ngIf="updatebutton"  class="btn btn-outline-success btn-sm" (click)="update(skills,skills,skills.skill[0].skills);show = !show;hide=!hide"> Update</button>
+        <button *ngIf="updatebutton" class="btn btn-outline-danger btn-sm" (click) = "cancel(skills);show = !show;hide=!hide"> Cancel </button>
+      </div>
+    </div>
+  </div>
+  </div>

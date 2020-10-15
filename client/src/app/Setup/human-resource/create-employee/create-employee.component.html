@@ -1,0 +1,124 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div class="">
+    <ol class="breadcrumb row bg-primary">
+      <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+      <li class="breadcrumb-item ">HR </li>
+      <li class="breadcrumb-item ">Employees </li>
+      <li class="breadcrumb-item Active">Add </li>
+    </ol>
+  </div>
+
+  <div style="overflow: auto">
+<div class="display_emp box" *ngIf="service.photobox" (click)="view1(data)">  
+  <div style="padding:5px;" class="row">
+    <div class="col">
+      <img class="imageClass imgbox" src="./assets/Images/creimg.png"/>
+      <br>
+      <div *ngIf="this.getuser.utype=='admin' || this.getuser.utype=='HR' || this.getuser.utype=='Executive Director'" class="btn-group" style="float:left; padding: 9px">
+        <button *ngIf="actbtn" class="btn btn-primary btn-sm" (click)="changeView('active',officiald);" [class.active]="view === 'active'">Active</button>
+        <button *ngIf="inactbtn" class="btn btn-primary btn-sm" (click)="changeView('inactive',officiald)" [class.active]="view === 'inactive'">Inactive</button> 
+      </div>    
+     </div>
+    <div class="col-9" *ngFor="let employee of officiald">
+      <div>  
+     <div style="border-bottom:2px dotted rgb(167, 165, 165);line-height: 3;">     
+         <a> <b>Employee Name</b></a>&nbsp;:&nbsp;<a></a> {{employee.official[0].firstname}} {{employee.official[0].lastname}}
+         <!-- {{employee.official[0].firstname}} {{employee.official[0].middlename}} {{employee.official[0].lastname}} -->
+     </div>
+
+     <div style="border-bottom:2px dotted rgb(167, 165, 165);line-height: 3;">     
+      <a> <b>Employee Id</b></a>&nbsp;:&nbsp;<a></a> {{employee.official[0].id}}
+      </div>
+     
+     <div style="border-bottom:2px dotted rgb(167, 165, 165);line-height: 3;">     
+       <a><b>Email</b></a>&nbsp;:&nbsp;<a></a><a>{{employee.official[0].email}}</a>
+     </div>
+     
+     <div style="line-height: 3;">     
+       <a><b>Contact Number</b></a>&nbsp;:&nbsp;<a></a> {{employee.official[0].phonenumber}}
+     </div>  
+   </div>             
+  </div>
+</div>
+</div><br>
+
+  <!-- style="padding: 0% 0% 0% 2%;margin-top: 2%;position:relative;" -->
+  <div class="row" >
+    <div class="" style="width:17%;">
+      <ul class="nav nav-pills nav-pills flex-column">
+        <li class="nav-item "  (click)="official()" >
+          <a class="nav-link"  >Official</a>
+        </li>
+        <li class="nav-item" (click)="documents()" role="tab">
+          <a class="nav-link" >Documents</a>
+        </li>
+        <li class="nav-item" (click)="leave()">
+          <a class="nav-link">Leave</a>
+        </li>
+        <li class="nav-item" (click)="holidays()">
+          <a class="nav-link ">Holidays</a>
+        </li>
+        <li class="nav-item" (click)="salary()">
+          <a class="nav-link ">Salary</a>
+        </li>
+        <li class="nav-item" (click)="personal()">
+          <a class="nav-link ">Personal</a>
+        </li>
+        <li class="nav-item" (click)="contact()">
+          <a class="nav-link ">Contact</a>
+        </li>
+        <li class="nav-item" (click)="skills()">
+          <a class="nav-link ">Skills</a>
+        </li>
+        <li class="nav-item" (click)="jobHistory()">
+          <a class="nav-link ">JobHistory</a>
+        </li>
+        <!-- <li class="nav-item" (click)="experience()">
+          <a class="nav-link ">Experience</a>
+        </li> -->
+        <li class="nav-item" (click)="education()">
+          <a class="nav-link ">Education</a>
+        </li>
+        <li class="nav-item" (click)="trcer()">
+          <a class="nav-link ">Training & Certifications</a>
+        </li>
+        <li class="nav-item" (click)="medical()">
+          <a class="nav-link ">Medical Claims</a>
+        </li>
+        <li class="nav-item" (click)="disablity()">
+          <a class="nav-link ">Disability</a>
+        </li>
+        <li class="nav-item" (click)="dependency()">
+          <a class="nav-link ">Nominee</a>
+        </li>
+        <li class="nav-item" (click)="visa()">
+          <a class="nav-link ">Visa & Immigration</a>
+        </li>
+        <li class="nav-item" (click)="corpcard()">
+          <a class="nav-link ">Corparate Card</a>
+        </li>
+        <li class="nav-item" (click)="weligib()">
+          <a class="nav-link ">Working Eligibility</a>
+        </li>
+        <li class="nav-item" (click)="adetails()">
+          <a class="nav-link ">Additional Details</a>
+        </li>
+      </ul>
+    </div>
+    <div class="" style="width:83% ;">
+      <div >
+        <router-outlet name="fourthchild"></router-outlet>
+      </div>
+    </div>
+  </div>
+</div> <!--  -->
+</div>
+
+
+
+
+
+
+
+
+

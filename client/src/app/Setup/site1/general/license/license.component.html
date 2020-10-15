@@ -1,0 +1,83 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div  *ngIf= "!show" >
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">Site </li>
+        <li class="breadcrumb-item ">General </li>
+        <li class="breadcrumb-item active"> License Types</li>
+      </ol>
+    </div>
+    
+    <div >
+      <span style="font-weight:500">License Type</span>
+      <button type="button" style="float: right;" class="btn btn-outline-primary btn-sm"  (click) = "show = !show">Add</button>
+    </div><br><br>
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+          <table  class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>License Types</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let li of alllicense; let i=index ">
+              <tr>
+                <td>
+                  <i title="Edit" *ngIf="li.id !== editRowId" (click)="toggle(li.id)" (click)="edit(li.id)" style="margin-left: 1%;"  class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  <i title="Delete" style="margin-left: 1%;" class="fa fa-trash" aria-hidden="true" (click)="remove(li,i)" ></i>
+                  <i title="Save" *ngIf="li.id == editRowId" style="float: right" class="fa fa-floppy-o" aria-hidden="true"  (click)="update(li)"></i>
+                </td>
+                
+                <td *ngIf="li.id == editRowId" class="example-full-width">
+                  <input type="text"  [(ngModel)]="li.licensetype[0].licensetype">
+                </td>
+                <td  *ngIf="li.id !== editRowId">{{li.licensetype[0].licensetype}}</td>
+                <td *ngIf="li.id == editRowId" class="example-full-width">
+                  <input type="text"  [(ngModel)]="li.licensetype[0].description">
+                </td>
+                <td  *ngIf="li.id !== editRowId">{{li.licensetype[0].description}}</td>
+                
+                
+                
+              </tr>
+            </tbody>
+            
+          </table>
+        </div>
+      </div>
+      </div>
+    </div>
+      <div *ngIf= "show">
+        <div >
+          <ol class="breadcrumb row bg-primary">
+            <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+            <li class="breadcrumb-item ">Site </li>
+            <li class="breadcrumb-item ">General </li>
+            <li class="breadcrumb-item "> License Types</li>
+            <li class="breadcrumb-item active"> <i class="fa fa-plus">Add</i></li>
+          </ol>
+        </div>
+        <div  class="row">
+          <div class="col-md-3">
+            <md-input-container class="example-full-width">
+            <input  required mdInput placeholder="License Types"  [(ngModel)]="data.licensetype">
+            
+            </md-input-container><i mdTooltip="Ex:Class A,Class B,Class C" class="fa fa-question-circle"></i><br>
+          </div>
+          <div class="col-md-3">
+            <md-input-container class="example-full-width">
+            <input mdInput #message maxlength="200" [(ngModel)]="data.description" placeholder="Description">
+            <md-hint align="start">{{message.value.length}} characters entered(200 maximum)</md-hint>
+            </md-input-container><br>
+          </div>
+          <div  class="col-md-12" style="margin-top: 5%">
+            <button class="btn btn-outline-success btn-sm" (click)="save(data);show=!show"> Save</button>
+            <button class="btn btn-outline-danger btn-sm" (click) = "show=!show"> Cancel </button>
+          </div>
+        </div>
+      </div>
+ </div>   

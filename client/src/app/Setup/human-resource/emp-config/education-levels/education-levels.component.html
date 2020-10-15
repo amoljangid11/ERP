@@ -1,0 +1,194 @@
+<div class="col-md-12 card card-outline-primary" style="height:100%">
+  <div *ngIf = "!show" >
+    <div >
+      <ol class="breadcrumb row bg-primary">
+        <li class="breadcrumb-item "> <i class="fa  fa-home">Home </i></li>
+        <li class="breadcrumb-item ">HR </li>
+        <li class="breadcrumb-item ">Employee Configuration</li>
+        <li class="breadcrumb-item active">Education Levels</li>
+      </ol>
+    </div>
+    
+    <div>
+      <span style="font-weight:500">Education Levels</span>
+      <button type="button" style="float: right;margin:0% 2% 0% 0%" class="btn btn-outline-primary btn-sm"  (click) = "cancel();show = !show;">Add</button>
+    </div><br><br>
+    <div class="row">
+      <div class="col-lg-12">
+        <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+          {{ message }}
+        </div>
+        <div *ngIf="deleted" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+          {{ message }}
+        </div>
+        
+        <div >
+          <table  class="table table-bordered table-striped table-sm">
+            <thead class="bg-success">
+              <tr>
+                <th>Action</th>
+                <th>Education Level</th>
+                <th>Courses</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let el of datas;let i = index " >
+                <td>
+                    <i class="fa fa-eye"  title="View" (click)="open(deptModal);view(el);"></i>&nbsp;&nbsp;
+                    <i  (click)="edit(el);show=!show"  title="Edit" class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;
+                    <i (click)="delete(el,i)" title="Delete" class="fa fa-trash-o"></i></td>
+                <td>{{el.educationlevel[0].educationlevel}}</td>
+                <td><ul *ngFor="let bb of courseview;let i=index"><li *ngIf="bb.educationlevel==el.educationlevel[0].educationlevel">{{bb.coursename}}</li></ul></td>
+                <td>{{el.educationlevel[0].description}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div></div>
+      </div>
+    </div>
+    <br>
+    <form class="form-horizontal" [formGroup]="form">
+    <div *ngIf= "show">
+      <div >
+        <ol class="breadcrumb row bg-primary">
+          <li class="breadcrumb-item "><i class="fa  fa-home">Home </i></li>
+          <li class="breadcrumb-item ">HR </li>
+          <li class="breadcrumb-item ">Employee Configuration</li>
+          <li class="breadcrumb-item ">Education Levels</li>
+          <li class="breadcrumb-item active">Add</li>
+        </ol>
+      </div><br>
+      <div class="row">
+        <div class="col-md-4" *ngIf="e1">
+          <md-input-container class="example-full-width">
+            <!-- pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" -->
+          <input mdInput [(ngModel)]="level.educationlevel[0].educationlevel"  placeholder="Education Level"  maxlength="20" class="form-control" formControlName="educationlevel" required>
+          <md-error>Please Enter Education Level</md-error>
+          </md-input-container><i mdTooltip="Secondary,Master Degree" class="fa fa-question-circle" ></i><br><br><br>
+        </div>
+        <div class="col-md-4" *ngIf="v1">
+          <md-input-container class="example-full-width">
+            <!-- pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" -->
+          <input mdInput [(ngModel)]="level.educationlevel[0].educationlevel" [value]="level.educationlevel[0].educationlevel"  placeholder="Education Level"  maxlength="20" class="form-control" formControlName="educationlevel" required>
+          <md-error>Please Enter Education Level</md-error>
+          </md-input-container><i mdTooltip="Secondary,Master Degree" class="fa fa-question-circle" ></i><br><br><br>
+        </div>
+        <div class="col-md-4"><br>
+            <!-- <md-select placeholder="Course" [(ngModel)]="level.educationlevel[0].courses" formControlName="course" required>
+                <md-option *ngFor="let co of datas1 "  (click)="select(co.countryal)" [value]="co.countryal" >
+                {{co.countryal}}
+                </md-option>
+            </md-select><br> -->
+            <angular2-multiselect [data]="coslist" [(ngModel)]="level.educationlevel[0].course" [settings]="settings" formControlName="courses" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)" required>
+              </angular2-multiselect>
+              <!-- <md-error *ngIf="level.educationlevel[0].course">Please Select Course Name</md-error> -->
+           <i style="color: #1565c0" onclick="document.getElementById('course').style.display='block'">Add Courses</i><br><br><br>
+          </div>
+
+        <div class="col-md-4" *ngIf="e1">
+          <md-input-container class="example-full-width">
+          <input mdInput #message maxlength="200" [(ngModel)]="level.educationlevel[0].description" placeholder="Description" class="form-control" formControlName="description">
+          <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+          </md-input-container><br><br><br>
+        </div>
+        <div class="col-md-4" *ngIf="v1">
+          <md-input-container class="example-full-width">
+          <input mdInput #message maxlength="200" [(ngModel)]="level.educationlevel[0].description" [value]="level.educationlevel[0].description" placeholder="Description" class="form-control" formControlName="description">
+          <md-hint align="end">{{message.value.length}} Characters entered / 200</md-hint>
+          </md-input-container><br><br><br>
+        </div>
+        <div  class="col-md-12" style="margin-top: 5%">
+          <button  *ngIf="!updates" class="btn btn-outline-success btn-sm" (click)="save(level);show=!show" [disabled]="!form.valid"> Save</button>
+          <button  *ngIf="updates" class="btn btn-outline-success btn-sm" (click)="update(level);show=!show;updates=!updates" [disabled]="!form.valid"> Update</button>
+          <button class="btn btn-outline-warning btn-sm" (click) = "cancel(level);show=!show;updates=!update"> Cancel </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  </div>
+
+
+  <div id="course" class="w3-modal w3-animate-opacity">
+      <div class="w3-modal-content w3-card-4">
+        <header class="w3-container w3-teal bg-primary">
+          <span onclick="document.getElementById('course').style.display='none'"  style="margin-top: -1%;font-weight: 500"
+          class=" w3-display-topright fa fa-times " ></span>
+          <span><b>Course</b></span>
+        </header>
+        <div class="w3-container">
+          <div class="col-md-12">
+            <div class="row">
+              <div  style="display: inline-flex;" class="col-md-12">
+                <div class="col-md-6">
+                  <md-input-container>
+                  <input mdInput  [(ngModel)]="cors.courses[0].coursename" placeholder="Course Name" pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" minlength="2" maxlength="40">
+                  <!-- <md-error *ngIf="abc.controls['countnm'].errors && (abc.controls['countnm'].dirty || abc.controls['countnm'].touched)" [ngStyle]="{'color': 'red'}"> country name is required  -->
+                    <!-- </md-error> -->
+                  </md-input-container>
+                  <br><br><br><br>
+                </div>
+                <div class="col-md-6">
+                  <md-input-container>
+                  <input mdInput  [(ngModel)]="cors.courses[0].coursecode" placeholder="Course Code"  minlength="1" maxlength="20">
+                  <!-- <md-error *ngIf="abc.controls['countcd'].errors && (abc.controls['countcd'].dirty || abc.controls['countcd'].touched)" [ngStyle]="{'color': 'red'}"> country code is required  -->
+                    <!-- </md-error> -->
+                  </md-input-container>
+                  <br><br><br><br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="w3-container w3-teal" style="border-top: 0.5px solid lightgrey">
+          <div class="col-sm-12">
+              <!-- (click)="savecountry(alert,document)" [disabled]="abc.invalid" -->
+            <button style="float: right;" type="submit" class="btn btn-primary btn-sm" (click)="savecourse(cors);viewedulevel(level);"  data-dismiss="model" >Save Course</button>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+  
+  <md2-dialog #deptModal>
+      <md2-dialog-title>Education Levels</md2-dialog-title>
+      <!-- <div class="row">
+        <div class="col-md-12">
+ 
+        <div class="emp-info alter-div">
+            Education Level: {{level.educationlevel[0].educationlevel}}
+        </div>
+        <div class="emp-info alter-div">
+            Courses: 
+        </div>
+        <div class="emp-info">
+            Description: {{level.educationlevel[0].description}}
+        </div>
+        <div class="emp-info">
+        </div>
+        </div>
+     
+      </div><br><br>  -->
+
+      <div class="box33">
+          <table class="table table-striped table-hover" cellspacing="5" border = "1" frame=hsides rules=rows>
+              <tr>
+                  <td><b>Education Level</b></td>
+                  <td>{{level.educationlevel[0].educationlevel}}<td>
+                      <td><b>Description</b></td>
+                      <td>{{level.educationlevel[0].description}}<td>
+              </tr>
+              <tr>
+                 
+                      <td><b>Courses</b></td> 
+                      <td><ul *ngFor="let bb of courseview;let i=index"><li *ngIf="bb.educationlevel==level.educationlevel[0].educationlevel">{{bb.coursename}}</li></ul><td>
+                  <td></td> 
+                  <td><td>
+              </tr>
+          </table>
+      </div>
+      <!-- <md2-dialog-footer>
+        <button type="submit" class="btn btn-outline-primary btn-sm" (click)="close(deptModal)">Cancel</button>
+    </md2-dialog-footer> -->
+    </md2-dialog>
+    

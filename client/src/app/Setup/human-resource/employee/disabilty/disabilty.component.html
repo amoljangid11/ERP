@@ -1,0 +1,72 @@
+
+<div style="display: both" class="col-md-12">
+    <span style="font-weight:500">Disability</span><br><br>
+  </div>
+  <div *ngIf="edited" [ngClass]="messageClass"  style="text-align:center;margin-left:30%;padding: 0.5% 0.5% 0.5% 0.5%;width:40%;float:center">
+    {{ message }}
+  </div>
+  <form class="form-horizontal" [formGroup]="form" *ngIf="service.visible" >
+  <div  class="col-md-12">
+    <div class="row">
+      
+      <div class="col-md-4">
+        <br>
+        <md-select placeholder="Select Disability Type" (change)="hideother(employee.disability[0].disabilitytype)" [(ngModel)]="employee.disability[0].disabilitytype" name="disability" formControlName="disability" required>
+        <md-option *ngFor="let dis of datas"   [value]="dis.disabilityvalue">
+        {{dis.disabilityvalue}}
+        </md-option>
+        <md-option  value="Other"><b style="color:cornsilk">Other Impairments</b></md-option>
+        </md-select><br><br>
+      </div>
+      <div class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput [(ngModel)]="employee.disability[0].disabilityname"   placeholder="Disability"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" formControlName="name" maxlength="50" >
+        </md-input-container><br><br>
+      </div>
+      <div class="col-md-4">
+        <md-input-container>
+        <textarea mdInput [(ngModel)]="employee.disability[0].from" placeholder="Disablity From" formControlName="from" required></textarea>
+        <!-- <button mdSuffix [mdDatepickerToggle]="pick2"></button> -->
+        <md-error>Please enter disability from</md-error>
+        </md-input-container><br><br>
+        <!-- <md-datepicker #pick2></md-datepicker> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <md-input-container class="full-width">
+        <textarea mdInput #message [(ngModel)]="employee.disability[0].reason"  maxlength="200" mdTextareaAutosize minRows="6" placeholder="Description/Reason" id="description" formControlName="description"></textarea>
+        <md-hint align="end">{{message.value.length}} characters entered / 200</md-hint>
+        </md-input-container><br><br>
+      </div>
+  
+      <div style="display: inline-flex;" *ngIf="show"  class="col-md-4">
+        <md-input-container class="example-full-width">
+        <input mdInput  [(ngModel)]="employee.disability[0].other"  placeholder="Other Disability type"  pattern="[a-zA-Z]+([\s][a-zA-Z]+)*" formControlName="other">
+        </md-input-container><br><br>
+      </div>
+    </div>
+   
+    <div  class="row">
+      <div  class="col-md-12">
+        <button  class="btn btn-outline-success btn-sm" (click)="save(employee)" [disabled]="!form.valid"> Save</button>
+      </div>
+    </div>
+  </div>
+  </form>
+  
+  
+  <button *ngIf="service.invisible"  (click)="viewdisability(data)">edit</button>
+  
+  
+  <div class="col-md-12 box" *ngIf="service.invisible" (click)="view(data)" >
+        <div class="emp-info alter-div">
+            Disability Type : {{employee.disability[0].disabilitytype}}
+        </div>
+        <div class="emp-info alter-div ">
+            Disability Name : {{employee.disability[0].disabilityname}}
+        </div><br>
+        <div class="emp-info ">
+            Disability Reason : {{employee.disability[0].reason}}
+        </div>
+  </div>
